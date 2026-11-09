@@ -127,13 +127,23 @@
   .tag{font-size:12px;font-weight:600;padding:3px 9px;border-radius:7px;background:var(--sunk);color:var(--ink2)}
   .tag.plus{background:var(--up-soft);color:var(--up)}
   .tag.minus{background:var(--down-soft);color:var(--down)}
+  .fstrip{grid-column:2 / -1;display:flex;flex-wrap:wrap;align-items:center;gap:6px;border-top:1px dashed var(--rule2);padding-top:9px;margin-top:-2px}
+  .fs-h{font-size:12px;font-weight:800;padding:3px 9px;border-radius:7px;background:var(--sunk);color:var(--ink2);margin-right:2px}
+  .fs-h.ok{background:var(--up-soft);color:var(--up)}.fs-h.bad{background:var(--down-soft);color:var(--down)}.fs-h.mid{background:var(--warn-soft);color:var(--warn)}
+  .fs-wait{font-size:12px;color:var(--ink3)}
+  .fc{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;color:var(--ink2);padding:3px 9px 3px 4px;border-radius:7px;border:1px solid var(--rule);background:var(--surface);cursor:default}
+  .fc i{font-style:normal;width:16px;height:16px;border-radius:50%;display:grid;place-items:center;font-size:10px;font-weight:900;flex:none}
+  .fc b{font-weight:700}
+  .fc.pass i{background:var(--up);color:#fff}.fc.pass b{color:var(--up)}
+  .fc.fail i{background:var(--down);color:#fff}.fc.fail b{color:var(--down)}
+  .fc.na{opacity:.75}.fc.na i{background:var(--rule2);color:var(--ink2)}.fc.na b{color:var(--ink3);font-weight:600}
   @media(max-width:900px){
     .row{grid-template-columns:34px 1fr auto;gap:10px 12px}
     .px{grid-column:3;text-align:right}
     .score{grid-column:2 / -1}
     .stat{grid-column:2}
     .act{grid-column:3;text-align:right}
-    .tags{grid-column:1 / -1;margin-top:0}
+    .tags,.fstrip{grid-column:1 / -1;margin-top:0}
   }
   .empty{background:var(--surface);border:1px dashed var(--rule2);border-radius:16px;padding:28px;text-align:center;color:var(--ink2)}
   .skel{height:74px;border-radius:16px;background:linear-gradient(90deg,var(--surface),var(--sunk),var(--surface));background-size:200% 100%;animation:sh 1.2s infinite;border:1px solid var(--rule)}
@@ -615,7 +625,6 @@ function finalize(list){
     r.score=Math.max(0,Math.min(100,Math.round(r.base+pctl*20)));
     const rsTag = pctl>=0.8 ? [['plus',`Momentum 3 bulan top ${Math.max(1,100-r.rs)}%`]] : pctl<=0.3 ? [['minus','Momentum tertinggal']] : [];
     r.tags=[...rsTag, ...r.baseTags];
-    if(fundState.on && r.fund) r.tags.unshift([r.fund.avail===0?'':r.fund.pass>=4?'plus':r.fund.pass<=2?'minus':'', r.fund.avail===0 ? 'Fundamental: data kosong' : `Fundamental ${r.fund.pass}/${r.fund.total}`]);
     r.status = (r.isBreak && r.volOK && r.green && r.up1) ? 'go'
              : (r.score>=65 && r.dist<=3) ? 'ready'
              : r.score>=45 ? 'watch' : 'weak';
@@ -704,7 +713,7 @@ async function runFund(){
       if(id!==fundState.run) return;
       const items = f && !f.empty ? evalFund(f) : [];
       const pass=items.filter(x=>x.st==='pass').length, avail=items.filter(x=>x.st!=='na').length;
-      r.fund={pass,avail,total:items.length||5};
+      r.fund={pass,avail,total:items.length||5,items:items.map(x=>({key:x.key,st:x.st,val:x.val,det:x.det}))};
       done++; tick(); if(done%3===0) render();
     }
   }
@@ -765,7 +774,7 @@ function buildContext(){
     `Bursa: ${m.name}, mata uang ${m.cur}. ${state.demo?'Catatan: data contoh, bukan harga asli.':''}`,
     `Kondisi indeks: ${$('#regime').textContent.trim()||'tidak tersedia'}`,
     `Hasil scanner (skor 0-100; faktor: tren MA50/MA200, momentum 3 bulan, jarak ke high 52 minggu, penyempitan volatilitas, breakout high 20 hari + volume, kualitas candle):`,
-    ...top.map((r,i)=>`${i+1}. ${r.code} (${r.name}): skor ${r.score}, ${LABEL[r.status]}, harga ${fp(r.price,m)}, buy trigger ${fp(r.buy,m)}${r.fund?`, fundamental ${r.fund.pass}/${r.fund.total}`:''}; ${r.tags.map(t=>t[1]).join(', ')}`),
+    ...top.map((r,i)=>`${i+1}. ${r.code} (${r.name}): skor ${r.score}, ${LABEL[r.status]}, harga ${fp(r.price,m)}, buy trigger ${fp(r.buy,m)}${r.fund&&r.fund.items?`, fundamental ${r.fund.pass}/${r.fund.total} (${r.fund.items.map(x=>`${FUND_SHORT[x.key]} ${x.st==='pass'?'lolos':x.st==='fail'?'gagal':'data kosong'} ${x.st==='na'?'':x.val}`.trim()).join('; ')})`:''}; ${r.tags.map(t=>t[1]).join(', ')}`),
   ].join('\n');
 }
 function buildPrompt(q){
@@ -799,6 +808,15 @@ const COLOR={go:'var(--up)',ready:'var(--acc)',watch:'var(--warn)',weak:'var(--i
 function banner(html){ const b=$('#banner'); if(!html){ b.className='banner'; b.innerHTML=''; return; } b.className='banner show'; b.innerHTML=html; }
 function hashFor(code){ return state.market==='ID' ? code : `${state.market}-${code}`; }
 
+const FUND_SHORT={qEps:'EPS kuartal',qRev:'Pendapatan kuartal',aEps:'EPS tahunan',hist:'EPS 3 tahun',roe:'ROE'};
+const FUND_ICON={pass:'✓',fail:'✕',na:'–'};
+function fundStrip(r){
+  if(!r.fund) return `<div class="fstrip"><span class="fs-h">Fundamental</span><span class="fs-wait">memuat…</span></div>`;
+  if(!r.fund.avail) return `<div class="fstrip"><span class="fs-h na">Fundamental: data kosong</span><span class="fs-wait">Yahoo tidak punya laporan keuangan saham ini</span></div>`;
+  const cls=r.fund.pass>=4?'ok':r.fund.pass<=2?'bad':'mid';
+  return `<div class="fstrip"><span class="fs-h ${cls}">Fundamental ${r.fund.pass}/${r.fund.total}</span>${r.fund.items.map(x=>
+    `<span class="fc ${x.st}" title="${esc(x.det||'')}"><i>${FUND_ICON[x.st]}</i>${esc(FUND_SHORT[x.key]||x.key)} <b>${esc(x.st==='na'?'data kosong':x.val)}</b></span>`).join('')}</div>`;
+}
 function render(){
   finalize(state.results);
   const m=M(), all=state.results.slice().sort((a,b)=>ORDER[a.status]-ORDER[b.status]||b.score-a.score);
@@ -823,6 +841,7 @@ function render(){
       <div class="stat"><span class="badge b-${r.status}"><i></i>${LABEL[r.status]}</span><div class="trig">Buy trigger <b>${fp(r.buy,m)}</b></div></div>
       <div class="act"><a href="index.html#${encodeURIComponent(hashFor(r.code))}">Lihat detail</a></div>
       <div class="tags">${r.tags.map(([c,t])=>`<span class="tag ${c}">${esc(t)}</span>`).join('')}</div>
+      ${fundState.on ? fundStrip(r) : ''}
     </article>`).join('');
 }
 

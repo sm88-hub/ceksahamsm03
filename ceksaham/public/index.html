@@ -330,6 +330,16 @@
   .wl-empty{border:1px dashed var(--rule2);border-radius:14px;padding:22px;text-align:center;color:var(--ink2);font-size:14px}
   .skel-row{height:58px;border-radius:14px;background:linear-gradient(90deg,var(--sunk),var(--surface),var(--sunk));background-size:200% 100%;animation:sh 1.2s infinite}
   @keyframes sh{to{background-position:-200% 0}}
+  .wl-sync{margin-top:14px;border:1px dashed var(--rule2);border-radius:14px;padding:12px 14px;display:grid;gap:10px}
+  .wl-sync-t{font-size:13px;color:var(--ink2);line-height:1.5}
+  .wl-sync-t b{color:var(--ink)}
+  .wl-sync-b{display:flex;flex-wrap:wrap;gap:8px}
+  .wl-msg{font-size:12.5px;font-weight:600;color:var(--up);min-height:0}
+  .wl-msg:empty{display:none}.wl-msg.err{color:var(--down)}
+  .wl-import{display:flex;flex-wrap:wrap;align-items:center;gap:8px;background:rgba(198,241,53,.16);border:1px solid rgba(156,199,26,.45);border-radius:12px;padding:10px 12px;font-size:13px}
+  .wl-import[hidden]{display:none}
+  .wl-import span{flex:1 1 220px}
+  .wl-import .btn{padding:7px 14px;font-size:13px}
   .ghost-btn{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule2);background:var(--surface);border-radius:10px;padding:7px 12px;font-size:13px;font-weight:700;cursor:pointer}
   .ghost-btn:hover{border-color:var(--ink)}
   .ghost-btn:disabled{opacity:.6;cursor:progress}
@@ -660,6 +670,17 @@
           <button class="btn" type="submit">Tambah</button>
         </form>
         <div class="wl-list" id="wlList"></div>
+        <div class="wl-sync">
+          <div class="wl-sync-t"><b>Watchlist hanya tersimpan di browser ini.</b> Simpan cadangannya supaya tidak hilang saat riwayat browser dihapus, atau untuk dibuka di HP dan laptop lain.</div>
+          <div class="wl-sync-b">
+            <button type="button" class="ghost-btn" id="wlLink"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg>Salin link watchlist</button>
+            <button type="button" class="ghost-btn" id="wlBackup"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 3v12m0 0-4-4m4 4 4-4M4 17v3h16v-3"/></svg>Backup ke file</button>
+            <button type="button" class="ghost-btn" id="wlRestore"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 21V9m0 0-4 4m4-4 4 4M4 7V4h16v3"/></svg>Pulihkan dari file</button>
+            <input type="file" id="wlFile" accept=".json,application/json" hidden>
+          </div>
+          <div class="wl-msg" id="wlMsg" role="status"></div>
+          <div class="wl-import" id="wlImport" hidden></div>
+        </div>
         <p class="fine">Status mengikuti aturan sheet breakout: <b>Breakout terkonfirmasi</b> kalau close di atas Price to Watch dengan volume ≥1,4× rata-rata 50 hari. Daftar tersimpan di browser ini saja, tidak terkirim ke mana pun. Kosongkan Price to Watch untuk memakai Buy trigger otomatis.</p>
       </article>
 
@@ -1041,8 +1062,9 @@ function render(silent){
   $('#v').textContent=vol(ref.v); $('#val').textContent=money(ref.v*(ref.h+ref.l+ref.c)/3);
   renderRing(plan);
 
-  runAndRenderBacktest(); resetCalc(); updateWatchBtn();
-  renderSessions(); renderLadder(plan,cur); renderTable(bars,ref); renderChart();
+  const safe=(name,fn)=>{ try{ fn(); }catch(e){ console.error('[SM-Crestboard] '+name+' gagal:',e); } };
+  safe('grafik',renderChart); safe('pivot',()=>renderLadder(plan,cur)); safe('tabel',()=>renderTable(bars,ref)); safe('sesi',renderSessions);
+  safe('uji strategi',runAndRenderBacktest); safe('kalkulator',resetCalc); safe('watchlist',updateWatchBtn);
   $('#hK').textContent=$('#hK2').textContent=fmt(CONFIG.k,2); $('#hRR').textContent=fmt(CONFIG.minRewardRisk,1);
   $('#hVM').textContent=fmt(CONFIG.volumeMultiplier,1); $('#hVD').textContent=CONFIG.avgVolumeDays;
   $('#upd').textContent='Diperbarui '+new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit',second:'2-digit'})+' WIB';
@@ -1214,7 +1236,7 @@ function runBacktest(bars, mode, period){
   return { n, wins:wins.length, winRate:n?wins.length/n:0, pf: gl>0 ? gw/gl : (gw>0?Infinity:0),
     avg: n? trades.reduce((s,t)=>s+t.ret,0)/n : 0, avgWin: wins.length? gw/wins.length:0, avgLoss: losses.length? -gl/losses.length:0,
     total:eq-1, dd, worst: n? Math.min(...trades.map(t=>t.ret)) : 0, hold: n? trades.reduce((s,t)=>s+t.days,0)/n : 0,
-    bh: bars[start] ? bars[bars.length-1].c/bars[start].c-1 : 0, trades, open:pos, curve, startKey:bars[start]?.key, endKey:bars[bars.length-1]?.key, fee };
+    bh: bars[start] ? bars[bars.length-1].c/bars[start].c-1 : 0, trades, open: pos ? {...pos, inKey:pos.key} : null, curve, startKey:bars[start]?.key, endKey:bars[bars.length-1]?.key, fee };
 }
 function countUp(el, to, fmtFn){
   if(matchMedia('(prefers-reduced-motion: reduce)').matches || !isFinite(to)){ el.textContent=fmtFn(to); return; }
@@ -1600,6 +1622,59 @@ $('#wlList').addEventListener('change',e=>{
   const it=wl.items.find(x=>wlId(x)===inp.dataset.ptw); if(!it) return;
   const v=parseFloat(inp.value); it.ptw = v>0 ? v : null; wlSave(); wlRender();
 });
+/* Cadangan watchlist: link & file, tanpa server */
+function wlEncode(items){ return items.map(x=>[x.mk,x.t,x.ptw||''].join('.').replace(/\.$/,'')).join('~'); }
+function wlDecode(str){
+  return String(str||'').split('~').map(p=>{ const [mk,t,ptw]=p.split('.'); const v=parseFloat(ptw); return {mk:(mk||'').toUpperCase(), t:(t||'').toUpperCase().replace(/[^A-Z0-9\-]/g,''), ptw: v>0?v:null}; })
+    .filter(x=>MARKETS[x.mk] && x.t && x.t.length<=12).slice(0,200);
+}
+function wlMsg(t,err){ const m=$('#wlMsg'); m.textContent=t; m.className='wl-msg'+(err?' err':''); clearTimeout(wlMsg.tm); if(t) wlMsg.tm=setTimeout(()=>m.textContent='',7000); }
+function wlMerge(items, replace){
+  if(replace) wl.items=[]; let added=0;
+  for(const x of items){ const ex=wl.items.find(y=>y.mk===x.mk&&y.t===x.t); if(ex){ if(x.ptw) ex.ptw=x.ptw; } else { wl.items.push(x); added++; } }
+  wlSave(); wlRender(); updateWatchBtn(); wlRefresh(); return added;
+}
+function wlOffer(items, src){
+  const box=$('#wlImport');
+  if(!items.length){ wlMsg(`Tidak ada saham yang bisa dibaca dari ${src}.`,true); return; }
+  box.hidden=false;
+  box.innerHTML=`<span><b>${items.length} saham</b> dari ${esc(src)}: ${esc(items.slice(0,6).map(x=>x.t).join(', '))}${items.length>6?', …':''}</span>
+    <button type="button" class="btn" data-imp="merge">Gabungkan</button>${wl.items.length?'<button type="button" class="ghost-btn" data-imp="replace">Ganti semua</button>':''}<button type="button" class="ghost-btn" data-imp="no">Batal</button>`;
+  box.onclick=e=>{ const b=e.target.closest('[data-imp]'); if(!b) return; box.hidden=true; box.innerHTML='';
+    if(b.dataset.imp==='no') return;
+    const n=wlMerge(items, b.dataset.imp==='replace');
+    wlMsg(b.dataset.imp==='replace' ? `Watchlist diganti dengan ${items.length} saham.` : `${n} saham baru ditambahkan${items.length-n?`, ${items.length-n} sudah ada sebelumnya`:''}.`);
+  };
+  box.scrollIntoView({block:'nearest',behavior:'smooth'});
+}
+$('#wlLink').addEventListener('click',async()=>{
+  if(!wl.items.length){ wlMsg('Watchlist masih kosong.',true); return; }
+  const url=location.origin+location.pathname+'?wl='+encodeURIComponent(wlEncode(wl.items))+location.hash;
+  try{ await navigator.clipboard.writeText(url); wlMsg('Link disalin. Buka link itu di perangkat lain atau simpan sebagai bookmark untuk memulihkan watchlist.'); }
+  catch{ window.prompt('Salin link ini:',url); }
+});
+$('#wlBackup').addEventListener('click',()=>{
+  if(!wl.items.length){ wlMsg('Watchlist masih kosong.',true); return; }
+  const d=new Date(), tag=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  const blob=new Blob([JSON.stringify({app:'SM-Crestboard',type:'watchlist',version:1,saved:d.toISOString(),items:wl.items},null,2)],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`sm-crestboard-watchlist-${tag}.json`;
+  document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),2000);
+  wlMsg(`File backup berisi ${wl.items.length} saham sudah diunduh.`);
+});
+$('#wlRestore').addEventListener('click',()=>$('#wlFile').click());
+$('#wlFile').addEventListener('change',async e=>{
+  const f=e.target.files[0]; e.target.value=''; if(!f) return;
+  try{
+    const j=JSON.parse(await f.text()), arr=Array.isArray(j)?j:j.items;
+    const items=(arr||[]).map(x=>({mk:String(x.mk||'').toUpperCase(),t:String(x.t||'').toUpperCase().replace(/[^A-Z0-9\-]/g,''),ptw:+x.ptw>0?+x.ptw:null})).filter(x=>MARKETS[x.mk]&&x.t).slice(0,200);
+    wlOffer(items,'file '+f.name);
+  }catch{ wlMsg('File tidak bisa dibaca. Pastikan memilih file backup watchlist SM-Crestboard (.json).',true); }
+});
+(()=>{ const p=new URLSearchParams(location.search), v=p.get('wl'); if(v==null) return;
+  try{ history.replaceState(null,'',location.pathname+location.hash); }catch{}
+  const items=wlDecode(v); wlOffer(items,'link');
+})();
+
 wlRender(); if(wl.items.length) setTimeout(wlRefresh, 1500);
 
 $('#aiFab').addEventListener('click',openChat);
