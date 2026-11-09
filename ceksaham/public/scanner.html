@@ -152,6 +152,61 @@
   .regime{display:none;align-items:flex-start;gap:10px;background:var(--surface);border:1px solid var(--rule);border-radius:14px;padding:11px 14px;margin-bottom:12px;font-size:14px;color:var(--ink2);line-height:1.5}
   .regime.show{display:flex}.regime i{width:9px;height:9px;border-radius:50%;flex:none;margin-top:6px}
   .regime.ok i{background:var(--up)}.regime.mid i{background:var(--warn)}.regime.bad i{background:var(--down)}.regime b{color:var(--ink)}
+  /* Chatbot AI */
+  .ai-fab{position:fixed;right:22px;bottom:84px;z-index:40;display:inline-flex;align-items:center;gap:10px;padding:11px 18px 11px 12px;border:0;border-radius:999px;background:#0D1526;color:#fff;font-weight:800;font-size:14px;cursor:pointer;
+    box-shadow:0 14px 34px -12px rgba(13,21,38,.6);transition:transform .2s,opacity .2s}
+  .ai-fab:hover{transform:translateY(-2px)}
+  .ai-fab.hide{opacity:0;pointer-events:none;transform:translateY(10px)}
+  .ai-fab .spark{width:24px;height:24px;border-radius:50%;background:conic-gradient(from 0deg,#C6F135,#5CEBA9,#7AA2FF,#C6F135);animation:spin 3s linear infinite;display:grid;place-items:center}
+  .ai-fab .spark::after{content:'';width:15px;height:15px;border-radius:50%;background:#0D1526}
+  [data-theme="dark"] .ai-fab{background:#C6F135;color:#0D1526}
+  [data-theme="dark"] .ai-fab .spark::after{background:#C6F135}
+  .ai-panel{position:fixed;right:22px;bottom:22px;z-index:50;width:min(410px,calc(100vw - 24px));height:min(620px,calc(100vh - 44px));display:flex;flex-direction:column;
+    background:var(--surface);border:1px solid var(--rule);border-radius:22px;box-shadow:0 30px 70px -20px rgba(13,21,38,.45);
+    transform:translateY(18px) scale(.98);opacity:0;pointer-events:none;transition:transform .28s cubic-bezier(.2,.8,.2,1),opacity .2s}
+  .ai-panel.open{transform:none;opacity:1;pointer-events:auto}
+  @media(max-width:560px){.ai-panel{right:12px;bottom:12px}.ai-fab{right:14px;bottom:76px}}
+  .ai-head{display:flex;align-items:center;gap:11px;padding:15px 16px;border-bottom:1px solid var(--rule)}
+  .ai-head .spark{width:30px;height:30px;border-radius:50%;background:conic-gradient(from 0deg,#C6F135,#5CEBA9,#7AA2FF,#C6F135);display:grid;place-items:center;flex:none}
+  .ai-head .spark::after{content:'';width:20px;height:20px;border-radius:50%;background:var(--surface)}
+  .ai-head b{display:block;font:700 15px 'Space Grotesk',sans-serif}
+  .ai-head span{display:block;font-size:12px;color:var(--ink3)}
+  .ai-close{margin-left:auto}
+  .ai-body{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px}
+  .ai-intro{font-size:13.5px;color:var(--ink2);line-height:1.55}
+  .ai-lbl{font-size:12.5px;font-weight:700;color:var(--ink2);margin-top:4px}
+  #aiInput{resize:vertical;border:1px solid var(--rule2);border-radius:12px;padding:10px 12px;background:var(--surface);min-height:84px;line-height:1.45;outline:0}
+  #aiInput:focus{border-color:var(--ink);box-shadow:0 0 0 4px var(--acc-soft)}
+  .ai-sugg{display:flex;flex-wrap:wrap;gap:6px}
+  .ai-sugg button{border:1px solid var(--rule2);background:var(--surface);border-radius:999px;padding:5px 11px;font-size:12.5px;font-weight:600;cursor:pointer;color:var(--ink2);text-align:left}
+  .ai-sugg button:hover{border-color:var(--ink);color:var(--ink)}
+  .ai-go{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px}
+  .ai-btn{display:flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:12px;padding:12px 10px;font-weight:800;font-size:13.5px;cursor:pointer;transition:transform .15s,box-shadow .15s}
+  .ai-btn:hover{transform:translateY(-2px)}
+  .ai-btn .logo{width:22px;height:22px;border-radius:7px;display:grid;place-items:center;font:800 12px 'Space Grotesk',sans-serif}
+  .ai-btn.gpt{background:#0D1526;color:#fff;box-shadow:0 8px 18px -10px rgba(13,21,38,.7)}
+  .ai-btn.gpt .logo{background:#10A37F;color:#fff}
+  .ai-btn.cld{background:#F4EFE6;color:#2B2118;box-shadow:inset 0 0 0 1px #E2D7C5}
+  .ai-btn.cld .logo{background:#2B2118;color:#F4EFE6}
+  [data-theme="dark"] .ai-btn.gpt{background:#EAEEF6;color:#0D1526}
+  .ai-status{font-size:12.5px;color:var(--up);min-height:18px}
+  .ai-status.err{color:var(--down)}
+  .ai-prev summary{font-size:12.5px;color:var(--ink3);font-weight:600}
+  .ai-prev pre{margin-top:8px;white-space:pre-wrap;font:12px/1.5 ui-monospace,Menlo,monospace;background:var(--sunk);border-radius:10px;padding:10px;color:var(--ink2);max-height:180px;overflow:auto}
+  .ai-note{font-size:11.5px;color:var(--ink3);padding:0 16px 12px}
+  .fund-bar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:var(--surface);border:1px solid var(--rule);border-radius:14px;padding:10px 14px;margin-bottom:12px}
+  .fund-bar .toggle{display:inline-flex;align-items:center;gap:9px;font-size:13.5px;font-weight:700;cursor:pointer;user-select:none}
+  .fund-bar .toggle input{appearance:none;width:36px;height:21px;border-radius:99px;background:var(--rule2);position:relative;cursor:pointer;transition:background .2s;flex:none}
+  .fund-bar .toggle input::after{content:'';position:absolute;top:3px;left:3px;width:15px;height:15px;border-radius:50%;background:#fff;transition:transform .2s}
+  .fund-bar .toggle input:checked{background:var(--ink)}.fund-bar .toggle input:checked::after{transform:translateX(15px)}
+  [data-theme="dark"] .fund-bar .toggle input:checked{background:var(--acc)}
+  .fund-bar .toggle span{display:flex;flex-direction:column;gap:2px;min-width:0}
+  .fund-bar small{color:var(--ink3);font-size:12px;font-weight:500}
+  .fund-bar .toggle{flex:1 1 320px;min-width:0}
+  .fund-bar select{border:1px solid var(--rule2);border-radius:10px;padding:6px 10px;background:var(--surface);font-weight:600;color:var(--ink)}
+  .fund-bar select:disabled{opacity:.5}
+  .fund-bar .fprog{font-size:12px;color:var(--ink3)}
+  .fund-bar .fprog:empty{display:none}
   @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -197,6 +252,16 @@
       <input id="filterQ" placeholder="Cari kode atau nama di hasil pindaian" aria-label="Cari di hasil">
     </label>
     <span class="count" id="countTxt"></span>
+  </div>
+  <div class="fund-bar">
+    <label class="toggle"><input type="checkbox" id="fundOn"><span>Cek fundamental<small>EPS &amp; pendapatan kuartalan ≥25%, EPS tahunan ≥25% selama 3 tahun, ROE ≥17%</small></span></label>
+    <select id="fundMin" aria-label="Filter fundamental" disabled>
+      <option value="0">Tampilkan semua</option>
+      <option value="3">Lolos minimal 3 dari 5</option>
+      <option value="4">Lolos minimal 4 dari 5</option>
+      <option value="5">Lolos semua (5 dari 5)</option>
+    </select>
+    <span class="fprog" id="fundProg"></span>
   </div>
 
   <div class="list" id="list"></div>
@@ -251,6 +316,31 @@
   <footer>Data dari Yahoo Finance dan bisa tertunda 15–20 menit. Skor ini penyaring teknikal, bukan rekomendasi investasi. Setup yang bagus pun bisa gagal; selalu pasang stop loss dan keputusan beli sepenuhnya tanggung jawab Anda.</footer>
 </div>
 
+<!-- Chatbot AI -->
+<button class="ai-fab" id="aiFab" type="button" aria-label="Buka asisten AI"><span class="spark" aria-hidden="true"></span>Tanya AI</button>
+<section class="ai-panel" id="aiPanel" role="dialog" aria-label="Tanya AI" aria-hidden="true">
+  <div class="ai-head">
+    <span class="spark" aria-hidden="true"></span>
+    <div><b>Tanya AI</b><span id="aiCtx">Pakai akun ChatGPT atau Claude milikmu sendiri</span></div>
+    <button class="icon-btn ai-close" id="aiClose" type="button" aria-label="Tutup">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <div class="ai-body">
+    <p class="ai-intro">Tulis pertanyaanmu. Hasil pindaian di halaman ini ikut disertakan, lalu ChatGPT atau Claude terbuka di tab baru memakai akunmu sendiri. Versi gratis pun bisa.</p>
+    <label class="ai-lbl" for="aiInput">Pertanyaan</label>
+    <textarea id="aiInput" rows="3" placeholder="Contoh: Dari daftar ini, mana yang paling layak dipantau?"></textarea>
+    <div class="ai-sugg" id="aiSugg"></div>
+    <div class="ai-go">
+      <button class="ai-btn gpt" data-p="chatgpt" type="button"><span class="logo">G</span>Tanya di ChatGPT</button>
+      <button class="ai-btn cld" data-p="claude" type="button"><span class="logo">C</span>Tanya di Claude</button>
+    </div>
+    <p class="ai-status" id="aiStatus" role="status"></p>
+    <details class="ai-prev"><summary>Lihat data yang ikut dikirim</summary><pre id="aiPreview"></pre></details>
+  </div>
+  <p class="ai-note">Situs ini tidak menyimpan pertanyaanmu dan tidak terhubung ke akun siapa pun. Jawaban AI bisa keliru dan bukan rekomendasi investasi.</p>
+</section>
+
 <script>
 /* =====================================================================
    PENGATURAN — daftar pantauan tiap bursa bisa diubah di sini
@@ -261,6 +351,8 @@ const CONFIG = {
   k: 0.4,                 // pengali range untuk Buy trigger
   volumeMultiplier: 1.4,  // syarat volume
   concurrency: 5,         // jumlah permintaan data sekaligus
+  fundPath: '/api/fundamentals',
+  fund: { qEps:25, qRev:25, aEps:25, histYears:3, roe:17 },   // ambang CAN SLIM C & A
 };
 
 function tickIDX(p){ if(p<200) return 1; if(p<500) return 2; if(p<2000) return 5; if(p<5000) return 10; return 25; }
@@ -424,7 +516,7 @@ function analyse(code, data){
 
   return { code, name:data.meta.longName||data.meta.shortName||(m.names&&m.names[code])||code,
            price:live?live.c:ref.c, chg: live ? (live.c-ref.c)/ref.c*100 : (ref.c-prev.c)/prev.c*100, live:!!live,
-           base:s, baseTags:tags, ret63, dist, isBreak, volOK, green, up1, buy, refKey:ref.key };
+           symbol:data.symbol, base:s, baseTags:tags, ret63, dist, isBreak, volOK, green, up1, buy, refKey:ref.key };
 }
 
 /* Kondisi pasar: indeks bursa di atas atau di bawah rata-rata 50 hari */
@@ -454,10 +546,101 @@ function finalize(list){
     r.score=Math.max(0,Math.min(100,Math.round(r.base+pctl*20)));
     const rsTag = pctl>=0.8 ? [['plus',`Momentum 3 bulan top ${Math.max(1,100-r.rs)}%`]] : pctl<=0.3 ? [['minus','Momentum tertinggal']] : [];
     r.tags=[...rsTag, ...r.baseTags];
+    if(fundState.on && r.fund) r.tags.unshift([r.fund.avail===0?'':r.fund.pass>=4?'plus':r.fund.pass<=2?'minus':'', r.fund.avail===0 ? 'Fundamental: data kosong' : `Fundamental ${r.fund.pass}/${r.fund.total}`]);
     r.status = (r.isBreak && r.volOK && r.green && r.up1) ? 'go'
              : (r.score>=65 && r.dist<=3) ? 'ready'
              : r.score>=45 ? 'watch' : 'weak';
   });
+}
+
+/* ===================== Fundamental (CAN SLIM C & A) ===================== */
+const fundCache={};
+async function fetchFund(symbol){
+  if(fundCache[symbol]) return fundCache[symbol];
+  let r,j;
+  try{ r=await fetch(`${CONFIG.fundPath}?symbol=${encodeURIComponent(symbol)}`); j=await r.json(); }catch{ throw new ApiDown('fund'); }
+  if(!r.ok) throw new Error(j?.error||'Gagal');
+  return (fundCache[symbol]=j);
+}
+function demoFund(t){
+  let seed=3; for(const ch of t) seed=(seed*37+ch.charCodeAt(0))>>>0;
+  const rnd=()=>{ seed=(Math.imul(seed,1664525)+1013904223)>>>0; return seed/4294967296; };
+  const g=0.05+rnd()*0.4, q=[], a=[]; let e=50+rnd()*400, rev=e*12;
+  for(let y=2021;y<=2025;y++){ a.push({d:`${y}-12-31`,v:e}); e*=1+g*(0.5+rnd()); }
+  let qe=a[a.length-2].v/4;
+  for(let i=0;i<9;i++){ const dt=new Date(Date.UTC(2024,2+i*3+1,0)); q.push({d:dt.toISOString().slice(0,10),v:qe}); qe*=1+g/4*(0.4+rnd()*1.4); }
+  return { demo:true, currency:M().cur, q:{DilutedEPS:q, TotalRevenue:q.map(p=>({d:p.d,v:p.v*12*(1+rnd()*0.1)})), NetIncome:q.map(p=>({d:p.d,v:p.v*1e7})), StockholdersEquity:[{d:q[q.length-1].d,v:q[q.length-1].v*1e7*4/(0.1+rnd()*0.2)}]},
+           a:{DilutedEPS:a, NetIncome:a.map(p=>({d:p.d,v:p.v*1e7}))} };
+}
+function yoyQ(s){
+  if(!s || s.length<2) return null;
+  const last=s[s.length-1], target=new Date(last.d); target.setUTCFullYear(target.getUTCFullYear()-1);
+  let best=null, bd=1e9; for(const p of s){ const dd=Math.abs(new Date(p.d)-target)/864e5; if(dd<bd){ bd=dd; best=p; } }
+  return best && bd<=45 ? {cur:last, prev:best} : null;
+}
+const qLabel=d=>{ const dt=new Date(d); return `K${Math.floor(dt.getUTCMonth()/3)+1} ${dt.getUTCFullYear()}`; };
+const growthPct=(c,p)=> p>0 ? (c-p)/p*100 : null;
+const fNum=v=>{ const a=Math.abs(v); return a>=1e12? fmt(v/1e12,2)+' T' : a>=1e9? fmt(v/1e9,2)+' M' : a>=1e6? fmt(v/1e6,2)+' jt' : fmt(v, a<100?2:0); };
+function evalFund(f){
+  const C=CONFIG.fund, out=[];
+  const epsOf=b=> b.DilutedEPS?.length ? {s:b.DilutedEPS,proxy:false} : b.BasicEPS?.length ? {s:b.BasicEPS,proxy:false} : b.NetIncome?.length ? {s:b.NetIncome,proxy:true} : null;
+  const growthItem=(key,label,series,min,proxy,isQ)=>{
+    const base={key,label,min:`min ${min}%`};
+    if(!series) return {...base,st:'na',val:'Data tidak tersedia',det:'Yahoo tidak menyediakan data ini untuk saham ini'};
+    const pr = isQ ? yoyQ(series) : (series.length>=2 ? {cur:series[series.length-1],prev:series[series.length-2]} : null);
+    if(!pr) return {...base,st:'na',val:'Data kurang',det: isQ ? 'Butuh kuartal yang sama tahun lalu' : 'Butuh minimal 2 tahun data'};
+    const lab = isQ ? qLabel(pr.cur.d)+' vs '+qLabel(pr.prev.d) : pr.cur.d.slice(0,4)+' vs '+pr.prev.d.slice(0,4);
+    const g=growthPct(pr.cur.v, pr.prev.v), det=`${lab}: ${fNum(pr.cur.v)} vs ${fNum(pr.prev.v)}${proxy?' (pakai laba bersih)':''}`;
+    if(g==null) return {...base,st: pr.cur.v>0?'na':'fail',val: pr.cur.v>0?'Berbalik untung':'Masih rugi',det};
+    return {...base,st:g>=min?'pass':'fail',val:(g>0?'+':'')+fmt(g,1)+'%',det,g};
+  };
+  const qe=epsOf(f.q||{}), ae=epsOf(f.a||{});
+  out.push(growthItem('qEps','EPS kuartalan, tumbuh YoY',qe?.s,C.qEps,qe?.proxy,true));
+  out.push(growthItem('qRev','Pendapatan kuartalan, tumbuh YoY',f.q?.TotalRevenue,C.qRev,false,true));
+  out.push(growthItem('aEps','EPS tahunan, tumbuh',ae?.s,C.aEps,ae?.proxy,false));
+  // Riwayat 3 tahun
+  (()=>{
+    const base={key:'hist',label:`Pertumbuhan EPS ${C.histYears} tahun berturut-turut`,min:`tiap tahun ≥${C.aEps}%`};
+    const s=ae?.s; if(!s || s.length<3){ out.push({...base,st:'na',val:'Data kurang',det:'Butuh minimal 3 tahun data'}); return; }
+    const rates=[]; for(let i=Math.max(1,s.length-C.histYears);i<s.length;i++) rates.push(growthPct(s[i].v,s[i-1].v));
+    const ok=rates.filter(r=>r!=null && r>=C.aEps).length, full=rates.length>=C.histYears;
+    const st = rates.some(r=>r==null||r<C.aEps) ? 'fail' : full ? 'pass' : 'na';
+    out.push({...base,st,val:`${ok}/${rates.length} tahun`,det:rates.map((r,i)=>`${s[s.length-rates.length+i].d.slice(0,4)}: ${r==null?'rugi':((r>0?'+':'')+fmt(r,0)+'%')}`).join(' · ').replace(/ · /g,', ')+(full?'':' (riwayat kurang dari 3 tahun)')});
+  })();
+  // ROE
+  (()=>{
+    const base={key:'roe',label:'Return on Equity (ROE)',min:`min ${C.roe}%`};
+    const qn=f.q?.NetIncome, eq=(f.q?.StockholdersEquity?.length ? f.q.StockholdersEquity : f.a?.StockholdersEquity);
+    let ni=null, how='';
+    if(qn && qn.length>=4 && (new Date(qn[qn.length-1].d)-new Date(qn[qn.length-4].d))/864e5<300){ ni=qn.slice(-4).reduce((a,b)=>a+b.v,0); how='laba 4 kuartal terakhir'; }
+    else if(f.a?.NetIncome?.length){ ni=f.a.NetIncome[f.a.NetIncome.length-1].v; how='laba tahunan terakhir'; }
+    const e=eq?.length ? eq[eq.length-1].v : null;
+    if(ni==null || !e || e<=0){ out.push({...base,st:'na',val:'Data tidak tersedia',det:'Butuh data laba bersih dan ekuitas'}); return; }
+    const roe=ni/e*100;
+    out.push({...base,st:roe>=C.roe?'pass':'fail',val:fmt(roe,1)+'%',det:`${how} ÷ ekuitas terakhir`,g:roe});
+  })();
+  return out;
+}
+const fundState={ on:false, min:0, run:0 };
+async function runFund(){
+  const id=++fundState.run, m=M(), list=state.results.filter(r=>!r.fund);
+  let done=0; const total=list.length, prog=$('#fundProg');
+  const tick=()=>{ prog.textContent = total ? `Fundamental: ${done}/${total} saham` : ''; };
+  tick(); let i=0;
+  async function worker(){
+    while(i<list.length && id===fundState.run && fundState.on){
+      const r=list[i++]; let f=null;
+      try{ f = state.demo ? demoFund(r.code) : await fetchFund(r.symbol||r.code); }
+      catch(e){ f = e instanceof ApiDown ? demoFund(r.code) : null; }
+      if(id!==fundState.run) return;
+      const items = f && !f.empty ? evalFund(f) : [];
+      const pass=items.filter(x=>x.st==='pass').length, avail=items.filter(x=>x.st!=='na').length;
+      r.fund={pass,avail,total:items.length||5};
+      done++; tick(); if(done%3===0) render();
+    }
+  }
+  await Promise.all([worker(),worker(),worker(),worker()]);
+  if(id===fundState.run){ prog.textContent = total ? `Fundamental selesai untuk ${total} saham` : prog.textContent; render(); }
 }
 
 /* ===================== Pindai ===================== */
@@ -490,10 +673,54 @@ async function scan(){
   await Promise.all(Array.from({length:CONFIG.concurrency},worker));
   if(id!==state.scanId) return;
   state.demo=apiDown; state.scanning=false; $('#scanBtn').disabled=false;
+  if(fundState.on) runFund();
   $('#progTxt').textContent=`Selesai: ${state.results.length} saham dianalisis`+(failed?`, ${failed} tidak ditemukan`:'');
   $('#lastScan').textContent='Dipindai '+new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'})+' WIB';
   if(apiDown) banner('<b>Mode contoh.</b> Data di bawah adalah simulasi untuk melihat tampilan. Setelah file ini di-upload ke Netlify, pemindaian memakai data asli.');
   render();
+}
+
+/* ===================== Tanya AI (akun milik pengunjung) ===================== */
+const AI_LINKS = {
+  chatgpt: { name:'ChatGPT', url:q=>'https://chatgpt.com/?q='+encodeURIComponent(q) },
+  claude:  { name:'Claude',  url:q=>'https://claude.ai/new?q='+encodeURIComponent(q) },
+};
+function renderSugg(){
+  const s=['Dari daftar ini, 3 saham mana yang paling layak dipantau dan kenapa?','Saham mana yang paling berisiko di daftar ini?','Jelaskan arti skor dan status di daftar ini dengan bahasa awam','Bagaimana kondisi pasar saat ini memengaruhi peluang breakout?'];
+  $('#aiSugg').innerHTML=s.map(x=>`<button type="button">${esc(x)}</button>`).join('');
+}
+function buildContext(){
+  const m=M(); if(!state.results.length) return `Pindaian bursa ${m.name} belum selesai.`;
+  const top=state.results.slice().sort((a,b)=>ORDER[a.status]-ORDER[b.status]||b.score-a.score).slice(0,15);
+  return [
+    `Bursa: ${m.name}, mata uang ${m.cur}. ${state.demo?'Catatan: data contoh, bukan harga asli.':''}`,
+    `Kondisi indeks: ${$('#regime').textContent.trim()||'tidak tersedia'}`,
+    `Hasil scanner (skor 0-100; faktor: tren MA50/MA200, momentum 3 bulan, jarak ke high 52 minggu, penyempitan volatilitas, breakout high 20 hari + volume, kualitas candle):`,
+    ...top.map((r,i)=>`${i+1}. ${r.code} (${r.name}): skor ${r.score}, ${LABEL[r.status]}, harga ${fp(r.price,m)}, buy trigger ${fp(r.buy,m)}${r.fund?`, fundamental ${r.fund.pass}/${r.fund.total}`:''}; ${r.tags.map(t=>t[1]).join(', ')}`),
+  ].join('\n');
+}
+function buildPrompt(q){
+  return `Kamu analis teknikal saham yang berhati-hati. Jawab dalam bahasa Indonesia yang mudah dipahami dan ringkas, pakai angka dari data di bawah. Kalau perlu info lain (berita, fundamental rinci), sebutkan bahwa itu di luar data ini. Akhiri dengan pengingat singkat bahwa ini bukan rekomendasi investasi.
+
+Pertanyaan: ${q}
+
+Data dari scanner SM-Crestboard:
+${buildContext()}`;
+}
+function openChat(){
+  const pnl=$('#aiPanel'); pnl.classList.add('open'); pnl.setAttribute('aria-hidden','false'); $('#aiFab').classList.add('hide');
+  $('#aiPreview').textContent=buildContext(); $('#aiStatus').textContent=''; renderSugg();
+  setTimeout(()=>$('#aiInput').focus(),150);
+}
+function closeChat(){ const pnl=$('#aiPanel'); pnl.classList.remove('open'); pnl.setAttribute('aria-hidden','true'); $('#aiFab').classList.remove('hide'); }
+async function askAI(provider){
+  const q=$('#aiInput').value.trim() || 'Dari daftar ini, saham mana yang paling layak dipantau dan kenapa?';
+  const prompt=buildPrompt(q), link=AI_LINKS[provider], st=$('#aiStatus');
+  let copied=false; try{ await navigator.clipboard.writeText(prompt); copied=true; }catch{}
+  const w=window.open(link.url(prompt),'_blank','noopener');
+  st.className='ai-status'+(w?'':' err');
+  st.textContent = w ? `${link.name} dibuka di tab baru.`+(copied?' Pertanyaan juga sudah disalin; kalau kolom chat masih kosong, tekan Ctrl+V lalu Enter.':'')
+    : (copied ? `Browser memblokir tab baru. Pertanyaan sudah disalin: buka ${link.name}, tekan Ctrl+V, lalu Enter.` : 'Browser memblokir tab baru. Izinkan pop-up untuk situs ini lalu coba lagi.');
 }
 
 /* ===================== Tampilan ===================== */
@@ -510,7 +737,7 @@ function render(){
   $('#nGo').textContent=n('go'); $('#nReady').textContent=n('ready'); $('#nWatch').textContent=n('watch');
   document.querySelectorAll('.sum button').forEach(b=>b.classList.toggle('on',b.dataset.f===state.filter));
   const q=state.q.trim().toLowerCase();
-  const rows=all.filter(r=>(state.filter==='all'||r.status===state.filter)&&(!q||r.code.toLowerCase().includes(q)||r.name.toLowerCase().includes(q)));
+  const rows=all.filter(r=>(state.filter==='all'||r.status===state.filter)&&(!q||r.code.toLowerCase().includes(q)||r.name.toLowerCase().includes(q))&&(!fundState.on||!fundState.min||(r.fund&&r.fund.pass>=fundState.min)));
   $('#countTxt').textContent = state.filter==='all' ? `${rows.length} saham, diurutkan dari setup terkuat` : `${rows.length} saham dengan status "${LABEL[state.filter]}", klik kartunya lagi untuk melihat semua`;
   const list=$('#list');
   if(!rows.length){
@@ -542,6 +769,16 @@ function setMarket(k){
 $('#markets').insertAdjacentHTML('beforeend',Object.entries(MARKETS).map(([k,m])=>`<button type="button" class="mk" role="tab" data-mk="${k}">${m.name}<span class="code">${m.tag}</span></button>`).join(''));
 $('#markets').addEventListener('click',e=>{ const k=e.target.closest('.mk')?.dataset.mk; if(k && k!==state.market) setMarket(k); });
 $('#scanBtn').addEventListener('click',scan);
+try{ fundState.on = localStorage.getItem('smcb_fund')==='1'; fundState.min=+(localStorage.getItem('smcb_fundmin')||0); }catch{}
+$('#fundOn').checked=fundState.on; $('#fundMin').value=String(fundState.min); $('#fundMin').disabled=!fundState.on;
+$('#fundOn').addEventListener('change',e=>{ fundState.on=e.target.checked; $('#fundMin').disabled=!fundState.on; try{ localStorage.setItem('smcb_fund',fundState.on?'1':'0'); }catch{}
+  if(fundState.on){ if(!state.scanning) runFund(); } else { fundState.run++; $('#fundProg').textContent=''; } render(); });
+$('#fundMin').addEventListener('change',e=>{ fundState.min=+e.target.value; try{ localStorage.setItem('smcb_fundmin',e.target.value); }catch{} render(); });
+$('#aiFab').addEventListener('click',openChat);
+$('#aiClose').addEventListener('click',closeChat);
+document.addEventListener('keydown',e=>{ if(e.key==='Escape' && $('#aiPanel').classList.contains('open')) closeChat(); });
+$('#aiSugg').addEventListener('click',e=>{ const b=e.target.closest('button'); if(b){ $('#aiInput').value=b.textContent; $('#aiInput').focus(); } });
+document.querySelector('.ai-go').addEventListener('click',e=>{ const b=e.target.closest('.ai-btn'); if(b) askAI(b.dataset.p); });
 document.querySelector('.sum').addEventListener('click',e=>{ const f=e.target.closest('button')?.dataset.f; if(!f) return; state.filter = state.filter===f ? 'all' : f; render(); });
 $('#filterQ').addEventListener('input',e=>{ state.q=e.target.value; render(); });
 window.addEventListener('resize',moveInd);
