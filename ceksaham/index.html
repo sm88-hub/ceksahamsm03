@@ -14,7 +14,7 @@
 <meta name="theme-color" content="#020F29">
 <meta property="og:title" content="SM-Crestboard">
 <meta property="og:description" content="Catch the crest before the breakout. Analisis breakout saham Indonesia, AS, Jepang, Korea, dan Hong Kong.">
-<meta property="og:image" content="https://ceksahamsm03.vercel.app/og-image.png">
+<meta property="og:image" content="https://sm-crestboard.vercel.app/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="description" content="Level breakout, stop loss, target, dan volume per sesi untuk saham Indonesia, Amerika, Jepang, Korea, dan Hong Kong.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -418,12 +418,20 @@
   .ack-go{margin-top:14px;width:100%;border:0;border-radius:14px;padding:14px;font:800 15px 'Plus Jakarta Sans',sans-serif;background:#C6F135;color:#0B1220;cursor:pointer;transition:transform .15s,opacity .2s,box-shadow .2s;box-shadow:0 8px 24px rgba(198,241,53,.25)}
   .ack-go:hover:not(:disabled){transform:translateY(-1px)}
   .ack-go:disabled{opacity:.35;cursor:not-allowed;box-shadow:none}
+  .ack-go{position:relative;overflow:hidden;isolation:isolate}
+  .ack-go:not(:disabled){animation:ackGlow 2s ease-out infinite}
+  .ack-go:not(:disabled)::before{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.7) 50%,transparent 70%);background-size:250% 100%;animation:ackSheen 2.2s linear infinite}
+  @keyframes ackGlow{0%{box-shadow:0 8px 24px rgba(198,241,53,.25),0 0 0 0 rgba(198,241,53,.55)}70%,100%{box-shadow:0 8px 24px rgba(198,241,53,.25),0 0 0 12px rgba(198,241,53,0)}}
+  @keyframes ackSheen{from{background-position:120% 0}to{background-position:-120% 0}}
+  .ack-hl{background:linear-gradient(90deg,#C6F135 0%,#F4FFD1 45%,#C6F135 60%,#9CD12A 100%);background-size:220% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:ackShine 3.2s linear infinite}
+  @keyframes ackShine{to{background-position:-220% center}}
+  .ack-list b{letter-spacing:.005em}
   body.ack-open{overflow:hidden}
   .ack-pill{display:inline-flex;align-items:center;gap:7px;margin-top:12px;border:1px solid var(--rule2);background:var(--surface);color:var(--ink2);border-radius:999px;padding:6px 12px 6px 8px;font-size:12.5px;font-weight:700;cursor:pointer}
   .ack-pill i{width:18px;height:18px;border-radius:6px;background:#C6F135;color:#0B1220;display:grid;place-items:center;font-style:normal;font-weight:900;font-size:11px}
   .ack-pill:hover{border-color:var(--ink3);color:var(--ink)}
   @media(max-width:520px){.ack-card{padding:24px 18px 18px}.ack-card h2{font-size:19px}}
-  @media(prefers-reduced-motion:reduce){.ack,.ack-card,.ack-list li,.ack-ico{animation:none}}
+  @media(prefers-reduced-motion:reduce){.ack,.ack-card,.ack-list li,.ack-ico,.ack-hl,.ack-go,.ack-go::before{animation:none}}
   @media(prefers-reduced-motion:reduce){.lens-grid.swap .lcard,.lbars i{animation:none}.lv-lamp i{animation:none}}
   .legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:12px;color:var(--ink2);font-size:13px}
   .legend span{display:inline-flex;align-items:center;gap:7px}.legend i{width:16px;display:inline-block}
@@ -929,7 +937,7 @@
             <button type="button" class="ghost-btn" id="wlLink"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg>Salin link watchlist</button>
             <button type="button" class="ghost-btn" id="wlBackup"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 3v12m0 0-4-4m4 4 4-4M4 17v3h16v-3"/></svg>Backup ke file</button>
             <button type="button" class="ghost-btn" id="wlRestore"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 21V9m0 0-4 4m4-4 4 4M4 7V4h16v3"/></svg>Pulihkan dari file</button>
-            <button type="button" class="btn" id="wlLogin" hidden style="padding:7px 14px;font-size:13px">Masuk untuk sinkron otomatis</button>
+            <button type="button" class="btn" id="wlLogin" hidden style="padding:7px 14px;font-size:13px">Masuk untuk sinkronisasi otomatis</button>
             <input type="file" id="wlFile" accept=".json,application/json" hidden>
           </div>
           <div class="wl-msg" id="wlMsg" role="status"></div>
@@ -1014,7 +1022,7 @@
   </main>
 
   <footer>Data dari Yahoo Finance dan bisa tertunda 15–20 menit. Bukan rekomendasi investasi; keputusan beli dan jual sepenuhnya tanggung jawab Anda.
-  <button type="button" class="ack-pill" data-ack-open><i>!</i>Hanya untuk analisis, bukan rekomendasi. Baca ketentuannya</button>
+  <button type="button" class="ack-pill" data-ack-open><i>!</i>Ketentuan Penggunaan · Bukan Rekomendasi Investasi</button>
   <div class="vz" id="vz" hidden>
     <div class="vz-line">
       <span class="vz-dot" aria-hidden="true"></span><span class="vz-lbl">Pengunjung</span>
@@ -1059,15 +1067,15 @@
 <div class="ack" id="ack" role="dialog" aria-modal="true" aria-labelledby="ackT" aria-describedby="ackD" hidden>
   <div class="ack-card">
     <div class="ack-ico" aria-hidden="true"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v6c0 4.6 3.3 8.3 8 9 4.7-.7 8-4.4 8-9V6l-8-3z"/><path d="M12 8v5"/><path d="M12 16.5h.01"/></svg></div>
-    <span class="ack-kick">Sebelum mulai</span>
-    <h2 id="ackT">Situs ini alat bantu analisis, bukan penasihat investasi</h2>
+    <span class="ack-kick">Pernyataan Penting</span>
+    <h2 id="ackT">SM-Crestboard merupakan <span class="ack-hl">alat bantu analisis</span>, bukan penasihat investasi</h2>
     <ul class="ack-list" id="ackD">
-      <li><b>Bukan rekomendasi.</b> Skor, sinyal, level harga, dan bacaan AI adalah hasil hitungan otomatis untuk bahan belajar dan analisis. Tidak ada satu pun yang merupakan ajakan membeli atau menjual.</li>
-      <li><b>Keputusan dan risikonya milikmu.</b> Setiap keputusan beli, jual, atau tindakan lain sepenuhnya tanggung jawab pribadi. Saham bisa turun tajam dan kerugian bisa lebih besar dari perkiraan.</li>
-      <li><b>Data bisa tertunda atau keliru.</b> Harga dan laporan keuangan berasal dari sumber pihak ketiga, bisa terlambat 15–20 menit atau tidak akurat. Cek ulang ke sekuritas atau sumber resmi sebelum bertransaksi.</li>
+      <li><b>Bukan Rekomendasi Investasi</b> Seluruh skor, sinyal, level harga, maupun ulasan berbasis AI dihasilkan secara otomatis semata-mata untuk keperluan edukasi dan analisis, dan tidak dimaksudkan sebagai ajakan untuk membeli atau menjual efek apa pun.</li>
+      <li><b>Keputusan dan Risiko Sepenuhnya Tanggung Jawab Pengguna</b> Setiap keputusan jual, beli, maupun tindakan lainnya merupakan tanggung jawab pribadi Anda. Nilai investasi dapat menurun secara signifikan dan kerugian dapat melampaui perkiraan.</li>
+      <li><b>Keterbatasan Data</b> Data harga dan laporan keuangan bersumber dari pihak ketiga serta dapat mengalami keterlambatan 15–20 menit atau ketidakakuratan. Mohon verifikasi kembali melalui perusahaan efek atau sumber resmi sebelum bertransaksi.</li>
     </ul>
-    <label class="ack-check"><input type="checkbox" id="ackCk"><span>Saya sudah membaca dan memahami bahwa semua keputusan investasi adalah tanggung jawab saya sendiri.</span></label>
-    <button type="button" class="ack-go" id="ackGo" disabled>Saya mengerti, lanjutkan</button>
+    <label class="ack-check"><input type="checkbox" id="ackCk"><span>Saya telah membaca, memahami, dan menyetujui bahwa seluruh keputusan investasi sepenuhnya merupakan tanggung jawab saya pribadi.</span></label>
+    <button type="button" class="ack-go" id="ackGo" disabled><span>Saya Memahami dan Setuju</span></button>
   </div>
 </div>
 
@@ -2570,8 +2578,8 @@ function syncMergeWatch(L,R){ const m=new Map(); R.forEach(x=>m.set(x.mk+':'+x.t
 function syncMergeJournal(L,R){ const m=new Map(); R.forEach(x=>m.set(x.id,x)); L.forEach(x=>{ const r=m.get(x.id); if(!r || (!r.outP && x.outP)) m.set(x.id,x); }); return [...m.values()]; }
 function syncUI(){
   const A=window.SMCB_ACCOUNT, t=$('.wl-sync-t'), b=$('#wlLogin'); if(!t) return;
-  if(A && A.user){ t.innerHTML='<b>Tersimpan di akunmu.</b> Watchlist dan jurnal tersinkron otomatis ke semua perangkat tempat kamu masuk.'; if(b) b.hidden=true; }
-  else { t.innerHTML='<b>Watchlist hanya tersimpan di browser ini.</b> '+(A&&A.enabled?'Masuk supaya tersinkron otomatis, atau simpan cadangannya.':'Simpan cadangannya supaya tidak hilang saat riwayat browser dihapus, atau untuk dibuka di HP dan laptop lain.'); if(b) b.hidden=!(A&&A.enabled); }
+  if(A && A.user){ t.innerHTML='<b>Tersimpan pada akun Anda.</b> Watchlist dan jurnal tersinkron otomatis di setiap perangkat tempat Anda masuk.'; if(b) b.hidden=true; }
+  else { t.innerHTML='<b>Watchlist hanya tersimpan di browser ini.</b> '+(A&&A.enabled?'Masuk agar tersinkron otomatis, atau simpan cadangannya.':'Simpan cadangannya supaya tidak hilang saat riwayat browser dihapus, atau untuk dibuka di HP dan laptop lain.'); if(b) b.hidden=!(A&&A.enabled); }
 }
 document.addEventListener('smcb:data',e=>{
   const {data,first}=e.detail||{}, d=data||{};
@@ -2584,14 +2592,14 @@ document.addEventListener('smcb:data',e=>{
   if(first || watchChanged){ wlRefresh(); }
   jrRefreshPx();
   if(first && (JSON.stringify(W)!==JSON.stringify(rw) || JSON.stringify(J)!==JSON.stringify(rj))) syncPush();
-  if(first) wlMsg(`Tersinkron dengan akunmu: ${W.length} saham di watchlist, ${J.length} transaksi di jurnal.`);
+  if(first) wlMsg(`Tersinkron dengan akun Anda: ${W.length} saham di watchlist dan ${J.length} transaksi di jurnal.`);
 });
 document.addEventListener('smcb:auth',e=>{
   const {user,reason}=e.detail||{};
   if(!user && reason==='signout'){
     SYNC.applying=true; wl.items=[]; wl.data={}; jr.items=[]; jr.px={}; wlSave(); jrSave(); SYNC.applying=false;
     wlRender(); updateWatchBtn(); jrRender();
-    wlMsg('Kamu sudah keluar. Watchlist dan jurnal di perangkat ini dibersihkan; semuanya tetap aman di akunmu.');
+    wlMsg('Anda telah keluar. Data pada perangkat ini telah dibersihkan dan tetap tersimpan aman pada akun Anda.');
   }
   syncUI();
 });
@@ -2677,6 +2685,7 @@ if('serviceWorker' in navigator && (location.protocol==='https:' || location.hos
     if(e.shiftKey && document.activeElement===a){ e.preventDefault(); z.focus(); } else if(!e.shiftKey && document.activeElement===z){ e.preventDefault(); a.focus(); }
   });
   document.querySelectorAll('[data-ack-open]').forEach(b=>b.addEventListener('click',()=>open(true)));
+  window.SMCB_ACK_OPEN=()=>open(true);
   let seen=null; try{ seen=JSON.parse(localStorage.getItem(KEY)||'null'); }catch{}
   if(!seen || seen.v!==VER || Date.now()-seen.at>DAYS*864e5) open(false);
 })();

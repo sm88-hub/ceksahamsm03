@@ -91,29 +91,29 @@
       ${required?'':'<button type="button" class="au-x" id="auX" aria-label="Tutup">✕</button>'}
       <aside class="au-side">
         <div class="au-brand"><img src="logo-mark.png" alt=""><span>SM-<b>Crestboard</b></span></div>
-        <h2>Analisis di mana saja. Datamu ikut.</h2>
-        <p>Satu akun untuk watchlist dan jurnal tradingmu. Buka di HP atau laptop, semuanya langsung tersinkron.</p>
+        <h2>Satu akun untuk seluruh analisis Anda.</h2>
+        <p>Masuk untuk mengakses watchlist dan jurnal trading Anda secara tersinkron di setiap perangkat.</p>
         <ul class="au-pts">
-          <li><i>✓</i><span>Watchlist, Price to Watch, dan jurnal tersimpan di akunmu, bukan hanya di browser.</span></li>
-          <li><i>✓</i><span>Ganti perangkat kapan saja tanpa backup manual.</span></li>
-          <li><i>✓</i><span>Data pribadi: hanya kamu yang bisa membaca dan mengubahnya.</span></li>
+          <li><i>✓</i><span>Watchlist, Price to Watch, dan jurnal trading tersimpan aman pada akun Anda.</span></li>
+          <li><i>✓</i><span>Akses berkelanjutan dari perangkat mana pun tanpa pencadangan manual.</span></li>
+          <li><i>✓</i><span>Data bersifat pribadi dan hanya dapat diakses oleh pemilik akun.</span></li>
         </ul>
       </aside>
       <section class="au-main">
-        <div class="au-tabs" role="tablist"><button type="button" data-m="in" class="on">Masuk</button><button type="button" data-m="up">Daftar</button></div>
-        <h3 id="auT">Selamat datang kembali</h3>
-        <p class="sub" id="auSub">Masuk untuk membuka watchlist dan jurnalmu.</p>
-        <button type="button" class="au-g" id="auG"><svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg>Lanjutkan dengan Google</button>
-        <div class="au-or">atau dengan email</div>
+        <div class="au-tabs" role="tablist"><button type="button" data-m="in" class="on">Masuk</button><button type="button" data-m="up">Buat Akun</button></div>
+        <h3 id="auT">Selamat Datang</h3>
+        <p class="sub" id="auSub">Silakan masuk untuk melanjutkan ke akun Anda.</p>
+        <button type="button" class="au-g" id="auG"><svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg><span id="auGT">Masuk dengan Google</span></button>
+        <div class="au-or">atau gunakan email</div>
         <form class="au-f" id="auF" novalidate>
-          <label id="auNameL" hidden>Nama<input id="auName" autocomplete="name" placeholder="Nama panggilan"></label>
-          <label>Email<input id="auEmail" type="email" autocomplete="email" placeholder="nama@email.com" required></label>
-          <label>Password<input id="auPw" type="password" autocomplete="current-password" placeholder="Minimal 6 karakter" required></label>
+          <label id="auNameL" hidden>Nama Lengkap<input id="auName" autocomplete="name" placeholder="Nama Anda"></label>
+          <label>Alamat Email<input id="auEmail" type="email" autocomplete="email" placeholder="nama@domain.com" required></label>
+          <label>Kata Sandi<input id="auPw" type="password" autocomplete="current-password" placeholder="Minimal 6 karakter" required></label>
           <button type="submit" class="au-go" id="auGo">Masuk</button>
         </form>
         <div class="au-msg" id="auMsg" role="status"></div>
-        <button type="button" class="au-forgot" id="auForgot">Lupa password?</button>
-        <p class="au-note">Dengan masuk, kamu tetap tunduk pada ketentuan situs: semua informasi hanya untuk analisis, bukan rekomendasi investasi.</p>
+        <button type="button" class="au-forgot" id="auForgot">Lupa kata sandi?</button>
+        <p class="au-note">Dengan melanjutkan, Anda memahami bahwa seluruh informasi pada SM-Crestboard disediakan semata-mata untuk keperluan analisis dan bukan merupakan rekomendasi investasi.</p>
       </section>
     </div>
   </div>`;
@@ -121,9 +121,10 @@
   const $=id=>document.getElementById(id);
   let mode='in';
   const setMode=m=>{ mode=m; document.querySelectorAll('.au-tabs button').forEach(b=>b.classList.toggle('on',b.dataset.m===m));
-    $('auT').textContent = m==='in' ? 'Selamat datang kembali' : 'Buat akun baru';
-    $('auSub').textContent = m==='in' ? 'Masuk untuk membuka watchlist dan jurnalmu.' : 'Gratis. Watchlist dan jurnal di perangkat ini ikut dipindahkan ke akunmu.';
-    $('auGo').textContent = m==='in' ? 'Masuk' : 'Daftar';
+    $('auT').textContent = m==='in' ? 'Selamat Datang' : 'Buat Akun Baru';
+    $('auSub').textContent = m==='in' ? 'Silakan masuk untuk melanjutkan ke akun Anda.' : 'Pendaftaran tidak dipungut biaya. Watchlist dan jurnal pada perangkat ini akan dipindahkan ke akun Anda.';
+    $('auGo').textContent = m==='in' ? 'Masuk' : 'Buat Akun';
+    $('auGT').textContent = m==='in' ? 'Masuk dengan Google' : 'Daftar dengan Google';
     $('auNameL').hidden = m==='in'; $('auPw').autocomplete = m==='in' ? 'current-password' : 'new-password';
     $('auForgot').hidden = m!=='in'; msg(''); };
   const msg=(t,kind='err')=>{ const e=$('auMsg'); e.textContent=t; e.className='au-msg '+(t?kind:''); };
@@ -135,12 +136,12 @@
   $('au').addEventListener('click',e=>{ if(e.target.id==='au') closeModal(); });
   document.addEventListener('keydown',e=>{ if(e.key==='Escape' && !$('au').hidden) closeModal(); });
 
-  const ERR={ 'auth/invalid-credential':'Email atau password salah.', 'auth/wrong-password':'Email atau password salah.', 'auth/user-not-found':'Akun dengan email ini belum terdaftar.',
-    'auth/email-already-in-use':'Email ini sudah terdaftar. Silakan masuk.', 'auth/weak-password':'Password minimal 6 karakter.', 'auth/invalid-email':'Format email tidak valid.',
-    'auth/missing-password':'Isi password.', 'auth/too-many-requests':'Terlalu banyak percobaan. Coba lagi beberapa menit lagi.', 'auth/network-request-failed':'Koneksi internet bermasalah. Coba lagi.',
+  const ERR={ 'auth/invalid-credential':'Alamat email atau kata sandi tidak sesuai.', 'auth/wrong-password':'Alamat email atau kata sandi tidak sesuai.', 'auth/user-not-found':'Alamat email ini belum terdaftar.',
+    'auth/email-already-in-use':'Alamat email ini telah terdaftar. Silakan masuk.', 'auth/weak-password':'Kata sandi minimal terdiri dari 6 karakter.', 'auth/invalid-email':'Format alamat email tidak valid.',
+    'auth/missing-password':'Mohon isi kata sandi.', 'auth/too-many-requests':'Terlalu banyak percobaan. Silakan coba kembali dalam beberapa menit.', 'auth/network-request-failed':'Koneksi internet terganggu. Silakan coba kembali.',
     'auth/unauthorized-domain':'Domain situs ini belum diizinkan di Firebase (Authentication → Settings → Authorized domains).', 'auth/operation-not-allowed':'Metode masuk ini belum diaktifkan di Firebase Console.',
-    'auth/popup-blocked':'Browser memblokir jendela login. Izinkan pop-up lalu coba lagi.' };
-  const errText=e=>ERR[e?.code] || 'Gagal: '+(e?.message||'coba lagi');
+    'auth/popup-blocked':'Peramban memblokir jendela masuk. Mohon izinkan pop-up, lalu coba kembali.' };
+  const errText=e=>ERR[e?.code] || 'Terjadi kendala: '+(e?.message||'silakan coba kembali.');
 
   /* ---------- tombol akun di header ---------- */
   let syncing=false;
@@ -151,9 +152,9 @@
     const name=u.displayName||u.email||'Akun', ini=esc((name.trim()[0]||'A').toUpperCase());
     slot.innerHTML=`<button type="button" class="acct-btn in" id="acctBtn" aria-haspopup="menu" aria-expanded="false" title="${esc(u.email||'')}"><span class="acct-av">${u.photoURL?`<img src="${esc(u.photoURL)}" alt="" referrerpolicy="no-referrer">`:ini}</span><i class="acct-dot ${syncing?'sync':''}" aria-hidden="true"></i></button>
       <div class="acct-menu" id="acctMenu" role="menu" hidden>
-        <div class="who"><span class="acct-av" style="width:34px;height:34px;font-size:14px">${u.photoURL?`<img src="${esc(u.photoURL)}" alt="" referrerpolicy="no-referrer">`:ini}</span><div><b>${esc(u.displayName||'Akun saya')}</b><span>${esc(u.email||'')}</span></div></div>
-        <div class="st"><i class="acct-dot ${syncing?'sync':''}"></i>${syncing?'Menyimpan…':'Watchlist & jurnal tersinkron'}</div>
-        <button type="button" class="out" id="acctOut" role="menuitem">Keluar</button>
+        <div class="who"><span class="acct-av" style="width:34px;height:34px;font-size:14px">${u.photoURL?`<img src="${esc(u.photoURL)}" alt="" referrerpolicy="no-referrer">`:ini}</span><div><b>${esc(u.displayName||'Akun Saya')}</b><span>${esc(u.email||'')}</span></div></div>
+        <div class="st"><i class="acct-dot ${syncing?'sync':''}"></i>${syncing?'Menyimpan perubahan…':'Watchlist dan jurnal telah tersinkron'}</div>
+        <button type="button" class="out" id="acctOut" role="menuitem">Keluar dari akun</button>
       </div>`;
     const btn=$('acctBtn'), menu=$('acctMenu');
     btn.onclick=e=>{ e.stopPropagation(); menu.hidden=!menu.hidden; btn.setAttribute('aria-expanded',String(!menu.hidden)); };
@@ -214,7 +215,7 @@
     $('auF').onsubmit=async e=>{
       e.preventDefault(); msg(''); reason='signin';
       const email=$('auEmail').value.trim(), pw=$('auPw').value, go=$('auGo');
-      if(!email){ msg('Isi email.'); return; } if(pw.length<6){ msg('Password minimal 6 karakter.'); return; }
+      if(!email){ msg('Mohon isi alamat email.'); return; } if(pw.length<6){ msg('Kata sandi minimal terdiri dari 6 karakter.'); return; }
       go.disabled=true;
       try{
         if(mode==='in') await fu.signInWithEmailAndPassword(auth,email,pw);
@@ -223,8 +224,8 @@
       go.disabled=false;
     };
     $('auForgot').onclick=async()=>{
-      const email=$('auEmail').value.trim(); if(!email){ msg('Isi email dulu, lalu tekan "Lupa password?" lagi.'); $('auEmail').focus(); return; }
-      try{ await fu.sendPasswordResetEmail(auth,email); msg('Tautan reset password sudah dikirim ke '+email+'. Cek juga folder spam.','ok'); }
+      const email=$('auEmail').value.trim(); if(!email){ msg('Mohon isi alamat email terlebih dahulu, lalu pilih "Lupa kata sandi?" kembali.'); $('auEmail').focus(); return; }
+      try{ await fu.sendPasswordResetEmail(auth,email); msg('Tautan pengaturan ulang kata sandi telah dikirim ke '+email+'. Mohon periksa juga folder spam.','ok'); }
       catch(err){ msg(errText(err)); }
     };
   }).catch(e=>{
