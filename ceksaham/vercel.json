@@ -1,10 +1,5 @@
 {
-  "$schema": "https://openapi.vercel.sh/vercel.json",
-  "outputDirectory": "public",
-  "functions": {
-    "api/rs.js": { "maxDuration": 30 },
-    "api/fundamentals.js": { "maxDuration": 20 }
-  },
+  "outputDirectory": ".",
   "headers": [
     { "source": "/sw.js", "headers": [{ "key": "Cache-Control", "value": "no-cache" }] }
   ]
