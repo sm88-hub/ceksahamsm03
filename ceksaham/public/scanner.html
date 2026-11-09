@@ -4,10 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SM-Crestboard | Pemindai breakout</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#020F29">
+<meta property="og:title" content="SM-Crestboard">
+<meta property="og:description" content="Catch the crest before the breakout. Analisis breakout saham Indonesia, AS, Jepang, Korea, dan Hong Kong.">
+<meta property="og:image" content="https://sm-crestboard.netlify.app/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="description" content="Pindai saham Indonesia, Amerika, Jepang, dan Korea lalu urutkan berdasarkan kekuatan setup breakout.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
   :root,[data-theme="light"]{
     --bg:#EDF0F5;--surface:#FFFFFF;--sunk:#F3F5F9;--ink:#0D1526;--ink2:#47536A;--ink3:#8591A6;
@@ -39,7 +46,13 @@
   .bar{position:sticky;top:0;z-index:20;background:var(--glass);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--rule)}
   .bar-in{max-width:1200px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
   .brand{display:flex;align-items:center;gap:10px;text-decoration:none;margin-right:auto}
-  .wordmark{font:700 20px 'Space Grotesk',sans-serif;letter-spacing:-.02em}
+  .wordmark{font:800 20px 'Montserrat','Plus Jakarta Sans',sans-serif;letter-spacing:-.01em;white-space:nowrap}
+  .wordmark b{font-weight:800;color:#4D7C0F}
+  [data-theme="dark"] .wordmark b{color:#C6F135}
+  .brand-mark{width:36px;height:36px;border-radius:9px;display:block;flex:none;box-shadow:0 2px 8px rgba(2,15,41,.18)}
+  [data-theme="dark"] .brand-mark{box-shadow:0 0 0 1px rgba(255,255,255,.14)}
+  .brand-sep{width:1px;height:22px;background:currentColor;opacity:.22;flex:none}
+  @media(max-width:560px){.brand-sep{display:none}.brand-mark{width:32px;height:32px}}
   .page-tag{font-size:12px;font-weight:700;background:var(--acc);color:#0D1526;border-radius:6px;padding:2px 8px}
   .seg{position:relative;display:flex;background:var(--sunk);border:1px solid var(--rule);border-radius:12px;padding:3px;overflow-x:auto;max-width:100%;scrollbar-width:none}
   .seg::-webkit-scrollbar{display:none}
@@ -207,14 +220,34 @@
   .fund-bar select:disabled{opacity:.5}
   .fund-bar .fprog{font-size:12px;color:var(--ink3)}
   .fund-bar .fprog:empty{display:none}
+  .fx{margin-top:14px;padding:0;border:1px solid var(--rule);border-radius:14px;background:var(--surface);overflow:hidden}
+  .fx>summary{padding:12px 16px;font-weight:700;font-size:14px;color:var(--ink);list-style:none;display:flex;align-items:center;gap:8px;cursor:pointer}
+  .fx>summary::-webkit-details-marker{display:none}
+  .fx>summary::before{content:'i';display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--ink);color:var(--surface);font:700 12px/1 Georgia,serif;flex:none}
+  .fx>summary::after{content:'';margin-left:auto;width:8px;height:8px;border-right:2px solid var(--ink3);border-bottom:2px solid var(--ink3);transform:rotate(45deg);transition:transform .2s}
+  .fx[open]>summary::after{transform:rotate(225deg)}
+  .fx-body{padding:2px 16px 16px;color:var(--ink2);font-size:13.5px;line-height:1.6}
+  .fx-body p{margin:0 0 8px}
+  .fx-lead{max-width:80ch}
+  .fx-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:10px;margin:12px 0}
+  .fx-item{display:flex;gap:12px;border:1px solid var(--rule);border-radius:12px;padding:12px 14px;min-width:0}
+  .fx-item h5{margin:1px 0 4px;font-size:14px;color:var(--ink)}
+  .fx-n{flex:none;width:24px;height:24px;border-radius:8px;background:#C6F135;color:#0B1220;display:grid;place-items:center;font-weight:800;font-size:12.5px}
+  .fx-ex{font-size:12.5px;color:var(--ink3);background:var(--rule);border-radius:8px;padding:6px 9px;margin:6px 0 0!important}
+  [data-theme="dark"] .fx-ex{background:rgba(255,255,255,.05)}
+  .fx-note{border-top:1px dashed var(--rule2);padding-top:10px}
+  .fx-d{display:inline-block;width:8px;height:8px;border-radius:50%;margin:0 5px 0 8px;vertical-align:1px}
+  .fx-d.ok{background:#16A34A}.fx-d.bad{background:#DC2626}.fx-d.na{background:#9CA3AF}
+  .fx-scan{margin:-4px 0 14px}
   @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
 <header class="bar"><div class="bar-in">
   <a class="brand" href="index.html" aria-label="Kembali ke halaman cek saham">
-    <svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#0D1526"/><path d="M6 22l6-7 4 4 9-11" fill="none" stroke="#C6F135" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="25" cy="8" r="2.6" fill="#C6F135"/></svg>
-    <span class="wordmark" id="brandName">SM-Crestboard</span>
+    <img class="brand-mark" src="logo-mark.png" width="36" height="36" alt="" aria-hidden="true">
+    <i class="brand-sep" aria-hidden="true"></i>
+    <span class="wordmark" id="brandName">SM-<b>Crestboard</b></span>
     <span class="page-tag">Scanner</span>
   </a>
   <nav class="seg" id="markets" role="tablist" aria-label="Pilih bursa"><i class="seg-ind" id="segInd"></i></nav>
@@ -263,6 +296,42 @@
     </select>
     <span class="fprog" id="fundProg"></span>
   </div>
+  <details class="fx fx-scan">
+    <summary>Apa arti tiap kriteria fundamental?</summary>
+    <div class="fx-body">
+      <p class="fx-lead">Lima kriteria ini adalah huruf <b>C</b> (Current earnings) dan <b>A</b> (Annual earnings) dari metode CAN SLIM karya William O'Neil. Ia meneliti saham-saham yang harganya naik paling tinggi dan menemukan pola yang sama sebelum harganya meroket: labanya sedang tumbuh cepat. Tujuan filter ini adalah memastikan breakout didukung bisnis yang benar-benar membaik, bukan hanya gerak harga.</p>
+      <div class="fx-grid">
+        <div class="fx-item"><span class="fx-n">1</span><div>
+          <h5>EPS kuartalan tumbuh ≥25% (YoY)</h5>
+          <p><b>EPS</b> (earnings per share) adalah laba bersih dibagi jumlah lembar saham, atau laba yang menjadi hak tiap lembar saham. Angka kuartal terbaru dibandingkan dengan <b>kuartal yang sama tahun lalu</b> (misalnya K3 2026 dengan K3 2025), bukan dengan kuartal sebelumnya, supaya pengaruh musim, seperti Lebaran atau akhir tahun, tidak mengacaukan perbandingan.</p>
+          <p class="fx-ex">Contoh: EPS K3 2025 Rp100 menjadi Rp130 di K3 2026 = +30%, <b>lolos</b>.</p>
+        </div></div>
+        <div class="fx-item"><span class="fx-n">2</span><div>
+          <h5>Pendapatan kuartalan tumbuh ≥25% (YoY)</h5>
+          <p>Pendapatan adalah total penjualan atau omzet. Kriteria ini memeriksa apakah laba naik karena <b>bisnisnya memang tumbuh</b>. Laba bisa juga naik karena memangkas biaya atau mendapat untung sekali saja (misalnya menjual aset), dan kenaikan seperti itu biasanya tidak bertahan.</p>
+          <p class="fx-ex">Laba naik 40% tapi penjualan hanya naik 3%: patut dicurigai.</p>
+        </div></div>
+        <div class="fx-item"><span class="fx-n">3</span><div>
+          <h5>EPS tahunan tumbuh ≥25%</h5>
+          <p>EPS tahun buku terakhir dibandingkan dengan tahun sebelumnya. Satu kuartal bagus bisa saja kebetulan. Angka tahunan menunjukkan apakah pertumbuhannya <b>berlangsung sepanjang tahun</b>.</p>
+        </div></div>
+        <div class="fx-item"><span class="fx-n">4</span><div>
+          <h5>Pertumbuhan EPS 3 tahun berturut-turut</h5>
+          <p>EPS tahunan harus naik ≥25% <b>setiap tahun</b> selama 3 tahun terakhir. Kalau ada satu tahun yang turun atau rugi, kriteria ini gagal. Tujuannya membedakan perusahaan yang tumbuh konsisten dari yang hanya sedang pulih setelah tahun yang buruk.</p>
+          <p class="fx-ex">Contoh: +30%, +28%, +41% = <b>lolos</b>. Kalau urutannya −20%, +60%, +35% = <b>gagal</b>.</p>
+        </div></div>
+        <div class="fx-item"><span class="fx-n">5</span><div>
+          <h5>ROE ≥17%</h5>
+          <p><b>Return on Equity</b> = laba bersih ÷ modal pemegang saham (ekuitas). Angka ini menunjukkan seberapa efisien perusahaan mengubah modal menjadi laba. Di sini laba diambil dari total 4 kuartal terakhir, atau laba tahunan terakhir kalau data kuartal tidak lengkap.</p>
+          <p class="fx-ex">Contoh: ekuitas Rp1.000 M, laba Rp200 M, ROE = 20%, <b>lolos</b>.</p>
+        </div></div>
+      </div>
+      <div class="fx-note">
+        <p><b>Cara membaca hasil.</b> <i class="fx-d ok"></i>Lolos = memenuhi batas. <i class="fx-d bad"></i>Gagal = di bawah batas atau perusahaan masih rugi. <i class="fx-d na"></i>Data kosong = Yahoo tidak punya angkanya, jadi <b>tidak dihitung gagal</b>. Skor 4–5 dari 5 berarti fundamentalnya kuat. Skor 0–2 berarti lonjakan harganya belum didukung laba.</p>
+        <p><b>Yang perlu diingat.</b> Kriteria ini dirancang untuk <b>saham pertumbuhan</b>. Saham blue chip yang stabil, bank besar, atau saham dividen (misalnya BBCA, TLKM, KO) jarang tumbuh 25% per tahun, jadi wajar kalau skornya rendah. Skor rendah tidak otomatis berarti perusahaannya jelek. Data laporan keuangan diperbarui setiap kuartal saat emiten merilis laporannya, bukan setiap hari.</p>
+      </div>
+    </div>
+  </details>
 
   <div class="list" id="list"></div>
 
@@ -785,7 +854,7 @@ window.addEventListener('resize',moveInd);
 if(document.fonts&&document.fonts.ready) document.fonts.ready.then(moveInd);
 $('#themeBtn').addEventListener('click',()=>{ const t=document.documentElement.dataset.theme==='dark'?'light':'dark'; document.documentElement.dataset.theme=t; try{ localStorage.setItem('theme',t); }catch{} });
 try{ const t=localStorage.getItem('theme'); if(t) document.documentElement.dataset.theme=t; }catch{}
-$('#brandName').textContent=CONFIG.appName;
+$('#brandName').innerHTML=esc(CONFIG.appName).replace(/^([^-]+-)(.+)$/,'$1<b>$2</b>');
 
 const start=(location.hash.slice(1)||'').toUpperCase();
 setMarket(MARKETS[start] ? start : 'ID');
