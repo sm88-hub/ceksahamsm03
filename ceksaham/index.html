@@ -696,6 +696,88 @@
   .fx-d.ok{background:#16A34A}.fx-d.bad{background:#DC2626}.fx-d.na{background:#9CA3AF}
   @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 
+
+  /* ===== Kalender laporan keuangan ===== */
+  .t-earn{grid-column:span 12;position:relative;overflow:hidden}.t-earn:hover{transform:none}
+  .t-earn::before{content:'';position:absolute;inset:-1px -1px auto -1px;height:220px;background:radial-gradient(600px 200px at 85% -40%,var(--acc-soft),transparent 70%);pointer-events:none}
+  .er-head{position:relative;display:flex;justify-content:space-between;align-items:flex-end;gap:18px;flex-wrap:wrap;margin-bottom:16px}
+  .er-ttl{max-width:620px}
+  .er-ttl h3{margin:4px 0 3px}
+  .er-kick{display:inline-flex;align-items:center;gap:7px;font-size:11.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--up)}
+  .er-kick i{width:7px;height:7px;border-radius:50%;background:var(--up);box-shadow:0 0 0 0 var(--up);animation:erPulse 2s infinite}
+  @keyframes erPulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--up) 60%,transparent)}70%{box-shadow:0 0 0 8px transparent}100%{box-shadow:0 0 0 0 transparent}}
+  .er-sum{display:flex;gap:8px;flex-wrap:wrap}
+  .er-pill{display:flex;flex-direction:column;align-items:flex-start;padding:8px 13px;border-radius:12px;border:1px solid var(--rule);background:var(--surface);min-width:92px}
+  .er-pill b{font:700 20px 'Space Grotesk',sans-serif;line-height:1.1}
+  .er-pill small{font-size:11px;color:var(--ink3);font-weight:600}
+  .er-pill.up b{color:var(--up)}.er-pill.down b{color:var(--down)}.er-pill.nx b{color:var(--ink)}
+  .er-alert{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;padding:11px 14px;border-radius:14px;margin-bottom:14px;background:var(--warn-soft,rgba(255,200,61,.14));border:1px solid color-mix(in srgb,var(--warn) 45%,transparent);font-size:13px}
+  .er-alert > b{display:inline-flex;align-items:center;gap:6px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:color-mix(in srgb,var(--warn) 70%,var(--ink))}
+  .er-alert a{color:var(--ink);text-decoration:none;font-weight:600;border-bottom:1px dashed var(--ink3);cursor:pointer}
+  .er-alert a b{font-family:'Space Grotesk',sans-serif}
+  .er-sec{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin:2px 0 8px}
+  .er-sec h4{margin:0;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3)}
+  .er-sec small{font-size:12px;color:var(--ink3)}
+  .er-next{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(208px,1fr);gap:10px;overflow-x:auto;padding:2px 2px 10px;scroll-snap-type:x mandatory;scrollbar-width:thin}
+  .er-card{scroll-snap-align:start;position:relative;display:flex;gap:12px;align-items:stretch;padding:12px;border-radius:16px;border:1px solid var(--rule);background:var(--surface);cursor:pointer;text-align:left;color:var(--ink);font:inherit;transition:transform .25s cubic-bezier(.2,.8,.2,1),border-color .25s,box-shadow .25s}
+  .er-card:hover,.er-card:focus-visible{transform:translateY(-3px);border-color:var(--ink3);box-shadow:var(--shadow);outline:0}
+  .er-card.soon{border-color:color-mix(in srgb,var(--up) 55%,transparent)}
+  .er-cal{flex:none;width:52px;border-radius:12px;overflow:hidden;text-align:center;background:var(--sunk);border:1px solid var(--rule)}
+  .er-cal span{display:block;font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:3px 0;background:var(--ink);color:var(--surface)}
+  .er-card.soon .er-cal span{background:var(--up);color:#fff}
+  [data-theme="dark"] .er-card.soon .er-cal span{color:#0A101C}
+  .er-cal b{display:block;font:700 22px 'Space Grotesk',sans-serif;line-height:1.2;padding-top:3px}
+  .er-cal small{display:block;font-size:10px;color:var(--ink3);font-weight:700;padding-bottom:4px}
+  .er-info{min-width:0;display:flex;flex-direction:column;gap:2px;flex:1}
+  .er-info .tk{font:700 15.5px 'Space Grotesk',sans-serif;display:flex;align-items:center;gap:6px}
+  .er-info .nm{font-size:12px;color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .er-info .mt{font-size:11.5px;color:var(--ink3);margin-top:auto}
+  .er-cd{position:absolute;top:10px;right:10px;font-size:10.5px;font-weight:800;padding:2px 8px;border-radius:99px;background:var(--sunk);color:var(--ink2)}
+  .er-card.soon .er-cd{background:var(--up-soft);color:var(--up)}
+  .er-star{color:#E2A400;font-size:12px}
+  .er-none{padding:16px;border-radius:14px;background:var(--sunk);color:var(--ink3);font-size:13px;text-align:center}
+  .er-year{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:8px;margin-top:6px}
+  .er-m{position:relative;display:flex;flex-direction:column;gap:6px;padding:10px 9px 9px;border-radius:14px;border:1px solid var(--rule);background:var(--surface);cursor:pointer;text-align:left;font:inherit;color:var(--ink);min-width:0;transition:border-color .2s,transform .2s,background .2s}
+  .er-m:hover{border-color:var(--ink3);transform:translateY(-2px)}
+  .er-m.past{background:var(--sunk)}
+  .er-m.now{border-color:var(--up);box-shadow:0 0 0 3px var(--up-soft)}
+  .er-m.sel{border-color:var(--ink);box-shadow:0 0 0 2px var(--ink) inset}
+  .er-m .mh{display:flex;justify-content:space-between;align-items:baseline;gap:4px}
+  .er-m .mh b{font-size:12.5px;font-weight:800}
+  .er-m .mh span{font:700 11px 'Space Grotesk',sans-serif;color:var(--ink3)}
+  .er-m.now .mh b::after{content:'kini';margin-left:5px;font-size:9.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--up)}
+  .er-bar{display:flex;height:5px;border-radius:99px;overflow:hidden;background:var(--rule);gap:1px}
+  .er-bar i{display:block}
+  .er-bar .b{background:var(--up)}.er-bar .x{background:var(--down)}.er-bar .n{background:var(--ink3)}.er-bar .f{background:repeating-linear-gradient(90deg,var(--ink3) 0 3px,transparent 3px 5px)}
+  .er-chips{display:flex;flex-wrap:wrap;gap:3px}
+  .er-c{font:700 10.5px 'Space Grotesk',sans-serif;padding:1px 5px;border-radius:5px;background:var(--rule);color:var(--ink2);white-space:nowrap}
+  .er-c.b{background:var(--up-soft);color:var(--up)}.er-c.x{background:var(--down-soft);color:var(--down)}
+  .er-c.f{background:none;box-shadow:inset 0 0 0 1px var(--rule2);color:var(--ink)}
+  .er-c.w{box-shadow:inset 0 0 0 1.5px #E2A400}
+  .er-c.more{background:none;color:var(--ink3)}
+  .er-m .emp{font-size:11px;color:var(--ink3)}
+  .er-legend{display:flex;flex-wrap:wrap;gap:12px;font-size:11.5px;color:var(--ink3);margin:10px 0 0}
+  .er-legend span{display:inline-flex;align-items:center;gap:5px}
+  .er-legend i{width:12px;height:8px;border-radius:3px;display:inline-block}
+  .er-detail{margin-top:14px;border:1px solid var(--rule);border-radius:16px;overflow:hidden;animation:swap .3s ease both}
+  .er-dh{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 14px;background:var(--sunk);border-bottom:1px solid var(--rule)}
+  .er-dh b{font-size:14px}.er-dh small{font-size:12px;color:var(--ink3)}
+  .er-row{display:grid;grid-template-columns:118px minmax(150px,1.6fr) 1fr .8fr .8fr .9fr;gap:10px;align-items:center;padding:10px 14px;border-bottom:1px solid var(--rule);font-size:13px;cursor:pointer;transition:background .15s}
+  .er-row:last-child{border-bottom:0}
+  .er-row:hover{background:var(--sunk)}
+  .er-row.hd{cursor:default;background:none;font-size:11px;font-weight:700;color:var(--ink3);padding-top:8px;padding-bottom:8px}
+  .er-row .tk b{font:700 14px 'Space Grotesk',sans-serif;display:flex;align-items:center;gap:5px}
+  .er-info .mt b{color:var(--ink2);font-weight:700}.er-row .tk span{display:block;font-size:11.5px;color:var(--ink3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .er-row .n{font-family:'Space Grotesk',sans-serif;font-weight:600;text-align:right}
+  .er-row.hd .n{font-family:inherit;text-align:right}
+  .er-row .tm{font-size:12px;color:var(--ink2)}
+  .er-st{display:inline-block;font-size:11px;font-weight:800;padding:2px 8px;border-radius:99px}
+  .er-st.b{background:var(--up-soft);color:var(--up)}.er-st.x{background:var(--down-soft);color:var(--down)}.er-st.n{background:var(--rule);color:var(--ink2)}.er-st.f{box-shadow:inset 0 0 0 1px var(--rule2);color:var(--ink2)}
+  .er-skel{height:96px;border-radius:16px;background:linear-gradient(90deg,var(--sunk),var(--rule),var(--sunk));background-size:200% 100%;animation:erSk 1.2s infinite linear}
+  @keyframes erSk{to{background-position:-200% 0}}
+  .er-fine{margin-top:12px}
+  @media(max-width:1100px){.er-year{grid-template-columns:repeat(6,minmax(0,1fr))}}
+  @media(max-width:720px){.er-year{grid-template-columns:repeat(3,minmax(0,1fr))}.er-row{grid-template-columns:76px 1fr auto}.er-row .hm{display:none}.er-next{grid-auto-columns:minmax(196px,82%)}.er-sum{width:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.er-pill{min-width:0}}
   /* ===== Mode gelap: keterbacaan teks & kolom isian ===== */
   [data-theme="dark"]{color-scheme:dark;--ink2:#B6C0D2;--ink3:#8D99AE}
   :where(input,select,textarea){color:var(--ink)}
@@ -1006,6 +1088,19 @@
         <p class="fine">Status mengikuti aturan breakout: <b>Breakout terkonfirmasi</b> apabila harga penutupan berada di atas Price to Watch dengan volume minimal 1,4× rata-rata 50 hari. Kosongkan kolom Price to Watch untuk menggunakan Buy trigger otomatis. <span class="store-note" data-what="watch">Daftar ini hanya tersimpan di browser ini dan tidak dikirim ke mana pun.</span></p>
       </article>
 
+      <article class="tile t-earn" id="earn" style="--i:10">
+        <div class="er-head">
+          <div class="er-ttl">
+            <span class="er-kick"><i></i>Kalender Emiten</span>
+            <h3>Laporan keuangan <span id="erYear"></span> <span class="sub" id="erMk"></span></h3>
+            <p class="jr-sub">Jadwal rilis laporan keuangan saham-saham utama di bursa ini sepanjang tahun berjalan, beserta realisasi laba per saham dibandingkan estimasi analis.</p>
+          </div>
+          <div class="er-sum" id="erSum"></div>
+        </div>
+        <div id="erBody"></div>
+        <p class="fine er-fine">Sumber: kalender earnings Yahoo Finance; jadwal dapat berubah dan sebagian tanggal masih berupa perkiraan. <b>EPS</b> = laba bersih per saham. <b>Di atas estimasi</b> berarti EPS yang dilaporkan lebih tinggi dari rata-rata perkiraan analis. Cakupan bursa di luar Amerika Serikat bergantung pada ketersediaan data di Yahoo Finance.</p>
+      </article>
+
       <article class="tile t-journal" style="--i:10">
         <div class="jr-head">
           <div>
@@ -1121,7 +1216,7 @@
   <div class="ai-body">
     <p class="ai-intro">Tuliskan pertanyaan Anda. Data saham di halaman ini akan disertakan, kemudian ChatGPT atau Claude terbuka di tab baru menggunakan akun Anda sendiri. Versi gratis juga dapat digunakan.</p>
     <label class="ai-lbl" for="aiInput">Pertanyaan</label>
-    <textarea id="aiInput" rows="3" placeholder="Contoh: Apakah saham ini layak dibeli minggu ini?"></textarea>
+    <textarea id="aiInput" rows="3" placeholder="Contoh: Bagaimana kondisi teknikal saham ini minggu ini?"></textarea>
     <div class="ai-sugg" id="aiSugg"></div>
     <div class="ai-go">
       <button class="ai-btn gpt" data-p="chatgpt" type="button"><span class="logo">G</span>Tanya di ChatGPT</button>
@@ -1383,7 +1478,7 @@ function paintMarketUI(){
   $('#tblSub').textContent = m.crypto ? (m.volIsValue?'volume dalam dolar AS':'volume dalam koin') : m.lot>1 ? `volume dalam lot (1 lot = ${m.lot} lembar)` : 'volume dalam lembar saham';
   $('#sessTitle').textContent = m.sessions.length>1 ? 'Volume per sesi' : 'Volume per paruh hari';
   $('#s1L').textContent=m.sessionNames[0]; $('#s2L').textContent=m.sessionNames[1];
-  paintMarket(); moveInd();
+  paintMarket(); moveInd(); window.erOnMarket?.();
 }
 
 async function load(raw, silent, mk){
@@ -1479,11 +1574,11 @@ function render(silent){
 
   const vtxt=`volume ${refLbl} ${fmt(plan.volRatio,2)}× rata-rata`;
   let st,tt,dd;
-  if(cur>=plan.target){ st='done'; tt='Sudah mencapai target'; dd='Harga telah melampaui target. Hindari membeli pada harga ini.'; }
-  else if(cur>=plan.buy && plan.volOK){ st='go'; tt='Breakout terkonfirmasi'; dd=`Tembus ${fp(plan.buy)} dengan ${vtxt}. Disiplin pada stop loss ${fp(plan.stop)}.`; }
+  if(cur>=plan.target){ st='done'; tt='Sudah mencapai target'; dd='Harga telah melampaui target; ruang kenaikan menurut perhitungan rencana ini sudah terlampaui.'; }
+  else if(cur>=plan.buy && plan.volOK){ st='go'; tt='Breakout terkonfirmasi'; dd=`Tembus ${fp(plan.buy)} dengan ${vtxt}. Level stop loss rencana berada di ${fp(plan.stop)}.`; }
   else if(cur>=plan.buy){ st='warn'; tt='Tembus, volume lemah'; dd=`Harga di atas ${fp(plan.buy)}, tapi ${vtxt} (syarat ${fmt(CONFIG.volumeMultiplier,1)}×).`; }
-  else if(cur<=plan.stop){ st='stop'; tt='Di bawah stop loss'; dd='Tren melemah. Tunggu pola baru terbentuk.'; }
-  else { st='wait'; tt='Menunggu breakout'; dd=`Masuk jika harga menembus ${fp(plan.buy)}, ${fmt(pct(plan.buy,cur),2)}% di atas harga sekarang.`; }
+  else if(cur<=plan.stop){ st='stop'; tt='Di bawah stop loss'; dd='Tren melemah; pola dasar yang baru belum terbentuk.'; }
+  else { st='wait'; tt='Menunggu breakout'; dd=`Level pemicu berada di ${fp(plan.buy)}, ${fmt(pct(plan.buy,cur),2)}% di atas harga sekarang.`; }
   $('#verdict').dataset.state=st; $('#statusT').textContent=tt; $('#statusD').textContent=dd;
 
   $('#ohlcDate').textContent=refLbl;
@@ -1685,8 +1780,8 @@ function runAndRenderBacktest(){
   const badge=$('#btBadge'), vtxt=$('#btVerdict');
   if(r.n<5){ badge.className='vb na'; badge.textContent='Data belum cukup'; vtxt.textContent=`Hanya ${r.n} transaksi dalam periode ini. Jumlah ini terlalu sedikit untuk disimpulkan; silakan gunakan periode 2 tahun atau mode "Semua breakout".`; }
   else if(r.pf>=1.5 && r.winRate>=0.4){ badge.className='vb good'; badge.textContent='Cocok'; vtxt.textContent=`Aturan breakout ini menghasilkan untung bersih di ${state.ticker}: tiap Rp1 rugi dibalas Rp${fmt(Math.min(r.pf,99),2)} untung.`; }
-  else if(r.pf>=1){ badge.className='vb mid'; badge.textContent='Netral'; vtxt.textContent=`Hasilnya sedikit di atas impas. Gunakan hanya ketika kondisi lain mendukung, misalnya pasar sedang menguat.`; }
-  else { badge.className='vb bad'; badge.textContent='Kurang cocok'; vtxt.textContent=`Di ${state.ticker}, breakout lebih sering gagal dalam periode ini. Lebih baik cari saham lain.`; }
+  else if(r.pf>=1){ badge.className='vb mid'; badge.textContent='Netral'; vtxt.textContent=`Hasilnya sedikit di atas impas; kinerjanya cenderung bergantung pada kondisi pasar secara umum.`; }
+  else { badge.className='vb bad'; badge.textContent='Kurang cocok'; vtxt.textContent=`Di ${state.ticker}, breakout lebih sering gagal dalam periode ini; aturan breakout secara historis kurang efektif pada saham ini.`; }
   if(r.n) countUp($('#btWin'), r.winRate*100, x=>fmt(x,0)+'%'); else $('#btWin').textContent='–';
   $('#btWinSub').textContent=`${r.wins} dari ${r.n} transaksi untung`;
   $('#btPF').textContent = r.n ? (r.pf===Infinity ? '∞' : fmt(r.pf,2)) : '–';
@@ -1752,7 +1847,7 @@ function calc(){
   $('#cGain').textContent = target ? '+'+m.cur+' '+fmt(Math.max(0,sh*(target-entry)), m.dec?2:0) : '—';
   if(lots===0) warn.textContent = byCash===0 ? `Modal belum cukup untuk membeli 1 ${lotSz>1?'lot':'lembar'}.` : 'Risiko terlalu kecil untuk jarak stop ini. Naikkan persentase risiko atau dekatkan stop loss.';
   else if(capped) warn.textContent='Dibatasi modal: ukuran berdasarkan risiko melebihi modal yang ada.';
-  else if(val/modal>0.5) warn.textContent='Lebih dari 50% modal di satu saham. Pertimbangkan diversifikasi.';
+  else if(val/modal>0.5) warn.textContent='Lebih dari 50% modal terkonsentrasi pada satu saham, sehingga risiko konsentrasinya tinggi.';
   if(state.market==='HK') warn.textContent=(warn.textContent?warn.textContent+' ':'')+'Di HKEX jumlah lembar per lot berbeda tiap saham; sesuaikan dengan board lot.';
 }
 
@@ -2043,14 +2138,14 @@ function lensDay(i){
 
   // Sinyal jual paling keras dulu
   if(chg<0 && chg<=minChg && wasUp && (vr==null || vr>=1))
-    add('bad','Penurunan harian terbesar dalam ±6 bulan',`Turun ${pctS(chg)}, terdalam sejak tren naik berjalan, dengan volume ${vr?fmt(vr,1)+'×':'tinggi'} rata-rata. Dalam metode ini, hari seperti ini hampir selalu dibaca sebagai sinyal keluar, sebagus apa pun beritanya.`);
+    add('bad','Penurunan harian terbesar dalam ±6 bulan',`Turun ${pctS(chg)}, terdalam sejak tren naik berjalan, dengan volume ${vr?fmt(vr,1)+'×':'tinggi'} rata-rata. Dalam metode ini, hari seperti ini umumnya dibaca sebagai tanda melemahnya tren, terlepas dari berita yang menyertainya.`);
   let freshBO=false; for(let j=i-1;j>=Math.max(21,i-3);j--){ const [h]=lensMax(B,j-20,j-1,x=>x.h), a=P.v50[j-1]; if(B[j].c>h && a && B[j].v/a>=CONFIG.volumeMultiplier){ freshBO=true; break; } }
   if(big && b.h>=hi20 && cr<0.35 && b.c<b.o && (extended || !freshBO))
     add('bad','Pembalikan bervolume besar','Sempat mencetak high baru lalu ditutup dekat low dengan volume besar. Ini jejak pemain besar menjual ke pembeli yang terlambat.');
   if(m50 && P.ma50[i-1] && b.c<m50 && p.c>=P.ma50[i-1] && heavy)
     add('bad','Jebol MA50 dengan volume tinggi','Menutup di bawah rata-rata 50 hari dengan volume di atas rata-rata. Tanda pembeli besar tidak lagi menahan harga di area ini.');
   if(extended){
-    if(chg>0 && chg>=maxChg) add('warn','Kenaikan harian terbesar setelah reli panjang','Lonjakan terbesar justru kerap muncul beberapa hari sebelum puncak. Apabila posisi sudah untung, ini saat yang tepat untuk menjual sebagian, bukan menambah.');
+    if(chg>0 && chg>=maxChg) add('warn','Kenaikan harian terbesar setelah reli panjang','Lonjakan terbesar justru kerap muncul beberapa hari sebelum puncak. Dalam metode acuan, pola ini dikategorikan sebagai tanda kelelahan tren.');
     else if(sp>=maxSp && chg>0) add('warn','Rentang harian terlebar setelah reli panjang','Ayunan harga paling lebar di ujung reli biasanya tanda kepanikan beli. Waspadai puncak jangka pendek.');
     if(b.l>p.h) add('warn','Gap naik saat harga sudah jauh dari base','Gap di ujung reli dapat menjadi gap kelelahan (exhaustion gap), yaitu dorongan beli terakhir sebelum harga berbalik.');
     if(big && Math.abs(chg)<0.005) add('warn','Volume besar tapi harga tidak ke mana-mana','Churning: banyak saham berpindah tangan tanpa kemajuan harga. Sering terjadi saat pemain besar diam-diam keluar.');
@@ -2058,11 +2153,11 @@ function lensDay(i){
   // Breakout & perilaku sesudahnya
   const bo = b.c>hi20;
   if(bo && vr!=null && vr>=CONFIG.volumeMultiplier && cr>=0.5 && !extended)
-    add('good','Tembus pivot dengan volume',`Close di atas high 20 hari (${fp(hi20)}) dengan volume ${fmt(vr,1)}× rata-rata. Ini pola masuk ideal: pasokan di atas sudah tipis, permintaan datang.`);
+    add('good','Tembus pivot dengan volume',`Close di atas high 20 hari (${fp(hi20)}) dengan volume ${fmt(vr,1)}× rata-rata. Dalam metode acuan, pola ini tergolong breakout ideal: pasokan di atas menipis dan permintaan meningkat.`);
   else if(bo && vr!=null && vr<1)
-    add('warn','Tembus tanpa volume',`Harga di atas ${fp(hi20)} tapi volume di bawah rata-rata. Breakout tanpa dorongan institusi lebih sering gagal; tunggu konfirmasi volume.`);
+    add('warn','Tembus tanpa volume',`Harga di atas ${fp(hi20)} tapi volume di bawah rata-rata. Breakout tanpa dorongan institusi lebih sering gagal, dan konfirmasi volume belum terlihat.`);
   if(b.h>hi20 && !bo && cr<0.5)
-    add('warn','Squat: sempat tembus lalu mundur',`Menyentuh di atas ${fp(hi20)} tapi ditutup di separuh bawah rentang. Belum tentu gagal: beri waktu 1–10 hari untuk pulih, selama stop loss tidak tersentuh.`);
+    add('warn','Squat: sempat tembus lalu mundur',`Menyentuh di atas ${fp(hi20)} tapi ditutup di separuh bawah rentang. Belum tentu gagal; dalam metode acuan, pemulihan lazim terjadi dalam 1–10 hari selama stop loss tidak tersentuh.`);
   for(let j=i-1;j>=Math.max(21,i-10);j--){
     const [h20j]=lensMax(B,j-20,j-1,x=>x.h);
     if(B[j].h>h20j && P.cr[j]<0.5 && b.c>B[j].h && B.slice(j+1,i).every(x=>x.c<=B[j].h)){
@@ -2186,31 +2281,31 @@ function lensVerdict(D, C){
   const B=C.base, c=D.b.c;
   let lamp='amber', head='', desc='', acts=[], lv=null;
   if(C.stage==null){ head='Riwayat data belum cukup'; desc='Butuh sekitar 10 bulan data harga untuk menilai tahap tren. Bacaan candle tetap berlaku, tapi tanpa konteks tren.'; }
-  else if(C.stage===4){ lamp='red'; head='Tren turun: hindari pembelian'; desc='Harga berada di bawah MA200 yang menurun. Pada tahap ini, base yang tampak baik pun mudah jebol. Tunggu hingga tren berbalik ke tahap 2.'; acts=['Abaikan sinyal beli jangka pendek','Pantau lagi setelah harga kembali di atas MA200 yang mulai naik']; }
-  else if(C.stage===3){ lamp='red'; head='Gejala puncak (distribusi)'; desc='Tren lama melemah: harga berayun lebar di sekitar rata-rata panjang. Pemain awal sedang menjual ke pembeli yang terlambat.'; acts=['Apabila masih memegang posisi, perketat stop atau ambil untung','Hindari membuka posisi baru']; }
-  else if(C.stage===1){ lamp='amber'; head='Belum ada tren'; desc='Harga bergerak menyamping di sekitar MA200. Saham dapat bertahan di fase ini selama berbulan-bulan; modal sebaiknya dialokasikan pada saham yang sudah bergerak.'; acts=['Tunggu syarat tren terpenuhi (tahap 2)','Tanda awal: MA200 berbalik naik dan harga membuat high-high baru']; }
+  else if(C.stage===4){ lamp='red'; head='Tren turun'; desc='Harga berada di bawah MA200 yang menurun. Secara historis, pola dasar yang terbentuk pada tahap ini lebih rentan gagal dibandingkan pada tahap 2.'; acts=['Sinyal jangka pendek pada tahap ini memiliki tingkat keberhasilan yang lebih rendah','Perubahan kondisi umumnya ditandai harga kembali di atas MA200 yang mulai menanjak']; }
+  else if(C.stage===3){ lamp='red'; head='Gejala puncak (distribusi)'; desc='Tren lama melemah: harga berayun lebar di sekitar rata-rata panjang. Pola ini kerap dikaitkan dengan aksi jual pelaku pasar awal.'; acts=['Risiko pembalikan tren pada tahap ini relatif tinggi','Dalam metode acuan, tahap ini tidak tergolong area pembelian']; }
+  else if(C.stage===1){ lamp='amber'; head='Belum ada tren'; desc='Harga bergerak menyamping di sekitar MA200. Saham dapat bertahan di fase ini selama berbulan-bulan tanpa arah yang jelas.'; acts=['Tahap 2 tercapai apabila syarat tren di atas terpenuhi','Tanda awal: MA200 berbalik naik dan harga membuat high-high baru']; }
   else {
-    if(bad){ lamp='red'; head='Tren naik, tapi ada sinyal jual'; desc='Struktur jangka panjang masih naik, namun candle ini memberi peringatan keras. Ikuti harga, bukan harapan.'; acts=['Apabila memegang posisi, pertimbangkan untuk mengurangi','Hindari menambah posisi hingga harga kembali stabil']; }
-    else if(D.extended){ lamp='amber'; head='Sudah terlalu jauh dari base'; desc=`Harga ${pctS(D.ext)} di atas MA50. Membeli di sini berarti risiko besar dengan sisa ruang yang mengecil.`; acts=['Hindari mengejar harga','Apabila sudah untung, jual sebagian saat harga menguat','Tunggu hingga base baru terbentuk']; }
-    else if(D.signals.some(x=>x.h.startsWith('Tembus pivot')||x.h.startsWith('Pulih dari squat'))){ lamp='green'; head='Breakout sehat'; desc='Tahap 2, keluar dari pivot dengan dukungan volume. Ini jenis titik masuk yang dicari metode ini.'; }
-    else if(D.signals.some(x=>x.h.startsWith('Squat'))){ lamp='amber'; head='Breakout tertahan (squat)'; desc='Harga sempat menembus lalu mundur ke dalam rentang. Ini sering terjadi dan belum berarti gagal.'; acts=['Apabila sudah masuk, beri waktu hingga 10 hari dengan stop loss tetap','Apabila belum masuk, tunggu hingga harga ditutup kembali di atas high hari ini']; }
-    else if(B && B.T>=2 && B.right<=0.1 && c>=B.pivot*0.95 && c<=B.pivot){ lamp='green'; head='Setup mengetat dekat pivot'; desc=`${B.T} kontraksi makin kecil, rentang 10 hari terakhir hanya ${fmt(B.right*100,1)}%. Pasokan menipis; tinggal menunggu permintaan.`; }
+    if(bad){ lamp='red'; head='Tren naik, terdapat sinyal peringatan'; desc='Struktur jangka panjang masih naik, namun candle ini menunjukkan peringatan yang kuat.'; acts=['Peringatan ini muncul meskipun struktur tren jangka panjang masih naik','Kondisi dinilai kembali stabil apabila harga bertahan tanpa tekanan jual bervolume']; }
+    else if(D.extended){ lamp='amber'; head='Sudah terlalu jauh dari base'; desc=`Harga ${pctS(D.ext)} di atas MA50. Pada jarak ini, risiko terhadap stop loss besar dan sisa ruang kenaikan relatif mengecil.`; acts=['Jarak harga dari base sudah melebar','Base baru umumnya terbentuk melalui konsolidasi beberapa minggu']; }
+    else if(D.signals.some(x=>x.h.startsWith('Tembus pivot')||x.h.startsWith('Pulih dari squat'))){ lamp='green'; head='Breakout sehat'; desc='Tahap 2, keluar dari pivot dengan dukungan volume. Pola ini sesuai dengan kriteria titik masuk dalam metode acuan.'; }
+    else if(D.signals.some(x=>x.h.startsWith('Squat'))){ lamp='amber'; head='Breakout tertahan (squat)'; desc='Harga sempat menembus lalu mundur ke dalam rentang. Ini sering terjadi dan belum berarti gagal.'; acts=['Dalam metode acuan, pemulihan squat lazim terjadi dalam 10 hari selama stop loss tidak tersentuh','Konfirmasi umumnya ditandai penutupan kembali di atas high hari ini']; }
+    else if(B && B.T>=2 && B.right<=0.1 && c>=B.pivot*0.95 && c<=B.pivot){ lamp='green'; head='Setup mengetat dekat pivot'; desc=`${B.T} kontraksi makin kecil, rentang 10 hari terakhir hanya ${fmt(B.right*100,1)}%. Pasokan menipis, sementara lonjakan permintaan belum muncul.`; }
     else if(B && B.depth>0.6){ lamp='red'; head='Koreksi terlalu dalam'; desc=`Base turun ${fmt(B.depth*100,0)}% dari puncaknya. Penurunan sedalam ini biasanya menandakan masalah serius dan banyak pembeli terjebak di atas.`; }
-    else { lamp='amber'; head='Tren naik, titik beli belum matang'; desc='Struktur tren mendukung, tapi harga belum membentuk area sempit yang rendah risiko. Sabar menunggu base mengetat.'; acts=['Tunggu rentang harian menyempit dan volume mengering','Siapkan alarm di high terakhir']; }
+    else { lamp='amber'; head='Tren naik, titik pivot belum matang'; desc='Struktur tren mendukung, tetapi harga belum membentuk area sempit yang berisiko rendah.'; acts=['Kriteria berikutnya: rentang harian menyempit dan volume mengering','Level acuan terdekat berada di high terakhir']; }
     if(B && (lamp==='green' || head.startsWith('Tren naik, titik'))){
       const pv=D.signals.some(x=>x.h.startsWith('Tembus pivot')) ? D.hi20 : B.pivot, stop=Math.min(B.rightLow, pv*0.97), risk=(pv-stop)/pv;
       lv={ pivot:pv, chase:pv*(1+LENS.chaseMax), stop, risk };
-      if(lamp==='green' && !acts.length) acts=[`Beli hanya di ${fp(pv)}–${fp(lv.chase)} dengan volume di atas rata-rata`, `Stop di bawah low area ketat, sekitar ${fp(stop)} (risiko ${fmt(risk*100,1)}%)`];
-      if(risk>0.1) acts.push('Jarak stop di atas 10%: base masih terlalu longgar untuk masuk');
+      if(lamp==='green' && !acts.length) acts=[`Area pivot menurut metode acuan: ${fp(pv)}–${fp(lv.chase)}, dengan volume di atas rata-rata`, `Stop teknis berada di bawah low area ketat, sekitar ${fp(stop)} (risiko ${fmt(risk*100,1)}%)`];
+      if(risk>0.1) acts.push('Jarak stop di atas 10%: menurut kriteria metode acuan, base masih terlalu longgar');
     }
   }
-  if(warn && lamp==='green'){ lamp='amber'; acts.unshift('Ada peringatan di candle ini, perhatikan sebelum masuk'); }
+  if(warn && lamp==='green'){ lamp='amber'; acts.unshift('Terdapat peringatan pada candle ini'); }
   return { lamp, head, desc, acts, lv };
 }
 
 /* ---------- Tampilan ---------- */
 const LENS_STAGE=['','Konsolidasi','Tren naik','Puncak','Tren turun'];
-const LENS_STAGE_D=['','Diabaikan pasar, bergerak datar','Fase akumulasi, satu-satunya tahap untuk membeli','Fase distribusi, tren melemah','Fase kapitulasi, hindari'];
+const LENS_STAGE_D=['','Diabaikan pasar, bergerak datar','Fase akumulasi, tahap yang menjadi sasaran metode breakout','Fase distribusi, tren melemah','Fase kapitulasi, risiko penurunan lanjutan tinggi'];
 const lensRangeLbl=()=>({22:'1 bulan',66:'3 bulan',130:'6 bulan',250:'1 tahun'})[state.range]||'2 tahun';
 function lensCandleSvg(b){
   const W=60,H=118, pad=8, lo=b.l, hi=b.h, span=(hi-lo)||1, y=v=>pad+(hi-v)/span*(H-pad*2);
@@ -2247,7 +2342,7 @@ function renderLens(){
   const volHtml = `<div class="lvol"><div class="lvol-h"><span>Hari bervolume di atas rata-rata</span><b>${C.accD} naik · ${C.disD} turun</b></div>
     <div class="lvol-bar"><i class="a" style="width:${C.accD/tot*100}%"></i><i class="d" style="width:${C.disD/tot*100}%"></i></div>
     <p>${C.accD>=C.disD*1.3?'Volume lebih berat di hari naik: jejak akumulasi.':C.disD>=C.accD*1.3?'Volume lebih berat di hari turun: jejak distribusi.':'Seimbang; belum ada pihak yang dominan.'} 10 hari terakhir: ${C.up10} hari naik, ${C.good10} close di separuh atas.</p></div>`;
-  const postHtml = C.post && C.post.days>0 ? `<div class="lpost"><b>Setelah breakout ${dateID(B[C.post.k].key)}:</b> ${C.post.u} hari naik, ${C.post.d} hari turun${C.post.below20?`, ${C.post.below20}× close di bawah MA20`:''}${C.post.back?'. Harga kembali ke bawah level breakout: tunggu apakah memantul seperti bola tenis atau pecah seperti telur.':C.post.tennis?'. Sempat mundur lalu kembali ke high baru: pantulan bola tenis, tanda sehat.':'.'}</div>` : '';
+  const postHtml = C.post && C.post.days>0 ? `<div class="lpost"><b>Setelah breakout ${dateID(B[C.post.k].key)}:</b> ${C.post.u} hari naik, ${C.post.d} hari turun${C.post.below20?`, ${C.post.below20}× close di bawah MA20`:''}${C.post.back?'. Harga kembali ke bawah level breakout; reaksi berikutnya menentukan apakah harga memantul seperti bola tenis atau pecah seperti telur.':C.post.tennis?'. Sempat mundur lalu kembali ke high baru: pantulan bola tenis, tanda sehat.':'.'}</div>` : '';
   const lv=V.lv;
   const lvHtml = lv ? `<div class="lv-grid"><div><label>Pivot</label><b>${fp(lv.pivot)}</b></div><div><label>Batas kejar</label><b>${fp(lv.chase)}</b></div><div><label>Stop</label><b>${fp(lv.stop)}</b></div><div><label>Risiko</label><b>${fmt(lv.risk*100,1)}%</b></div></div>` : '';
   box.classList.remove('swap'); void box.offsetWidth; box.classList.add('swap');
@@ -2298,7 +2393,7 @@ const AI_LINKS = {
 };
 function renderSugg(){
   const t=state.ticker||'saham ini';
-  const s=[`Apakah ${t} layak dibeli sekarang?`,`Jelaskan papan breakout ${t} dengan bahasa awam`,`Apa risiko terbesar ${t} saat ini?`,`Kapan sebaiknya ambil untung atau cut loss?`];
+  const s=[`Bagaimana kondisi teknikal ${t} saat ini?`,`Jelaskan papan breakout ${t} dengan bahasa awam`,`Apa risiko terbesar ${t} saat ini?`,`Bagaimana prinsip manajemen risiko yang lazim untuk saham seperti ${t}?`];
   $('#aiSugg').innerHTML=s.map(x=>`<button type="button">${esc(x)}</button>`).join('');
 }
 function buildContext(){
@@ -2458,6 +2553,89 @@ $('#wlFile').addEventListener('change',async e=>{
 })();
 
 wlRender(); if(wl.items.length) setTimeout(wlRefresh, 1500);
+
+/* ===================== Kalender laporan keuangan ===================== */
+const er={ data:{}, busy:{}, sel:null, seen:false };
+const ER_TIME={ BMO:'Sebelum pasar dibuka', AMC:'Setelah pasar ditutup', TAS:'Setelah pasar ditutup', TNS:'Waktu belum diumumkan' };
+const erMonths=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+function erKey(iso,mk){ return keyOf(local(Date.parse(iso)/1000, MARKETS[mk].tz)); }
+function erStat(e){ if(e.act!=null && e.est!=null){ const d=e.sur!=null?e.sur:(e.act-e.est); return d>0?'b':d<0?'x':'n'; } return e.fut?'f':'n'; }
+function erEPS(v,mk){ if(v==null) return '–'; const m=MARKETS[mk]; return `${m.cur} ${fmt(v,Math.abs(v)<10?2:Math.abs(v)<1000?1:0)}`; }
+async function erLoad(mk,force){
+  const y=new Date().getFullYear(), k=mk+y;
+  if(!force && er.data[k]) return er.data[k];
+  if(!force){ try{ const c=JSON.parse(localStorage.getItem('smcb_earn_'+k)||'null'); if(c && Date.now()-c.t<6*3600e3){ er.data[k]=c.v; return c.v; } }catch{} }
+  if(er.busy[k]) return er.busy[k];
+  er.busy[k]=(async()=>{
+    try{
+      const r=await fetch(`/api/earnings?market=${mk}&year=${y}`); if(!r.ok) throw 0;
+      const j=await r.json(); if(!Array.isArray(j.events)) throw 0;
+      er.data[k]=j; try{ localStorage.setItem('smcb_earn_'+k,JSON.stringify({t:Date.now(),v:j})); }catch{}
+      return j;
+    }catch{ er.data[k]={ error:true, events:[] }; return er.data[k]; }
+    finally{ delete er.busy[k]; }
+  })();
+  return er.busy[k];
+}
+function erGo(code){ const mk=state.market; window.scrollTo({top:0,behavior:'smooth'}); load(code,false,mk); }
+async function erRender(){
+  const box=$('#erBody'); if(!box) return;
+  const mk=state.market, m=MARKETS[mk], y=new Date().getFullYear();
+  $('#erYear').textContent=y; $('#erMk').textContent=`· ${m.name}`;
+  if(m.crypto){ $('#erSum').innerHTML=''; box.innerHTML='<div class="er-none">Aset kripto tidak menerbitkan laporan keuangan. Kalender ini tersedia untuk bursa saham: Indonesia, Amerika, Jepang, Korea Selatan, dan Hong Kong.</div>'; return; }
+  if(!er.data[mk+y]) box.innerHTML='<div class="er-next">'+'<div class="er-skel"></div>'.repeat(4)+'</div>';
+  const d=await erLoad(mk); if(state.market!==mk) return;
+  if(d.error){ $('#erSum').innerHTML=''; box.innerHTML='<div class="er-none">Data kalender belum dapat dimuat saat ini. Silakan muat ulang halaman beberapa saat lagi.</div>'; return; }
+  const today=keyOf(local(Date.now()/1000,m.tz));
+  const ev=d.events.map(e=>{ const key=erKey(e.d,mk); return {...e, key, fut: key>=today && e.act==null, name:e.name||d.names?.[e.code]||e.code, w: wl.items.some(x=>x.mk===mk&&x.t===e.code)}; });
+  ev.forEach(e=>e.st=erStat(e));
+  const past=ev.filter(e=>!e.fut), fut=ev.filter(e=>e.fut);
+  const nb=past.filter(e=>e.st==='b').length, nx=past.filter(e=>e.st==='x').length;
+  const pill=(v,l,c='')=>`<div class="er-pill ${c}"><b>${v}</b><small>${l}</small></div>`;
+  $('#erSum').innerHTML=pill(ev.length,'rilis tahun ini')+pill(nb,'di atas estimasi','up')+pill(nx,'di bawah estimasi','down')+pill(fut.length,'akan datang','nx');
+  const days=k=>Math.round((Date.parse(k)-Date.parse(today))/864e5);
+  const cdTxt=n=> n<=0?'Hari ini':n===1?'Besok':`${n} hari lagi`;
+  const dShort=k=>new Date(k+'T00:00:00Z').toLocaleDateString('id-ID',{weekday:'short',day:'numeric',month:'short',timeZone:'UTC'});
+  // pengingat: saham di watchlist atau saham yang sedang dibuka, rilis ≤ 14 hari
+  const rem=fut.filter(e=>(e.w || e.code===state.ticker) && days(e.key)<=14);
+  const alert = rem.length ? `<div class="er-alert" role="status"><b>⏰ Pengingat</b>${rem.map(e=>`<a data-er="${esc(e.code)}"><b>${esc(e.code)}</b> merilis laporan ${days(e.key)<=0?'hari ini':days(e.key)===1?'besok':`dalam ${days(e.key)} hari`} (${dShort(e.key)})${e.w?'':' · sedang dibuka'}</a>`).join('')}</div>` : '';
+  const nx8=fut.slice(0,10);
+  const cards = nx8.length ? `<div class="er-next">${nx8.map(e=>{ const n=days(e.key), dt=new Date(e.key+'T00:00:00Z');
+      return `<button type="button" class="er-card${n<=7?' soon':''}" data-er="${esc(e.code)}" title="Buka analisis ${esc(e.code)}">
+        <span class="er-cal"><span>${erMonths[dt.getUTCMonth()]}</span><b>${dt.getUTCDate()}</b><small>${dt.toLocaleDateString('id-ID',{weekday:'short',timeZone:'UTC'})}</small></span>
+        <span class="er-info"><span class="tk">${esc(e.code)}${e.w?'<span class="er-star" title="Ada di watchlist">★</span>':''}</span><span class="nm">${esc(e.name)}</span>
+        <span class="mt">${ER_TIME[e.time]||'Waktu belum diumumkan'}${e.est!=null?`<br>Estimasi EPS <b>${erEPS(e.est,mk)}</b>`:''}</span></span>
+        <span class="er-cd">${cdTxt(n)}</span></button>`; }).join('')}</div>`
+    : '<div class="er-none">Belum ada jadwal rilis mendatang yang diumumkan untuk sisa tahun ini.</div>';
+  // kalender 12 bulan
+  const curM=+today.slice(5,7)-1; if(er.sel==null) er.sel=curM;
+  const byM=Array.from({length:12},()=>[]); ev.forEach(e=>{ if(+e.key.slice(0,4)===y) byM[+e.key.slice(5,7)-1].push(e); });
+  const months=byM.map((L,i)=>{ const c={b:0,x:0,n:0,f:0}; L.forEach(e=>c[e.st]++); const tot=L.length||1;
+    const chips=L.slice(0,8).map(e=>`<span class="er-c ${e.st}${e.w?' w':''}">${esc(e.code)}</span>`).join('')+(L.length>8?`<span class="er-c more">+${L.length-8}</span>`:'');
+    return `<button type="button" class="er-m${i<curM?' past':''}${i===curM?' now':''}${i===er.sel?' sel':''}" data-m="${i}" aria-pressed="${i===er.sel}">
+      <span class="mh"><b>${erMonths[i]}</b><span>${L.length||''}</span></span>
+      <span class="er-bar">${L.length?['b','x','n','f'].map(k=>c[k]?`<i class="${k}" style="flex:${c[k]}"></i>`:'').join(''):''}</span>
+      <span class="er-chips">${L.length?chips:'<span class="emp">Tidak ada</span>'}</span></button>`; }).join('');
+  const L=byM[er.sel]||[], stTxt={b:'Di atas estimasi',x:'Di bawah estimasi',n:'Sesuai / tanpa estimasi',f:'Akan datang'};
+  const detail = `<div class="er-detail"><div class="er-dh"><b>${['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'][er.sel]} ${y}</b><small>${L.length} rilis</small></div>
+    ${L.length?`<div class="er-row hd"><span>Tanggal</span><span>Emiten</span><span class="hm">Waktu</span><span class="n hm">EPS estimasi</span><span class="n hm">EPS aktual</span><span>Hasil</span></div>`+L.map(e=>`<div class="er-row" data-er="${esc(e.code)}" role="button" tabindex="0">
+      <span>${dShort(e.key)}</span><span class="tk"><b>${esc(e.code)}${e.w?' <span class="er-star">★</span>':''}</b><span>${esc(e.name)}</span></span>
+      <span class="tm hm">${ER_TIME[e.time]||'–'}</span><span class="n hm">${erEPS(e.est,mk)}</span><span class="n hm">${erEPS(e.act,mk)}</span>
+      <span><span class="er-st ${e.st}">${e.st==='b'||e.st==='x'?(e.sur!=null?`${e.sur>0?'+':''}${fmt(e.sur,1)}%`:stTxt[e.st]):stTxt[e.st]}</span></span></div>`).join(''):'<div class="er-none" style="border-radius:0">Tidak ada jadwal rilis pada bulan ini.</div>'}</div>`;
+  box.innerHTML=alert+`<div class="er-sec"><h4>Rilis terdekat</h4><small>${fut.length?`${fut.length} jadwal tersisa tahun ini`:''}</small></div>`+cards
+    +`<div class="er-sec" style="margin-top:14px"><h4>Rekap Januari–Desember ${y}</h4><small>Klik bulan untuk melihat rinciannya</small></div><div class="er-year">${months}</div>
+      <div class="er-legend"><span><i style="background:var(--up)"></i>Di atas estimasi</span><span><i style="background:var(--down)"></i>Di bawah estimasi</span><span><i style="background:var(--ink3)"></i>Sesuai / tanpa estimasi</span><span><i style="background:none;box-shadow:inset 0 0 0 1px var(--rule2)"></i>Akan datang</span><span><i style="background:none;box-shadow:inset 0 0 0 1.5px #E2A400"></i>Ada di watchlist</span></div>`+detail;
+}
+$('#erBody').addEventListener('click',e=>{
+  const mb=e.target.closest('[data-m]'); if(mb){ er.sel=+mb.dataset.m; erRender(); return; }
+  const t=e.target.closest('[data-er]'); if(t) erGo(t.dataset.er);
+});
+$('#erBody').addEventListener('keydown',e=>{ if(e.key==='Enter'){ const t=e.target.closest('.er-row[data-er]'); if(t) erGo(t.dataset.er); } });
+window.erOnMarket=()=>{ er.sel=null; if(er.seen) erRender(); };
+(()=>{ const el=$('#earn'); if(!el) return;
+  const go=()=>{ if(er.seen) return; er.seen=true; erRender(); };
+  if('IntersectionObserver' in window){ const io=new IntersectionObserver(x=>{ if(x.some(y=>y.isIntersecting)){ io.disconnect(); go(); } },{rootMargin:'400px'}); io.observe(el); } else go();
+})();
 
 /* ===================== Jurnal trading ===================== */
 const JR_KEY='smcb_journal';

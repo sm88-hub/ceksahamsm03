@@ -652,7 +652,7 @@
         <li>Riset di atas mengukur rata-rata ribuan saham dalam hitungan bulan. Hasilnya tidak menjamin satu saham akan naik besok.</li>
         <li>Banyak breakout gagal. Trader breakout untung karena kerugiannya dipotong kecil dengan stop loss dan keuntungannya dibiarkan berjalan, bukan karena selalu benar.</li>
         <li>Skor bersifat relatif terhadap daftar pantauan. Karena itu, di atas daftar ditampilkan kondisi indeks bursanya (IHSG, S&amp;P 500, Nikkei 225, KOSPI, Hang Seng). Apabila indeks berada di bawah rata-rata 50 hari, breakout lebih sering gagal meskipun skornya tinggi. Prinsip ini huruf "M" (market direction) pada metode CAN SLIM William O'Neil.</li>
-        <li>Hindari mengejar saham yang sudah jauh di atas Buy trigger. Titik masuk terbaik ada di sekitar level breakout.</li>
+        <li>Risiko meningkat pada saham yang sudah jauh di atas Buy trigger; dalam metode acuan, area terbaik berada di sekitar level breakout.</li>
       </ul>
     </div>
     <details>
@@ -922,8 +922,8 @@ function regime(info){
   el.innerHTML = strong
     ? `<i></i><span><b>Pasar mendukung.</b> ${m.indexName} di atas rata-rata 50${info.above200!=null?' dan 200':''} hari. Peluang keberhasilan breakout cenderung lebih baik.</span>`
     : info.above50
-      ? `<i></i><span><b>Pasar campuran.</b> ${m.indexName} di atas rata-rata 50 hari, tetapi masih di bawah rata-rata 200 hari. Prioritaskan ${m.unitWord||'saham'} dengan skor tertinggi.</span>`
-      : `<i></i><span><b>Pasar sedang lemah.</b> ${m.indexName} di bawah rata-rata 50 hari. Breakout lebih sering gagal; perketat stop loss atau kurangi ukuran posisi.</span>`;
+      ? `<i></i><span><b>Pasar campuran.</b> ${m.indexName} di atas rata-rata 50 hari, tetapi masih di bawah rata-rata 200 hari. Dalam kondisi ini, ${m.unitWord||'saham'} dengan skor tertinggi cenderung lebih tahan.</span>`
+      : `<i></i><span><b>Pasar sedang lemah.</b> ${m.indexName} di bawah rata-rata 50 hari. Secara historis, breakout lebih sering gagal dalam kondisi ini.</span>`;
 }
 
 /* Kekuatan relatif (20): kinerja 12 bulan tertimbang (3 bulan terakhir ×2), diperingkat 1–99 di daftar yang sama */
@@ -1220,7 +1220,7 @@ const AI_LINKS = {
   claude:  { name:'Claude',  url:q=>'https://claude.ai/new?q='+encodeURIComponent(q) },
 };
 function renderSugg(){
-  const s=['Dari daftar ini, 3 saham mana yang paling layak dipantau dan kenapa?','Saham mana yang paling berisiko di daftar ini?','Jelaskan arti skor dan status di daftar ini dengan bahasa awam','Bagaimana kondisi pasar saat ini memengaruhi peluang breakout?'];
+  const s=['Dari daftar ini, saham mana yang setup teknikalnya paling lengkap dan apa alasannya?','Saham mana yang paling berisiko di daftar ini?','Jelaskan arti skor dan status di daftar ini dengan bahasa awam','Bagaimana kondisi pasar saat ini memengaruhi peluang breakout?'];
   $('#aiSugg').innerHTML=s.map(x=>`<button type="button">${esc(x)}</button>`).join('');
 }
 function buildContext(){
@@ -1343,10 +1343,10 @@ function stagePair(bars){
   return { d:stageOf(done,STG_P.d), w:stageOf(toWeekly(done),STG_P.w) };
 }
 const STG_INFO={
-  1:{n:'Konsolidasi', d:'Harga bergerak mendatar di sekitar rata-rata jangka panjang yang cenderung datar. Fase akumulasi; pantau hingga terjadi breakout dari basis.'},
+  1:{n:'Konsolidasi', d:'Harga bergerak mendatar di sekitar rata-rata jangka panjang yang cenderung datar. Fase akumulasi; breakout dari basis belum terjadi.'},
   2:{n:'Tren naik', d:'Harga berada di atas rata-rata menengah dan panjang yang tersusun naik. Fase paling sesuai untuk strategi breakout.'},
-  3:{n:'Puncak', d:'Setelah kenaikan besar, momentum melemah dan rata-rata mulai mendatar. Waspadai distribusi dan perketat batas kerugian.'},
-  4:{n:'Penurunan', d:'Harga di bawah rata-rata jangka panjang yang menurun. Posisi beli sebaiknya dihindari.'}
+  3:{n:'Puncak', d:'Setelah kenaikan besar, momentum melemah dan rata-rata mulai mendatar. Risiko distribusi meningkat.'},
+  4:{n:'Penurunan', d:'Harga di bawah rata-rata jangka panjang yang menurun. Secara historis, risiko penurunan lanjutan pada tahap ini tinggi.'}
 };
 function stgRender(){
   const box=$('#stgBody'); if(!box) return;
