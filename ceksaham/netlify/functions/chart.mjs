@@ -6,7 +6,7 @@ const INTERVALS = new Set(['1m', '5m', '15m', '30m', '1h', '1d', '1wk']);
 
 export default async (req) => {
   const url = new URL(req.url);
-  const symbol = (url.searchParams.get('symbol') || '').toUpperCase().replace(/[^A-Z0-9.\-]/g, '');
+  const symbol = (url.searchParams.get('symbol') || '').toUpperCase().replace(/[^A-Z0-9.^\-]/g, '');
   const range = url.searchParams.get('range') || '1y';
   const interval = url.searchParams.get('interval') || '1d';
 
