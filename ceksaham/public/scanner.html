@@ -126,11 +126,32 @@
   .skel{height:74px;border-radius:16px;background:linear-gradient(90deg,var(--surface),var(--sunk),var(--surface));background-size:200% 100%;animation:sh 1.2s infinite;border:1px solid var(--rule)}
   @keyframes sh{to{background-position:-200% 0}}
 
-  details{margin-top:22px;background:var(--surface);border:1px solid var(--rule);border-radius:16px;padding:16px 20px}
+  .method{margin-top:36px;scroll-margin-top:90px}
+  .method h2{font:700 26px 'Space Grotesk',sans-serif;letter-spacing:-.02em}
+  .lead{color:var(--ink2);max-width:72ch;margin:8px 0 18px;font-size:15px;line-height:1.65}
+  .fgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media(max-width:980px){.fgrid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:620px){.fgrid{grid-template-columns:1fr}}
+  .factor{background:var(--surface);border:1px solid var(--rule);border-radius:18px;padding:18px 20px;box-shadow:var(--shadow)}
+  .f-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:8px}
+  .f-head b{font-size:15.5px}
+  .f-head span{font:700 12.5px 'Space Grotesk',sans-serif;background:var(--acc-soft);color:var(--ink);padding:2px 9px;border-radius:999px;white-space:nowrap}
+  .factor p{font-size:14px;color:var(--ink2);line-height:1.6}
+  .factor .why{margin-top:8px;padding-top:8px;border-top:1px dashed var(--rule2);color:var(--ink3);font-size:13.5px}
+  .minus-box,.caveats{margin-top:14px;background:var(--surface);border:1px solid var(--rule);border-radius:18px;padding:16px 20px}
+  .minus-box{border-left:4px solid var(--down)}
+  .caveats{border-left:4px solid var(--warn)}
+  .minus-box b,.caveats b{display:block;margin-bottom:6px}
+  .minus-box p,.caveats li{font-size:14px;color:var(--ink2);line-height:1.65}
+  .caveats ul{margin-left:18px}
+  details{margin-top:14px;background:var(--surface);border:1px solid var(--rule);border-radius:16px;padding:14px 20px}
   summary{cursor:pointer;font-weight:700;font-size:14.5px}
-  .howto{margin-top:12px;color:var(--ink2);line-height:1.7;font-size:14px;max-width:78ch}
-  .howto li{margin-left:18px}.howto b{color:var(--ink)}
+  .howto{margin:10px 0 0 18px;color:var(--ink2);line-height:1.7;font-size:14px;max-width:78ch}
+  .howto b{color:var(--ink)}
   footer{color:var(--ink3);font-size:13px;margin-top:22px;max-width:78ch;line-height:1.6}
+  .regime{display:none;align-items:flex-start;gap:10px;background:var(--surface);border:1px solid var(--rule);border-radius:14px;padding:11px 14px;margin-bottom:12px;font-size:14px;color:var(--ink2);line-height:1.5}
+  .regime.show{display:flex}.regime i{width:9px;height:9px;border-radius:50%;flex:none;margin-top:6px}
+  .regime.ok i{background:var(--up)}.regime.mid i{background:var(--warn)}.regime.bad i{background:var(--down)}.regime b{color:var(--ink)}
   @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -143,7 +164,6 @@
   </a>
   <nav class="seg" id="markets" role="tablist" aria-label="Pilih bursa"><i class="seg-ind" id="segInd"></i></nav>
   <div class="bar-r">
-    <a class="link-btn" href="index.html">Cek satu saham</a>
     <button class="icon-btn" id="themeBtn" type="button" aria-label="Ganti tema terang/gelap">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
     </button>
@@ -155,7 +175,7 @@
     <div class="hero-top">
       <div>
         <h1 id="heroTitle">Saham Indonesia dengan setup breakout terkuat</h1>
-        <p>Setiap saham di daftar pantauan diberi skor 0–100 dari tren, jarak ke titik tertinggi 20 hari, volume, bentuk candle, dan momentum. Skor tinggi berarti tanda-tandanya lengkap, bukan jaminan harga pasti naik.</p>
+        <p>Setiap saham di daftar pantauan diberi skor 0–100 dari enam faktor yang paling konsisten muncul sebelum breakout berhasil: tren, momentum relatif, jarak ke titik tertinggi 52 minggu, volatilitas, breakout dan volume, serta candle. Skor tinggi berarti tanda-tandanya lengkap, bukan jaminan harga naik. <a href="#dasar" style="color:var(--acc);font-weight:700">Lihat dasar analisisnya</a></p>
       </div>
       <button class="scan-btn" id="scanBtn" type="button">Pindai ulang</button>
     </div>
@@ -168,6 +188,7 @@
     </div>
   </section>
 
+  <div id="regime" class="regime" role="status"></div>
   <div id="banner" class="banner" role="status"></div>
 
   <div class="tools">
@@ -180,26 +201,52 @@
 
   <div class="list" id="list"></div>
 
-  <details>
-    <summary>Cara skor dan status dihitung</summary>
-    <div class="howto">
-      <p>Semua dihitung dari candle harian hari bursa terakhir yang sudah selesai.</p>
-      <ul>
-        <li><b>Tren (maks 25)</b>: close di atas rata-rata 20 hari (+10), rata-rata 20 hari di atas rata-rata 50 hari (+10), close di atas rata-rata 50 hari (+5).</li>
-        <li><b>Jarak ke breakout (maks 25)</b>: close di atas titik tertinggi 20 hari sebelumnya (+25); jaraknya ≤1% (+20), ≤3% (+14), ≤5% (+7).</li>
-        <li><b>Volume (maks 20)</b>: dibanding rata-rata 50 hari, ≥1,4× (+20), ≥1,1× (+12), ≥0,8× (+5).</li>
-        <li><b>Candle (maks 15)</b>: candle hijau (+7), close di 30% teratas rentang harian (+8) atau di paruh atas (+4).</li>
-        <li><b>Momentum RSI 14 hari (maks 15)</b>: 50–70 (+15), 45–50 atau 70–75 (+8), di atas 75 (+3, rawan jenuh beli).</li>
-      </ul>
-      <p style="margin-top:8px"><b>Status</b></p>
-      <ul>
-        <li><b>Breakout terkonfirmasi</b>: close menembus titik tertinggi 20 hari, candle hijau, dan volume ≥1,4× rata-rata.</li>
-        <li><b>Siap breakout</b>: skor ≥65 dan harga tinggal ≤3% di bawah titik tertinggi 20 hari.</li>
-        <li><b>Layak dipantau</b>: skor ≥45. Sisanya <b>lemah</b>.</li>
-      </ul>
-      <p style="margin-top:8px"><b>Buy trigger</b> di tiap baris memakai rumus yang sama dengan halaman cek saham: Close + Range × 0,4.</p>
+  <section class="method" id="dasar">
+    <h2>Dasar analisis</h2>
+    <p class="lead">Tidak ada analisis yang bisa memastikan harga besok. Yang bisa dilakukan adalah memilih saham yang punya ciri-ciri paling sering mendahului breakout yang berhasil. Skor di halaman ini menggabungkan enam faktor itu. Sebagian berasal dari riset pasar modal yang sudah diuji puluhan tahun, sebagian dari praktik trader momentum profesional, dan sumbernya disebut di tiap faktor.</p>
+    <div class="fgrid">
+      <article class="factor"><div class="f-head"><b>Tren jangka menengah</b><span>20 poin</span></div>
+        <p>Harga di atas rata-rata 50 hari, rata-rata 50 hari di atas rata-rata 200 hari, dan harga di atas rata-rata 200 hari.</p>
+        <p class="why">Breakout paling sering berhasil kalau searah tren besar. Aturan rata-rata bergerak sederhana terbukti punya daya prediksi pada data indeks Dow Jones selama hampir 90 tahun (Brock, Lakonishok &amp; LeBaron, 1992).</p></article>
+      <article class="factor"><div class="f-head"><b>Momentum relatif</b><span>20 poin</span></div>
+        <p>Kenaikan 3 bulan terakhir dibanding saham lain di daftar yang sama. Makin tinggi peringkatnya, makin besar poinnya.</p>
+        <p class="why">Saham yang paling kuat dalam 3–12 bulan terakhir cenderung terus mengungguli yang lemah. Ini efek momentum, salah satu temuan paling konsisten di riset pasar modal (Jegadeesh &amp; Titman, 1993).</p></article>
+      <article class="factor"><div class="f-head"><b>Dekat titik tertinggi 52 minggu</b><span>15 poin</span></div>
+        <p>Jarak harga ke titik tertinggi setahun terakhir. Dalam 5% mendapat poin penuh.</p>
+        <p class="why">Banyak investor ragu membeli di dekat harga tertinggi, sehingga reaksi terhadap kabar baik tertahan. Ketika level itu tembus, kenaikannya cenderung berlanjut (George &amp; Hwang, 2004).</p></article>
+      <article class="factor"><div class="f-head"><b>Volatilitas menyempit</b><span>15 poin</span></div>
+        <p>Rata-rata rentang gerak 10 hari terakhir (ATR) dibanding 50 hari. Makin sempit, makin besar poinnya.</p>
+        <p class="why">Harga yang bergerak makin rapat menandakan tekanan jual mengering sebelum dilepas. Ini pola basis yang dipakai trader momentum seperti William O'Neil dan Mark Minervini; dasarnya pengalaman praktisi, bukan riset akademik.</p></article>
+      <article class="factor"><div class="f-head"><b>Titik breakout dan volume</b><span>20 poin</span></div>
+        <p>Close menembus titik tertinggi 20 hari dengan volume minimal 1,4× rata-rata mendapat poin penuh. Belum tembus tapi tinggal 3% dan volumenya sedang mengering juga diberi poin.</p>
+        <p class="why">Volume besar menandakan partisipasi pemain besar. Perilaku volume juga membantu membedakan momentum yang bertahan dari yang cepat berbalik (Lee &amp; Swaminathan, 2000).</p></article>
+      <article class="factor"><div class="f-head"><b>Kualitas candle</b><span>10 poin</span></div>
+        <p>Candle hijau dan ditutup di 30% teratas rentang harian.</p>
+        <p class="why">Penutupan di dekat level tertinggi hari itu menunjukkan pembeli tetap menguasai sampai akhir sesi, bukan hanya sesaat.</p></article>
     </div>
-  </details>
+    <div class="minus-box">
+      <b>Pengurang skor</b>
+      <p>RSI di atas 80 (−5, jenuh beli), harga lebih dari 10% di atas rata-rata 20 hari (−5, rawan koreksi), dan nilai transaksi harian rata-rata terlalu kecil (−10, rawan digoreng dan sulit keluar). Batas likuid: Rp5 miliar, US$20 juta, ¥1 miliar, ₩10 miliar, HK$50 juta per hari.</p>
+    </div>
+    <div class="caveats">
+      <b>Yang perlu diingat</b>
+      <ul>
+        <li>Riset di atas mengukur rata-rata ribuan saham dalam hitungan bulan. Hasilnya tidak menjamin satu saham akan naik besok.</li>
+        <li>Banyak breakout gagal. Trader breakout untung karena kerugiannya dipotong kecil dengan stop loss dan keuntungannya dibiarkan berjalan, bukan karena selalu benar.</li>
+        <li>Skor bersifat relatif terhadap daftar pantauan. Karena itu, di atas daftar ditampilkan kondisi indeks bursanya (IHSG, S&amp;P 500, Nikkei 225, KOSPI, Hang Seng). Kalau indeks di bawah rata-rata 50 hari, breakout lebih sering gagal walau skornya tinggi. Prinsip ini huruf "M" (market direction) pada metode CAN SLIM William O'Neil.</li>
+        <li>Jangan mengejar saham yang sudah jauh di atas Buy trigger. Titik masuk terbaik ada di sekitar level breakout.</li>
+      </ul>
+    </div>
+    <details>
+      <summary>Aturan status</summary>
+      <ul class="howto">
+        <li><b>Breakout terkonfirmasi</b>: close menembus titik tertinggi 20 hari, volume minimal 1,4× rata-rata 50 hari, candle hijau, dan harga di atas rata-rata 50 hari.</li>
+        <li><b>Siap breakout</b>: skor minimal 65 dan harga tinggal 3% atau kurang di bawah titik tertinggi 20 hari.</li>
+        <li><b>Layak dipantau</b>: skor minimal 45. Sisanya <b>lemah</b>.</li>
+        <li><b>Buy trigger</b> memakai rumus yang sama dengan halaman cek saham: Close + Range × 0,4.</li>
+      </ul>
+    </details>
+  </section>
 
   <footer>Data dari Yahoo Finance dan bisa tertunda 15–20 menit. Skor ini penyaring teknikal, bukan rekomendasi investasi. Setup yang bagus pun bisa gagal; selalu pasang stop loss dan keputusan beli sepenuhnya tanggung jawab Anda.</footer>
 </div>
@@ -219,19 +266,23 @@ const CONFIG = {
 function tickIDX(p){ if(p<200) return 1; if(p<500) return 2; if(p<2000) return 5; if(p<5000) return 10; return 25; }
 function tickUS(p){ return p<1 ? 0.0001 : 0.01; }
 function tickJP(p){ if(p<=3000) return 1; if(p<=5000) return 5; if(p<=30000) return 10; if(p<=50000) return 50; if(p<=300000) return 100; if(p<=500000) return 500; return 1000; }
+function tickHK(p){ if(p<0.25) return 0.001; if(p<0.5) return 0.005; if(p<10) return 0.01; if(p<20) return 0.02; if(p<100) return 0.05; if(p<200) return 0.1; if(p<500) return 0.2; if(p<1000) return 0.5; if(p<2000) return 1; if(p<5000) return 2; return 5; }
 function tickKR(p){ if(p<2000) return 1; if(p<5000) return 5; if(p<20000) return 10; if(p<50000) return 50; if(p<200000) return 100; if(p<500000) return 500; return 1000; }
 
 const MARKETS = {
-  ID: { name:'Indonesia', tag:'IDX', tz:'Asia/Jakarta', suffixes:['.JK'], cur:'Rp', dec:0, tick:tickIDX, closeMin:975,
+  ID: { name:'Indonesia', tag:'IDX', index:'^JKSE', indexName:'IHSG', tz:'Asia/Jakarta', suffixes:['.JK'], cur:'Rp', dec:0, tick:tickIDX, closeMin:975, minValue:5e9,
         list:'BBCA BBRI BMRI BBNI TLKM ASII UNVR ICBP INDF KLBF ADRO PTBA ITMG ANTM INCO MDKA PGAS UNTR CPIN AMRT GOTO BRIS SMGR INTP EXCL ISAT TOWR MEDC AKRA BBTN ARTO MAPI HRUM ACES TPIA'.split(' ') },
-  US: { name:'Amerika', tag:'US', tz:'America/New_York', suffixes:[''], cur:'$', dec:2, tick:tickUS, closeMin:975,
+  US: { name:'Amerika', tag:'US', index:'^GSPC', indexName:'S&P 500', tz:'America/New_York', suffixes:[''], cur:'$', dec:2, smallDec:4, tick:tickUS, closeMin:975, minValue:2e7,
         list:'AAPL MSFT NVDA AMZN GOOGL META TSLA AVGO AMD NFLX COST JPM V MA LLY UNH XOM WMT ORCL CRM ADBE INTC QCOM PEP KO DIS BA NKE PLTR UBER'.split(' ') },
-  JP: { name:'Jepang', tag:'TSE', tz:'Asia/Tokyo', suffixes:['.T'], cur:'¥', dec:0, tick:tickJP, closeMin:945,
+  JP: { name:'Jepang', tag:'TSE', index:'^N225', indexName:'Nikkei 225', tz:'Asia/Tokyo', suffixes:['.T'], cur:'¥', dec:0, tick:tickJP, closeMin:945, minValue:1e9,
         list:'7203 6758 9984 8306 6861 9983 7974 8035 6098 4063 9432 8316 6501 7267 6367 4502 8058 8001 6954 7741 6902 4568 6273 8411 9433 6981 7751 4519 6702 8766'.split(' '),
         names:{7203:'Toyota',6758:'Sony',9984:'SoftBank Group',8306:'MUFG',6861:'Keyence',9983:'Fast Retailing',7974:'Nintendo',8035:'Tokyo Electron',6098:'Recruit',4063:'Shin-Etsu',9432:'NTT',8316:'SMFG',6501:'Hitachi',7267:'Honda',6367:'Daikin',4502:'Takeda',8058:'Mitsubishi Corp',8001:'Itochu',6954:'Fanuc',7741:'Hoya',6902:'Denso',4568:'Daiichi Sankyo',6273:'SMC',8411:'Mizuho',9433:'KDDI',6981:'Murata',7751:'Canon',4519:'Chugai',6702:'Fujitsu',8766:'Tokio Marine'} },
-  KR: { name:'Korea Selatan', tag:'KRX', tz:'Asia/Seoul', suffixes:['.KS','.KQ'], cur:'₩', dec:0, tick:tickKR, closeMin:945,
+  KR: { name:'Korea Selatan', tag:'KRX', index:'^KS11', indexName:'KOSPI', tz:'Asia/Seoul', suffixes:['.KS','.KQ'], cur:'₩', dec:0, tick:tickKR, closeMin:945, minValue:1e10,
         list:'005930 000660 373220 207940 005380 000270 035420 035720 051910 006400 068270 105560 055550 012330 028260 066570 003670 005490 032830 096770 017670 030200 034730 015760 086790 010130 009150 018260 011200 247540'.split(' '),
         names:{'005930':'Samsung Electronics','000660':'SK Hynix','373220':'LG Energy Solution','207940':'Samsung Biologics','005380':'Hyundai Motor','000270':'Kia','035420':'Naver','035720':'Kakao','051910':'LG Chem','006400':'Samsung SDI','068270':'Celltrion','105560':'KB Financial','055550':'Shinhan Financial','012330':'Hyundai Mobis','028260':'Samsung C&T','066570':'LG Electronics','003670':'POSCO Future M','005490':'POSCO Holdings','032830':'Samsung Life','096770':'SK Innovation','017670':'SK Telecom','030200':'KT','034730':'SK Inc','015760':'KEPCO','086790':'Hana Financial','010130':'Korea Zinc','009150':'Samsung Electro-Mechanics','018260':'Samsung SDS','011200':'HMM','247540':'EcoPro BM'} },
+  HK: { name:'Hong Kong', tag:'HKEX', index:'^HSI', indexName:'Hang Seng', tz:'Asia/Hong_Kong', suffixes:['.HK'], cur:'HK$', dec:2, smallDec:3, tick:tickHK, closeMin:975, minValue:5e7,
+        list:'0700 9988 0005 1299 0941 3690 1810 2318 0388 0939 1398 3988 0883 0001 0016 0011 0002 0003 0027 1928 9618 9999 1211 2020 0669 2269 0175 0857 0386 0066'.split(' '),
+        names:{'0700':'Tencent','9988':'Alibaba','0005':'HSBC','1299':'AIA','0941':'China Mobile','3690':'Meituan','1810':'Xiaomi','2318':'Ping An','0388':'HKEX','0939':'CCB','1398':'ICBC','3988':'Bank of China','0883':'CNOOC','0001':'CK Hutchison','0016':'Sun Hung Kai Properties','0011':'Hang Seng Bank','0002':'CLP Holdings','0003':'HK & China Gas','0027':'Galaxy Entertainment','1928':'Sands China','9618':'JD.com','9999':'NetEase','1211':'BYD','2020':'Anta Sports','0669':'Techtronic','2269':'WuXi Biologics','0175':'Geely Auto','0857':'PetroChina','0386':'Sinopec','0066':'MTR'} },
 };
 
 /* ===================== Utilitas ===================== */
@@ -241,7 +292,7 @@ const M = () => MARKETS[state.market];
 const clean = x => Number(x.toFixed(6));
 function roundUpTick(p,m){ const t=m.tick(p); return clean(Math.ceil(p/t-1e-9)*t); }
 const fmt = (n,d=0) => (n==null||!isFinite(n)) ? '–' : n.toLocaleString('id-ID',{minimumFractionDigits:d,maximumFractionDigits:d});
-function fp(p,m){ if(p==null||!isFinite(p)) return '–'; let d=m.dec; if(d===2&&Math.abs(p)<1) d=4; if(d===0&&!Number.isInteger(clean(p))) d=1; return fmt(p,d); }
+function fp(p,m){ if(p==null||!isFinite(p)) return '–'; let d=m.dec; if(d===2&&Math.abs(p)<1) d=m.smallDec||2; if(d===0&&!Number.isInteger(clean(p))) d=1; return fmt(p,d); }
 const sgn = n => (n>0?'+':'')+fmt(n,2)+'%';
 const esc = s => String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
@@ -257,7 +308,7 @@ class NotFound extends Error{}
 class ApiDown extends Error{}
 async function fetchDaily(symbol){
   let text;
-  try{ const r=await fetch(`${CONFIG.apiPath}?symbol=${encodeURIComponent(symbol)}&range=6mo&interval=1d`); text=await r.text(); }
+  try{ const r=await fetch(`${CONFIG.apiPath}?symbol=${encodeURIComponent(symbol)}&range=1y&interval=1d`); text=await r.text(); }
   catch(e){ throw new ApiDown(e.message); }
   let j; try{ j=JSON.parse(text); }catch{ throw new ApiDown('bukan JSON'); }
   if(!j.chart) throw new ApiDown('format');
@@ -284,13 +335,13 @@ function demoStock(code){
   const m=M(); let seed=11; for(const ch of state.market+code) seed=(seed*33+ch.charCodeAt(0))>>>0;
   const rnd=()=>{ seed=(Math.imul(seed,1664525)+1013904223)>>>0; return seed/4294967296; };
   const g=()=>{ let s=0; for(let i=0;i<6;i++) s+=rnd(); return (s-3)/1.4; };
-  const base={ID:[300,9000],US:[20,600],JP:[800,9000],KR:[8000,300000]}[state.market];
+  const base={ID:[300,9000],US:[20,600],JP:[800,9000],KR:[8000,300000],HK:[5,400]}[state.market];
   const drift=(rnd()-0.45)*0.006; let c=base[0]+rnd()*base[1]; const bars=[]; const bv=1e6+rnd()*3e7;
   const d=new Date(); d.setUTCHours(0,0,0,0); const days=[];
-  while(days.length<125){ d.setUTCDate(d.getUTCDate()-1); if(d.getUTCDay()%6) days.unshift(d.toISOString().slice(0,10)); }
+  while(days.length<260){ d.setUTCDate(d.getUTCDate()-1); if(d.getUTCDay()%6) days.unshift(d.toISOString().slice(0,10)); }
   days.forEach((key,i)=>{
     const o=c*(1+g()*0.006), cl=Math.max(base[0]*0.2,o*(1+g()*0.016+drift)), h=Math.max(o,cl)*(1+rnd()*0.012), l=Math.min(o,cl)*(1-rnd()*0.012);
-    const spike = i>118 && rnd()>0.6 ? 1.6+rnd() : 1;
+    const spike = i>253 && rnd()>0.6 ? 1.6+rnd() : 1;
     bars.push({key,o,h,l,c:cl,v:Math.round(bv*(0.5+rnd())*spike)}); c=cl;
   });
   return {meta:{shortName:(m.names&&m.names[code])||code}, bars, symbol:code};
@@ -312,61 +363,112 @@ function pickBars(bars){
   if(last && last.key===now.key && now.min<m.closeMin) return {done:bars.slice(0,-1), live:last};
   return {done:bars, live:null};
 }
+const avg=a=>a.length ? a.reduce((x,y)=>x+y,0)/a.length : 0;
+function atr(bars,n){
+  if(bars.length<n+1) return null; let t=0;
+  for(let i=bars.length-n;i<bars.length;i++){ const b=bars[i], p=bars[i-1]; t+=Math.max(b.h-b.l,Math.abs(b.h-p.c),Math.abs(b.l-p.c)); }
+  return t/n;
+}
+
+/* Bagian skor yang dihitung per saham (momentum relatif dihitung setelah semua saham terkumpul) */
 function analyse(code, data){
   const m=M(), {done,live}=pickBars(data.bars);
-  if(done.length<55) return null;
+  if(done.length<120) return null;
   const ref=done[done.length-1], prev=done[done.length-2];
   const closes=done.map(b=>b.c);
   const ma20=sma(closes,20), ma50=sma(closes,50);
+  const longN=closes.length>=200?200:100, maLong=sma(closes,longN);
   const hi20=Math.max(...done.slice(-21,-1).map(b=>b.h));
-  const avgV=done.slice(-50).reduce((s,b)=>s+b.v,0)/50, vr=avgV? ref.v/avgV : 0;
-  const R=rsi(closes.slice(-80));
+  const hi52=Math.max(...done.slice(-250).map(b=>b.h));
+  const avgV50=avg(done.slice(-50).map(b=>b.v)), avgV10=avg(done.slice(-11,-1).map(b=>b.v));
+  const vr=avgV50 ? ref.v/avgV50 : 0, dry=avgV50 ? avgV10/avgV50 : 1;
+  const a10=atr(done,10), a50=atr(done,50), vc=a50 ? a10/a50 : 1;
+  const R=rsi(closes.slice(-120));
+  const ret63=closes.length>63 ? (ref.c/closes[closes.length-64]-1)*100 : 0;
+  const value=avg(done.slice(-20).map(b=>b.v*b.c));
   const span=ref.h-ref.l, cpos=span>0 ? (ref.c-ref.l)/span : 0.5, green=ref.c>ref.o;
-  const range=Math.max(ref.h-ref.l, Math.abs(ref.h-prev.c), Math.abs(ref.l-prev.c));
-  const buy=roundUpTick(ref.c+range*CONFIG.k, m);
-  const dist=(hi20-ref.c)/ref.c*100;          // % di bawah high 20 hari (negatif = sudah tembus)
-  const chg=(ref.c-prev.c)/prev.c*100;
+  const trueRange=Math.max(ref.h-ref.l, Math.abs(ref.h-prev.c), Math.abs(ref.l-prev.c));
+  const buy=roundUpTick(ref.c+trueRange*CONFIG.k, m);
+  const dist=(hi20-ref.c)/ref.c*100;            // % di bawah high 20 hari (negatif = sudah tembus)
+  const d52=(hi52-ref.c)/hi52*100;
+  const ext=(ref.c/ma20-1)*100;
+  const isBreak=ref.c>hi20, volOK=vr>=CONFIG.volumeMultiplier;
 
   let s=0; const tags=[];
-  // Tren
-  if(ref.c>ma20) s+=10; if(ma20>ma50) s+=10; if(ref.c>ma50) s+=5;
-  if(ref.c>ma20 && ma20>ma50) tags.push(['plus','Tren naik']); else if(ref.c<ma50) tags.push(['minus','Di bawah MA50']);
-  // Jarak ke breakout
-  if(ref.c>hi20){ s+=25; tags.push(['plus','Tembus high 20 hari']); }
-  else if(dist<=1){ s+=20; tags.push(['plus',`${fmt(dist,1)}% dari high 20 hari`]); }
-  else if(dist<=3){ s+=14; tags.push(['',`${fmt(dist,1)}% dari high 20 hari`]); }
-  else if(dist<=5){ s+=7; }
-  // Volume
-  if(vr>=CONFIG.volumeMultiplier){ s+=20; tags.push(['plus',`Volume ${fmt(vr,1)}×`]); }
-  else if(vr>=1.1){ s+=12; tags.push(['',`Volume ${fmt(vr,1)}×`]); }
-  else if(vr>=0.8){ s+=5; }
-  else tags.push(['minus',`Volume sepi ${fmt(vr,1)}×`]);
-  // Candle
-  if(green) s+=7;
-  if(cpos>=0.7){ s+=8; if(green) tags.push(['plus','Candle kuat']); }
-  else if(cpos>=0.5) s+=4;
+  // Tren jangka menengah (20)
+  const up1=ref.c>ma50, up2=ma50>maLong, up3=ref.c>maLong;
+  s+=(up1?6:0)+(up2?8:0)+(up3?6:0);
+  if(up1&&up2&&up3) tags.push(['plus','Tren naik']);
+  else if(!up3) tags.push(['minus',`Di bawah MA${longN}`]);
+  // Dekat titik tertinggi 52 minggu (15)
+  if(d52<=5){ s+=15; tags.push(['plus', d52<=0.5 ? 'Di titik tertinggi 52 minggu' : `${fmt(d52,1)}% dari high 52 minggu`]); }
+  else if(d52<=10){ s+=10; tags.push(['',`${fmt(d52,1)}% dari high 52 minggu`]); }
+  else if(d52<=20) s+=5;
+  // Volatilitas menyempit (15)
+  if(vc<=0.75){ s+=15; tags.push(['plus','Volatilitas menyempit']); }
+  else if(vc<=0.9) s+=9;
+  else if(vc<=1) s+=4;
+  // Titik breakout dan volume (20)
+  if(isBreak && volOK){ s+=20; tags.push(['plus',`Tembus high 20 hari, volume ${fmt(vr,1)}×`]); }
+  else if(isBreak){ s+=10; tags.push(['',`Tembus high 20 hari, volume baru ${fmt(vr,1)}×`]); }
+  else if(dist<=3){ if(dry<=0.85){ s+=12; tags.push(['plus',`${fmt(dist,1)}% dari pivot, volume mengering`]); } else { s+=8; tags.push(['',`${fmt(dist,1)}% dari pivot`]); } }
+  else if(dist<=5) s+=4;
+  // Kualitas candle (10)
+  if(cpos>=0.7) s+=6; if(green) s+=4;
+  if(green && cpos>=0.7) tags.push(['plus','Candle kuat']);
   else if(!green && cpos<0.3) tags.push(['minus','Ditutup lemah']);
-  // Momentum
-  if(R!=null){
-    if(R>=50&&R<=70){ s+=15; tags.push(['',`RSI ${fmt(R,0)}`]); }
-    else if((R>=45&&R<50)||(R>70&&R<=75)){ s+=8; tags.push(['',`RSI ${fmt(R,0)}`]); }
-    else if(R>75){ s+=3; tags.push(['minus',`RSI ${fmt(R,0)}, rawan jenuh beli`]); }
-  }
-  let status='weak';
-  if(ref.c>hi20 && green && vr>=CONFIG.volumeMultiplier) status='go';
-  else if(s>=65 && dist<=3) status='ready';
-  else if(s>=45) status='watch';
+  // Pengurang
+  if(R!=null && R>80){ s-=5; tags.push(['minus',`RSI ${fmt(R,0)}, jenuh beli`]); }
+  if(ext>10){ s-=5; tags.push(['minus',`${fmt(ext,0)}% di atas MA20, rawan koreksi`]); }
+  if(value<m.minValue){ s-=10; tags.push(['minus','Kurang likuid']); }
+
   return { code, name:data.meta.longName||data.meta.shortName||(m.names&&m.names[code])||code,
-           price:live?live.c:ref.c, chg: live ? (live.c-ref.c)/ref.c*100 : chg, live:!!live,
-           score:Math.min(100,Math.round(s)), status, tags, buy, refKey:ref.key };
+           price:live?live.c:ref.c, chg: live ? (live.c-ref.c)/ref.c*100 : (ref.c-prev.c)/prev.c*100, live:!!live,
+           base:s, baseTags:tags, ret63, dist, isBreak, volOK, green, up1, buy, refKey:ref.key };
+}
+
+/* Kondisi pasar: indeks bursa di atas atau di bawah rata-rata 50 hari */
+function indexInfo(data){
+  const {done}=pickBars(data.bars); if(done.length<60) return null;
+  const closes=done.map(b=>b.c), c=closes[closes.length-1], ma50=sma(closes,50), ma200=closes.length>=200?sma(closes,200):null;
+  return { c, ma50, ma200, above50:c>ma50, above200: ma200==null ? null : c>ma200 };
+}
+function regime(info){
+  const el=$('#regime'), m=M();
+  if(!info){ el.className='regime'; el.innerHTML=''; return; }
+  const strong=info.above50 && info.above200!==false;
+  el.className='regime show '+(strong?'ok':info.above50?'mid':'bad');
+  el.innerHTML = strong
+    ? `<i></i><span><b>Pasar mendukung.</b> ${m.indexName} di atas rata-rata 50${info.above200!=null?' dan 200':''} hari. Breakout punya peluang berhasil lebih baik.</span>`
+    : info.above50
+      ? `<i></i><span><b>Pasar campuran.</b> ${m.indexName} di atas rata-rata 50 hari tapi masih di bawah rata-rata 200 hari. Pilih yang skornya paling tinggi saja.</span>`
+      : `<i></i><span><b>Pasar sedang lemah.</b> ${m.indexName} di bawah rata-rata 50 hari. Breakout lebih sering gagal; perketat stop loss atau kurangi ukuran posisi.</span>`;
+}
+
+/* Momentum relatif (20): peringkat kenaikan 3 bulan dibanding saham lain di daftar yang sama */
+function finalize(list){
+  const rets=list.map(r=>r.ret63);
+  list.forEach(r=>{
+    const below=rets.filter(x=>x<r.ret63).length, pctl=list.length>1 ? below/(list.length-1) : 0.5;
+    r.rs=Math.round(pctl*100);
+    r.score=Math.max(0,Math.min(100,Math.round(r.base+pctl*20)));
+    const rsTag = pctl>=0.8 ? [['plus',`Momentum 3 bulan top ${Math.max(1,100-r.rs)}%`]] : pctl<=0.3 ? [['minus','Momentum tertinggal']] : [];
+    r.tags=[...rsTag, ...r.baseTags];
+    r.status = (r.isBreak && r.volOK && r.green && r.up1) ? 'go'
+             : (r.score>=65 && r.dist<=3) ? 'ready'
+             : r.score>=45 ? 'watch' : 'weak';
+  });
 }
 
 /* ===================== Pindai ===================== */
 async function scan(){
   const id=++state.scanId, m=M(), codes=m.list.slice();
   state.results=[]; state.scanning=true; render();
-  $('#scanBtn').disabled=true; banner(null);
+  $('#scanBtn').disabled=true; banner(null); regime(null);
   let done=0, failed=0, apiDown=false;
+  try{ regime(indexInfo(await fetchDaily(m.index))); }
+  catch(e){ if(e instanceof ApiDown){ apiDown=true; regime(indexInfo(demoStock('INDEX'))); } }
+  if(id!==state.scanId) return;
   const tick=()=>{ $('#progBar').style.width=(done/codes.length*100)+'%'; $('#progTxt').textContent=`Memindai ${done} dari ${codes.length} saham ${m.name}…`; };
   tick();
   let i=0;
@@ -402,6 +504,7 @@ function banner(html){ const b=$('#banner'); if(!html){ b.className='banner'; b.
 function hashFor(code){ return state.market==='ID' ? code : `${state.market}-${code}`; }
 
 function render(){
+  finalize(state.results);
   const m=M(), all=state.results.slice().sort((a,b)=>ORDER[a.status]-ORDER[b.status]||b.score-a.score);
   const n=s=>all.filter(r=>r.status===s).length;
   $('#nGo').textContent=n('go'); $('#nReady').textContent=n('ready'); $('#nWatch').textContent=n('watch');
