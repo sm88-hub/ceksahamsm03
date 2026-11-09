@@ -4,6 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SM-Crestboard</title>
+<link rel="manifest" href="/manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Crestboard">
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="theme-color" content="#020F29">
@@ -69,6 +74,9 @@
   .pill.pre .dot{background:var(--warn)}
   @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(14,138,92,.5)}70%,100%{box-shadow:0 0 0 8px rgba(14,138,92,0)}}
   .icon-btn{width:34px;height:34px;display:grid;place-items:center;border-radius:10px;border:1px solid var(--rule);background:var(--surface);cursor:pointer;color:var(--ink2)}
+  .install-btn{width:auto;padding:0 11px;gap:6px;display:inline-flex;align-items:center;font-weight:700;font-size:12.5px;color:var(--ink)}
+  .install-btn[hidden]{display:none}
+  @media(max-width:560px){.install-btn span{display:none}.install-btn{padding:0;width:34px;justify-content:center}}
   .icon-btn:hover{color:var(--ink)}
   @media(max-width:760px){#upd{display:none}.bar-in{padding:10px 16px}.seg{order:3;width:100%}}
   @media(min-width:761px){#upd{display:none}.mk{padding:7px 11px}.mk .code{display:none}}
@@ -114,6 +122,11 @@
   .sym .code{font:700 32px 'Space Grotesk',sans-serif;letter-spacing:-.02em}
   .tag{font-size:12px;font-weight:700;color:rgba(255,255,255,.75);border:1px solid rgba(255,255,255,.22);border-radius:6px;padding:1px 8px}
   .name{color:rgba(255,255,255,.65);font-size:14px;margin-top:2px}
+  .rs-pill{display:inline-flex;align-items:center;gap:5px;font:700 12px 'Plus Jakarta Sans',sans-serif;padding:3px 9px;border-radius:999px;margin-left:8px;vertical-align:middle;background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.15);cursor:help}
+  .rs-pill b{font:700 13px 'Space Grotesk',sans-serif}
+  .rs-pill.hi{background:rgba(63,209,143,.18);border-color:rgba(63,209,143,.45);color:#5CEBA9}
+  .rs-pill.lo{background:rgba(255,107,87,.16);border-color:rgba(255,107,87,.4);color:#FF8D76}
+  .rs-pill[hidden]{display:none}
   .price-row{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-top:22px}
   .price{font-weight:700;font-size:clamp(40px,6.4vw,62px);letter-spacing:-.03em;line-height:1;border-radius:8px;transition:color .3s}
   .hero .price.up{color:#5CEBA9}.hero .price.down{color:#FF8D76}
@@ -254,7 +267,7 @@
   .lstage .on.s1{background:#64748B}.lstage .on.s2{background:var(--up)}.lstage .on.s3{background:#D9A400}.lstage .on.s4{background:var(--down)}
   .lstage-d{font-size:12.5px;color:var(--ink2);margin:8px 0 12px}
   .ltt{display:grid;grid-template-columns:1fr 1fr;gap:4px 10px;margin-bottom:12px}
-  .ltt-h{grid-column:1 / -1;font-size:12.5px;color:var(--ink2);margin-bottom:2px}
+  .ltt-h{grid-column:1 / -1;font-size:12.5px;color:var(--ink2);margin-bottom:2px}.ltt-h small{color:var(--ink3);font-size:11px}
   .ltt span{font-size:11.5px;color:var(--ink2);display:flex;gap:6px;align-items:flex-start;line-height:1.35}
   .ltt i{font-style:normal;font-weight:900;font-size:10px;width:15px;height:15px;border-radius:50%;display:grid;place-items:center;flex:none;margin-top:1px}
   .ltt .ok i{background:var(--up);color:#fff}.ltt .no i{background:var(--rule2);color:var(--ink2)}.ltt .no{color:var(--ink3)}
@@ -290,6 +303,75 @@
     .lc-ohlc{grid-template-columns:repeat(2,minmax(0,1fr))}
     .ltt{grid-template-columns:1fr}
   }
+  /* Jurnal trading */
+  .t-journal{grid-column:span 12}.t-journal:hover{transform:none}
+  .jr-head{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap;margin-bottom:14px}
+  .jr-sub{margin:0;font-size:13px;color:var(--ink3)}
+  .jr-acts{display:flex;gap:8px;flex-wrap:wrap}
+  .jr-acts .btn{padding:8px 14px;font-size:13.5px}
+  .jr-form{border:1px solid var(--rule2);border-radius:16px;padding:16px;margin-bottom:14px;background:var(--sunk);animation:swap .35s ease both}
+  .jr-form[hidden],.jr-close[hidden]{display:none}
+  .jr-form-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;font-size:15px}
+  .jr-x{border:0;background:none;font-size:16px;cursor:pointer;color:var(--ink3);width:30px;height:30px;border-radius:8px}.jr-x:hover{background:var(--rule)}
+  .jr-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px 12px}
+  .jr-grid label{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:700;color:var(--ink2);min-width:0}
+  .jr-grid label small{font-weight:500;color:var(--ink3)}
+  .jr-grid input,.jr-grid select{border:1px solid var(--rule2);border-radius:10px;padding:9px 11px;background:var(--surface);font:600 14px 'Plus Jakarta Sans',sans-serif;color:var(--ink);min-width:0;width:100%}
+  .jr-grid input:focus,.jr-grid select:focus{outline:0;border-color:var(--ink);box-shadow:0 0 0 4px var(--acc-soft)}
+  #jT{text-transform:uppercase}
+  .jr-wide{grid-column:1 / -1}.jr-wide2{grid-column:span 1}
+  .jr-toggle{display:inline-flex;align-items:center;gap:8px;margin:14px 0 4px;font-size:13.5px;font-weight:700;cursor:pointer}
+  .jr-toggle input{width:17px;height:17px;accent-color:#7FB800}
+  .jr-close{border-top:1px dashed var(--rule2);margin-top:10px;padding-top:12px}
+  .jr-errs{margin-top:12px;font-size:12.5px;font-weight:700;color:var(--ink2)}
+  .jr-errs small{font-weight:500;color:var(--ink3)}
+  .jr-errs > div{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
+  .jr-errs label{display:inline-flex;align-items:center;gap:6px;font-weight:600;font-size:12.5px;border:1px solid var(--rule2);border-radius:999px;padding:5px 11px;background:var(--surface);cursor:pointer;user-select:none}
+  .jr-errs label:has(input:checked){background:var(--down-soft);border-color:var(--down);color:var(--down)}
+  .jr-errs input{display:none}
+  .jr-form-f{display:flex;justify-content:flex-end;align-items:center;gap:12px;margin-top:14px}
+  .jr-ferr{font-size:12.5px;color:var(--down);font-weight:600}
+  .jr-stats{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
+  .jr-st{border:1px solid var(--rule);border-radius:14px;padding:11px 13px;min-width:0}
+  .jr-st label{display:block;font-size:11.5px;color:var(--ink3);font-weight:600}
+  .jr-st b{display:block;font:700 21px 'Space Grotesk',sans-serif;letter-spacing:-.01em;margin-top:2px}
+  .jr-st small{font-size:11.5px;color:var(--ink3)}
+  .jr-st b.up{color:var(--up)}.jr-st b.down{color:var(--down)}
+  .jr-mid{display:grid;grid-template-columns:1.4fr 1fr;gap:12px;margin-top:12px}
+  .jr-eq{border:1px solid var(--rule);border-radius:14px;padding:12px 14px;min-width:0}
+  .jr-eq-h{display:flex;flex-wrap:wrap;gap:4px 10px;justify-content:space-between;font-size:12px;color:var(--ink3);margin-bottom:6px}
+  .jr-eq-h b{font:700 13px 'Space Grotesk',sans-serif}
+  .jr-eq svg{width:100%;height:110px;display:block}
+  .jr-eq .eq-line{fill:none;stroke-width:2.2;stroke-dasharray:1;stroke-dashoffset:1;animation:jrdraw 1.1s cubic-bezier(.2,.8,.2,1) forwards}
+  @keyframes jrdraw{to{stroke-dashoffset:0}}
+  .jr-ins{border-radius:14px;padding:14px;background:#020F29;color:#fff;font-size:13px;line-height:1.5;display:grid;gap:9px;align-content:start}
+  .jr-ins h5{margin:0;font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#C6F135}
+  .jr-ins p{margin:0;color:rgba(255,255,255,.82);padding-left:16px;position:relative}
+  .jr-ins p::before{content:'';position:absolute;left:0;top:7px;width:7px;height:7px;border-radius:50%;background:var(--c,#C6F135)}
+  .jr-ins p.bad{--c:#FF7A62}.jr-ins p.good{--c:#3FD18F}.jr-ins p.mid{--c:#FFC83D}
+  .jr-tabs{display:inline-flex;gap:2px;background:var(--sunk);border-radius:11px;padding:3px;margin:16px 0 10px}
+  .jr-tabs button{border:0;background:none;padding:7px 14px;border-radius:8px;font-weight:700;font-size:13px;color:var(--ink3);cursor:pointer}
+  .jr-tabs button i{font-style:normal;font-size:11px;background:var(--rule2);border-radius:99px;padding:1px 7px;margin-left:4px;color:var(--ink2)}
+  .jr-tabs .on{background:var(--surface);color:var(--ink);box-shadow:0 0 0 1px var(--rule2)}
+  .jr-list{display:flex;flex-direction:column;gap:8px}
+  .jr-row{display:grid;grid-template-columns:minmax(150px,1.3fr) 1fr 1.25fr .7fr .6fr 1fr auto;gap:12px;align-items:center;border:1px solid var(--rule);border-radius:14px;padding:11px 14px;animation:swap .35s ease both;font-size:13px}
+  .jr-row .tk b{font:700 15px 'Space Grotesk',sans-serif}.jr-row .tk span{display:block;font-size:11.5px;color:var(--ink3)}
+  .jr-row .tk .mt{display:inline-block;font:700 10px 'Plus Jakarta Sans',sans-serif;background:var(--sunk);border-radius:5px;padding:1px 5px;margin-left:5px;vertical-align:2px;color:var(--ink2)}
+  .jr-row .c label{display:block;font-size:11px;color:var(--ink3)}
+  .jr-row .c b{font:600 13.5px 'Space Grotesk',sans-serif}
+  .jr-row .up{color:var(--up)}.jr-row .down{color:var(--down)}
+  .jr-row .warn-b{display:inline-block;font-size:10.5px;font-weight:800;color:#fff;background:var(--down);border-radius:5px;padding:1px 6px;margin-left:4px}
+  .jr-row .errs{grid-column:1 / -1;display:flex;flex-wrap:wrap;gap:5px;margin-top:-4px}
+  .jr-row .errs span{font-size:11px;font-weight:700;color:var(--down);background:var(--down-soft);border-radius:6px;padding:2px 7px}
+  .jr-row .acts{display:flex;gap:6px;justify-content:flex-end}
+  .jr-row .acts button{border:1px solid var(--rule2);background:var(--surface);border-radius:8px;padding:5px 9px;font-size:12px;font-weight:700;cursor:pointer;color:var(--ink)}
+  .jr-row .acts button.pri{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+  .jr-row .acts button:hover{border-color:var(--ink)}
+  .jr-empty{border:1px dashed var(--rule2);border-radius:14px;padding:22px;text-align:center;color:var(--ink3);font-size:13.5px}
+  .jr-pl{margin-top:8px;font-size:12.5px;color:var(--ink2)}
+  @media(max-width:1100px){.jr-stats{grid-template-columns:repeat(3,minmax(0,1fr))}.jr-row{grid-template-columns:minmax(120px,1fr) 1fr 1fr auto}.jr-row .hide-m{display:none}}
+  @media(max-width:720px){.jr-mid{grid-template-columns:1fr}.jr-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.jr-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .jr-row{grid-template-columns:1fr auto;gap:8px 10px}.jr-row .c{grid-column:auto}.jr-row .acts{grid-column:1 / -1;justify-content:flex-start}}
   /* Pengunjung (footer) */
   .vz{margin-top:14px;color:var(--ink3);font-size:12.5px;position:relative}
   .vz[hidden]{display:none}
@@ -543,6 +625,9 @@
     <a class="scan-cta" href="scanner.html" title="Pindai saham dengan setup breakout terkuat"><span class="radar" aria-hidden="true"></span>Scanner<span class="new">LIVE</span></a>
     <span id="upd"></span>
     <div id="mkt" class="pill"><span class="dot"></span><span>—</span></div>
+    <button class="icon-btn install-btn" id="installBtn" type="button" hidden title="Pasang SM-Crestboard sebagai aplikasi" aria-label="Pasang aplikasi">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0-4-4m4 4 4-4"/><path d="M5 21h14"/></svg><span>Pasang</span>
+    </button>
     <button class="icon-btn" id="themeBtn" type="button" aria-label="Ganti tema terang/gelap">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
     </button>
@@ -564,7 +649,7 @@
   <main id="app" class="swap">
     <section class="hero" style="--i:0">
       <div>
-        <div class="sym"><span class="code" id="code">—</span><span class="tag" id="exch">IDX</span></div>
+        <div class="sym"><span class="code" id="code">—</span><span class="tag" id="exch">IDX</span><span class="rs-pill" id="rsPill" hidden title="Peringkat kekuatan relatif 1–99: kinerja 12 bulan (3 bulan terakhir dihitung dua kali) dibanding saham-saham utama di bursa yang sama."></span></div>
         <div class="name" id="name">&nbsp;</div>
         <div class="price-row"><div class="price" id="price">—</div><div class="chg" id="chg">—</div></div>
         <div id="asof">&nbsp;</div>
@@ -717,7 +802,7 @@
             <div class="inp"><label for="cEntry">Harga beli</label><div class="box"><input type="number" id="cEntry" step="any"></div></div>
             <div class="inp"><label for="cStop">Stop loss</label><div class="box"><input type="number" id="cStop" step="any"></div></div>
           </div>
-          <button type="button" class="link-btn" id="cReset" style="align-self:flex-start">Pakai level aplikasi</button>
+          <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><button type="button" class="link-btn" id="cReset">Pakai level aplikasi</button><button type="button" class="link-btn" id="cJournal">+ Catat ke jurnal</button></div>
         </div>
         <div class="calc-out">
           <label>Maksimal yang boleh dibeli</label>
@@ -822,7 +907,57 @@
         <p class="fine">Status mengikuti aturan sheet breakout: <b>Breakout terkonfirmasi</b> kalau close di atas Price to Watch dengan volume ≥1,4× rata-rata 50 hari. Daftar tersimpan di browser ini saja, tidak terkirim ke mana pun. Kosongkan Price to Watch untuk memakai Buy trigger otomatis.</p>
       </article>
 
-      <article class="tile t-table" style="--i:10">
+      <article class="tile t-journal" style="--i:10">
+        <div class="jr-head">
+          <div>
+            <h3 style="margin:0 0 3px">Jurnal trading <span class="sub" id="jrCount"></span></h3>
+            <p class="jr-sub">Catat setiap transaksi. Biar angka yang menilai cara tradingmu, bukan perasaan.</p>
+          </div>
+          <div class="jr-acts">
+            <button type="button" class="btn" id="jrNew">+ Catat transaksi</button>
+            <button type="button" class="ghost-btn" id="jrCsv">Ekspor CSV</button>
+            <button type="button" class="ghost-btn" id="jrBackup">Backup</button>
+            <button type="button" class="ghost-btn" id="jrRestore">Pulihkan</button>
+            <input type="file" id="jrFile" accept=".json,application/json" hidden>
+          </div>
+        </div>
+        <form class="jr-form" id="jrForm" hidden autocomplete="off">
+          <div class="jr-form-h"><b id="jrFormT">Catat transaksi</b><button type="button" class="jr-x" id="jrCancel" aria-label="Tutup formulir">✕</button></div>
+          <div class="jr-grid">
+            <label>Bursa<select id="jMk"></select></label>
+            <label>Kode saham<input id="jT" required placeholder="BBCA"></label>
+            <label>Setup<select id="jSetup"></select></label>
+            <label>Tanggal beli<input type="date" id="jInD" required></label>
+            <label>Harga beli<input type="number" step="any" min="0" id="jInP" required></label>
+            <label><span id="jQtyL">Jumlah (lot)</span><input type="number" step="1" min="1" id="jQty" required></label>
+            <label>Stop loss<input type="number" step="any" min="0" id="jStop" placeholder="Wajib diisi"></label>
+            <label>Target <small>(opsional)</small><input type="number" step="any" min="0" id="jTgt"></label>
+            <label class="jr-wide">Catatan<input id="jNote" maxlength="240" placeholder="Alasan beli, kondisi pasar, dsb."></label>
+          </div>
+          <label class="jr-toggle"><input type="checkbox" id="jClosed"> Posisi ini sudah dijual</label>
+          <div class="jr-close" id="jrClose" hidden>
+            <div class="jr-grid">
+              <label>Tanggal jual<input type="date" id="jOutD"></label>
+              <label>Harga jual<input type="number" step="any" min="0" id="jOutP"></label>
+              <label class="jr-wide2">Alasan jual<select id="jWhy"></select></label>
+            </div>
+            <div class="jr-errs"><span>Ada kesalahan di transaksi ini? <small>Jujur saja, ini hanya untukmu.</small></span><div id="jErrs"></div></div>
+          </div>
+          <div class="jr-form-f"><span class="jr-ferr" id="jrFerr"></span><button type="submit" class="btn">Simpan</button></div>
+        </form>
+        <div class="wl-msg" id="jrMsg" role="status"></div>
+        <div class="jr-import wl-import" id="jrImport" hidden></div>
+        <div class="jr-stats" id="jrStats"></div>
+        <div class="jr-mid">
+          <div class="jr-eq"><div class="jr-eq-h"><span>Kurva hasil (transaksi selesai, bobot sama)</span><b id="jrEqV"></b></div><svg viewBox="0 0 600 120" preserveAspectRatio="none" id="jrEqS" aria-hidden="true"></svg></div>
+          <div class="jr-ins" id="jrIns"></div>
+        </div>
+        <div class="jr-tabs" id="jrTabs" role="tablist"><button type="button" data-v="open" class="on">Posisi terbuka <i id="jrNOpen">0</i></button><button type="button" data-v="closed">Selesai <i id="jrNClosed">0</i></button></div>
+        <div class="jr-list" id="jrList"></div>
+        <p class="fine">Tersimpan hanya di browser ini; pakai Backup supaya tidak hilang. Hasil transaksi selesai sudah dipotong biaya transaksi per bursa. <b>R</b> = hasil dibagi risiko awal (jarak harga beli ke stop loss): +2R berarti untungnya dua kali risiko yang dipasang. Rasio tersesuaikan = (win rate × untung rata-rata) ÷ (loss rate × rugi rata-rata); metode acuan menargetkan minimal 2.</p>
+      </article>
+
+      <article class="tile t-table" style="--i:11">
         <h3>10 hari terakhir <span class="sub" id="tblSub"></span></h3>
         <div class="tbl-wrap">
           <table>
@@ -1139,13 +1274,13 @@ async function load(raw, silent, mk){
     }
     if(silent && !state.demo) return;
     const demo=makeDemo(t); state.daily=demo.daily; state.intra=demo.intra; state.demo=true;
-    banner('<b>Mode contoh.</b> Angka di bawah adalah data simulasi. Setelah di-deploy ke Netlify, halaman ini otomatis memakai data asli.');
+    banner(navigator.onLine===false ? '<b>Kamu sedang offline.</b> Saham ini belum pernah dibuka sebelumnya, jadi yang tampil adalah data contoh. Sambungkan internet untuk data asli.' : '<b>Mode contoh.</b> Angka di bawah adalah data simulasi. Setelah di-deploy ke Netlify, halaman ini otomatis memakai data asli.');
   }
   state.daily.bars=dedupeDaily(state.daily.bars);
   if(state.daily.bars.length<3){ banner('Data harga untuk saham ini belum cukup.','err'); document.body.classList.remove('loading'); return; }
   render(silent);
   document.body.classList.remove('loading');
-  if(!silent) loadFund();
+  if(!silent){ loadFund(); loadRS(); }
 }
 
 function pickReference(bars, m=M()){
@@ -1467,7 +1602,7 @@ function calc(){
   const per=entry-stop, lotSz=m.lot;
   let lots=Math.floor(modal*risk/per/lotSz), byCash=Math.floor(modal/(entry*lotSz)), capped=false;
   if(lots>byCash){ lots=byCash; capped=true; }
-  const sh=lots*lotSz, val=sh*entry;
+  const sh=lots*lotSz, val=sh*entry; state.calcLots=lots||null;
   $('#cBig').innerHTML = lotSz>1 ? `${fmt(lots)} <small>lot (${fmt(sh)} lembar)</small>` : `${fmt(sh)} <small>lembar</small>`;
   $('#cVal').textContent=m.cur+' '+fmt(val,m.dec?2:0);
   $('#cPct').textContent=fmt(val/modal*100,1)+'%';
@@ -1665,6 +1800,40 @@ function wlRender(loading){
       <div class="acts"><button type="button" data-go="${wlId(x)}" aria-label="Lihat detail"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button><button type="button" data-del="${wlId(x)}" aria-label="Hapus">✕</button></div>
     </div>`;
   }).join('');
+}
+
+/* ===================== Kekuatan relatif (RS) ===================== */
+const rsCache={};
+function rsWeighted(closes){
+  const n=closes.length, c=closes[n-1]; let s=0, w=0;
+  for(const [k,wt] of [[63,.4],[126,.2],[189,.2],[252,.2]]) if(n>k && closes[n-1-k]>0){ s+=(c/closes[n-1-k]-1)*wt; w+=wt; }
+  return w>=.4 ? s/w : null;
+}
+async function loadRS(){
+  state.rs=null; renderRS();
+  if(state.demo || !state.daily) return;
+  const mk=state.market, tk=state.ticker;
+  try{
+    if(!rsCache[mk] || Date.now()-rsCache[mk].at>30*60e3){
+      const r=await fetch(`/api/rs?market=${mk}`); if(!r.ok) return;
+      const j=await r.json(); if(!j.scores) return; rsCache[mk]={at:Date.now(), data:j};
+    }
+    if(state.market!==mk || state.ticker!==tk) return;
+    const d=rsCache[mk].data, bars=state.daily.bars, end=bars.indexOf(state.ref);
+    const mine=rsWeighted(bars.slice(0,end+1).map(b=>b.c)); if(mine==null) return;
+    const others=Object.entries(d.scores).filter(([c])=>c!==tk).map(([,v])=>v); if(others.length<10) return;
+    const below=others.filter(v=>v<mine).length, eq=others.filter(v=>v===mine).length;
+    const rating=Math.max(1,Math.min(99,Math.round((below+eq/2)/others.length*98)+1));
+    state.rs={ rating, mine, index:d.index, n:others.length, refKey:state.ref.key };
+    renderRS(); try{ renderLens(); }catch{}
+  }catch{}
+}
+function renderRS(){
+  const p=$('#rsPill'); if(!p) return; const r=state.rs;
+  if(!r){ p.hidden=true; return; }
+  p.hidden=false; p.className='rs-pill'+(r.rating>=80?' hi':r.rating<50?' lo':'');
+  p.innerHTML=`RS <b>${r.rating}</b>`;
+  p.title=`Peringkat kekuatan relatif ${r.rating} dari 99: kinerja 12 bulan ${state.ticker} (${pctS(r.mine)}) mengungguli ${r.rating-1}% dari ${r.n} saham utama ${M().name}${r.index!=null?`; indeks ${pctS(r.index)}`:''}. Metode acuan mensyaratkan minimal 70, idealnya 80–90-an.`;
 }
 
 /* ===================== Crest Lens ===================== */
@@ -1922,7 +2091,9 @@ function renderLens(){
   const sig = D.signals.length ? D.signals.map(x=>`<li class="ls ${x.t}"><i></i><div><b>${esc(x.h)}</b><span>${esc(x.d)}</span></div></li>`).join('')
     : `<li class="ls info"><i></i><div><b>Candle biasa</b><span>Tidak ada jejak harga atau volume yang menonjol. Lihat konteks periode untuk membaca arah besarnya.</span></div></li>`;
   const stg = C.stage ? `<div class="lstage">${[1,2,3,4].map(k=>`<span class="${k===C.stage?'on s'+k:''}"><b>${k}</b>${LENS_STAGE[k]}</span>`).join('')}</div><p class="lstage-d"><b>Tahap ${C.stage}.</b> ${LENS_STAGE_D[C.stage]}.</p>` : '<p class="lstage-d">Tahap tren belum bisa dinilai (data kurang dari ±10 bulan).</p>';
-  const ttHtml = C.tt ? `<div class="ltt"><div class="ltt-h">Syarat tren <b>${C.tt.ok}/7</b></div>${C.tt.map(([t,ok])=>`<span class="${ok?'ok':'no'}"><i>${ok?'✓':'✕'}</i>${t}</span>`).join('')}</div>` : '';
+  let ttList=C.tt, ttOk=C.tt?.ok, ttN=7;
+  if(C.tt && state.rs && state.rs.refKey===B[i].key){ ttList=[...C.tt,[`RS minimal 70 (sekarang ${state.rs.rating})`, state.rs.rating>=70]]; ttOk+= state.rs.rating>=70?1:0; ttN=8; }
+  const ttHtml = C.tt ? `<div class="ltt"><div class="ltt-h">Syarat tren <b>${ttOk}/${ttN}</b>${state.rs&&ttN===7?' <small>(RS hanya dinilai di hari referensi)</small>':''}</div>${ttList.map(([t,ok])=>`<span class="${ok?'ok':'no'}"><i>${ok?'✓':'✕'}</i>${t}</span>`).join('')}</div>` : '';
   const Bs=C.base;
   const baseHtml = Bs ? `<div class="lbase"><div class="lbase-h"><span>Jejak base</span><b>${fmt(Bs.weeks,0)} mgg · ${Bs.depths.length?Bs.depths.map(d=>fmt(d*100,0)+'%').join(' → '):fmt(Bs.depth*100,0)+'%'} · ${Bs.T}T</b></div>
       <div class="lbars">${(Bs.depths.length?Bs.depths:[Bs.depth]).slice(-6).map((d,k,a)=>`<i style="--h:${Math.max(8,Math.min(100,d/Math.max(...a)*100))}%;--d:${k*70}ms" title="${fmt(d*100,1)}%"></i>`).join('')}</div>
@@ -2000,6 +2171,7 @@ function buildContext(){
     `Volume vs rata-rata 50 hari: ${fmt(p.volRatio,2)}x, syarat ${fmt(CONFIG.volumeMultiplier,1)}x ${p.volOK?'terpenuhi':'belum terpenuhi'}`,
     `Status aplikasi: ${$('#statusT').textContent}`,
     `MA20 ${fp(ma(20))}, MA50 ${fp(ma(50))}, MA200 ${fp(ma(200))}`,
+    state.rs ? `Peringkat kekuatan relatif (RS) ${state.rs.rating}/99 dibanding ${state.rs.n} saham utama ${m.name}; kinerja tertimbang 12 bulan ${pctS(state.rs.mine)}` : '',
     `Pivot: R2 ${fp(p.R2)}, R1 ${fp(p.R1)}, P ${fp(p.P)}, S1 ${fp(p.S1)}, S2 ${fp(p.S2)}`,
     `Close 10 hari terakhir: ${closes}`,
     lens.last ? `Bacaan Crest Lens untuk candle ${lens.last.key} (konteks ${lensRangeLbl()}): ${lens.last.V.head}. ${lens.last.C.stage?`Tahap tren ${lens.last.C.stage}, syarat tren ${lens.last.C.tt.ok}/7. `:''}Sinyal candle: ${lens.last.D.signals.map(x=>x.h).join('; ')||'tidak ada yang menonjol'}.` : '',
@@ -2142,6 +2314,207 @@ $('#wlFile').addEventListener('change',async e=>{
 
 wlRender(); if(wl.items.length) setTimeout(wlRefresh, 1500);
 
+/* ===================== Jurnal trading ===================== */
+const JR_KEY='smcb_journal';
+const JR_SETUPS=['Breakout pivot','VCP / base ketat','Pullback ke MA','Low cheat','Power play','Lainnya'];
+const JR_WHY=['Kena stop loss','Capai target','Jual saat menguat','Sinyal jual / pelanggaran','Batas waktu','Lainnya'];
+const JR_ERRS=[['chase','Beli >5% di atas pivot'],['nostop','Tanpa stop loss'],['movestop','Menggeser stop ke bawah'],['avgdown','Average down'],['early','Jual terlalu cepat'],['late','Telat cut loss'],['plan','Melanggar rencana']];
+const jr={ items:[], px:{}, view:'open', edit:null };
+const todayKey=()=>{ const d=new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; };
+function jrClean(x){
+  if(!x || !MARKETS[x.mk]) return null;
+  const n=v=>{ const f=parseFloat(v); return f>0?f:null; };
+  const o={ id:String(x.id||Date.now().toString(36)+Math.random().toString(36).slice(2,6)), mk:x.mk, t:String(x.t||'').toUpperCase().replace(/[^A-Z0-9\-]/g,'').slice(0,12),
+    setup:JR_SETUPS.includes(x.setup)?x.setup:'Lainnya', inD:/^\d{4}-\d{2}-\d{2}$/.test(x.inD)?x.inD:todayKey(), inP:n(x.inP), qty:Math.max(1,Math.round(+x.qty||1)),
+    stop:n(x.stop), tgt:n(x.tgt), note:String(x.note||'').slice(0,240),
+    outD:/^\d{4}-\d{2}-\d{2}$/.test(x.outD)?x.outD:null, outP:n(x.outP), why:JR_WHY.includes(x.why)?x.why:null,
+    errs:Array.isArray(x.errs)?x.errs.filter(e=>JR_ERRS.some(([k])=>k===e)):[] };
+  if(!o.t || !o.inP) return null;
+  if(!o.outP){ o.outD=null; o.why=null; o.errs=o.errs.filter(e=>['chase','nostop','avgdown','movestop','plan'].includes(e)); }
+  return o;
+}
+function jrLoad(){ try{ const j=JSON.parse(localStorage.getItem(JR_KEY)||'[]'); jr.items=(Array.isArray(j)?j:j.items||[]).map(jrClean).filter(Boolean); }catch{ jr.items=[]; } }
+function jrSave(){ try{ localStorage.setItem(JR_KEY,JSON.stringify(jr.items)); }catch{} }
+const jrD=k=>{ const [y,m,d]=k.split('-').map(Number); return new Date(Date.UTC(y,m-1,d)).toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'2-digit',timeZone:'UTC'}); };
+const jrDays=(a,b)=>Math.max(0,Math.round((new Date(b)-new Date(a))/864e5));
+function jrCalc(x){
+  const m=MARKETS[x.mk], fee=(CONFIG.fees[x.mk]??0.2)/100, sh=x.qty*m.lot, closed=!!x.outP;
+  const px= closed ? x.outP : jr.px[x.mk+':'+x.t]?.price ?? null;
+  const ret= px ? px/x.inP-1-(closed?fee:0) : null;
+  const risk= x.stop && x.stop<x.inP ? (x.inP-x.stop)/x.inP : null;
+  const R= ret!=null && risk ? ret/risk : null;
+  const pl= px ? sh*(px-x.inP)-(closed?sh*x.inP*fee:0) : null;
+  const days= jrDays(x.inD, closed ? (x.outD||todayKey()) : todayKey());
+  return { m, sh, closed, px, ret, risk, R, pl, days, belowStop: !closed && px && x.stop && px<=x.stop };
+}
+function jrStats(){
+  const cl=jr.items.filter(x=>x.outP).map(x=>({x,...jrCalc(x)})).sort((a,b)=>(a.x.outD||'').localeCompare(b.x.outD||''));
+  const n=cl.length, W=cl.filter(c=>c.ret>0), L=cl.filter(c=>c.ret<=0);
+  const avg=a=>a.length?a.reduce((s,v)=>s+v,0)/a.length:0;
+  const aw=avg(W.map(c=>c.ret)), al=Math.abs(avg(L.map(c=>c.ret))), wr=n?W.length/n:0;
+  const adj= L.length&&al ? (wr*aw)/((1-wr)*al) : (W.length?Infinity:0);
+  const Rs=cl.filter(c=>c.R!=null).map(c=>c.R), expR=Rs.length?avg(Rs):null;
+  let eq=1; const curve=[0]; cl.forEach(c=>{ eq*=1+c.ret; curve.push(eq-1); });
+  const pl={}; cl.forEach(c=>{ pl[c.m.cur]=(pl[c.m.cur]||0)+c.pl; });
+  const errs={}; jr.items.forEach(x=>x.errs.forEach(e=>errs[e]=(errs[e]||0)+1));
+  return { cl, n, wins:W.length, wr, aw, al, adj, expR, nR:Rs.length, total:eq-1, curve, pl, errs,
+    worst: n?Math.min(...cl.map(c=>c.ret)):0, holdW:avg(W.map(c=>c.days)), holdL:avg(L.map(c=>c.days)), nostop:jr.items.filter(x=>!x.stop).length };
+}
+function jrInsights(S){
+  const out=[];
+  if(S.n<5){ out.push(['mid',`Catat minimal 5 transaksi selesai untuk mulai melihat pola. Sekarang baru ${S.n}.`]); }
+  else {
+    if(S.adj===Infinity) out.push(['good','Belum ada transaksi rugi. Bagus, tapi angka ini baru bermakna setelah sampelnya lebih banyak.']);
+    else if(S.adj>=2) out.push(['good',`Rasio tersesuaikan ${fmt(S.adj,2)} : 1. Untungmu cukup besar dibanding ruginya untuk tetap tumbuh walau sering salah.`]);
+    else if(S.adj>=1) out.push(['mid',`Rasio tersesuaikan ${fmt(S.adj,2)} : 1, masih untung tapi tipis. Target minimal 2 : 1: potong rugi lebih cepat atau biarkan untung berjalan lebih lama.`]);
+    else out.push(['bad',`Rasio tersesuaikan ${fmt(S.adj,2)} : 1. Dengan pola ini, makin sering trading makin rugi. Perbaiki ukuran rugi dulu sebelum mencari saham lain.`]);
+    if(S.al && S.aw && S.al>S.aw/2) out.push(['bad',`Rugi rata-rata ${fmt(S.al*100,1)}% lebih dari separuh untung rata-rata ${fmt(S.aw*100,1)}%. Rugi harus dijaga jauh lebih kecil dari untung.`]);
+    if(S.worst<-0.1) out.push(['bad',`Ada rugi ${pctS(S.worst)}. Metode acuan jarang membiarkan satu transaksi rugi lebih dari 8–10%.`]);
+    if(S.holdL>S.holdW && S.wins && S.n-S.wins) out.push(['bad',`Saham rugi kamu pegang lebih lama (${fmt(S.holdL,0)} hari) daripada saham untung (${fmt(S.holdW,0)} hari). Seharusnya kebalikannya.`]);
+  }
+  if(S.nostop) out.push(['bad',`${S.nostop} transaksi tanpa stop loss. Tanpa stop, risiko tidak terukur dan nilai R tidak bisa dihitung.`]);
+  const top=Object.entries(S.errs).sort((a,b)=>b[1]-a[1])[0];
+  if(top) out.push(['mid',`Kesalahan paling sering: <b>${JR_ERRS.find(([k])=>k===top[0])[1]}</b> (${top[1]}×). Fokus perbaiki satu ini dulu.`]);
+  return out.slice(0,4);
+}
+function jrRender(){
+  const S=jrStats(), open=jr.items.filter(x=>!x.outP);
+  $('#jrCount').textContent = jr.items.length ? `${jr.items.length} transaksi` : '';
+  $('#jrNOpen').textContent=open.length; $('#jrNClosed').textContent=S.n;
+  const st=(l,v,s,c='')=>`<div class="jr-st"><label>${l}</label><b class="${c}">${v}</b><small>${s}</small></div>`;
+  $('#jrStats').innerHTML=
+    st('Transaksi selesai', S.n, `${open.length} posisi terbuka`)+
+    st('Win rate', S.n?fmt(S.wr*100,0)+'%':'–', S.n?`${S.wins} untung, ${S.n-S.wins} rugi`:'belum ada data')+
+    st('Untung rata-rata', S.wins?'+'+fmt(S.aw*100,1)+'%':'–', 'per transaksi untung', S.wins?'up':'')+
+    st('Rugi rata-rata', S.n-S.wins?'−'+fmt(S.al*100,1)+'%':'–', 'per transaksi rugi', S.n-S.wins?'down':'')+
+    st('Rasio tersesuaikan', S.n? (S.adj===Infinity?'∞':fmt(S.adj,2)+' : 1') : '–', 'target minimal 2 : 1', S.n?(S.adj>=2?'up':S.adj<1?'down':''):'')+
+    st('Rata-rata R', S.expR!=null?(S.expR>0?'+':'')+fmt(S.expR,2)+'R':'–', S.nR?`dari ${S.nR} transaksi ber-stop`:'isi stop loss untuk menghitung', S.expR!=null?(S.expR>0?'up':'down'):'');
+  const plTxt=Object.entries(S.pl).map(([c,v])=>`${c} ${v>=0?'+':'−'}${fmt(Math.abs(v),c==='$'||c==='HK$'?2:0)}`).join(' · ');
+  // kurva
+  const svg=$('#jrEqS'), W=600, H=120, pts=S.curve;
+  if(pts.length<2){ svg.innerHTML=`<line x1="0" y1="60" x2="600" y2="60" stroke="var(--rule2)" stroke-dasharray="4 4"/>`; $('#jrEqV').textContent=''; }
+  else {
+    const lo=Math.min(0,...pts), hi=Math.max(0,...pts), pad=(hi-lo)*.12||.01, y=v=>H-((v-(lo-pad))/((hi+pad)-(lo-pad)))*H, x=i=>i/(pts.length-1)*W;
+    let d=`M0 ${y(0)}`; pts.forEach((v,i)=>{ if(i) d+=` H${x(i)} V${y(v)}`; });
+    const col=S.total>=0?'var(--up)':'var(--down)', g=S.total>=0?'#0E8A5C':'#D13F2B';
+    svg.innerHTML=`<defs><linearGradient id="jrg" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="${g}" stop-opacity=".22"/><stop offset="1" stop-color="${g}" stop-opacity="0"/></linearGradient></defs>
+      <line x1="0" y1="${y(0)}" x2="600" y2="${y(0)}" stroke="var(--rule2)" stroke-dasharray="4 4"/><path d="${d} V${H} H0 Z" fill="url(#jrg)"/>
+      <path class="eq-line" d="${d}" stroke="${col}" pathLength="1" vector-effect="non-scaling-stroke"/>`;
+    $('#jrEqV').innerHTML=`<span class="${S.total>=0?'up':'down'}" style="color:${col}">${pctS(S.total)}</span>${plTxt?` · ${plTxt}`:''}`;
+  }
+  $('#jrIns').innerHTML='<h5>Evaluasi otomatis</h5>'+jrInsights(S).map(([c,t])=>`<p class="${c}">${t}</p>`).join('');
+  // daftar
+  const rows=(jr.view==='open'?open:jr.items.filter(x=>x.outP)).slice().sort((a,b)=>(b.outD||b.inD).localeCompare(a.outD||a.inD));
+  const list=$('#jrList');
+  if(!rows.length){ list.innerHTML=`<div class="jr-empty">${jr.view==='open'?'Tidak ada posisi terbuka.':'Belum ada transaksi selesai.'} Tekan <b>+ Catat transaksi</b>, atau pakai tombol <b>Catat ke jurnal</b> di kalkulator.</div>`; return; }
+  list.innerHTML=rows.map(x=>{
+    const c=jrCalc(x), m=c.m, unit=m.lot>1?'lot':'lembar';
+    const pxTxt = c.closed ? `${fp(x.inP,m)} → ${fp(x.outP,m)}` : `${fp(x.inP,m)} → ${c.px?fp(c.px,m):'…'}`;
+    const res = c.ret==null ? '–' : `<b class="${c.ret>=0?'up':'down'}">${pctS(c.ret)}</b>`;
+    const R = c.R==null ? '–' : `<b class="${c.R>=0?'up':'down'}">${c.R>0?'+':''}${fmt(c.R,2)}R</b>`;
+    const pl = c.pl==null ? '–' : `<b class="${c.pl>=0?'up':'down'}">${c.pl>=0?'+':'−'}${m.cur} ${fmt(Math.abs(c.pl),m.dec?2:0)}</b>`;
+    return `<div class="jr-row">
+      <div class="tk"><b>${esc(x.t)}</b><span class="mt">${m.tag.split('/')[0]}</span><span>${esc(x.setup)} · ${fmt(x.qty)} ${unit}</span></div>
+      <div class="c"><label>${c.closed?'Beli → jual':'Dibeli'}</label><b>${jrD(x.inD)}${c.closed?` → ${jrD(x.outD||x.inD)}`:''}</b></div>
+      <div class="c"><label>${c.closed?'Harga':'Harga beli → sekarang'}</label><b>${pxTxt}</b>${c.belowStop?'<span class="warn-b">di bawah stop</span>':''}</div>
+      <div class="c"><label>${c.closed?'Hasil':'Berjalan'}</label>${res}</div>
+      <div class="c hide-m"><label>R</label>${R}</div>
+      <div class="c hide-m"><label>${c.closed?'Laba/rugi':'Belum direalisasi'}</label>${pl}</div>
+      <div class="acts">${c.closed?'':`<button type="button" class="pri" data-jclose="${x.id}">Jual</button>`}<button type="button" data-jedit="${x.id}">Ubah</button><button type="button" data-jdel="${x.id}" aria-label="Hapus">✕</button></div>
+      ${x.errs.length||x.note?`<div class="errs">${x.errs.map(e=>`<span>${JR_ERRS.find(([k])=>k===e)[1]}</span>`).join('')}${x.note?`<span style="background:var(--sunk);color:var(--ink2);font-weight:600">${esc(x.note)}</span>`:''}</div>`:''}
+    </div>`;
+  }).join('');
+}
+async function jrRefreshPx(){
+  const open=jr.items.filter(x=>!x.outP), uniq=[...new Map(open.map(x=>[x.mk+':'+x.t,x])).values()].filter(x=>!jr.px[x.mk+':'+x.t] || Date.now()-jr.px[x.mk+':'+x.t].at>60e3);
+  let i=0; async function w(){ while(i<uniq.length){ const x=uniq[i++]; try{ const d=await wlFetchOne({mk:x.mk,t:x.t}); if(d && d.price) jr.px[x.mk+':'+x.t]={price:d.price,at:Date.now()}; }catch{} } }
+  if(!uniq.length) return; await Promise.all([w(),w(),w()]); jrRender();
+}
+function jrFormUnit(){ const m=MARKETS[$('#jMk').value]; $('#jQtyL').textContent=`Jumlah (${m.lot>1?'lot':'lembar'})`; }
+function jrOpenForm(x, closing){
+  const f=$('#jrForm'); jr.edit=x?.id||null; f.hidden=false; $('#jrFerr').textContent='';
+  $('#jrFormT').textContent = closing ? `Jual ${x.t}` : x?.id ? `Ubah transaksi ${x.t}` : 'Catat transaksi';
+  $('#jMk').value=x?.mk||state.market; $('#jT').value=x?.t||''; $('#jSetup').value=x?.setup||JR_SETUPS[0];
+  $('#jInD').value=x?.inD||todayKey(); $('#jInP').value=x?.inP??''; $('#jQty').value=x?.qty??''; $('#jStop').value=x?.stop??''; $('#jTgt').value=x?.tgt??''; $('#jNote').value=x?.note||'';
+  const cl=closing || !!x?.outP; $('#jClosed').checked=cl; $('#jrClose').hidden=!cl;
+  $('#jOutD').value=x?.outD||todayKey(); const lp=jr.px[x?.mk+':'+x?.t]?.price; $('#jOutP').value=x?.outP ?? (closing && lp ? Number(lp.toFixed(priceDec(lp,MARKETS[x.mk]))) : ''); $('#jWhy').value=x?.why||JR_WHY[0];
+  $('#jErrs').querySelectorAll('input').forEach(i=>i.checked=!!x?.errs?.includes(i.value));
+  jrFormUnit(); f.scrollIntoView({block:'nearest',behavior:'smooth'});
+  setTimeout(()=>(closing?$('#jOutP'):x?.t?$('#jInP'):$('#jT')).focus(),200);
+}
+function jrInit(){
+  $('#jMk').innerHTML=Object.entries(MARKETS).map(([k,m])=>`<option value="${k}">${m.name}</option>`).join('');
+  $('#jSetup').innerHTML=JR_SETUPS.map(s=>`<option>${s}</option>`).join('');
+  $('#jWhy').innerHTML=JR_WHY.map(s=>`<option>${s}</option>`).join('');
+  $('#jErrs').innerHTML=JR_ERRS.map(([k,l])=>`<label><input type="checkbox" value="${k}">${l}</label>`).join('');
+  $('#jMk').addEventListener('change',jrFormUnit);
+  $('#jClosed').addEventListener('change',e=>{ $('#jrClose').hidden=!e.target.checked; });
+  $('#jrNew').addEventListener('click',()=>jrOpenForm(null));
+  $('#jrCancel').addEventListener('click',()=>{ $('#jrForm').hidden=true; jr.edit=null; });
+  $('#jrForm').addEventListener('submit',e=>{
+    e.preventDefault();
+    const raw={ id:jr.edit||undefined, mk:$('#jMk').value, t:normalize($('#jT').value,$('#jMk').value)||$('#jT').value, setup:$('#jSetup').value, inD:$('#jInD').value, inP:$('#jInP').value, qty:$('#jQty').value,
+      stop:$('#jStop').value, tgt:$('#jTgt').value, note:$('#jNote').value.trim(),
+      outD: $('#jClosed').checked?$('#jOutD').value:null, outP: $('#jClosed').checked?$('#jOutP').value:null, why: $('#jClosed').checked?$('#jWhy').value:null,
+      errs:[...$('#jErrs').querySelectorAll('input:checked')].map(i=>i.value) };
+    const err = !raw.t ? 'Isi kode saham.' : !(+raw.inP>0) ? 'Isi harga beli.' : !(+raw.qty>=1) ? 'Isi jumlah.' : (+raw.stop && +raw.stop>=+raw.inP) ? 'Stop loss harus di bawah harga beli.'
+      : ($('#jClosed').checked && !(+raw.outP>0)) ? 'Isi harga jual.' : ($('#jClosed').checked && raw.outD<raw.inD) ? 'Tanggal jual tidak boleh sebelum tanggal beli.' : '';
+    if(err){ $('#jrFerr').textContent=err; return; }
+    const x=jrClean(raw); if(!x){ $('#jrFerr').textContent='Data belum lengkap.'; return; }
+    const i=jr.items.findIndex(y=>y.id===x.id); if(i>=0) jr.items[i]=x; else jr.items.push(x);
+    jrSave(); $('#jrForm').hidden=true; jr.edit=null;
+    jr.view = x.outP ? 'closed' : 'open'; $('#jrTabs').querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.v===jr.view));
+    jrRender(); jrRefreshPx(); jrMsg(x.outP?`Transaksi ${x.t} tercatat sebagai selesai.`:`Posisi ${x.t} tercatat.`);
+  });
+  $('#jrTabs').addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; jr.view=b.dataset.v; $('#jrTabs').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b)); jrRender(); });
+  $('#jrList').addEventListener('click',e=>{
+    const id=e.target.closest('[data-jclose],[data-jedit],[data-jdel]'); if(!id) return;
+    const key=id.dataset.jclose||id.dataset.jedit||id.dataset.jdel, x=jr.items.find(y=>y.id===key); if(!x) return;
+    if(id.dataset.jdel){ if(id.dataset.sure){ jr.items=jr.items.filter(y=>y.id!==key); jrSave(); jrRender(); jrMsg(`Transaksi ${x.t} dihapus.`); } else { id.dataset.sure='1'; id.textContent='Hapus?'; setTimeout(()=>{ if(id.isConnected){ delete id.dataset.sure; id.textContent='✕'; } },3000); } return; }
+    jrOpenForm(x, !!id.dataset.jclose);
+  });
+  $('#jrCsv').addEventListener('click',()=>{
+    if(!jr.items.length){ jrMsg('Jurnal masih kosong.',true); return; }
+    const num=v=> v==null||v==='' ? '' : String(+(+v).toFixed(6)).replace('.',',');
+    const head=['Bursa','Kode','Setup','Tanggal beli','Harga beli','Jumlah','Satuan','Stop loss','Target','Tanggal jual','Harga jual','Alasan jual','Hasil %','R','Laba/rugi','Mata uang','Kesalahan','Catatan'];
+    const q=s=>`"${String(s??'').replace(/"/g,'""')}"`;
+    const lines=jr.items.map(x=>{ const c=jrCalc(x); return [x.mk,x.t,x.setup,x.inD,num(x.inP),x.qty,c.m.lot>1?'lot':'lembar',num(x.stop),num(x.tgt),x.outD||'',num(x.outP),x.why||'',c.closed&&c.ret!=null?num(c.ret*100):'',c.closed&&c.R!=null?num(c.R):'',c.closed?num(c.pl):'',c.m.cur,x.errs.map(e=>JR_ERRS.find(([k])=>k===e)[1]).join(', '),x.note].map(q).join(';'); });
+    jrDownload('﻿sep=;\n'+[head.map(q).join(';'),...lines].join('\n'),'text/csv;charset=utf-8',`sm-crestboard-jurnal-${todayKey()}.csv`);
+    jrMsg('File CSV diunduh. Bisa dibuka langsung di Excel atau Google Sheets.');
+  });
+  $('#jrBackup').addEventListener('click',()=>{
+    if(!jr.items.length){ jrMsg('Jurnal masih kosong.',true); return; }
+    jrDownload(JSON.stringify({app:'SM-Crestboard',type:'journal',version:1,saved:new Date().toISOString(),items:jr.items},null,2),'application/json',`sm-crestboard-jurnal-${todayKey()}.json`);
+    jrMsg(`Backup berisi ${jr.items.length} transaksi sudah diunduh.`);
+  });
+  $('#jrRestore').addEventListener('click',()=>$('#jrFile').click());
+  $('#jrFile').addEventListener('change',async e=>{
+    const f=e.target.files[0]; e.target.value=''; if(!f) return;
+    try{
+      const j=JSON.parse(await f.text()); if(j.type && j.type!=='journal') throw 0;
+      const items=(Array.isArray(j)?j:j.items||[]).map(jrClean).filter(Boolean);
+      if(!items.length) throw 0;
+      const box=$('#jrImport'); box.hidden=false;
+      box.innerHTML=`<span><b>${items.length} transaksi</b> dari file ${esc(f.name)}</span><button type="button" class="btn" data-imp="merge">Gabungkan</button>${jr.items.length?'<button type="button" class="ghost-btn" data-imp="replace">Ganti semua</button>':''}<button type="button" class="ghost-btn" data-imp="no">Batal</button>`;
+      box.onclick=ev=>{ const b=ev.target.closest('[data-imp]'); if(!b) return; box.hidden=true; box.innerHTML='';
+        if(b.dataset.imp==='no') return;
+        if(b.dataset.imp==='replace') jr.items=[];
+        let add=0; items.forEach(x=>{ const i=jr.items.findIndex(y=>y.id===x.id); if(i>=0) jr.items[i]=x; else { jr.items.push(x); add++; } });
+        jrSave(); jrRender(); jrRefreshPx(); jrMsg(b.dataset.imp==='replace'?`Jurnal diganti dengan ${items.length} transaksi.`:`${add} transaksi baru ditambahkan.`);
+      };
+    }catch{ jrMsg('File tidak bisa dibaca. Pilih file backup jurnal SM-Crestboard (.json).',true); }
+  });
+  $('#cJournal')?.addEventListener('click',()=>{
+    if(!state.ticker) return;
+    jrOpenForm({ mk:state.market, t:state.ticker, inP:+$('#cEntry').value||state.plan?.buy, stop:+$('#cStop').value||state.plan?.stop, tgt:state.plan?.target, qty:state.calcLots||'', setup:JR_SETUPS[0], inD:todayKey() });
+  });
+  jrLoad(); jrRender(); if(jr.items.some(x=>!x.outP)) setTimeout(jrRefreshPx, 2500);
+}
+function jrMsg(t,err){ const m=$('#jrMsg'); m.textContent=t; m.className='wl-msg'+(err?' err':''); clearTimeout(jrMsg.tm); if(t) jrMsg.tm=setTimeout(()=>m.textContent='',7000); }
+function jrDownload(text,type,name){ const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([text],{type})); a.download=name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),2000); }
+jrInit();
+
+
 $('#aiFab').addEventListener('click',openChat);
 $('#askHero').addEventListener('click',openChat);
 $('#aiClose').addEventListener('click',closeChat);
@@ -2195,6 +2568,14 @@ load(start ? start.t : M().quick[0][0]);
   const pop=document.getElementById('vzPop'), btn=document.getElementById('vzMore');
   btn.addEventListener('click',()=>{ pop.hidden=!pop.hidden; btn.setAttribute('aria-expanded',String(!pop.hidden)); });
   pop.querySelector('.vz-tabs').addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; pop.querySelectorAll('.vz-tabs button').forEach(x=>x.classList.toggle('on',x===b)); paint(b.dataset.p); });
+})();
+/* ===================== Aplikasi (PWA) ===================== */
+if('serviceWorker' in navigator && (location.protocol==='https:' || location.hostname==='localhost'))
+  window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(()=>{}));
+(()=>{ let deferred=null; const b=document.getElementById('installBtn'); if(!b) return;
+  window.addEventListener('beforeinstallprompt',e=>{ e.preventDefault(); deferred=e; b.hidden=false; });
+  b.addEventListener('click',async()=>{ if(!deferred) return; deferred.prompt(); try{ await deferred.userChoice; }catch{} deferred=null; b.hidden=true; });
+  window.addEventListener('appinstalled',()=>{ b.hidden=true; });
 })();
 </script>
 </body>

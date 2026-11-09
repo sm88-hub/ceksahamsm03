@@ -4,6 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SM-Crestboard | Pemindai breakout</title>
+<link rel="manifest" href="/manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Crestboard">
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="theme-color" content="#020F29">
@@ -64,6 +69,9 @@
   .link-btn{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;text-decoration:none;background:var(--surface);border:1px solid var(--rule);padding:6px 12px;border-radius:10px}
   .link-btn:hover{border-color:var(--ink)}
   .icon-btn{width:34px;height:34px;display:grid;place-items:center;border-radius:10px;border:1px solid var(--rule);background:var(--surface);cursor:pointer;color:var(--ink2)}
+  .install-btn{width:auto;padding:0 11px;gap:6px;display:inline-flex;align-items:center;font-weight:700;font-size:12.5px;color:var(--ink)}
+  .install-btn[hidden]{display:none}
+  @media(max-width:560px){.install-btn span{display:none}.install-btn{padding:0;width:34px;justify-content:center}}
   @media(max-width:760px){.bar-in{padding:10px 16px}.seg{order:3;width:100%}}
 
   .wrap{max-width:1200px;margin:0 auto;padding:22px 24px 56px}
@@ -285,6 +293,9 @@
   </a>
   <nav class="seg" id="markets" role="tablist" aria-label="Pilih bursa"><i class="seg-ind" id="segInd"></i></nav>
   <div class="bar-r">
+    <button class="icon-btn install-btn" id="installBtn" type="button" hidden title="Pasang SM-Crestboard sebagai aplikasi" aria-label="Pasang aplikasi">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0-4-4m4 4 4-4"/><path d="M5 21h14"/></svg><span>Pasang</span>
+    </button>
     <button class="icon-btn" id="themeBtn" type="button" aria-label="Ganti tema terang/gelap">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
     </button>
@@ -375,8 +386,8 @@
       <article class="factor"><div class="f-head"><b>Tren jangka menengah</b><span>20 poin</span></div>
         <p>Harga di atas rata-rata 50 hari, rata-rata 50 hari di atas rata-rata 200 hari, dan harga di atas rata-rata 200 hari.</p>
         <p class="why">Breakout paling sering berhasil kalau searah tren besar. Aturan rata-rata bergerak sederhana terbukti punya daya prediksi pada data indeks Dow Jones selama hampir 90 tahun (Brock, Lakonishok &amp; LeBaron, 1992).</p></article>
-      <article class="factor"><div class="f-head"><b>Momentum relatif</b><span>20 poin</span></div>
-        <p>Kenaikan 3 bulan terakhir dibanding saham lain di daftar yang sama. Makin tinggi peringkatnya, makin besar poinnya.</p>
+      <article class="factor"><div class="f-head"><b>Kekuatan relatif (RS)</b><span>20 poin</span></div>
+        <p>Kinerja 12 bulan dengan bobot ganda untuk 3 bulan terakhir, lalu diperingkat 1–99 dibanding saham lain di daftar yang sama. Label "RS 85" berarti lebih kuat dari ±85% saham di daftar.</p>
         <p class="why">Saham yang paling kuat dalam 3–12 bulan terakhir cenderung terus mengungguli yang lemah. Ini efek momentum, salah satu temuan paling konsisten di riset pasar modal (Jegadeesh &amp; Titman, 1993).</p></article>
       <article class="factor"><div class="f-head"><b>Dekat titik tertinggi 52 minggu</b><span>15 poin</span></div>
         <p>Jarak harga ke titik tertinggi setahun terakhir. Dalam 5% mendapat poin penuh.</p>
@@ -593,6 +604,7 @@ function analyse(code, data){
   const a10=atr(done,10), a50=atr(done,50), vc=a50 ? a10/a50 : 1;
   const R=rsi(closes.slice(-120));
   const ret63=closes.length>63 ? (ref.c/closes[closes.length-64]-1)*100 : 0;
+  const rsw=rsWeighted(closes);
   const value=avg(done.slice(-20).map(b=>b.v*b.c));
   const span=ref.h-ref.l, cpos=span>0 ? (ref.c-ref.l)/span : 0.5, green=ref.c>ref.o;
   const trueRange=Math.max(ref.h-ref.l, Math.abs(ref.h-prev.c), Math.abs(ref.l-prev.c));
@@ -632,7 +644,7 @@ function analyse(code, data){
 
   return { code, name:data.meta.longName||data.meta.shortName||(m.names&&m.names[code])||code,
            price:live?live.c:ref.c, chg: live ? (live.c-ref.c)/ref.c*100 : (ref.c-prev.c)/prev.c*100, live:!!live,
-           symbol:data.symbol, base:s, baseTags:tags, ret63, dist, isBreak, volOK, green, up1, buy, refKey:ref.key };
+           symbol:data.symbol, base:s, baseTags:tags, ret63, rsw, dist, isBreak, volOK, green, up1, buy, refKey:ref.key };
 }
 
 /* Kondisi pasar: indeks bursa di atas atau di bawah rata-rata 50 hari */
@@ -653,14 +665,19 @@ function regime(info){
       : `<i></i><span><b>Pasar sedang lemah.</b> ${m.indexName} di bawah rata-rata 50 hari. Breakout lebih sering gagal; perketat stop loss atau kurangi ukuran posisi.</span>`;
 }
 
-/* Momentum relatif (20): peringkat kenaikan 3 bulan dibanding saham lain di daftar yang sama */
+/* Kekuatan relatif (20): kinerja 12 bulan tertimbang (3 bulan terakhir ×2), diperingkat 1–99 di daftar yang sama */
+function rsWeighted(closes){
+  const n=closes.length, c=closes[n-1]; let s=0, w=0;
+  for(const [k,wt] of [[63,.4],[126,.2],[189,.2],[252,.2]]) if(n>k && closes[n-1-k]>0){ s+=(c/closes[n-1-k]-1)*wt; w+=wt; }
+  return w>=.4 ? s/w : null;
+}
 function finalize(list){
-  const rets=list.map(r=>r.ret63);
+  const val=r=> r.rsw!=null ? r.rsw : r.ret63/100, vals=list.map(val);
   list.forEach(r=>{
-    const below=rets.filter(x=>x<r.ret63).length, pctl=list.length>1 ? below/(list.length-1) : 0.5;
-    r.rs=Math.round(pctl*100);
+    const v=val(r), below=vals.filter(x=>x<v).length, pctl=list.length>1 ? below/(list.length-1) : 0.5;
+    r.rs=Math.max(1,Math.min(99,Math.round(pctl*98)+1));
     r.score=Math.max(0,Math.min(100,Math.round(r.base+pctl*20)));
-    const rsTag = pctl>=0.8 ? [['plus',`Momentum 3 bulan top ${Math.max(1,100-r.rs)}%`]] : pctl<=0.3 ? [['minus','Momentum tertinggal']] : [];
+    const rsTag = r.rs>=80 ? [['plus',`RS ${r.rs}`]] : r.rs<50 ? [['minus',`RS ${r.rs}, tertinggal`]] : [['',`RS ${r.rs}`]];
     r.tags=[...rsTag, ...r.baseTags];
     r.status = (r.isBreak && r.volOK && r.green && r.up1) ? 'go'
              : (r.score>=65 && r.dist<=3) ? 'ready'
@@ -940,6 +957,14 @@ setMarket(MARKETS[start] ? start : 'ID');
   const pop=document.getElementById('vzPop'), btn=document.getElementById('vzMore');
   btn.addEventListener('click',()=>{ pop.hidden=!pop.hidden; btn.setAttribute('aria-expanded',String(!pop.hidden)); });
   pop.querySelector('.vz-tabs').addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; pop.querySelectorAll('.vz-tabs button').forEach(x=>x.classList.toggle('on',x===b)); paint(b.dataset.p); });
+})();
+/* ===================== Aplikasi (PWA) ===================== */
+if('serviceWorker' in navigator && (location.protocol==='https:' || location.hostname==='localhost'))
+  window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(()=>{}));
+(()=>{ let deferred=null; const b=document.getElementById('installBtn'); if(!b) return;
+  window.addEventListener('beforeinstallprompt',e=>{ e.preventDefault(); deferred=e; b.hidden=false; });
+  b.addEventListener('click',async()=>{ if(!deferred) return; deferred.prompt(); try{ await deferred.userChoice; }catch{} deferred=null; b.hidden=true; });
+  window.addEventListener('appinstalled',()=>{ b.hidden=true; });
 })();
 </script>
 </body>
