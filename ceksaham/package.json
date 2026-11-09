@@ -1,8 +1,5 @@
 {
   "name": "sm-crestboard",
   "private": true,
-  "type": "module",
-  "dependencies": {
-    "@netlify/blobs": "^8.2.0"
-  }
+  "type": "module"
 }
