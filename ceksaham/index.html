@@ -695,6 +695,17 @@
   .fx-d{display:inline-block;width:8px;height:8px;border-radius:50%;margin:0 5px 0 8px;vertical-align:1px}
   .fx-d.ok{background:#16A34A}.fx-d.bad{background:#DC2626}.fx-d.na{background:#9CA3AF}
   @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
+  /* ===== Mode gelap: keterbacaan teks & kolom isian ===== */
+  [data-theme="dark"]{color-scheme:dark;--ink2:#B6C0D2;--ink3:#8D99AE}
+  :where(input,select,textarea){color:var(--ink)}
+  :where(input,textarea)::placeholder{color:var(--ink3);opacity:1}
+  :where(select) option,:where(select) optgroup{background:var(--surface);color:var(--ink)}
+  [data-theme="dark"] :where(input,select,textarea){caret-color:var(--acc)}
+  [data-theme="dark"] input:-webkit-autofill{-webkit-text-fill-color:var(--ink);-webkit-box-shadow:0 0 0 40px var(--surface) inset;caret-color:var(--acc)}
+  [data-theme="dark"] .lstage .on.s2,[data-theme="dark"] .lstage .on.s3,[data-theme="dark"] .ltt .ok i,[data-theme="dark"] .fc.pass i,
+  [data-theme="dark"] .stg-n,[data-theme="dark"] .jr-row .warn-b,[data-theme="dark"] .fc.fail i{color:#0A101C}
+  [data-theme="dark"] .stg-col.s1 .stg-n,[data-theme="dark"] .lstage .on.s1{color:#fff}
 </style>
 </head>
 <body>
