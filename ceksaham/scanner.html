@@ -281,6 +281,37 @@
   .vz-pop li b{font-variant-numeric:tabular-nums;color:var(--ink)}
   .vz-pop p{font-size:11.5px;color:var(--ink3);margin:10px 0 0;line-height:1.5}
   /* Rapor scanner */
+  .cx-bar{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin:14px 0 0;padding:12px 16px;background:var(--surface);border:1px solid var(--rule);border-radius:16px}
+  .cx-bar[hidden]{display:none}
+  .cx-lbl{font-size:11.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3)}
+  .cx-bar small{font-weight:600;opacity:.7}
+  .cx-note{flex:1 1 320px;margin:0;font-size:12.5px;line-height:1.55;color:var(--ink2)}
+  .cx-note b{color:var(--down)}
+  .fund-bar[hidden],.fx-scan[hidden]{display:none}
+  .stg{margin-top:36px;scroll-margin-top:90px;background:var(--surface);border:1px solid var(--rule);border-radius:22px;padding:24px;box-shadow:var(--shadow)}
+  .stg{--s1:#8a94a6;--s2:var(--up);--s3:#d99a1e;--s4:var(--down)}
+  .stg-bar{display:flex;height:8px;border-radius:99px;overflow:hidden;gap:2px;margin:4px 0 16px;background:var(--sunk)}
+  .stg-bar i{display:block;min-width:4px}
+  .stg-bar .s1{background:var(--s1)}.stg-bar .s2{background:var(--s2)}.stg-bar .s3{background:var(--s3)}.stg-bar .s4{background:var(--s4)}
+  .stg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media(max-width:900px){.stg-grid{grid-template-columns:1fr}}
+  .stg-col{border:1px solid var(--rule);border-radius:16px;padding:14px;background:var(--bg);border-top:3px solid var(--sc)}
+  .stg-col.s1{--sc:var(--s1)}.stg-col.s2{--sc:var(--s2)}.stg-col.s3{--sc:var(--s3)}
+  .stg-h{display:flex;align-items:center;gap:10px}
+  .stg-h b{display:block;font-size:15px}.stg-h small{font-size:12px;color:var(--ink3);font-weight:600}
+  .stg-n{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:9px;font-weight:800;font-size:14px;color:#fff;background:var(--sc,var(--s4));flex:none}
+  .stg-d{font-size:12.5px;line-height:1.55;color:var(--ink2);margin:8px 0 10px}
+  .stg-chips{display:flex;flex-wrap:wrap;gap:6px}
+  .stg-chip{display:inline-flex;align-items:baseline;gap:5px;padding:5px 9px;border-radius:9px;border:1px solid var(--rule2);background:var(--surface);color:var(--ink);text-decoration:none;font-size:12.5px;transition:border-color .2s,transform .2s}
+  .stg-chip:hover{border-color:var(--sc,var(--ink3));transform:translateY(-1px)}
+  .stg-chip small{font-size:11px;color:var(--ink3);font-weight:600}
+  .stg-none,.stg-wait{font-size:13px;color:var(--ink3)}
+  .stg-wait{padding:18px;text-align:center;background:var(--sunk);border-radius:14px}
+  .stg-four{margin-top:14px;border:1px solid var(--rule);border-radius:14px;padding:10px 14px;--sc:var(--s4)}
+  .stg-four summary{cursor:pointer;font-weight:700;font-size:13.5px;display:flex;align-items:center;gap:8px;list-style:none}
+  .stg-four summary::-webkit-details-marker{display:none}
+  .stg-four .stg-n{width:22px;height:22px;font-size:12px;border-radius:7px}
+  .stg-live{font-size:12px;color:var(--ink3);margin:10px 0 0}
   .rapor{margin-top:36px;scroll-margin-top:90px;background:var(--surface);border:1px solid var(--rule);border-radius:22px;padding:24px;box-shadow:var(--shadow)}
   .rp-head{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;align-items:flex-end;margin-bottom:16px}
   .rp-head > div:first-child{max-width:640px}
@@ -389,7 +420,7 @@
 </head>
 <body>
 <header class="bar"><div class="bar-in">
-  <a class="brand" href="index.html" aria-label="Kembali ke halaman cek saham">
+  <a class="brand" href="index.html" aria-label="Kembali ke halaman utama">
     <img class="brand-mark" src="logo-mark.png" width="36" height="36" alt="" aria-hidden="true">
     <i class="brand-sep" aria-hidden="true"></i>
     <span class="wordmark" id="brandName">SM-<b>Crestboard</b></span>
@@ -412,7 +443,7 @@
     <div class="hero-top">
       <div>
         <h1 id="heroTitle">Saham Indonesia dengan setup breakout terkuat</h1>
-        <p>Setiap saham di daftar pantauan diberi skor 0–100 dari enam faktor yang paling konsisten muncul sebelum breakout berhasil: tren, momentum relatif, jarak ke titik tertinggi 52 minggu, volatilitas, breakout dan volume, serta candle. Skor tinggi berarti tanda-tandanya lengkap, bukan jaminan harga naik. <a href="#dasar" style="color:var(--acc);font-weight:700">Lihat dasar analisisnya</a> · <a href="#rapor" style="color:var(--acc);font-weight:700">Lihat rapor scanner</a></p>
+        <p>Setiap saham di daftar pantauan diberi skor 0–100 dari enam faktor yang paling konsisten muncul sebelum breakout berhasil: tren, momentum relatif, jarak ke titik tertinggi 52 minggu, volatilitas, breakout dan volume, serta candle. Skor tinggi berarti tanda-tandanya lengkap, bukan jaminan harga naik. <a href="#dasar" style="color:var(--acc);font-weight:700">Lihat dasar analisisnya</a> · <a href="#tahap" style="color:var(--acc);font-weight:700">Rekap tahap siklus</a> · <a href="#rapor" style="color:var(--acc);font-weight:700">Lihat rapor scanner</a></p>
       </div>
       <button class="scan-btn" id="scanBtn" type="button">Pindai ulang</button>
     </div>
@@ -425,6 +456,11 @@
     </div>
   </section>
 
+  <div class="cx-bar" id="cxBar" hidden>
+    <span class="cx-lbl">Pasar kripto</span>
+    <div class="rp-hz" role="tablist" aria-label="Jenis pasar kripto"><button type="button" data-mk="CS">Spot</button><button type="button" data-mk="CF">Futures <small>perpetual</small></button></div>
+    <p class="cx-note">Pasar kripto beroperasi 24 jam; satu candle harian ditutup pada pukul 00.00 UTC (07.00 WIB). Data spot bersumber dari Yahoo Finance, data futures dari Hyperliquid. <span id="cxLev" hidden><b>Futures memakai leverage:</b> kerugian dapat menghabiskan seluruh margin melalui likuidasi, sehingga ukuran posisi perlu diperhitungkan dengan cermat.</span></p>
+  </div>
   <div id="regime" class="regime" role="status"></div>
   <div id="banner" class="banner" role="status"></div>
 
@@ -452,44 +488,69 @@
       <div class="fx-grid">
         <div class="fx-item"><span class="fx-n">1</span><div>
           <h5>EPS kuartalan tumbuh ≥25% (YoY)</h5>
-          <p><b>EPS</b> (earnings per share) adalah laba bersih dibagi jumlah lembar saham, atau laba yang menjadi hak tiap lembar saham. Angka kuartal terbaru dibandingkan dengan <b>kuartal yang sama tahun lalu</b> (misalnya K3 2026 dengan K3 2025), bukan dengan kuartal sebelumnya, supaya pengaruh musim, seperti Lebaran atau akhir tahun, tidak mengacaukan perbandingan.</p>
+          <p><b>EPS</b> (earnings per share) adalah laba bersih dibagi jumlah lembar saham, atau laba yang menjadi hak tiap lembar saham. Angka kuartal terbaru dibandingkan dengan <b>kuartal yang sama tahun lalu</b> (misalnya K3 2026 dengan K3 2025), bukan dengan kuartal sebelumnya, agar pengaruh musim, seperti Lebaran atau akhir tahun, tidak mengacaukan perbandingan.</p>
           <p class="fx-ex">Contoh: EPS K3 2025 Rp100 menjadi Rp130 di K3 2026 = +30%, <b>lolos</b>.</p>
         </div></div>
         <div class="fx-item"><span class="fx-n">2</span><div>
           <h5>Pendapatan kuartalan tumbuh ≥25% (YoY)</h5>
-          <p>Pendapatan adalah total penjualan atau omzet. Kriteria ini memeriksa apakah laba naik karena <b>bisnisnya memang tumbuh</b>. Laba bisa juga naik karena memangkas biaya atau mendapat untung sekali saja (misalnya menjual aset), dan kenaikan seperti itu biasanya tidak bertahan.</p>
+          <p>Pendapatan adalah total penjualan atau omzet. Kriteria ini memeriksa apakah laba naik karena <b>bisnisnya memang tumbuh</b>. Laba juga dapat meningkat karena efisiensi biaya atau keuntungan yang bersifat sekali terjadi (misalnya penjualan aset), dan kenaikan semacam itu umumnya tidak berkelanjutan.</p>
           <p class="fx-ex">Laba naik 40% tapi penjualan hanya naik 3%: patut dicurigai.</p>
         </div></div>
         <div class="fx-item"><span class="fx-n">3</span><div>
           <h5>EPS tahunan tumbuh ≥25%</h5>
-          <p>EPS tahun buku terakhir dibandingkan dengan tahun sebelumnya. Satu kuartal bagus bisa saja kebetulan. Angka tahunan menunjukkan apakah pertumbuhannya <b>berlangsung sepanjang tahun</b>.</p>
+          <p>EPS tahun buku terakhir dibandingkan dengan tahun sebelumnya. Kinerja baik dalam satu kuartal dapat saja bersifat sementara. Angka tahunan menunjukkan apakah pertumbuhannya <b>berlangsung sepanjang tahun</b>.</p>
         </div></div>
         <div class="fx-item"><span class="fx-n">4</span><div>
           <h5>Pertumbuhan EPS 3 tahun berturut-turut</h5>
-          <p>EPS tahunan harus naik ≥25% <b>setiap tahun</b> selama 3 tahun terakhir. Kalau ada satu tahun yang turun atau rugi, kriteria ini gagal. Tujuannya membedakan perusahaan yang tumbuh konsisten dari yang hanya sedang pulih setelah tahun yang buruk.</p>
-          <p class="fx-ex">Contoh: +30%, +28%, +41% = <b>lolos</b>. Kalau urutannya −20%, +60%, +35% = <b>gagal</b>.</p>
+          <p>EPS tahunan harus naik ≥25% <b>setiap tahun</b> selama 3 tahun terakhir. Apabila terdapat satu tahun yang menurun atau merugi, kriteria ini tidak terpenuhi. Tujuannya membedakan perusahaan yang tumbuh konsisten dari yang hanya sedang pulih setelah tahun yang buruk.</p>
+          <p class="fx-ex">Contoh: +30%, +28%, +41% = <b>lolos</b>. Apabila urutannya −20%, +60%, +35% = <b>gagal</b>.</p>
         </div></div>
         <div class="fx-item"><span class="fx-n">5</span><div>
           <h5>ROE ≥17%</h5>
-          <p><b>Return on Equity</b> = laba bersih ÷ modal pemegang saham (ekuitas). Angka ini menunjukkan seberapa efisien perusahaan mengubah modal menjadi laba. Di sini laba diambil dari total 4 kuartal terakhir, atau laba tahunan terakhir kalau data kuartal tidak lengkap.</p>
+          <p><b>Return on Equity</b> = laba bersih ÷ modal pemegang saham (ekuitas). Angka ini menunjukkan seberapa efisien perusahaan mengubah modal menjadi laba. Di sini laba diambil dari total 4 kuartal terakhir, atau laba tahunan terakhir apabila data kuartalan tidak lengkap.</p>
           <p class="fx-ex">Contoh: ekuitas Rp1.000 M, laba Rp200 M, ROE = 20%, <b>lolos</b>.</p>
         </div></div>
       </div>
       <div class="fx-note">
         <p><b>Cara membaca hasil.</b> <i class="fx-d ok"></i>Lolos = memenuhi batas. <i class="fx-d bad"></i>Gagal = di bawah batas atau perusahaan masih rugi. <i class="fx-d na"></i>Data kosong = Yahoo tidak punya angkanya, jadi <b>tidak dihitung gagal</b>. Skor 4–5 dari 5 berarti fundamentalnya kuat. Skor 0–2 berarti lonjakan harganya belum didukung laba.</p>
-        <p><b>Yang perlu diingat.</b> Kriteria ini dirancang untuk <b>saham pertumbuhan</b>. Saham blue chip yang stabil, bank besar, atau saham dividen (misalnya BBCA, TLKM, KO) jarang tumbuh 25% per tahun, jadi wajar kalau skornya rendah. Skor rendah tidak otomatis berarti perusahaannya jelek. Data laporan keuangan diperbarui setiap kuartal saat emiten merilis laporannya, bukan setiap hari.</p>
+        <p><b>Yang perlu diingat.</b> Kriteria ini dirancang untuk <b>saham pertumbuhan</b>. Saham blue chip yang stabil, bank besar, atau saham dividen (misalnya BBCA, TLKM, KO) jarang tumbuh 25% per tahun, sehingga wajar apabila skornya rendah. Skor rendah tidak serta-merta menunjukkan kinerja perusahaan yang buruk. Data laporan keuangan diperbarui setiap kuartal saat emiten merilis laporannya, bukan setiap hari.</p>
       </div>
     </div>
   </details>
 
   <div class="list" id="list"></div>
 
+  <section class="stg" id="tahap">
+    <div class="rp-head">
+      <div>
+        <span class="rp-kick">Peta Siklus</span>
+        <h2>Rekap tahap siklus</h2>
+        <p>Pengelompokan seluruh hasil pindaian ke dalam tahap siklus harga, agar terlihat sekilas mana yang sedang berkonsolidasi, sedang dalam tren naik, atau mulai memuncak. Klik kode untuk membuka analisis lengkapnya.</p>
+      </div>
+      <div class="rp-ctrl">
+        <div class="rp-hz" id="stgTf" role="tablist" aria-label="Kerangka waktu"><button type="button" data-tf="d" class="on">Harian</button><button type="button" data-tf="w">Mingguan</button></div>
+      </div>
+    </div>
+    <div id="stgBody"></div>
+    <details class="rp-how">
+      <summary>Cara menentukan tahap</summary>
+      <ul>
+        <li><b>Tahap 2, tren naik:</b> harga di atas rata-rata menengah, rata-rata menengah di atas rata-rata panjang, rata-rata pendek di atas rata-rata menengah, dan rata-rata panjang sedang menanjak.</li>
+        <li><b>Tahap 4, penurunan:</b> harga di bawah rata-rata panjang yang sedang menurun.</li>
+        <li><b>Tahap 3, puncak:</b> sebelumnya terjadi kenaikan minimal 30% dari titik terendah, titik tertinggi tercapai belum lama, harga masih dalam jarak 30% dari puncak, tetapi struktur tren naik sudah tidak utuh (rata-rata pendek melandai, harga turun di bawahnya, atau rata-rata panjang mendatar).</li>
+        <li><b>Tahap 1, konsolidasi:</b> kondisi selain ketiga tahap di atas, umumnya harga bergerak di sekitar rata-rata panjang yang mendatar.</li>
+        <li><b>Harian</b> memakai rata-rata 50, 150, dan 200 hari, dengan kemiringan rata-rata panjang dibandingkan 21 hari bursa sebelumnya. <b>Mingguan</b> memakai rata-rata 10, 30, dan 40 minggu, dibandingkan 4 minggu sebelumnya. Kerangka mingguan lebih lambat berubah tetapi lebih tahan terhadap gejolak sesaat.</li>
+        <li><b>Keterbatasan.</b> Data yang dipakai adalah 12 bulan terakhir, sehingga tahap pada aset yang baru melantai atau baru diperdagangkan dapat kurang akurat. Tahap adalah gambaran kondisi, bukan sinyal beli atau jual.</li>
+      </ul>
+    </details>
+  </section>
+
   <section class="rapor" id="rapor">
     <div class="rp-head">
       <div>
         <span class="rp-kick">Transparansi</span>
         <h2>Rapor scanner</h2>
-        <p>Scanner ini diputar ulang hari demi hari selama 12 bulan terakhir, hanya dengan data yang tersedia di hari itu. Lalu dicek: apa yang terjadi pada saham setelah diberi sinyal? Hasilnya ditampilkan apa adanya, bagus maupun jelek.</p>
+        <p>Scanner ini diuji ulang hari demi hari selama 12 bulan terakhir, hanya dengan data yang tersedia pada hari tersebut, untuk melihat pergerakan saham setelah sinyal muncul. Hasilnya ditampilkan apa adanya, baik maupun buruk.</p>
       </div>
       <div class="rp-ctrl">
         <div class="rp-hz" id="rpHz" role="tablist" aria-label="Rentang waktu"><button type="button" data-h="5">5 hari</button><button type="button" data-h="10">10 hari</button><button type="button" data-h="20" class="on">20 hari</button></div>
@@ -501,22 +562,22 @@
     <details class="rp-how">
       <summary>Cara menghitung dan keterbatasannya</summary>
       <ul>
-        <li><b>Tanpa mengintip masa depan.</b> Untuk setiap hari, skor dan status dihitung ulang memakai data sampai hari itu saja, persis seperti yang akan terlihat kalau scanner dibuka hari itu.</li>
+        <li><b>Tanpa mengintip masa depan.</b> Untuk setiap hari, skor dan status dihitung ulang memakai data sampai hari itu saja, persis seperti yang akan terlihat apabila scanner dibuka pada hari tersebut.</li>
         <li><b>Hanya sinyal baru yang dihitung.</b> Saham yang berstatus sama berhari-hari dihitung sekali, di hari pertama statusnya muncul.</li>
         <li><b>Masuk di harga pembukaan hari berikutnya</b>, keluar di harga penutupan 5, 10, atau 20 hari bursa kemudian. Biaya transaksi pulang-pergi per bursa sudah dipotong. Tanpa stop loss, jadi hasilnya menggambarkan kualitas sinyal, bukan strategi lengkap.</li>
-        <li><b>Pembanding.</b> "Semua saham di daftar" adalah rata-rata kalau membeli saham mana saja dari daftar yang sama di hari mana saja. Sinyal yang berguna harus mengalahkan angka ini, bukan hanya positif.</li>
-        <li><b>Keterbatasan.</b> Daftar saham adalah saham besar hari ini, jadi saham yang dulu besar lalu jatuh tidak ikut (bias penyintas), dan hasil cenderung sedikit lebih bagus dari kenyataan. Periode 12 bulan dan jumlah sinyal masih kecil; satu kondisi pasar bisa mendominasi. Hasil masa lalu tidak menjamin hasil berikutnya.</li>
+        <li><b>Pembanding.</b> "Semua saham di daftar" adalah rata-rata hasil apabila membeli saham mana pun dari daftar yang sama pada hari mana pun. Sinyal yang berguna harus mengalahkan angka ini, bukan hanya positif.</li>
+        <li><b>Keterbatasan.</b> Daftar saham adalah saham besar hari ini, sehingga saham yang dahulu besar lalu jatuh tidak tercakup (bias penyintas), dan hasilnya cenderung sedikit lebih baik daripada kenyataan. Periode 12 bulan dan jumlah sinyal masih kecil; satu kondisi pasar bisa mendominasi. Hasil masa lalu tidak menjamin hasil berikutnya.</li>
       </ul>
     </details>
   </section>
 
   <section class="method" id="dasar">
     <h2>Dasar analisis</h2>
-    <p class="lead">Tidak ada analisis yang bisa memastikan harga besok. Yang bisa dilakukan adalah memilih saham yang punya ciri-ciri paling sering mendahului breakout yang berhasil. Skor di halaman ini menggabungkan enam faktor itu. Sebagian berasal dari riset pasar modal yang sudah diuji puluhan tahun, sebagian dari praktik trader momentum profesional, dan sumbernya disebut di tiap faktor.</p>
+    <p class="lead">Tidak ada analisis yang dapat memastikan harga esok hari. Yang dapat dilakukan adalah memilih saham yang punya ciri-ciri paling sering mendahului breakout yang berhasil. Skor di halaman ini menggabungkan enam faktor itu. Sebagian berasal dari riset pasar modal yang sudah diuji puluhan tahun, sebagian dari praktik trader momentum profesional, dan sumbernya disebut di tiap faktor.</p>
     <div class="fgrid">
       <article class="factor"><div class="f-head"><b>Tren jangka menengah</b><span>20 poin</span></div>
         <p>Harga di atas rata-rata 50 hari, rata-rata 50 hari di atas rata-rata 200 hari, dan harga di atas rata-rata 200 hari.</p>
-        <p class="why">Breakout paling sering berhasil kalau searah tren besar. Aturan rata-rata bergerak sederhana terbukti punya daya prediksi pada data indeks Dow Jones selama hampir 90 tahun (Brock, Lakonishok &amp; LeBaron, 1992).</p></article>
+        <p class="why">Breakout paling sering berhasil apabila searah tren besar. Aturan rata-rata bergerak sederhana terbukti punya daya prediksi pada data indeks Dow Jones selama hampir 90 tahun (Brock, Lakonishok &amp; LeBaron, 1992).</p></article>
       <article class="factor"><div class="f-head"><b>Kekuatan relatif (RS)</b><span>20 poin</span></div>
         <p>Kinerja 12 bulan dengan bobot ganda untuk 3 bulan terakhir, lalu diperingkat 1–99 dibanding saham lain di daftar yang sama. Label "RS 85" berarti lebih kuat dari ±85% saham di daftar.</p>
         <p class="why">Saham yang paling kuat dalam 3–12 bulan terakhir cenderung terus mengungguli yang lemah. Ini efek momentum, salah satu temuan paling konsisten di riset pasar modal (Jegadeesh &amp; Titman, 1993).</p></article>
@@ -527,7 +588,7 @@
         <p>Rata-rata rentang gerak 10 hari terakhir (ATR) dibanding 50 hari. Makin sempit, makin besar poinnya.</p>
         <p class="why">Harga yang bergerak makin rapat menandakan tekanan jual mengering sebelum dilepas. Ini pola basis yang dipakai trader momentum seperti William O'Neil dan Mark Minervini; dasarnya pengalaman praktisi, bukan riset akademik.</p></article>
       <article class="factor"><div class="f-head"><b>Titik breakout dan volume</b><span>20 poin</span></div>
-        <p>Close menembus titik tertinggi 20 hari dengan volume minimal 1,4× rata-rata mendapat poin penuh. Belum tembus tapi tinggal 3% dan volumenya sedang mengering juga diberi poin.</p>
+        <p>Close menembus titik tertinggi 20 hari dengan volume minimal 1,4× rata-rata mendapat poin penuh. Saham yang belum menembus namun berjarak 3% atau kurang dengan volume yang mengering juga memperoleh poin.</p>
         <p class="why">Volume besar menandakan partisipasi pemain besar. Perilaku volume juga membantu membedakan momentum yang bertahan dari yang cepat berbalik (Lee &amp; Swaminathan, 2000).</p></article>
       <article class="factor"><div class="f-head"><b>Kualitas candle</b><span>10 poin</span></div>
         <p>Candle hijau dan ditutup di 30% teratas rentang harian.</p>
@@ -542,22 +603,22 @@
       <ul>
         <li>Riset di atas mengukur rata-rata ribuan saham dalam hitungan bulan. Hasilnya tidak menjamin satu saham akan naik besok.</li>
         <li>Banyak breakout gagal. Trader breakout untung karena kerugiannya dipotong kecil dengan stop loss dan keuntungannya dibiarkan berjalan, bukan karena selalu benar.</li>
-        <li>Skor bersifat relatif terhadap daftar pantauan. Karena itu, di atas daftar ditampilkan kondisi indeks bursanya (IHSG, S&amp;P 500, Nikkei 225, KOSPI, Hang Seng). Kalau indeks di bawah rata-rata 50 hari, breakout lebih sering gagal walau skornya tinggi. Prinsip ini huruf "M" (market direction) pada metode CAN SLIM William O'Neil.</li>
-        <li>Jangan mengejar saham yang sudah jauh di atas Buy trigger. Titik masuk terbaik ada di sekitar level breakout.</li>
+        <li>Skor bersifat relatif terhadap daftar pantauan. Karena itu, di atas daftar ditampilkan kondisi indeks bursanya (IHSG, S&amp;P 500, Nikkei 225, KOSPI, Hang Seng). Apabila indeks berada di bawah rata-rata 50 hari, breakout lebih sering gagal meskipun skornya tinggi. Prinsip ini huruf "M" (market direction) pada metode CAN SLIM William O'Neil.</li>
+        <li>Hindari mengejar saham yang sudah jauh di atas Buy trigger. Titik masuk terbaik ada di sekitar level breakout.</li>
       </ul>
     </div>
     <details>
       <summary>Aturan status</summary>
       <ul class="howto">
         <li><b>Breakout terkonfirmasi</b>: close menembus titik tertinggi 20 hari, volume minimal 1,4× rata-rata 50 hari, candle hijau, dan harga di atas rata-rata 50 hari.</li>
-        <li><b>Siap breakout</b>: skor minimal 65 dan harga tinggal 3% atau kurang di bawah titik tertinggi 20 hari.</li>
+        <li><b>Siap breakout</b>: skor minimal 65 dan harga berjarak 3% atau kurang di bawah titik tertinggi 20 hari.</li>
         <li><b>Layak dipantau</b>: skor minimal 45. Sisanya <b>lemah</b>.</li>
-        <li><b>Buy trigger</b> memakai rumus yang sama dengan halaman cek saham: Close + Range × 0,4.</li>
+        <li><b>Buy trigger</b> menggunakan rumus yang sama dengan halaman utama: Close + Range × 0,4.</li>
       </ul>
     </details>
   </section>
 
-  <footer>Data dari Yahoo Finance dan bisa tertunda 15–20 menit. Skor ini penyaring teknikal, bukan rekomendasi investasi. Setup yang bagus pun bisa gagal; selalu pasang stop loss dan keputusan beli sepenuhnya tanggung jawab Anda.
+  <footer>Data bersumber dari Yahoo Finance dan dapat tertunda 15–20 menit. Skor ini merupakan penyaring teknikal, bukan rekomendasi investasi. Setup yang baik pun dapat gagal; selalu gunakan stop loss, dan setiap keputusan pembelian sepenuhnya menjadi tanggung jawab Anda.
   <button type="button" class="ack-pill" data-ack-open><i>!</i>Ketentuan Penggunaan · Bukan Rekomendasi Investasi</button>
   <div class="vz" id="vz" hidden>
     <div class="vz-line">
@@ -580,13 +641,13 @@
 <section class="ai-panel" id="aiPanel" role="dialog" aria-label="Tanya AI" aria-hidden="true">
   <div class="ai-head">
     <span class="spark" aria-hidden="true"></span>
-    <div><b>Tanya AI</b><span id="aiCtx">Pakai akun ChatGPT atau Claude milikmu sendiri</span></div>
+    <div><b>Tanya AI</b><span id="aiCtx">Menggunakan akun ChatGPT atau Claude milik Anda</span></div>
     <button class="icon-btn ai-close" id="aiClose" type="button" aria-label="Tutup">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
     </button>
   </div>
   <div class="ai-body">
-    <p class="ai-intro">Tulis pertanyaanmu. Hasil pindaian di halaman ini ikut disertakan, lalu ChatGPT atau Claude terbuka di tab baru memakai akunmu sendiri. Versi gratis pun bisa.</p>
+    <p class="ai-intro">Tuliskan pertanyaan Anda. Hasil pindaian di halaman ini akan disertakan, kemudian ChatGPT atau Claude terbuka di tab baru menggunakan akun Anda sendiri. Versi gratis juga dapat digunakan.</p>
     <label class="ai-lbl" for="aiInput">Pertanyaan</label>
     <textarea id="aiInput" rows="3" placeholder="Contoh: Dari daftar ini, mana yang paling layak dipantau?"></textarea>
     <div class="ai-sugg" id="aiSugg"></div>
@@ -595,9 +656,9 @@
       <button class="ai-btn cld" data-p="claude" type="button"><span class="logo">C</span>Tanya di Claude</button>
     </div>
     <p class="ai-status" id="aiStatus" role="status"></p>
-    <details class="ai-prev"><summary>Lihat data yang ikut dikirim</summary><pre id="aiPreview"></pre></details>
+    <details class="ai-prev"><summary>Lihat data yang disertakan</summary><pre id="aiPreview"></pre></details>
   </div>
-  <p class="ai-note">Situs ini tidak menyimpan pertanyaanmu dan tidak terhubung ke akun siapa pun. Jawaban AI bisa keliru dan bukan rekomendasi investasi.</p>
+  <p class="ai-note">Situs ini tidak menyimpan pertanyaan Anda dan tidak terhubung ke akun siapa pun. Jawaban AI dapat keliru dan bukan merupakan rekomendasi investasi.</p>
 </section>
 
 <div class="ack" id="ack" role="dialog" aria-modal="true" aria-labelledby="ackT" aria-describedby="ackD" hidden>
@@ -632,6 +693,7 @@ const CONFIG = {
 function tickIDX(p){ if(p<200) return 1; if(p<500) return 2; if(p<2000) return 5; if(p<5000) return 10; return 25; }
 function tickUS(p){ return p<1 ? 0.0001 : 0.01; }
 function tickJP(p){ if(p<=3000) return 1; if(p<=5000) return 5; if(p<=30000) return 10; if(p<=50000) return 50; if(p<=300000) return 100; if(p<=500000) return 500; return 1000; }
+function tickCrypto(p){ p=Math.abs(p)||1; if(p>=100) return 0.01; if(p>=1) return 0.0001; if(p>=0.01) return 0.000001; return 0.00000001; }
 function tickHK(p){ if(p<0.25) return 0.001; if(p<0.5) return 0.005; if(p<10) return 0.01; if(p<20) return 0.02; if(p<100) return 0.05; if(p<200) return 0.1; if(p<500) return 0.2; if(p<1000) return 0.5; if(p<2000) return 1; if(p<5000) return 2; return 5; }
 function tickKR(p){ if(p<2000) return 1; if(p<5000) return 5; if(p<20000) return 10; if(p<50000) return 50; if(p<200000) return 100; if(p<500000) return 500; return 1000; }
 
@@ -649,6 +711,10 @@ const MARKETS = {
   HK: { name:'Hong Kong', tag:'HKEX', index:'^HSI', indexName:'Hang Seng', tz:'Asia/Hong_Kong', suffixes:['.HK'], cur:'HK$', dec:2, smallDec:3, tick:tickHK, closeMin:975, minValue:5e7,
         list:'0700 9988 0005 1299 0941 3690 1810 2318 0388 0939 1398 3988 0883 0001 0016 0011 0002 0003 0027 1928 9618 9999 1211 2020 0669 2269 0175 0857 0386 0066'.split(' '),
         names:{'0700':'Tencent','9988':'Alibaba','0005':'HSBC','1299':'AIA','0941':'China Mobile','3690':'Meituan','1810':'Xiaomi','2318':'Ping An','0388':'HKEX','0939':'CCB','1398':'ICBC','3988':'Bank of China','0883':'CNOOC','0001':'CK Hutchison','0016':'Sun Hung Kai Properties','0011':'Hang Seng Bank','0002':'CLP Holdings','0003':'HK & China Gas','0027':'Galaxy Entertainment','1928':'Sands China','9618':'JD.com','9999':'NetEase','1211':'BYD','2020':'Anta Sports','0669':'Techtronic','2269':'WuXi Biologics','0175':'Geely Auto','0857':'PetroChina','0386':'Sinopec','0066':'MTR'} },
+  CS: { name:'Kripto Spot', navName:'Kripto', tag:'SPOT', index:'BTC-USD', indexName:'Bitcoin', tz:'UTC', suffixes:['-USD'], cur:'$', dec:2, tick:tickCrypto, closeMin:1440, minValue:5e6, crypto:true, volIsValue:true, unitWord:'aset',
+        list:'BTC ETH SOL XRP BNB DOGE ADA AVAX LINK TRX DOT LTC BCH NEAR UNI AAVE ATOM XLM ETC FIL HBAR ICP ALGO SHIB XMR'.split(' ') },
+  CF: { name:'Kripto Futures', navName:'Kripto', navHidden:true, tag:'PERP', index:'BTC.PERP', indexName:'BTC Perpetual', tz:'UTC', suffixes:['.PERP'], cur:'$', dec:2, tick:tickCrypto, closeMin:1440, minValue:5e6, crypto:true, perp:true, unitWord:'kontrak',
+        list:'BTC ETH SOL XRP DOGE HYPE SUI BNB ADA LINK AVAX LTC BCH DOT NEAR UNI AAVE TRX ENA WLD TAO ONDO ARB OP APT SEI TIA INJ FET PEPE'.split(' ') },
 };
 
 /* ===================== Utilitas ===================== */
@@ -658,7 +724,7 @@ const M = () => MARKETS[state.market];
 const clean = x => Number(x.toFixed(6));
 function roundUpTick(p,m){ const t=m.tick(p); return clean(Math.ceil(p/t-1e-9)*t); }
 const fmt = (n,d=0) => (n==null||!isFinite(n)) ? '–' : n.toLocaleString('id-ID',{minimumFractionDigits:d,maximumFractionDigits:d});
-function fp(p,m){ if(p==null||!isFinite(p)) return '–'; let d=m.dec; if(d===2&&Math.abs(p)<1) d=m.smallDec||2; if(d===0&&!Number.isInteger(clean(p))) d=1; return fmt(p,d); }
+function fp(p,m){ if(p==null||!isFinite(p)) return '–'; let d=m.dec; if(m.crypto){ const a=Math.abs(p); return fmt(p, a>=100?2:a>=1?4:a>=0.01?6:8); } if(d===2&&Math.abs(p)<1) d=m.smallDec||2; if(d===0&&!Number.isInteger(clean(p))) d=1; return fmt(p,d); }
 const sgn = n => (n>0?'+':'')+fmt(n,2)+'%';
 const esc = s => String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
@@ -674,7 +740,7 @@ class NotFound extends Error{}
 class ApiDown extends Error{}
 async function fetchDaily(symbol, range='1y'){
   let text;
-  try{ const r=await fetch(`${CONFIG.apiPath}?symbol=${encodeURIComponent(symbol)}&range=${range}&interval=1d`); text=await r.text(); }
+  try{ const api=/\.PERP$/.test(symbol)?'/api/perp':CONFIG.apiPath; const r=await fetch(`${api}?symbol=${encodeURIComponent(symbol)}&range=${range}&interval=1d`); text=await r.text(); }
   catch(e){ throw new ApiDown(e.message); }
   let j; try{ j=JSON.parse(text); }catch{ throw new ApiDown('bukan JSON'); }
   if(!j.chart) throw new ApiDown('format');
@@ -683,7 +749,7 @@ async function fetchDaily(symbol, range='1y'){
   for(let i=0;i<ts.length;i++){
     const c=q.close?.[i]; if(c==null) continue;
     const k=localKey(ts[i],m.tz).key;
-    map.set(k,{key:k,o:q.open?.[i]??c,h:q.high?.[i]??c,l:q.low?.[i]??c,c,v:q.volume?.[i]??0});
+    const vol=q.volume?.[i]??0; map.set(k,{key:k,o:q.open?.[i]??c,h:q.high?.[i]??c,l:q.low?.[i]??c,c,v: m.volIsValue&&c ? vol/c : vol});
   }
   return {meta:r.meta||{}, bars:[...map.values()]};
 }
@@ -701,7 +767,7 @@ function demoStock(code){
   const m=M(); let seed=11; for(const ch of state.market+code) seed=(seed*33+ch.charCodeAt(0))>>>0;
   const rnd=()=>{ seed=(Math.imul(seed,1664525)+1013904223)>>>0; return seed/4294967296; };
   const g=()=>{ let s=0; for(let i=0;i<6;i++) s+=rnd(); return (s-3)/1.4; };
-  const base={ID:[300,9000],US:[20,600],JP:[800,9000],KR:[8000,300000],HK:[5,400]}[state.market];
+  const base={ID:[300,9000],US:[20,600],JP:[800,9000],KR:[8000,300000],HK:[5,400],CS:[1,3000],CF:[1,3000]}[state.market];
   const drift=(rnd()-0.45)*0.006; let c=base[0]+rnd()*base[1]; const bars=[]; const bv=1e6+rnd()*3e7;
   const d=new Date(); d.setUTCHours(0,0,0,0); const days=[];
   while(days.length<260){ d.setUTCDate(d.getUTCDate()-1); if(d.getUTCDay()%6) days.unshift(d.toISOString().slice(0,10)); }
@@ -806,9 +872,9 @@ function regime(info){
   const strong=info.above50 && info.above200!==false;
   el.className='regime show '+(strong?'ok':info.above50?'mid':'bad');
   el.innerHTML = strong
-    ? `<i></i><span><b>Pasar mendukung.</b> ${m.indexName} di atas rata-rata 50${info.above200!=null?' dan 200':''} hari. Breakout punya peluang berhasil lebih baik.</span>`
+    ? `<i></i><span><b>Pasar mendukung.</b> ${m.indexName} di atas rata-rata 50${info.above200!=null?' dan 200':''} hari. Peluang keberhasilan breakout cenderung lebih baik.</span>`
     : info.above50
-      ? `<i></i><span><b>Pasar campuran.</b> ${m.indexName} di atas rata-rata 50 hari tapi masih di bawah rata-rata 200 hari. Pilih yang skornya paling tinggi saja.</span>`
+      ? `<i></i><span><b>Pasar campuran.</b> ${m.indexName} di atas rata-rata 50 hari, tetapi masih di bawah rata-rata 200 hari. Prioritaskan ${m.unitWord||'saham'} dengan skor tertinggi.</span>`
       : `<i></i><span><b>Pasar sedang lemah.</b> ${m.indexName} di bawah rata-rata 50 hari. Breakout lebih sering gagal; perketat stop loss atau kurangi ukuran posisi.</span>`;
 }
 
@@ -869,7 +935,7 @@ function evalFund(f){
     const pr = isQ ? yoyQ(series) : (series.length>=2 ? {cur:series[series.length-1],prev:series[series.length-2]} : null);
     if(!pr) return {...base,st:'na',val:'Data kurang',det: isQ ? 'Butuh kuartal yang sama tahun lalu' : 'Butuh minimal 2 tahun data'};
     const lab = isQ ? qLabel(pr.cur.d)+' vs '+qLabel(pr.prev.d) : pr.cur.d.slice(0,4)+' vs '+pr.prev.d.slice(0,4);
-    const g=growthPct(pr.cur.v, pr.prev.v), det=`${lab}: ${fNum(pr.cur.v)} vs ${fNum(pr.prev.v)}${proxy?' (pakai laba bersih)':''}`;
+    const g=growthPct(pr.cur.v, pr.prev.v), det=`${lab}: ${fNum(pr.cur.v)} vs ${fNum(pr.prev.v)}${proxy?' (menggunakan laba bersih)':''}`;
     if(g==null) return {...base,st: pr.cur.v>0?'na':'fail',val: pr.cur.v>0?'Berbalik untung':'Masih rugi',det};
     return {...base,st:g>=min?'pass':'fail',val:(g>0?'+':'')+fmt(g,1)+'%',det,g};
   };
@@ -924,14 +990,16 @@ async function runFund(){
 
 /* ===================== Pindai ===================== */
 async function scan(){
-  const id=++state.scanId, m=M(), codes=m.list.slice();
+  const id=++state.scanId, m=M(); let codes=m.list.slice();
+  if(m.perp){ try{ const r=await fetch('/api/perp?list=30'); if(r.ok){ const j=await r.json(); if(j.list&&j.list.length>=10) codes=j.list.map(x=>String(x.coin).replace(/^k(?=[A-Z])/,'')); } }catch{} if(id!==state.scanId) return; }
+  const uw=m.unitWord||'saham';
   state.results=[]; state.scanning=true; render();
   $('#scanBtn').disabled=true; banner(null); regime(null);
   let done=0, failed=0, apiDown=false;
   try{ regime(indexInfo(await fetchDaily(m.index))); }
   catch(e){ if(e instanceof ApiDown){ apiDown=true; regime(indexInfo(demoStock('INDEX'))); } }
   if(id!==state.scanId) return;
-  const tick=()=>{ $('#progBar').style.width=(done/codes.length*100)+'%'; $('#progTxt').textContent=`Memindai ${done} dari ${codes.length} saham ${m.name}…`; };
+  const tick=()=>{ $('#progBar').style.width=(done/codes.length*100)+'%'; $('#progTxt').textContent=`Memindai ${done} dari ${codes.length} ${uw} ${m.name}…`; };
   tick();
   let i=0;
   async function worker(){
@@ -944,7 +1012,7 @@ async function scan(){
       if(apiDown && !data) data=demoStock(code);
       if(id!==state.scanId) return;
       const r=data && analyse(code,data);
-      if(r) state.results.push(r);
+      if(r){ try{ r.stg=stagePair(data.bars); }catch{} state.results.push(r); }
       done++; tick();
       if(done%4===0) render();
     }
@@ -952,11 +1020,11 @@ async function scan(){
   await Promise.all(Array.from({length:CONFIG.concurrency},worker));
   if(id!==state.scanId) return;
   state.demo=apiDown; state.scanning=false; $('#scanBtn').disabled=false;
-  if(fundState.on) runFund();
+  if(fundState.on && !m.crypto) runFund();
   if(rapor.seen && !rapor.data[state.market]) setTimeout(()=>raporBuild(false),300);
-  $('#progTxt').textContent=`Selesai: ${state.results.length} saham dianalisis`+(failed?`, ${failed} tidak ditemukan`:'');
+  $('#progTxt').textContent=`Selesai: ${state.results.length} ${uw} dianalisis`+(failed?`, ${failed} tidak ditemukan`:'');
   $('#lastScan').textContent='Dipindai '+new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'})+' WIB';
-  if(apiDown) banner('<b>Mode contoh.</b> Data di bawah adalah simulasi untuk melihat tampilan. Setelah file ini di-upload ke Netlify, pemindaian memakai data asli.');
+  if(apiDown) banner('<b>Mode contoh.</b> Data di bawah adalah simulasi untuk melihat tampilan. Setelah situs dipublikasikan, pemindaian akan memakai data asli.');
   render();
 }
 
@@ -966,7 +1034,7 @@ async function scan(){
    apa yang terjadi 5/10/20 hari bursa setelah setiap sinyal baru.
    Masuk di harga open hari berikutnya, biaya transaksi dipotong. */
 const rpDate=k=>{ const [y,m,d]=k.split("-").map(Number); return new Date(Date.UTC(y,m-1,d)).toLocaleDateString("id-ID",{day:"2-digit",month:"short",year:"numeric",timeZone:"UTC"}); };
-const RAPOR={ v:2, days:250, hz:[5,10,20], fees:{ID:0.4,US:0.05,JP:0.1,KR:0.25,HK:0.3} };
+const RAPOR={ v:2, days:250, hz:[5,10,20], fees:{ID:0.4,US:0.05,JP:0.1,KR:0.25,HK:0.3,CS:0.2,CF:0.1} };
 const rapor={ busy:false, data:{}, hz:20, seen:false };
 const rpStat=a=>{ if(!a.length) return null; const s=a.slice().sort((x,y)=>x-y), n=a.length, sum=a.reduce((x,y)=>x+y,0);
   return { n, avg:sum/n, med: n%2? s[(n-1)/2] : (s[n/2-1]+s[n/2])/2, win:a.filter(x=>x>0).length/n, best:s[n-1], worst:s[0] }; };
@@ -1118,7 +1186,7 @@ function buildContext(){
   ].join('\n');
 }
 function buildPrompt(q){
-  return `Kamu analis teknikal saham yang berhati-hati. Jawab dalam bahasa Indonesia yang mudah dipahami dan ringkas, pakai angka dari data di bawah. Kalau perlu info lain (berita, fundamental rinci), sebutkan bahwa itu di luar data ini. Akhiri dengan pengingat singkat bahwa ini bukan rekomendasi investasi.
+  return `Anda adalah analis teknikal saham yang berhati-hati. Jawab dalam bahasa Indonesia yang baku, ringkas, dan mudah dipahami, dengan menggunakan angka dari data di bawah. Apabila memerlukan info lain (berita, fundamental rinci), sebutkan bahwa itu di luar data ini. Akhiri dengan pengingat singkat bahwa ini bukan rekomendasi investasi.
 
 Pertanyaan: ${q}
 
@@ -1137,8 +1205,8 @@ async function askAI(provider){
   let copied=false; try{ await navigator.clipboard.writeText(prompt); copied=true; }catch{}
   const w=window.open(link.url(prompt),'_blank','noopener');
   st.className='ai-status'+(w?'':' err');
-  st.textContent = w ? `${link.name} dibuka di tab baru.`+(copied?' Pertanyaan juga sudah disalin; kalau kolom chat masih kosong, tekan Ctrl+V lalu Enter.':'')
-    : (copied ? `Browser memblokir tab baru. Pertanyaan sudah disalin: buka ${link.name}, tekan Ctrl+V, lalu Enter.` : 'Browser memblokir tab baru. Izinkan pop-up untuk situs ini lalu coba lagi.');
+  st.textContent = w ? `${link.name} dibuka di tab baru.`+(copied?' Pertanyaan juga telah disalin; apabila kolom obrolan masih kosong, tekan Ctrl+V lalu Enter.':'')
+    : (copied ? `Browser memblokir tab baru. Pertanyaan telah disalin: buka ${link.name}, tekan Ctrl+V, lalu Enter.` : 'Browser memblokir tab baru. Mohon izinkan pop-up untuk situs ini, lalu coba kembali.');
 }
 
 /* ===================== Tampilan ===================== */
@@ -1158,18 +1226,19 @@ function fundStrip(r){
     `<span class="fc ${x.st}" title="${esc(x.det||'')}"><i>${FUND_ICON[x.st]}</i>${esc(FUND_SHORT[x.key]||x.key)} <b>${esc(x.st==='na'?'data kosong':x.val)}</b></span>`).join('')}</div>`;
 }
 function render(){
-  finalize(state.results);
+  finalize(state.results); stgRender();
+  const fOn=fundState.on && !M().crypto, uw=M().unitWord||'saham';
   const m=M(), all=state.results.slice().sort((a,b)=>ORDER[a.status]-ORDER[b.status]||b.score-a.score);
   const n=s=>all.filter(r=>r.status===s).length;
   $('#nGo').textContent=n('go'); $('#nReady').textContent=n('ready'); $('#nWatch').textContent=n('watch');
   document.querySelectorAll('.sum button').forEach(b=>b.classList.toggle('on',b.dataset.f===state.filter));
   const q=state.q.trim().toLowerCase();
-  const rows=all.filter(r=>(state.filter==='all'||r.status===state.filter)&&(!q||r.code.toLowerCase().includes(q)||r.name.toLowerCase().includes(q))&&(!fundState.on||!fundState.min||(r.fund&&r.fund.pass>=fundState.min)));
-  $('#countTxt').textContent = state.filter==='all' ? `${rows.length} saham, diurutkan dari setup terkuat` : `${rows.length} saham dengan status "${LABEL[state.filter]}", klik kartunya lagi untuk melihat semua`;
+  const rows=all.filter(r=>(state.filter==='all'||r.status===state.filter)&&(!q||r.code.toLowerCase().includes(q)||r.name.toLowerCase().includes(q))&&(!fOn||!fundState.min||(r.fund&&r.fund.pass>=fundState.min)));
+  $('#countTxt').textContent = state.filter==='all' ? `${rows.length} ${uw}, diurutkan dari setup terkuat` : `${rows.length} ${uw} dengan status "${LABEL[state.filter]}", klik kartunya lagi untuk melihat semua`;
   const list=$('#list');
   if(!rows.length){
     list.innerHTML = state.scanning ? Array.from({length:5},()=>'<div class="skel"></div>').join('')
-      : `<div class="empty">${state.filter==='all' ? 'Belum ada hasil. Tekan "Pindai ulang".' : 'Tidak ada saham dengan status ini pada pindaian terakhir.'}</div>`;
+      : `<div class="empty">${state.filter==='all' ? 'Belum ada hasil. Silakan tekan "Pindai ulang".' : `Tidak ada ${uw} dengan status ini pada pindaian terakhir.`}</div>`;
     return;
   }
   list.innerHTML=rows.map((r,i)=>`
@@ -1181,20 +1250,96 @@ function render(){
       <div class="stat"><span class="badge b-${r.status}"><i></i>${LABEL[r.status]}</span><div class="trig">Buy trigger <b>${fp(r.buy,m)}</b></div></div>
       <div class="act"><a href="index.html#${encodeURIComponent(hashFor(r.code))}">Lihat detail</a></div>
       <div class="tags">${r.tags.map(([c,t])=>`<span class="tag ${c}">${esc(t)}</span>`).join('')}</div>
-      ${fundState.on ? fundStrip(r) : ''}
+      ${fOn ? fundStrip(r) : ''}
     </article>`).join('');
 }
+
+/* ===================== Rekap tahap siklus =====================
+   Empat tahap siklus harga: 1 konsolidasi (basis), 2 tren naik,
+   3 puncak (distribusi), 4 penurunan. Dihitung dari candle yang sudah
+   selesai saja, dalam dua kerangka waktu: harian dan mingguan. */
+const STG_P={ d:{f:50,m:150,l:200,lag:21,top:120,yr:250,u:'hari'}, w:{f:10,m:30,l:40,lag:4,top:26,yr:52,u:'minggu'} };
+const stg={ tf:'d' };
+function toWeekly(bars){
+  const out=[]; let cur=null;
+  for(const b of bars){
+    const d=new Date(b.key+'T00:00:00Z'); d.setUTCDate(d.getUTCDate()-((d.getUTCDay()+6)%7));
+    const wk=d.toISOString().slice(0,10);
+    if(!cur || cur.key!==wk){ cur={key:wk,o:b.o,h:b.h,l:b.l,c:b.c,v:b.v}; out.push(cur); }
+    else { cur.h=Math.max(cur.h,b.h); cur.l=Math.min(cur.l,b.l); cur.c=b.c; cur.v+=b.v; }
+  }
+  return out;
+}
+function stageOf(bars,P){
+  const c=bars.map(b=>b.c), n=c.length;
+  if(n<P.m+P.lag) return null;
+  const lN=n>=P.l+P.lag ? P.l : P.m, px=c[n-1];
+  const f=sma(c,P.f), m=sma(c,P.m), L=sma(c,lN), Lp=sma(c.slice(0,n-P.lag),lN);
+  const fP=sma(c.slice(0,n-Math.max(2,Math.round(P.lag/2))),P.f);
+  const slope=(L/Lp-1)*100, fUp=f>fP;
+  const w=bars.slice(-P.yr); let hi=-Infinity, lo=Infinity, hiI=0, loI=0;
+  w.forEach((b,i)=>{ if(b.h>hi){ hi=b.h; hiI=i; } if(b.l<lo){ lo=b.l; loI=i; } });
+  const fromHi=(hi-px)/hi*100, hiAgo=w.length-1-hiI, run=hi/lo;
+  const advanced=run>=1.3 && hiI>loI && hiAgo<=P.top && fromHi<=30;
+  const struct=px>m && (lN===P.l ? m>L : true) && slope>0 && f>m && px>f*0.97;
+  const topping=advanced && fromHi>=5 && (!fUp || px<f) && slope<1.5;
+  let st;
+  if(struct && !topping) st=2;
+  else if(px<L && slope<-0.5 && (px<m || f<m)) st=4;
+  else if(advanced && (!fUp || px<f || Math.abs(slope)<1.5)) st=3;
+  else st=1;
+  return { st, fromHi, slope };
+}
+function stagePair(bars){
+  const {done}=pickBars(bars);
+  return { d:stageOf(done,STG_P.d), w:stageOf(toWeekly(done),STG_P.w) };
+}
+const STG_INFO={
+  1:{n:'Konsolidasi', d:'Harga bergerak mendatar di sekitar rata-rata jangka panjang yang cenderung datar. Fase akumulasi; pantau hingga terjadi breakout dari basis.'},
+  2:{n:'Tren naik', d:'Harga berada di atas rata-rata menengah dan panjang yang tersusun naik. Fase paling sesuai untuk strategi breakout.'},
+  3:{n:'Puncak', d:'Setelah kenaikan besar, momentum melemah dan rata-rata mulai mendatar. Waspadai distribusi dan perketat batas kerugian.'},
+  4:{n:'Penurunan', d:'Harga di bawah rata-rata jangka panjang yang menurun. Posisi beli sebaiknya dihindari.'}
+};
+function stgRender(){
+  const box=$('#stgBody'); if(!box) return;
+  const m=M(), tf=stg.tf, uw=m.unitWord||'saham';
+  document.querySelectorAll('#stgTf button').forEach(b=>b.classList.toggle('on',b.dataset.tf===tf));
+  const rows=state.results.filter(r=>r.stg && r.stg[tf]);
+  if(!rows.length){
+    box.innerHTML= state.scanning ? '<div class="stg-wait">Menyusun rekap seiring berjalannya pemindaian…</div>' : `<div class="stg-wait">Belum ada data. Rekap tersedia setelah pemindaian selesai.</div>`;
+    return;
+  }
+  const by={1:[],2:[],3:[],4:[]}; rows.forEach(r=>by[r.stg[tf].st].push(r));
+  by[2].sort((a,b)=>(b.score||0)-(a.score||0)); [1,3,4].forEach(k=>by[k].sort((a,b)=>a.stg[tf].fromHi-b.stg[tf].fromHi));
+  const tot=rows.length, pct=k=>Math.round(by[k].length/tot*100);
+  const chip=r=>{ const x=r.stg[tf], o=tf==='d'?r.stg.w:r.stg.d, alt=o?` · ${tf==='d'?'mingguan':'harian'}: tahap ${o.st}`:'';
+    return `<a class="stg-chip" href="index.html#${encodeURIComponent(hashFor(r.code))}" title="${esc(r.name)} · ${fmt(x.fromHi,1)}% di bawah puncak 52 minggu${alt}"><b>${esc(r.code)}</b><small>${x.fromHi<=0.5?'puncak':'−'+fmt(x.fromHi,0)+'%'}</small></a>`; };
+  const col=k=>`<div class="stg-col s${k}">
+      <div class="stg-h"><span class="stg-n">${k}</span><div><b>${STG_INFO[k].n}</b><small>${by[k].length} ${uw} · ${pct(k)}%</small></div></div>
+      <p class="stg-d">${STG_INFO[k].d}</p>
+      <div class="stg-chips">${by[k].length?by[k].map(chip).join(''):'<span class="stg-none">Tidak ada</span>'}</div></div>`;
+  box.innerHTML=`<div class="stg-bar" aria-hidden="true">${[1,2,3,4].map(k=>by[k].length?`<i class="s${k}" style="flex:${by[k].length}"></i>`:'').join('')}</div>
+    <div class="stg-grid">${col(1)}${col(2)}${col(3)}</div>
+    <details class="stg-four"${by[4].length?'':' hidden'}><summary><span class="stg-n">4</span> ${STG_INFO[4].n}: ${by[4].length} ${uw} (${pct(4)}%)</summary><p class="stg-d">${STG_INFO[4].d}</p><div class="stg-chips">${by[4].map(chip).join('')}</div></details>
+    ${state.scanning?`<p class="stg-live">Pemindaian masih berjalan; rekap akan diperbarui otomatis.</p>`:''}`;
+}
+$('#stgTf')?.addEventListener('click',e=>{ const b=e.target.closest('button[data-tf]'); if(!b) return; stg.tf=b.dataset.tf; try{ localStorage.setItem('smcb_stgtf',stg.tf); }catch{} stgRender(); });
+try{ const t=localStorage.getItem('smcb_stgtf'); if(t==='d'||t==='w') stg.tf=t; }catch{}
 
 function moveInd(){ const a=document.querySelector('.mk.active'), ind=$('#segInd'); if(!a) return; ind.style.width=a.offsetWidth+'px'; ind.style.transform=`translateX(${a.offsetLeft}px)`; }
 function setMarket(k){
   state.market=k; state.filter='all';
-  document.querySelectorAll('.mk').forEach(b=>{ const on=b.dataset.mk===k; b.classList.toggle('active',on); b.setAttribute('aria-selected',on); });
-  $('#heroTitle').textContent=`Saham ${MARKETS[k].name} dengan setup breakout terkuat`;
+  const mm=MARKETS[k];
+  document.querySelectorAll('.mk').forEach(b=>{ const on=b.dataset.mk===k || !!(mm.crypto && MARKETS[b.dataset.mk].crypto); b.classList.toggle('active',on); b.setAttribute('aria-selected',on); });
+  $('#heroTitle').textContent= mm.perp ? 'Kontrak futures kripto dengan setup breakout terkuat' : mm.crypto ? 'Aset kripto spot dengan setup breakout terkuat' : `Saham ${mm.name} dengan setup breakout terkuat`;
+  const cx=$('#cxBar'); cx.hidden=!mm.crypto; cx.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.mk===k)); $('#cxLev').hidden=!mm.perp;
+  document.querySelectorAll('.fund-bar,.fx-scan').forEach(e=>e.hidden=!!mm.crypto);
   try{ history.replaceState(null,'','#'+k); }catch{}
   moveInd(); raporRender(); scan();
 }
 
-$('#markets').insertAdjacentHTML('beforeend',Object.entries(MARKETS).map(([k,m])=>`<button type="button" class="mk" role="tab" data-mk="${k}">${m.name}<span class="code">${m.tag}</span></button>`).join(''));
+$('#markets').insertAdjacentHTML('beforeend',Object.entries(MARKETS).filter(([,m])=>!m.navHidden).map(([k,m])=>`<button type="button" class="mk" role="tab" data-mk="${k}">${m.navName||m.name}<span class="code">${m.crypto?'24J':m.tag}</span></button>`).join(''));
+$('#cxBar').addEventListener('click',e=>{ const b=e.target.closest('button[data-mk]'); if(b && b.dataset.mk!==state.market) setMarket(b.dataset.mk); });
 $('#markets').addEventListener('click',e=>{ const k=e.target.closest('.mk')?.dataset.mk; if(k && k!==state.market) setMarket(k); });
 $('#scanBtn').addEventListener('click',scan);
 raporInit();
