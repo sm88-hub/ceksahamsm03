@@ -51,28 +51,36 @@ function toISO(v) {
 async function fromCalendar(market, year, map) {
   const tickers = [...map.keys()];
   const body = {
-    sortType: 'ASC', sortField: 'startdatetime', entityIdType: 'earnings', offset: 0, size: 250,
+    sortType: 'ASC', sortField: 'startdatetime', entityIdType: 'sp_earnings', offset: 0, size: 100,
     includeFields: ['ticker', 'companyshortname', 'startdatetime', 'startdatetimetype', 'epsestimate', 'epsactual', 'epssurprisepct', 'eventtype'],
     query: {
       operator: 'and',
       operands: [
+        // EAD = jadwal rilis (mendatang), ERA = rilis yang sudah terjadi
+        { operator: 'or', operands: [{ operator: 'eq', operands: ['eventtype', 'EAD'] }, { operator: 'eq', operands: ['eventtype', 'ERA'] }] },
         { operator: 'gte', operands: ['startdatetime', `${year}-01-01`] },
         { operator: 'lt', operands: ['startdatetime', `${year + 1}-01-01`] },
         { operator: 'or', operands: tickers.map((t) => ({ operator: 'eq', operands: ['ticker', t] })) },
       ],
     },
   };
-  const call = async (a) => {
+  const call = async (a, offset) => {
     const r = await fetch(`https://query1.finance.yahoo.com/v1/finance/visualization?lang=en-US&region=US&crumb=${encodeURIComponent(a.crumb)}`, {
-      method: 'POST', headers: { 'User-Agent': UA, cookie: a.cookie, 'content-type': 'application/json' }, body: JSON.stringify(body),
+      method: 'POST', headers: { 'User-Agent': UA, cookie: a.cookie, 'content-type': 'application/json' }, body: JSON.stringify({ ...body, offset }),
     });
     if (r.status === 401 || r.status === 403) return null;
     const j = await r.json().catch(() => null);
-    return j?.finance?.result?.[0]?.documents?.[0] || null;
+    const res = j?.finance?.result?.[0];
+    return res?.documents?.[0] ? { doc: res.documents[0], total: +res.total || 0 } : null;
   };
-  let doc = await call(await getAuth(false));
-  if (!doc) doc = await call(await getAuth(true));
-  if (!doc || !Array.isArray(doc.rows)) throw new Error('Kalender earnings tidak merespons');
+  let a = await getAuth(false), page = await call(a, 0);
+  if (!page) { a = await getAuth(true); page = await call(a, 0); }
+  if (!page || !Array.isArray(page.doc.rows)) throw new Error('Kalender earnings tidak merespons');
+  const doc = page.doc, rowsAll = [...doc.rows];
+  // Yahoo membatasi 100 baris per permintaan
+  for (let off = 100; off < Math.min(page.total, 500) && rowsAll.length >= off; off += 100) {
+    const p = await call(a, off); if (!p || !p.doc.rows?.length) break; rowsAll.push(...p.doc.rows);
+  }
   const c = doc.columns || [];
   const I = {
     t: colIndex(c, 'ticker', 'Symbol'), n: colIndex(c, 'companyshortname', 'Company'), d: colIndex(c, 'startdatetime', 'Event Start Date', 'Earnings Date'),
@@ -80,12 +88,14 @@ async function fromCalendar(market, year, map) {
     s: colIndex(c, 'epssurprisepct', 'Surprise (%)', 'Surprise(%)'), ty: colIndex(c, 'eventtype', 'Event Type'),
   };
   const out = [];
-  for (const r of doc.rows) {
+  for (const r of rowsAll) {
     const sym = String(r[I.t] || '').toUpperCase(), code = map.get(sym), d = toISO(r[I.d]);
     if (!code || !d) continue;
-    out.push({ code, sym, name: r[I.n] || null, d, time: r[I.tt] || null, est: num(r[I.e]), act: num(r[I.a]), sur: num(r[I.s]), type: I.ty >= 0 ? r[I.ty] : null });
+    const nz = (v) => { const x = num(v); return x === 0 ? null : x; }; // Yahoo memakai 0 untuk data kosong
+    out.push({ code, sym, name: r[I.n] || null, d, time: r[I.tt] || null, est: nz(r[I.e]), act: nz(r[I.a]), sur: nz(r[I.s]), type: I.ty >= 0 ? r[I.ty] : null });
   }
-  return out;
+  // Jadwal (EAD) yang berdekatan dengan rilis aktual (ERA) dari emiten yang sama dianggap peristiwa yang sama
+  return out.filter((e) => e.type !== 'EAD' || !out.some((x) => x.type === 'ERA' && x.code === e.code && Math.abs(new Date(x.d) - new Date(e.d)) < 21 * 864e5));
 }
 
 async function fromQuote(market, year, map) {
