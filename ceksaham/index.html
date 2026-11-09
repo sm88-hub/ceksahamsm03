@@ -2671,11 +2671,11 @@ if('serviceWorker' in navigator && (location.protocol==='https:' || location.hos
 })();
 /* ===================== Peringatan penggunaan ===================== */
 (()=>{
-  const KEY='smcb_ack', VER=1, DAYS=30, box=document.getElementById('ack'); if(!box) return;
+  const KEY='smcb_ack', VER=2, box=document.getElementById('ack'); if(!box) return;
   const ck=document.getElementById('ackCk'), go=document.getElementById('ackGo');
   let last=null;
   const open=(again)=>{ last=document.activeElement; box.hidden=false; document.body.classList.add('ack-open'); ck.checked=!!again; go.disabled=!again; setTimeout(()=>(again?go:ck).focus(),60); };
-  const close=()=>{ box.hidden=true; document.body.classList.remove('ack-open'); try{ localStorage.setItem(KEY,JSON.stringify({v:VER,at:Date.now()})); }catch{} if(last&&last.focus) last.focus(); };
+  const close=()=>{ box.hidden=true; document.body.classList.remove('ack-open'); try{ sessionStorage.setItem(KEY,String(VER)); localStorage.setItem(KEY,JSON.stringify({v:VER,at:Date.now()})); }catch{} if(last&&last.focus) last.focus(); };
   ck.addEventListener('change',()=>{ go.disabled=!ck.checked; });
   go.addEventListener('click',()=>{ if(ck.checked) close(); });
   box.addEventListener('keydown',e=>{
@@ -2686,8 +2686,9 @@ if('serviceWorker' in navigator && (location.protocol==='https:' || location.hos
   });
   document.querySelectorAll('[data-ack-open]').forEach(b=>b.addEventListener('click',()=>open(true)));
   window.SMCB_ACK_OPEN=()=>open(true);
-  let seen=null; try{ seen=JSON.parse(localStorage.getItem(KEY)||'null'); }catch{}
-  if(!seen || seen.v!==VER || Date.now()-seen.at>DAYS*864e5) open(false);
+  // Tampil setiap sesi browser baru (setelah browser ditutup lalu dibuka lagi), sekali per sesi.
+  let seen=null; try{ seen=sessionStorage.getItem(KEY); }catch{}
+  if(seen!==String(VER)) open(false);
 })();
 </script>
 <script src="firebase-config.js"></script>
