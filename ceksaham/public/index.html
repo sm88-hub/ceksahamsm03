@@ -395,6 +395,35 @@
   .vz-pop li .bar i{display:block;height:100%;background:linear-gradient(90deg,#9CC71A,#3FD18F);border-radius:99px}
   .vz-pop li b{font-variant-numeric:tabular-nums;color:var(--ink)}
   .vz-pop p{font-size:11.5px;color:var(--ink3);margin:10px 0 0;line-height:1.5}
+  /* Peringatan (spotlight) */
+  .ack{position:fixed;inset:0;z-index:200;display:grid;place-items:center;padding:20px;background:radial-gradient(520px 420px at 50% 45%,rgba(198,241,53,.14),transparent 70%),rgba(2,8,22,.78);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);animation:ackBg .4s ease both;overflow-y:auto}
+  .ack[hidden]{display:none}
+  @keyframes ackBg{from{opacity:0}to{opacity:1}}
+  .ack-card{position:relative;width:min(520px,100%);background:linear-gradient(170deg,#0B1A3A,#020F29 60%);color:#fff;border:1px solid rgba(198,241,53,.35);border-radius:24px;padding:30px 28px 24px;box-shadow:0 0 0 6px rgba(198,241,53,.06),0 30px 80px rgba(0,0,0,.55),0 0 120px rgba(198,241,53,.12);animation:ackIn .55s cubic-bezier(.2,.9,.25,1.1) both;margin:auto}
+  @keyframes ackIn{from{opacity:0;transform:translateY(18px) scale(.96)}to{opacity:1;transform:none}}
+  .ack-ico{width:58px;height:58px;border-radius:18px;display:grid;place-items:center;color:#0B1220;background:#C6F135;box-shadow:0 0 0 0 rgba(198,241,53,.55);animation:ackPulse 2.4s ease-out infinite;margin-bottom:16px}
+  @keyframes ackPulse{0%{box-shadow:0 0 0 0 rgba(198,241,53,.5)}70%,100%{box-shadow:0 0 0 16px rgba(198,241,53,0)}}
+  .ack-kick{font-size:11.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#C6F135}
+  .ack-card h2{font:800 22px/1.25 'Montserrat','Plus Jakarta Sans',sans-serif;margin:6px 0 16px;letter-spacing:-.01em}
+  .ack-list{list-style:none;margin:0 0 18px;padding:0;display:grid;gap:10px}
+  .ack-list li{position:relative;padding:11px 14px 11px 40px;border-radius:14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);font-size:13.5px;line-height:1.55;color:rgba(255,255,255,.78);animation:ackIn .5s cubic-bezier(.2,.8,.2,1) both}
+  .ack-list li:nth-child(1){animation-delay:.12s}.ack-list li:nth-child(2){animation-delay:.22s}.ack-list li:nth-child(3){animation-delay:.32s}
+  .ack-list li::before{content:'';position:absolute;left:15px;top:16px;width:10px;height:10px;border-radius:3px;background:#C6F135;transform:rotate(45deg)}
+  .ack-list b{color:#fff;display:block;margin-bottom:1px}
+  .ack-check{display:flex;gap:11px;align-items:flex-start;cursor:pointer;font-size:13.5px;line-height:1.5;color:#fff;padding:12px 14px;border-radius:14px;border:1px dashed rgba(198,241,53,.45);background:rgba(198,241,53,.06)}
+  .ack-check input{appearance:none;flex:none;width:20px;height:20px;border-radius:6px;border:2px solid #C6F135;margin-top:1px;cursor:pointer;display:grid;place-items:center;transition:background .15s}
+  .ack-check input:checked{background:#C6F135}
+  .ack-check input:checked::after{content:'';width:5px;height:10px;border:solid #0B1220;border-width:0 2.5px 2.5px 0;transform:rotate(45deg) translate(-1px,-1px)}
+  .ack-check input:focus-visible{outline:3px solid rgba(198,241,53,.5);outline-offset:2px}
+  .ack-go{margin-top:14px;width:100%;border:0;border-radius:14px;padding:14px;font:800 15px 'Plus Jakarta Sans',sans-serif;background:#C6F135;color:#0B1220;cursor:pointer;transition:transform .15s,opacity .2s,box-shadow .2s;box-shadow:0 8px 24px rgba(198,241,53,.25)}
+  .ack-go:hover:not(:disabled){transform:translateY(-1px)}
+  .ack-go:disabled{opacity:.35;cursor:not-allowed;box-shadow:none}
+  body.ack-open{overflow:hidden}
+  .ack-pill{display:inline-flex;align-items:center;gap:7px;margin-top:12px;border:1px solid var(--rule2);background:var(--surface);color:var(--ink2);border-radius:999px;padding:6px 12px 6px 8px;font-size:12.5px;font-weight:700;cursor:pointer}
+  .ack-pill i{width:18px;height:18px;border-radius:6px;background:#C6F135;color:#0B1220;display:grid;place-items:center;font-style:normal;font-weight:900;font-size:11px}
+  .ack-pill:hover{border-color:var(--ink3);color:var(--ink)}
+  @media(max-width:520px){.ack-card{padding:24px 18px 18px}.ack-card h2{font-size:19px}}
+  @media(prefers-reduced-motion:reduce){.ack,.ack-card,.ack-list li,.ack-ico{animation:none}}
   @media(prefers-reduced-motion:reduce){.lens-grid.swap .lcard,.lbars i{animation:none}.lv-lamp i{animation:none}}
   .legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:12px;color:var(--ink2);font-size:13px}
   .legend span{display:inline-flex;align-items:center;gap:7px}.legend i{width:16px;display:inline-block}
@@ -969,11 +998,12 @@
           <summary>Cara level dihitung</summary>
           <div class="howto"><ul>
             <li><b>Hari referensi</b> adalah hari bursa terakhir yang sudah selesai. Selama pasar buka, level dihitung dari hari sebelumnya.</li>
-            <li><b>Range</b> = max(High − Low, |High − Close 2 hari lalu|, |Low − Close 2 hari lalu|).</li>
+            <li><b>Range</b> (True Range, Wilder 1978) = max(High − Low, |High − Close sebelumnya|, |Low − Close sebelumnya|). Close sebelumnya = harga penutupan sehari sebelum hari referensi.</li>
             <li><b>Buy trigger</b> = Close + Range × <code id="hK">0,4</code>. <b>Stop loss</b> = Close − Range × <code id="hK2">0,4</code>.</li>
             <li><b>Target</b> = Buy trigger + <code id="hRR">1,5</code> × (Buy trigger − Stop loss).</li>
             <li><b>Syarat volume</b>: volume hari referensi minimal <code id="hVM">1,4</code>× rata-rata <code id="hVD">50</code> hari.</li>
             <li><b>Pivot</b>: P = (H + L + C) / 3, R1 = 2P − L, S1 = 2P − H, R2 = P + (H − L), S2 = P − (H − L).</li>
+            <li><b>Asal rumus.</b> Buy trigger dan stop adalah varian <i>volatility breakout</i> Larry Williams dengan harga penutupan sebagai acuan. Syarat volume mengikuti aturan breakout IBD/William O'Neil: minimal 40% di atas rata-rata 50 hari. Pivot memakai rumus pivot klasik. Pengali 0,4 dan target 1,5× risiko adalah pilihan aplikasi ini, bukan angka baku.</li>
             <li>Harga dibulatkan ke fraksi harga tiap bursa. BEI, Tokyo, dan Hong Kong punya istirahat siang (sesi 1 dan 2); bursa US dan Korea dibagi dua paruh hari. Jam memakai waktu lokal bursa.</li>
           </ul></div>
         </details>
@@ -982,6 +1012,7 @@
   </main>
 
   <footer>Data dari Yahoo Finance dan bisa tertunda 15–20 menit. Bukan rekomendasi investasi; keputusan beli dan jual sepenuhnya tanggung jawab Anda.
+  <button type="button" class="ack-pill" data-ack-open><i>!</i>Hanya untuk analisis, bukan rekomendasi. Baca ketentuannya</button>
   <div class="vz" id="vz" hidden>
     <div class="vz-line">
       <span class="vz-dot" aria-hidden="true"></span><span class="vz-lbl">Pengunjung</span>
@@ -1022,6 +1053,21 @@
   </div>
   <p class="ai-note">Situs ini tidak menyimpan pertanyaanmu dan tidak terhubung ke akun siapa pun. Jawaban AI bisa keliru dan bukan rekomendasi investasi.</p>
 </section>
+
+<div class="ack" id="ack" role="dialog" aria-modal="true" aria-labelledby="ackT" aria-describedby="ackD" hidden>
+  <div class="ack-card">
+    <div class="ack-ico" aria-hidden="true"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v6c0 4.6 3.3 8.3 8 9 4.7-.7 8-4.4 8-9V6l-8-3z"/><path d="M12 8v5"/><path d="M12 16.5h.01"/></svg></div>
+    <span class="ack-kick">Sebelum mulai</span>
+    <h2 id="ackT">Situs ini alat bantu analisis, bukan penasihat investasi</h2>
+    <ul class="ack-list" id="ackD">
+      <li><b>Bukan rekomendasi.</b> Skor, sinyal, level harga, dan bacaan AI adalah hasil hitungan otomatis untuk bahan belajar dan analisis. Tidak ada satu pun yang merupakan ajakan membeli atau menjual.</li>
+      <li><b>Keputusan dan risikonya milikmu.</b> Setiap keputusan beli, jual, atau tindakan lain sepenuhnya tanggung jawab pribadi. Saham bisa turun tajam dan kerugian bisa lebih besar dari perkiraan.</li>
+      <li><b>Data bisa tertunda atau keliru.</b> Harga dan laporan keuangan berasal dari sumber pihak ketiga, bisa terlambat 15–20 menit atau tidak akurat. Cek ulang ke sekuritas atau sumber resmi sebelum bertransaksi.</li>
+    </ul>
+    <label class="ack-check"><input type="checkbox" id="ackCk"><span>Saya sudah membaca dan memahami bahwa semua keputusan investasi adalah tanggung jawab saya sendiri.</span></label>
+    <button type="button" class="ack-go" id="ackGo" disabled>Saya mengerti, lanjutkan</button>
+  </div>
+</div>
 
 <script>
 /* =====================================================================
@@ -2576,6 +2622,25 @@ if('serviceWorker' in navigator && (location.protocol==='https:' || location.hos
   window.addEventListener('beforeinstallprompt',e=>{ e.preventDefault(); deferred=e; b.hidden=false; });
   b.addEventListener('click',async()=>{ if(!deferred) return; deferred.prompt(); try{ await deferred.userChoice; }catch{} deferred=null; b.hidden=true; });
   window.addEventListener('appinstalled',()=>{ b.hidden=true; });
+})();
+/* ===================== Peringatan penggunaan ===================== */
+(()=>{
+  const KEY='smcb_ack', VER=1, DAYS=30, box=document.getElementById('ack'); if(!box) return;
+  const ck=document.getElementById('ackCk'), go=document.getElementById('ackGo');
+  let last=null;
+  const open=(again)=>{ last=document.activeElement; box.hidden=false; document.body.classList.add('ack-open'); ck.checked=!!again; go.disabled=!again; setTimeout(()=>(again?go:ck).focus(),60); };
+  const close=()=>{ box.hidden=true; document.body.classList.remove('ack-open'); try{ localStorage.setItem(KEY,JSON.stringify({v:VER,at:Date.now()})); }catch{} if(last&&last.focus) last.focus(); };
+  ck.addEventListener('change',()=>{ go.disabled=!ck.checked; });
+  go.addEventListener('click',()=>{ if(ck.checked) close(); });
+  box.addEventListener('keydown',e=>{
+    if(e.key!=='Tab') return;
+    const f=[...box.querySelectorAll('input,button')].filter(x=>!x.disabled); if(!f.length) return;
+    const a=f[0], z=f[f.length-1];
+    if(e.shiftKey && document.activeElement===a){ e.preventDefault(); z.focus(); } else if(!e.shiftKey && document.activeElement===z){ e.preventDefault(); a.focus(); }
+  });
+  document.querySelectorAll('[data-ack-open]').forEach(b=>b.addEventListener('click',()=>open(true)));
+  let seen=null; try{ seen=JSON.parse(localStorage.getItem(KEY)||'null'); }catch{}
+  if(!seen || seen.v!==VER || Date.now()-seen.at>DAYS*864e5) open(false);
 })();
 </script>
 </body>

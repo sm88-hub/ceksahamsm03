@@ -280,6 +280,102 @@
   .vz-pop li .bar i{display:block;height:100%;background:linear-gradient(90deg,#9CC71A,#3FD18F);border-radius:99px}
   .vz-pop li b{font-variant-numeric:tabular-nums;color:var(--ink)}
   .vz-pop p{font-size:11.5px;color:var(--ink3);margin:10px 0 0;line-height:1.5}
+  /* Rapor scanner */
+  .rapor{margin-top:36px;scroll-margin-top:90px;background:var(--surface);border:1px solid var(--rule);border-radius:22px;padding:24px;box-shadow:var(--shadow)}
+  .rp-head{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;align-items:flex-end;margin-bottom:16px}
+  .rp-head > div:first-child{max-width:640px}
+  .rp-kick{font-size:11.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--up)}
+  .rp-head h2{font:800 26px 'Montserrat','Plus Jakarta Sans',sans-serif;letter-spacing:-.01em;margin:4px 0 6px}
+  .rp-head p{margin:0;color:var(--ink2);font-size:14px;line-height:1.6}
+  .rp-ctrl{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .rp-hz{display:inline-flex;gap:2px;background:var(--sunk);border-radius:11px;padding:3px}
+  .rp-hz button{border:0;background:none;padding:7px 12px;border-radius:8px;font-weight:700;font-size:13px;color:var(--ink3);cursor:pointer}
+  .rp-hz .on{background:var(--surface);color:var(--ink);box-shadow:0 0 0 1px var(--rule2)}
+  .rp-run{border:0;border-radius:11px;padding:9px 16px;font-weight:800;font-size:13.5px;background:var(--ink);color:var(--surface);cursor:pointer}
+  .rp-run:disabled{opacity:.4;cursor:default}
+  .rp-prog{margin-bottom:14px}.rp-prog[hidden]{display:none}
+  .rp-pbar{height:6px;border-radius:99px;background:var(--sunk);overflow:hidden;margin-bottom:6px}
+  .rp-pbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#C6F135,#3FD18F);transition:width .3s}
+  .rp-prog span{font-size:12.5px;color:var(--ink3)}
+  .rp-empty,.rp-demo{border:1px dashed var(--rule2);border-radius:14px;padding:18px;color:var(--ink2);font-size:13.5px;text-align:center}
+  .rp-demo{padding:9px 12px;margin-bottom:12px;background:var(--warn-soft);border-style:solid;border-color:transparent;color:var(--warn);font-weight:600}
+  .rp-verdict{font-size:15px;line-height:1.65;margin:0 0 16px;padding:14px 16px;border-radius:14px;background:var(--sunk)}
+  .rp-verdict b.up,.rp-big.up,.rp-kv b.up,.rp-cmp b.up,.rp-sig .up,.rp-reg b.up{color:var(--up)}
+  .rp-verdict b.down,.rp-big.down,.rp-kv b.down,.rp-cmp b.down,.rp-sig .down,.rp-reg b.down{color:var(--down)}
+  .rp-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .rp-card{border:1px solid var(--rule);border-radius:18px;padding:18px;min-width:0;animation:swap .45s cubic-bezier(.2,.8,.2,1) both}
+  .rp-card:nth-child(2){animation-delay:.08s}
+  .rp-card-h{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+  .rp-card-h small{font-size:12px;color:var(--ink3)}
+  .rp-big{font:700 40px 'Space Grotesk',sans-serif;letter-spacing:-.03em;margin:12px 0 0;line-height:1}
+  .rp-big-s{font-size:12.5px;color:var(--ink3);margin-top:4px}
+  .rp-warn{font-size:11px;color:var(--warn);background:var(--warn-soft);border-radius:6px;padding:1px 6px;margin-left:4px}
+  .rp-kv{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px 12px;margin:16px 0}
+  .rp-kv label{display:block;font-size:11.5px;color:var(--ink3)}
+  .rp-kv b{font:700 16px 'Space Grotesk',sans-serif}
+  .rp-cmp{display:grid;gap:7px;border-top:1px dashed var(--rule2);padding-top:12px}
+  .rp-cmp-r{display:grid;grid-template-columns:150px 1fr 64px;gap:10px;align-items:center;font-size:12.5px;color:var(--ink2)}
+  .rp-cmp-r.sig span{font-weight:800;color:var(--ink)}
+  .rp-cmp-r b{text-align:right;font:700 13px 'Space Grotesk',sans-serif}
+  .rp-track{position:relative;height:10px;background:var(--sunk);border-radius:99px}
+  .rp-track::after{content:'';position:absolute;left:50%;top:-3px;bottom:-3px;width:1px;background:var(--rule2)}
+  .rp-track i{position:absolute;top:0;bottom:0;border-radius:99px;width:var(--w);animation:rpw .8s cubic-bezier(.2,.8,.2,1) both}
+  .rp-track i.pos{left:50%;background:var(--up)}.rp-track i.neg{right:50%;background:var(--down)}
+  .rp-cmp-r.base i{opacity:.55}.rp-cmp-r.idx i{opacity:.35}
+  @keyframes rpw{from{width:0}}
+  .rp-none{color:var(--ink3);font-size:13px}
+  .rp-row2{display:grid;grid-template-columns:1fr 1.2fr;gap:14px;margin-top:14px}
+  .rp-reg,.rp-recent{border:1px solid var(--rule);border-radius:18px;padding:16px;min-width:0}
+  .rp-reg h4,.rp-recent h4{margin:0 0 10px;font-size:14px}
+  .rp-reg table{width:100%;border-collapse:collapse;font-size:12.5px}
+  .rp-reg th{text-align:left;font-weight:700;color:var(--ink2);padding:6px 6px 8px;vertical-align:bottom}
+  .rp-reg th small{display:block;font-weight:500;color:var(--ink3);font-size:11px}
+  .rp-reg td{padding:8px 6px;border-top:1px solid var(--rule);vertical-align:top}
+  .rp-reg td b{display:block;font:700 16px 'Space Grotesk',sans-serif}
+  .rp-reg td small{color:var(--ink3);font-size:11.5px}
+  .rp-reg p{font-size:12px;color:var(--ink3);margin:10px 0 0}
+  .rp-list{display:grid;gap:6px;max-height:330px;overflow:auto;padding-right:4px}
+  .rp-sig{display:grid;grid-template-columns:96px 70px auto 1fr;grid-template-rows:auto auto;gap:0 10px;align-items:center;text-decoration:none;color:inherit;border:1px solid var(--rule);border-radius:12px;padding:8px 12px;transition:border-color .2s}
+  .rp-sig:hover{border-color:var(--ink3)}
+  .rp-sig .d{font-size:12px;color:var(--ink3)}
+  .rp-sig b{font:700 14px 'Space Grotesk',sans-serif}
+  .rp-sig .badge{font-size:11px;padding:2px 8px}
+  .rp-sig .r{justify-self:end;font:700 14px 'Space Grotesk',sans-serif}
+  .rp-sig small{grid-column:1 / -1;justify-self:end;font-size:11px;color:var(--ink3)}
+  .rp-meta{font-size:12px;color:var(--ink3);margin:14px 0 0}
+  .rp-how{margin-top:14px;padding:12px 16px}
+  .rp-how ul{margin:10px 0 0;padding-left:18px;color:var(--ink2);font-size:13.5px;line-height:1.65;display:grid;gap:6px}
+  @media(max-width:900px){.rp-grid,.rp-row2{grid-template-columns:1fr}}
+  @media(max-width:560px){.rapor{padding:18px}.rp-kv{grid-template-columns:repeat(2,minmax(0,1fr))}.rp-cmp-r{grid-template-columns:110px 1fr 56px}.rp-big{font-size:34px}.rp-sig{grid-template-columns:80px 1fr auto}.rp-sig .badge{display:none}}
+  /* Peringatan (spotlight) */
+  .ack{position:fixed;inset:0;z-index:200;display:grid;place-items:center;padding:20px;background:radial-gradient(520px 420px at 50% 45%,rgba(198,241,53,.14),transparent 70%),rgba(2,8,22,.78);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);animation:ackBg .4s ease both;overflow-y:auto}
+  .ack[hidden]{display:none}
+  @keyframes ackBg{from{opacity:0}to{opacity:1}}
+  .ack-card{position:relative;width:min(520px,100%);background:linear-gradient(170deg,#0B1A3A,#020F29 60%);color:#fff;border:1px solid rgba(198,241,53,.35);border-radius:24px;padding:30px 28px 24px;box-shadow:0 0 0 6px rgba(198,241,53,.06),0 30px 80px rgba(0,0,0,.55),0 0 120px rgba(198,241,53,.12);animation:ackIn .55s cubic-bezier(.2,.9,.25,1.1) both;margin:auto}
+  @keyframes ackIn{from{opacity:0;transform:translateY(18px) scale(.96)}to{opacity:1;transform:none}}
+  .ack-ico{width:58px;height:58px;border-radius:18px;display:grid;place-items:center;color:#0B1220;background:#C6F135;box-shadow:0 0 0 0 rgba(198,241,53,.55);animation:ackPulse 2.4s ease-out infinite;margin-bottom:16px}
+  @keyframes ackPulse{0%{box-shadow:0 0 0 0 rgba(198,241,53,.5)}70%,100%{box-shadow:0 0 0 16px rgba(198,241,53,0)}}
+  .ack-kick{font-size:11.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#C6F135}
+  .ack-card h2{font:800 22px/1.25 'Montserrat','Plus Jakarta Sans',sans-serif;margin:6px 0 16px;letter-spacing:-.01em}
+  .ack-list{list-style:none;margin:0 0 18px;padding:0;display:grid;gap:10px}
+  .ack-list li{position:relative;padding:11px 14px 11px 40px;border-radius:14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);font-size:13.5px;line-height:1.55;color:rgba(255,255,255,.78);animation:ackIn .5s cubic-bezier(.2,.8,.2,1) both}
+  .ack-list li:nth-child(1){animation-delay:.12s}.ack-list li:nth-child(2){animation-delay:.22s}.ack-list li:nth-child(3){animation-delay:.32s}
+  .ack-list li::before{content:'';position:absolute;left:15px;top:16px;width:10px;height:10px;border-radius:3px;background:#C6F135;transform:rotate(45deg)}
+  .ack-list b{color:#fff;display:block;margin-bottom:1px}
+  .ack-check{display:flex;gap:11px;align-items:flex-start;cursor:pointer;font-size:13.5px;line-height:1.5;color:#fff;padding:12px 14px;border-radius:14px;border:1px dashed rgba(198,241,53,.45);background:rgba(198,241,53,.06)}
+  .ack-check input{appearance:none;flex:none;width:20px;height:20px;border-radius:6px;border:2px solid #C6F135;margin-top:1px;cursor:pointer;display:grid;place-items:center;transition:background .15s}
+  .ack-check input:checked{background:#C6F135}
+  .ack-check input:checked::after{content:'';width:5px;height:10px;border:solid #0B1220;border-width:0 2.5px 2.5px 0;transform:rotate(45deg) translate(-1px,-1px)}
+  .ack-check input:focus-visible{outline:3px solid rgba(198,241,53,.5);outline-offset:2px}
+  .ack-go{margin-top:14px;width:100%;border:0;border-radius:14px;padding:14px;font:800 15px 'Plus Jakarta Sans',sans-serif;background:#C6F135;color:#0B1220;cursor:pointer;transition:transform .15s,opacity .2s,box-shadow .2s;box-shadow:0 8px 24px rgba(198,241,53,.25)}
+  .ack-go:hover:not(:disabled){transform:translateY(-1px)}
+  .ack-go:disabled{opacity:.35;cursor:not-allowed;box-shadow:none}
+  body.ack-open{overflow:hidden}
+  .ack-pill{display:inline-flex;align-items:center;gap:7px;margin-top:12px;border:1px solid var(--rule2);background:var(--surface);color:var(--ink2);border-radius:999px;padding:6px 12px 6px 8px;font-size:12.5px;font-weight:700;cursor:pointer}
+  .ack-pill i{width:18px;height:18px;border-radius:6px;background:#C6F135;color:#0B1220;display:grid;place-items:center;font-style:normal;font-weight:900;font-size:11px}
+  .ack-pill:hover{border-color:var(--ink3);color:var(--ink)}
+  @media(max-width:520px){.ack-card{padding:24px 18px 18px}.ack-card h2{font-size:19px}}
+  @media(prefers-reduced-motion:reduce){.ack,.ack-card,.ack-list li,.ack-ico{animation:none}}
   @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -307,7 +403,7 @@
     <div class="hero-top">
       <div>
         <h1 id="heroTitle">Saham Indonesia dengan setup breakout terkuat</h1>
-        <p>Setiap saham di daftar pantauan diberi skor 0–100 dari enam faktor yang paling konsisten muncul sebelum breakout berhasil: tren, momentum relatif, jarak ke titik tertinggi 52 minggu, volatilitas, breakout dan volume, serta candle. Skor tinggi berarti tanda-tandanya lengkap, bukan jaminan harga naik. <a href="#dasar" style="color:var(--acc);font-weight:700">Lihat dasar analisisnya</a></p>
+        <p>Setiap saham di daftar pantauan diberi skor 0–100 dari enam faktor yang paling konsisten muncul sebelum breakout berhasil: tren, momentum relatif, jarak ke titik tertinggi 52 minggu, volatilitas, breakout dan volume, serta candle. Skor tinggi berarti tanda-tandanya lengkap, bukan jaminan harga naik. <a href="#dasar" style="color:var(--acc);font-weight:700">Lihat dasar analisisnya</a> · <a href="#rapor" style="color:var(--acc);font-weight:700">Lihat rapor scanner</a></p>
       </div>
       <button class="scan-btn" id="scanBtn" type="button">Pindai ulang</button>
     </div>
@@ -379,6 +475,32 @@
 
   <div class="list" id="list"></div>
 
+  <section class="rapor" id="rapor">
+    <div class="rp-head">
+      <div>
+        <span class="rp-kick">Transparansi</span>
+        <h2>Rapor scanner</h2>
+        <p>Scanner ini diputar ulang hari demi hari selama 12 bulan terakhir, hanya dengan data yang tersedia di hari itu. Lalu dicek: apa yang terjadi pada saham setelah diberi sinyal? Hasilnya ditampilkan apa adanya, bagus maupun jelek.</p>
+      </div>
+      <div class="rp-ctrl">
+        <div class="rp-hz" id="rpHz" role="tablist" aria-label="Rentang waktu"><button type="button" data-h="5">5 hari</button><button type="button" data-h="10">10 hari</button><button type="button" data-h="20" class="on">20 hari</button></div>
+        <button type="button" class="rp-run" id="rpRun">Hitung rapor</button>
+      </div>
+    </div>
+    <div class="rp-prog" id="rpProg" hidden><div class="rp-pbar"><i id="rpBar"></i></div><span id="rpTxt">Menyiapkan…</span></div>
+    <div id="rpBody"></div>
+    <details class="rp-how">
+      <summary>Cara menghitung dan keterbatasannya</summary>
+      <ul>
+        <li><b>Tanpa mengintip masa depan.</b> Untuk setiap hari, skor dan status dihitung ulang memakai data sampai hari itu saja, persis seperti yang akan terlihat kalau scanner dibuka hari itu.</li>
+        <li><b>Hanya sinyal baru yang dihitung.</b> Saham yang berstatus sama berhari-hari dihitung sekali, di hari pertama statusnya muncul.</li>
+        <li><b>Masuk di harga pembukaan hari berikutnya</b>, keluar di harga penutupan 5, 10, atau 20 hari bursa kemudian. Biaya transaksi pulang-pergi per bursa sudah dipotong. Tanpa stop loss, jadi hasilnya menggambarkan kualitas sinyal, bukan strategi lengkap.</li>
+        <li><b>Pembanding.</b> "Semua saham di daftar" adalah rata-rata kalau membeli saham mana saja dari daftar yang sama di hari mana saja. Sinyal yang berguna harus mengalahkan angka ini, bukan hanya positif.</li>
+        <li><b>Keterbatasan.</b> Daftar saham adalah saham besar hari ini, jadi saham yang dulu besar lalu jatuh tidak ikut (bias penyintas), dan hasil cenderung sedikit lebih bagus dari kenyataan. Periode 12 bulan dan jumlah sinyal masih kecil; satu kondisi pasar bisa mendominasi. Hasil masa lalu tidak menjamin hasil berikutnya.</li>
+      </ul>
+    </details>
+  </section>
+
   <section class="method" id="dasar">
     <h2>Dasar analisis</h2>
     <p class="lead">Tidak ada analisis yang bisa memastikan harga besok. Yang bisa dilakukan adalah memilih saham yang punya ciri-ciri paling sering mendahului breakout yang berhasil. Skor di halaman ini menggabungkan enam faktor itu. Sebagian berasal dari riset pasar modal yang sudah diuji puluhan tahun, sebagian dari praktik trader momentum profesional, dan sumbernya disebut di tiap faktor.</p>
@@ -427,6 +549,7 @@
   </section>
 
   <footer>Data dari Yahoo Finance dan bisa tertunda 15–20 menit. Skor ini penyaring teknikal, bukan rekomendasi investasi. Setup yang bagus pun bisa gagal; selalu pasang stop loss dan keputusan beli sepenuhnya tanggung jawab Anda.
+  <button type="button" class="ack-pill" data-ack-open><i>!</i>Hanya untuk analisis, bukan rekomendasi. Baca ketentuannya</button>
   <div class="vz" id="vz" hidden>
     <div class="vz-line">
       <span class="vz-dot" aria-hidden="true"></span><span class="vz-lbl">Pengunjung</span>
@@ -467,6 +590,21 @@
   </div>
   <p class="ai-note">Situs ini tidak menyimpan pertanyaanmu dan tidak terhubung ke akun siapa pun. Jawaban AI bisa keliru dan bukan rekomendasi investasi.</p>
 </section>
+
+<div class="ack" id="ack" role="dialog" aria-modal="true" aria-labelledby="ackT" aria-describedby="ackD" hidden>
+  <div class="ack-card">
+    <div class="ack-ico" aria-hidden="true"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v6c0 4.6 3.3 8.3 8 9 4.7-.7 8-4.4 8-9V6l-8-3z"/><path d="M12 8v5"/><path d="M12 16.5h.01"/></svg></div>
+    <span class="ack-kick">Sebelum mulai</span>
+    <h2 id="ackT">Situs ini alat bantu analisis, bukan penasihat investasi</h2>
+    <ul class="ack-list" id="ackD">
+      <li><b>Bukan rekomendasi.</b> Skor, sinyal, level harga, dan bacaan AI adalah hasil hitungan otomatis untuk bahan belajar dan analisis. Tidak ada satu pun yang merupakan ajakan membeli atau menjual.</li>
+      <li><b>Keputusan dan risikonya milikmu.</b> Setiap keputusan beli, jual, atau tindakan lain sepenuhnya tanggung jawab pribadi. Saham bisa turun tajam dan kerugian bisa lebih besar dari perkiraan.</li>
+      <li><b>Data bisa tertunda atau keliru.</b> Harga dan laporan keuangan berasal dari sumber pihak ketiga, bisa terlambat 15–20 menit atau tidak akurat. Cek ulang ke sekuritas atau sumber resmi sebelum bertransaksi.</li>
+    </ul>
+    <label class="ack-check"><input type="checkbox" id="ackCk"><span>Saya sudah membaca dan memahami bahwa semua keputusan investasi adalah tanggung jawab saya sendiri.</span></label>
+    <button type="button" class="ack-go" id="ackGo" disabled>Saya mengerti, lanjutkan</button>
+  </div>
+</div>
 
 <script>
 /* =====================================================================
@@ -525,9 +663,9 @@ function localKey(tsSec,tz){
 /* ===================== Data ===================== */
 class NotFound extends Error{}
 class ApiDown extends Error{}
-async function fetchDaily(symbol){
+async function fetchDaily(symbol, range='1y'){
   let text;
-  try{ const r=await fetch(`${CONFIG.apiPath}?symbol=${encodeURIComponent(symbol)}&range=1y&interval=1d`); text=await r.text(); }
+  try{ const r=await fetch(`${CONFIG.apiPath}?symbol=${encodeURIComponent(symbol)}&range=${range}&interval=1d`); text=await r.text(); }
   catch(e){ throw new ApiDown(e.message); }
   let j; try{ j=JSON.parse(text); }catch{ throw new ApiDown('bukan JSON'); }
   if(!j.chart) throw new ApiDown('format');
@@ -540,10 +678,10 @@ async function fetchDaily(symbol){
   }
   return {meta:r.meta||{}, bars:[...map.values()]};
 }
-async function fetchStock(code){
+async function fetchStock(code, range='1y'){
   const m=M(); let last;
   for(const suf of m.suffixes){
-    try{ return {...await fetchDaily(code+suf), symbol:code+suf}; }
+    try{ return {...await fetchDaily(code+suf, range), symbol:code+suf}; }
     catch(e){ if(e instanceof ApiDown) throw e; last=e; }
   }
   throw last;
@@ -806,10 +944,149 @@ async function scan(){
   if(id!==state.scanId) return;
   state.demo=apiDown; state.scanning=false; $('#scanBtn').disabled=false;
   if(fundState.on) runFund();
+  if(rapor.seen && !rapor.data[state.market]) setTimeout(()=>raporBuild(false),300);
   $('#progTxt').textContent=`Selesai: ${state.results.length} saham dianalisis`+(failed?`, ${failed} tidak ditemukan`:'');
   $('#lastScan').textContent='Dipindai '+new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'})+' WIB';
   if(apiDown) banner('<b>Mode contoh.</b> Data di bawah adalah simulasi untuk melihat tampilan. Setelah file ini di-upload ke Netlify, pemindaian memakai data asli.');
   render();
+}
+
+/* ===================== Rapor scanner =====================
+   Memutar ulang scanner ini hari demi hari pada data 2 tahun, memakai
+   HANYA data sampai hari itu (tanpa mengintip masa depan), lalu mengukur
+   apa yang terjadi 5/10/20 hari bursa setelah setiap sinyal baru.
+   Masuk di harga open hari berikutnya, biaya transaksi dipotong. */
+const rpDate=k=>{ const [y,m,d]=k.split("-").map(Number); return new Date(Date.UTC(y,m-1,d)).toLocaleDateString("id-ID",{day:"2-digit",month:"short",year:"numeric",timeZone:"UTC"}); };
+const RAPOR={ v:2, days:250, hz:[5,10,20], fees:{ID:0.4,US:0.05,JP:0.1,KR:0.25,HK:0.3} };
+const rapor={ busy:false, data:{}, hz:20, seen:false };
+const rpStat=a=>{ if(!a.length) return null; const s=a.slice().sort((x,y)=>x-y), n=a.length, sum=a.reduce((x,y)=>x+y,0);
+  return { n, avg:sum/n, med: n%2? s[(n-1)/2] : (s[n/2-1]+s[n/2])/2, win:a.filter(x=>x>0).length/n, best:s[n-1], worst:s[0] }; };
+
+async function raporBuild(force){
+  const m=M(), mk=state.market, key='smcb_rapor_'+mk, today=localKey(Date.now()/1000,m.tz).key;
+  if(!force){ try{ const c=JSON.parse(localStorage.getItem(key)||'null'); if(c && c.v===RAPOR.v && c.day===today){ rapor.data[mk]=c; raporRender(); return; } }catch{} }
+  if(rapor.busy) return; rapor.busy=true;
+  const prog=$('#rpProg'), bar=$('#rpBar'), txt=$('#rpTxt'); prog.hidden=false; $('#rpRun').disabled=true;
+  const step=(f,t)=>{ bar.style.width=(f*100)+'%'; txt.textContent=t; };
+  let demo=false, idx=null;
+  try{ idx=await fetchDaily(m.index,'2y'); }catch(e){ if(e instanceof ApiDown) demo=true; }
+  if(!idx) idx=demoStock('INDEX');
+  const codes=m.list.slice(), S={}; let done=0, i=0;
+  step(0,`Mengambil data 2 tahun untuk ${codes.length} saham ${m.name}…`);
+  async function worker(){
+    while(i<codes.length){
+      const code=codes[i++]; let d=null;
+      if(!demo){ try{ d=await fetchStock(code,'2y'); }catch(e){ if(e instanceof ApiDown) demo=true; } }
+      if(!d && demo) d=demoStock(code);
+      if(d && d.bars.length>140) S[code]={...d, pos:new Map(d.bars.map((b,k)=>[b.key,k]))};
+      done++; step(done/codes.length*0.45,`Mengambil data ${done} dari ${codes.length} saham…`);
+    }
+  }
+  await Promise.all(Array.from({length:CONFIG.concurrency},worker));
+  if(mk!==state.market){ rapor.busy=false; return; }
+  // Kalender bursa & kondisi indeks per hari
+  const ib=pickBars(idx.bars).done, cal=ib.map(b=>b.key), ic=ib.map(b=>b.c), iPos=new Map(cal.map((k,j)=>[k,j]));
+  const strongAt=j=>{ if(j<50) return null; const ma=(n)=> j>=n-1 ? ic.slice(j-n+1,j+1).reduce((a,b)=>a+b,0)/n : null; const m50=ma(50), m200=ma(200); return ic[j]>m50 && (m200==null || ic[j]>m200); };
+  const fee=(RAPOR.fees[mk]??0.2)/100, H=RAPOR.hz, maxH=Math.max(...H);
+  const G={ go:{}, ready:{} }, base={}, idxF={}, reg={ go:{}, ready:{} };
+  H.forEach(h=>{ G.go[h]={r:[],x:[]}; G.ready[h]={r:[],x:[]}; base[h]=[]; idxF[h]=[]; reg.go[h]={s:[],w:[]}; reg.ready[h]={s:[],w:[]}; });
+  const prevSt={}, sig=[];
+  const start=Math.max(0,cal.length-RAPOR.days);
+  for(let j=start;j<cal.length;j++){
+    const K=cal[j], list=[];
+    for(const code in S){ const s=S[code], p=s.pos.get(K); if(p==null || p<120) continue;
+      const r=analyse(code,{bars:s.bars.slice(0,p+1), meta:s.meta, symbol:s.symbol}); if(r){ r._p=p; list.push(r); } }
+    if(list.length>=5){
+      finalize(list);
+      const strong=strongAt(j);
+      H.forEach(h=>{ if(j+h<ic.length) idxF[h].push(ic[j+h]/ic[j]-1); });
+      for(const r of list){
+        const s=S[r.code], p=r._p, bars=s.bars, isNew=(r.status==='go'||r.status==='ready') && prevSt[r.code]!==r.status;
+        prevSt[r.code]=r.status;
+        const entry=bars[p+1]?.o;
+        H.forEach(h=>{
+          if(!entry || p+h>=bars.length) return;
+          const ret=bars[p+h].c/entry-1-fee; base[h].push(ret);
+          if(!isNew) return;
+          const xj=iPos.get(bars[p+h].key), xr= xj!=null ? ic[xj]/ic[j]-1 : null;
+          G[r.status][h].r.push(ret); if(xr!=null) G[r.status][h].x.push(ret-xr);
+          if(strong!=null) reg[r.status][h][strong?'s':'w'].push(ret);
+        });
+        if(isNew){
+          const last=bars.length-1, hEnd=Math.min(p+maxH,last), fin=p+maxH<=last;
+          const xj=iPos.get(bars[hEnd].key);
+          sig.push({ k:K, code:r.code, st:r.status, entry:entry??null, ret: entry ? bars[hEnd].c/entry-1-(fin?fee:0) : null, days:hEnd-p, fin,
+            ix: xj!=null ? ic[xj]/ic[j]-1 : null, strong });
+        }
+      }
+    }
+    if((j-start)%10===0){ step(0.45+(j-start)/(cal.length-start)*0.55,`Memutar ulang scanner: ${rpDate(K)}…`); await new Promise(r=>setTimeout(r)); }
+  }
+  const out={ v:RAPOR.v, day:today, mk, demo, from:cal[start], to:cal[cal.length-1], nStocks:Object.keys(S).length, groups:{}, base:{}, idx:{}, reg:{}, recent:sig.slice(-24).reverse(), totals:{go:sig.filter(s=>s.st==='go').length, ready:sig.filter(s=>s.st==='ready').length} };
+  ['go','ready'].forEach(g=>{ out.groups[g]={}; out.reg[g]={}; H.forEach(h=>{ const st=rpStat(G[g][h].r), xs=G[g][h].x;
+    out.groups[g][h]= st && {...st, ex: xs.length? xs.reduce((a,b)=>a+b,0)/xs.length : null, beat: xs.length? xs.filter(x=>x>0).length/xs.length : null};
+    out.reg[g][h]={ s:rpStat(reg[g][h].s), w:rpStat(reg[g][h].w) }; }); });
+  H.forEach(h=>{ out.base[h]=rpStat(base[h]); out.idx[h]=rpStat(idxF[h]); });
+  rapor.data[mk]=out; rapor.busy=false; prog.hidden=true; $('#rpRun').disabled=false;
+  if(!demo) try{ localStorage.setItem(key,JSON.stringify(out)); }catch{}
+  raporRender();
+}
+
+function raporRender(){
+  const box=$('#rpBody'); if(!box) return;
+  const m=M(), d=rapor.data[state.market], h=rapor.hz;
+  $('#rpRun').textContent = d ? 'Hitung ulang' : 'Hitung rapor';
+  if(!d){ box.innerHTML=`<div class="rp-empty">Rapor untuk bursa ${m.name} belum dihitung. Prosesnya mengambil data 2 tahun untuk ${m.list.length} saham dan memutar ulang scanner hari demi hari; butuh sekitar setengah menit.</div>`; return; }
+  const P=x=> x==null ? '–' : (x>0?'+':'')+fmt(x*100,1)+'%', Pp=x=> x==null ? '–' : (x>0?'+':'')+fmt(x*100,1)+' poin', cls=x=> x==null?'':x>0?'up':'down';
+  const b=d.base[h], ix=d.idx[h];
+  const card=(g,label,desc)=>{
+    const s=d.groups[g][h];
+    if(!s) return `<article class="rp-card"><span class="badge b-${g}"><i></i>${label}</span><p class="rp-none">Belum ada sinyal ${label.toLowerCase()} yang sudah berjalan ${h} hari dalam periode ini.</p></article>`;
+    const vals=[['Sinyal ini',s.avg,'sig'],['Semua saham di daftar',b?.avg,'base'],[`Indeks ${m.indexName}`,ix?.avg,'idx']];
+    const mx=Math.max(...vals.map(v=>Math.abs(v[1]||0)),0.005);
+    return `<article class="rp-card">
+      <div class="rp-card-h"><span class="badge b-${g}"><i></i>${label}</span><small>${desc}</small></div>
+      <div class="rp-big ${cls(s.avg)}">${P(s.avg)}</div>
+      <div class="rp-big-s">rata-rata ${h} hari bursa setelah sinyal, dari ${s.n} sinyal${s.n<15?' <b class="rp-warn">sampel kecil</b>':''}</div>
+      <div class="rp-kv">
+        <div><label>Berakhir untung</label><b>${fmt(s.win*100,0)}%</b></div>
+        <div><label>Mengalahkan indeks</label><b>${s.beat==null?'–':fmt(s.beat*100,0)+'%'}</b></div>
+        <div><label>Selisih vs indeks</label><b class="${cls(s.ex)}">${Pp(s.ex)}</b></div>
+        <div><label>Median</label><b class="${cls(s.med)}">${P(s.med)}</b></div>
+        <div><label>Terbaik</label><b class="up">${P(s.best)}</b></div>
+        <div><label>Terburuk</label><b class="down">${P(s.worst)}</b></div>
+      </div>
+      <div class="rp-cmp">${vals.map(([l,v,c])=>`<div class="rp-cmp-r ${c}"><span>${l}</span><div class="rp-track"><i class="${(v||0)>=0?'pos':'neg'}" style="--w:${Math.abs(v||0)/mx*50}%"></i></div><b class="${cls(v)}">${P(v)}</b></div>`).join('')}</div>
+    </article>`;
+  };
+  const verdict=(()=>{
+    const r=d.groups.ready[h], g=d.groups.go[h], best=[g&&['Breakout terkonfirmasi',g],r&&['Siap breakout',r]].filter(Boolean);
+    if(!best.length) return 'Belum cukup sinyal yang sudah selesai untuk dinilai.';
+    return best.map(([l,s])=>`Sinyal <b>${l}</b> rata-rata <b class="${cls(s.avg)}">${P(s.avg)}</b> dalam ${h} hari, ${s.avg>(b?.avg??0)?'<b class="up">lebih baik</b>':'<b class="down">lebih buruk</b>'} daripada membeli saham mana saja dari daftar yang sama (${P(b?.avg)}), dan ${s.ex>0?'<b class="up">mengungguli</b>':'<b class="down">kalah dari</b>'} indeks ${Pp(Math.abs(s.ex)).replace('+','')}.`).join(' ');
+  })();
+  const regRow=(g,l)=>{ const R=d.reg[g][h]; const c=x=> x ? `<b class="${cls(x.avg)}">${P(x.avg)}</b><small>${fmt(x.win*100,0)}% untung · ${x.n} sinyal</small>` : '<small>belum ada</small>'; return `<tr><td><span class="badge b-${g}"><i></i>${l}</span></td><td>${c(R.s)}</td><td>${c(R.w)}</td></tr>`; };
+  box.innerHTML=`
+    ${d.demo?'<div class="rp-demo">Data contoh: rapor ini dihitung dari data simulasi karena data asli belum tersedia.</div>':''}
+    <p class="rp-verdict">${verdict}</p>
+    <div class="rp-grid">${card('go','Breakout terkonfirmasi','tembus high 20 hari + volume')}${card('ready','Siap breakout','skor ≥65, ≤3% dari pivot')}</div>
+    <div class="rp-row2">
+      <div class="rp-reg"><h4>Kondisi pasar saat sinyal muncul</h4>
+        <table><thead><tr><th></th><th>Pasar kuat<small>${m.indexName} di atas MA50 &amp; MA200</small></th><th>Pasar lemah</th></tr></thead><tbody>${regRow('go','Breakout')}${regRow('ready','Siap')}</tbody></table>
+        <p>Menguji aturan buku acuan: breakout lebih sering gagal saat pasar lemah.</p></div>
+      <div class="rp-recent"><h4>Sinyal terbaru dan hasilnya</h4>
+        <div class="rp-list">${d.recent.length?d.recent.map(s=>`<a class="rp-sig" href="index.html#${encodeURIComponent(hashFor(s.code))}">
+          <span class="d">${rpDate(s.k)}</span><b>${esc(s.code)}</b><span class="badge b-${s.st}"><i></i>${s.st==='go'?'Breakout':'Siap'}</span>
+          <span class="r ${cls(s.ret)}">${s.entry?P(s.ret):'baru'}</span><small>${!s.entry?'masuk di harga open hari bursa berikutnya':`${s.fin?`hasil ${RAPOR.hz[2]} hari`:`${s.days} hari, masih berjalan`}${s.ix!=null?` · indeks ${P(s.ix)}`:''}`}</small></a>`).join(''):'<p class="rp-none">Belum ada sinyal.</p>'}</div></div>
+    </div>
+    <p class="rp-meta">Periode ${rpDate(d.from)} sampai ${rpDate(d.to)} · ${d.nStocks} saham · ${d.totals.go} sinyal breakout dan ${d.totals.ready} sinyal siap breakout · dihitung ${d.day===localKey(Date.now()/1000,m.tz).key?'hari ini':rpDate(d.day)}</p>`;
+}
+function raporInit(){
+  $('#rpHz').addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; rapor.hz=+b.dataset.h; $('#rpHz').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b)); raporRender(); });
+  $('#rpRun').addEventListener('click',()=>raporBuild(!!rapor.data[state.market]));
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(es=>{ if(es.some(e=>e.isIntersecting)){ rapor.seen=true; if(!rapor.data[state.market] && !state.scanning) raporBuild(false); } },{rootMargin:'200px'}).observe($('#rapor'));
+  }
+  raporRender();
 }
 
 /* ===================== Tanya AI (akun milik pengunjung) ===================== */
@@ -905,12 +1182,13 @@ function setMarket(k){
   document.querySelectorAll('.mk').forEach(b=>{ const on=b.dataset.mk===k; b.classList.toggle('active',on); b.setAttribute('aria-selected',on); });
   $('#heroTitle').textContent=`Saham ${MARKETS[k].name} dengan setup breakout terkuat`;
   try{ history.replaceState(null,'','#'+k); }catch{}
-  moveInd(); scan();
+  moveInd(); raporRender(); scan();
 }
 
 $('#markets').insertAdjacentHTML('beforeend',Object.entries(MARKETS).map(([k,m])=>`<button type="button" class="mk" role="tab" data-mk="${k}">${m.name}<span class="code">${m.tag}</span></button>`).join(''));
 $('#markets').addEventListener('click',e=>{ const k=e.target.closest('.mk')?.dataset.mk; if(k && k!==state.market) setMarket(k); });
 $('#scanBtn').addEventListener('click',scan);
+raporInit();
 try{ fundState.on = localStorage.getItem('smcb_fund')==='1'; fundState.min=+(localStorage.getItem('smcb_fundmin')||0); }catch{}
 $('#fundOn').checked=fundState.on; $('#fundMin').value=String(fundState.min); $('#fundMin').disabled=!fundState.on;
 $('#fundOn').addEventListener('change',e=>{ fundState.on=e.target.checked; $('#fundMin').disabled=!fundState.on; try{ localStorage.setItem('smcb_fund',fundState.on?'1':'0'); }catch{}
@@ -965,6 +1243,25 @@ if('serviceWorker' in navigator && (location.protocol==='https:' || location.hos
   window.addEventListener('beforeinstallprompt',e=>{ e.preventDefault(); deferred=e; b.hidden=false; });
   b.addEventListener('click',async()=>{ if(!deferred) return; deferred.prompt(); try{ await deferred.userChoice; }catch{} deferred=null; b.hidden=true; });
   window.addEventListener('appinstalled',()=>{ b.hidden=true; });
+})();
+/* ===================== Peringatan penggunaan ===================== */
+(()=>{
+  const KEY='smcb_ack', VER=1, DAYS=30, box=document.getElementById('ack'); if(!box) return;
+  const ck=document.getElementById('ackCk'), go=document.getElementById('ackGo');
+  let last=null;
+  const open=(again)=>{ last=document.activeElement; box.hidden=false; document.body.classList.add('ack-open'); ck.checked=!!again; go.disabled=!again; setTimeout(()=>(again?go:ck).focus(),60); };
+  const close=()=>{ box.hidden=true; document.body.classList.remove('ack-open'); try{ localStorage.setItem(KEY,JSON.stringify({v:VER,at:Date.now()})); }catch{} if(last&&last.focus) last.focus(); };
+  ck.addEventListener('change',()=>{ go.disabled=!ck.checked; });
+  go.addEventListener('click',()=>{ if(ck.checked) close(); });
+  box.addEventListener('keydown',e=>{
+    if(e.key!=='Tab') return;
+    const f=[...box.querySelectorAll('input,button')].filter(x=>!x.disabled); if(!f.length) return;
+    const a=f[0], z=f[f.length-1];
+    if(e.shiftKey && document.activeElement===a){ e.preventDefault(); z.focus(); } else if(!e.shiftKey && document.activeElement===z){ e.preventDefault(); a.focus(); }
+  });
+  document.querySelectorAll('[data-ack-open]').forEach(b=>b.addEventListener('click',()=>open(true)));
+  let seen=null; try{ seen=JSON.parse(localStorage.getItem(KEY)||'null'); }catch{}
+  if(!seen || seen.v!==VER || Date.now()-seen.at>DAYS*864e5) open(false);
 })();
 </script>
 </body>
