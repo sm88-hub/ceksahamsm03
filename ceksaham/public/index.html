@@ -193,6 +193,104 @@
   .tab{background:none;border:0;color:var(--ink2);font-size:13px;font-weight:700;padding:4px 12px;border-radius:7px;cursor:pointer}
   .tab.active{background:var(--surface);color:var(--ink);box-shadow:0 0 0 1px var(--rule2)}
   #chart{height:350px;position:relative}
+  /* Crest Lens */
+  .t-lens{grid-column:span 12}.t-lens:hover{transform:none}
+  .lens-head{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:16px}
+  .lens-brand{display:flex;gap:12px;align-items:center;min-width:0}
+  .lens-brand h3{margin:0 0 2px;font:800 17px 'Montserrat','Plus Jakarta Sans',sans-serif;letter-spacing:-.01em;display:block}
+  .lens-brand p{margin:0;font-size:13px;color:var(--ink3)}.lens-brand p b{color:var(--ink2)}
+  .lens-ico{width:40px;height:40px;border-radius:12px;background:#020F29;color:#C6F135;display:grid;place-items:center;flex:none;position:relative;overflow:hidden}
+  .lens-ico::after{content:'';position:absolute;inset:0;background:linear-gradient(115deg,transparent 30%,rgba(198,241,53,.35) 50%,transparent 70%);background-size:250% 100%;animation:sheen 3.2s linear infinite}
+  .lens-nav{display:flex;align-items:center;gap:6px}
+  .lens-nav [hidden]{display:none!important}
+  .ln-btn{width:34px;height:34px;border-radius:10px;border:1px solid var(--rule2);background:var(--surface);font-size:20px;line-height:1;cursor:pointer;color:var(--ink)}
+  .ln-btn:disabled{opacity:.35;cursor:default}
+  .lens-date{min-width:150px;text-align:center;font-weight:700;font-size:13.5px}
+  .lens-date em{font-style:normal;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;background:var(--acc);color:#0D1526;border-radius:6px;padding:2px 6px;margin-left:4px;vertical-align:1px}
+  .lens-grid{display:grid;grid-template-columns:1.05fr 1fr .9fr;gap:14px}
+  @media(max-width:1100px){.lens-grid{grid-template-columns:1fr 1fr}.l-ver{grid-column:1 / -1}}
+  @media(max-width:720px){.lens-grid{grid-template-columns:1fr}}
+  #lensLast{white-space:nowrap}
+  .lens-grid.swap .lcard{animation:lensIn .5s cubic-bezier(.2,.8,.2,1) both}
+  .lens-grid.swap .lcard:nth-child(2){animation-delay:70ms}.lens-grid.swap .lcard:nth-child(3){animation-delay:140ms}
+  @keyframes lensIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .lens-empty{grid-column:1 / -1;color:var(--ink3);padding:20px;text-align:center}
+  .lcard{border:1px solid var(--rule);border-radius:16px;padding:16px;min-width:0;background:var(--surface)}
+  .lcard-h{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--ink3);margin-bottom:10px}
+  .lc-top{display:flex;gap:14px;align-items:stretch}
+  .lc-svg{width:52px;flex:none;background:var(--sunk,rgba(0,0,0,.03));border-radius:12px;padding:4px 0}
+  .lc-m{flex:1;min-width:0;display:grid;gap:7px}
+  .lc-row{display:grid;grid-template-columns:96px 1fr auto;align-items:center;gap:8px;font-size:12.5px}
+  .lc-row label{color:var(--ink3)}
+  .lc-ohlc{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+  .lc-ohlc span{background:var(--sunk);border-radius:8px;padding:5px 7px;font:600 12.5px 'Space Grotesk',sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .lc-ohlc label{display:block;font:600 10.5px 'Plus Jakarta Sans',sans-serif;color:var(--ink3)}
+  .lc-row b{font-weight:700;font-size:13px;grid-column:2 / -1}
+  .lc-row b.mono{font-family:'Space Grotesk',sans-serif;font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .lc-row b + small{grid-column:3}
+  .lc-row:has(small) b{grid-column:2}
+  .lc-row small{color:var(--ink2);font-weight:600;font-size:12px;white-space:nowrap}
+  .lc-pos{height:7px;border-radius:99px;background:linear-gradient(90deg,var(--down),#E5B21C 50%,var(--up));position:relative;opacity:.85}
+  .lc-pos i{position:absolute;top:50%;width:13px;height:13px;border-radius:50%;background:var(--surface);border:3px solid var(--ink);transform:translate(-50%,-50%);transition:left .6s cubic-bezier(.2,.8,.2,1)}
+  .lc-vol{height:7px;border-radius:99px;background:var(--rule);position:relative;overflow:visible}
+  .lc-vol i{display:block;height:100%;border-radius:99px;background:var(--ink3);transition:width .7s cubic-bezier(.2,.8,.2,1)}
+  .lc-vol i.hi{background:var(--up)}.lc-vol i.lo{background:#7AA2F7}
+  .lc-vol s{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink);opacity:.5}
+  .lc-live{font-size:12px;color:var(--ink3);margin:10px 0 0;background:var(--rule);border-radius:9px;padding:7px 10px}
+  .lsig{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:9px}
+  .ls{display:flex;gap:10px;align-items:flex-start;border-radius:12px;padding:10px 12px;background:var(--rule)}
+  [data-theme="dark"] .ls{background:rgba(255,255,255,.04)}
+  .ls i{width:9px;height:9px;border-radius:50%;margin-top:5px;flex:none;background:var(--ink3)}
+  .ls b{display:block;font-size:13.5px;margin-bottom:2px}.ls span{font-size:12.5px;color:var(--ink2);line-height:1.5}
+  .ls.good{background:var(--up-soft,rgba(14,138,92,.1))}.ls.good i{background:var(--up)}.ls.good b{color:var(--up)}
+  .ls.bad{background:var(--down-soft,rgba(209,63,43,.1))}.ls.bad i{background:var(--down)}.ls.bad b{color:var(--down)}
+  .ls.warn{background:rgba(229,178,28,.14)}.ls.warn i{background:#D9A400}.ls.warn b{color:#A87C00}
+  [data-theme="dark"] .ls.warn b{color:#FFC83D}
+  .lmore{font-size:12px;color:var(--ink3);margin:8px 0 0}
+  .lstage{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+  .lstage span{font-size:11px;font-weight:700;color:var(--ink3);background:var(--rule);border-radius:8px;padding:6px 4px;text-align:center;transition:all .4s;line-height:1.25}
+  .lstage span b{display:block;font:700 15px 'Space Grotesk',sans-serif}
+  .lstage .on{color:#fff;transform:translateY(-2px);box-shadow:0 6px 14px rgba(0,0,0,.12)}
+  .lstage .on.s1{background:#64748B}.lstage .on.s2{background:var(--up)}.lstage .on.s3{background:#D9A400}.lstage .on.s4{background:var(--down)}
+  .lstage-d{font-size:12.5px;color:var(--ink2);margin:8px 0 12px}
+  .ltt{display:grid;grid-template-columns:1fr 1fr;gap:4px 10px;margin-bottom:12px}
+  .ltt-h{grid-column:1 / -1;font-size:12.5px;color:var(--ink2);margin-bottom:2px}
+  .ltt span{font-size:11.5px;color:var(--ink2);display:flex;gap:6px;align-items:flex-start;line-height:1.35}
+  .ltt i{font-style:normal;font-weight:900;font-size:10px;width:15px;height:15px;border-radius:50%;display:grid;place-items:center;flex:none;margin-top:1px}
+  .ltt .ok i{background:var(--up);color:#fff}.ltt .no i{background:var(--rule2);color:var(--ink2)}.ltt .no{color:var(--ink3)}
+  .lbase,.lvol{border-top:1px dashed var(--rule2);padding-top:10px;margin-top:10px}
+  .lbase-h,.lvol-h{display:flex;justify-content:space-between;gap:8px;font-size:12.5px;color:var(--ink3);flex-wrap:wrap}
+  .lbase-h b,.lvol-h b{color:var(--ink);font-size:13px}
+  .lbars{display:flex;align-items:flex-end;gap:6px;height:46px;margin:8px 0}
+  .lbars i{flex:1;max-width:38px;height:var(--h);border-radius:6px 6px 2px 2px;background:linear-gradient(180deg,#C6F135,#7FB800);animation:grow .7s cubic-bezier(.2,.8,.2,1) both;animation-delay:var(--d);transform-origin:bottom}
+  @keyframes grow{from{transform:scaleY(0)}to{transform:none}}
+  .lbase p,.lvol p{font-size:12.5px;color:var(--ink2);margin:0;line-height:1.5}
+  .lvol-bar{display:flex;height:8px;border-radius:99px;overflow:hidden;margin:8px 0;background:var(--rule)}
+  .lvol-bar i{display:block;height:100%;transition:width .7s}.lvol-bar .a{background:var(--up)}.lvol-bar .d{background:var(--down)}
+  .lpost{font-size:12.5px;color:var(--ink2);margin-top:10px;background:var(--rule);border-radius:10px;padding:8px 10px;line-height:1.5}
+  .l-ver{background:#020F29;border-color:#020F29;color:#fff;position:relative;overflow:hidden}
+  .l-ver::before{content:'';position:absolute;inset:-40% -40% auto auto;width:220px;height:220px;border-radius:50%;filter:blur(40px);opacity:.35;background:var(--lamp)}
+  .l-ver.green{--lamp:#3FD18F}.l-ver.amber{--lamp:#FFC83D}.l-ver.red{--lamp:#FF6B57}
+  .lv-lamp{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--lamp);position:relative}
+  .lv-lamp i{width:12px;height:12px;border-radius:50%;background:var(--lamp);box-shadow:0 0 0 0 var(--lamp);animation:lamp 1.8s infinite}
+  @keyframes lamp{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--lamp) 70%,transparent)}70%,100%{box-shadow:0 0 0 10px transparent}}
+  .l-ver h4{font:800 19px 'Montserrat','Plus Jakarta Sans',sans-serif;margin:10px 0 6px;position:relative;letter-spacing:-.01em}
+  .l-ver p{font-size:13px;color:rgba(255,255,255,.75);margin:0;line-height:1.55;position:relative}
+  .lv-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px;position:relative}
+  .lv-grid div{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:8px 10px}
+  .lv-grid label{display:block;font-size:11px;color:rgba(255,255,255,.55);font-weight:700}
+  .lv-grid b{font:700 15px 'Space Grotesk',sans-serif}
+  .l-ver ul{margin:14px 0 0;padding:0;list-style:none;display:grid;gap:7px;position:relative}
+  .l-ver li{font-size:13px;color:rgba(255,255,255,.88);padding-left:18px;position:relative;line-height:1.45}
+  .l-ver li::before{content:'→';position:absolute;left:0;color:var(--lamp);font-weight:800}
+  @media(max-width:560px){
+    .lens-nav{width:100%}.lens-date{flex:1;min-width:0}
+    .lc-top{gap:10px}.lc-svg{width:40px}
+    .lc-row{grid-template-columns:74px minmax(0,1fr) auto;gap:6px}
+    .lc-ohlc{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .ltt{grid-template-columns:1fr}
+  }
+  @media(prefers-reduced-motion:reduce){.lens-grid.swap .lcard,.lbars i{animation:none}.lv-lamp i{animation:none}}
   .legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:12px;color:var(--ink2);font-size:13px}
   .legend span{display:inline-flex;align-items:center;gap:7px}.legend i{width:16px;display:inline-block}
   .tbl-wrap{overflow-x:auto}
@@ -535,6 +633,23 @@
       <article class="tile" style="--i:5">
         <h3>Level pivot <span class="sub">metode klasik</span></h3>
         <div class="ladder" id="ladder"></div>
+      </article>
+
+      <article class="tile t-lens" style="--i:6">
+        <div class="lens-head">
+          <div class="lens-brand">
+            <span class="lens-ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/><path d="M8 13v-3M11 14V8M14 12v-2"/></svg></span>
+            <div><h3>Crest Lens</h3><p>Membaca jejak harga &amp; volume tiap candle. <b>Klik candle di grafik</b> untuk membacanya.</p></div>
+          </div>
+          <div class="lens-nav">
+            <button type="button" class="ln-btn" id="lensPrev" aria-label="Candle sebelumnya">‹</button>
+            <div class="lens-date" id="lensDate">–</div>
+            <button type="button" class="ln-btn" id="lensNext" aria-label="Candle berikutnya">›</button>
+            <button type="button" class="ghost-btn" id="lensLast" hidden>Ke terbaru</button>
+          </div>
+        </div>
+        <div class="lens-grid" id="lens"></div>
+        <p class="fine">Disarikan dari prinsip price-volume dua buku trader juara kompetisi saham AS: tahap siklus harga, syarat tren, volatilitas yang menyempit, titik pivot, serta jejak akumulasi dan distribusi. Bacaan hanya memakai data sampai candle yang dipilih, dan konteksnya mengikuti periode grafik (1B–2T). Ini alat bantu membaca, bukan rekomendasi beli atau jual.</p>
       </article>
 
       <div class="section-h"><div><h2>Alat trader</h2><p>Uji strategi, hitung ukuran posisi, dan pantau saham pilihanmu.</p></div></div>
@@ -1064,6 +1179,7 @@ function render(silent){
 
   const safe=(name,fn)=>{ try{ fn(); }catch(e){ console.error('[SM-Crestboard] '+name+' gagal:',e); } };
   safe('grafik',renderChart); safe('pivot',()=>renderLadder(plan,cur)); safe('tabel',()=>renderTable(bars,ref)); safe('sesi',renderSessions);
+  safe('lensa',()=>{ if(!same) lens.sel=null; renderLens(); });
   safe('uji strategi',runAndRenderBacktest); safe('kalkulator',resetCalc); safe('watchlist',updateWatchBtn);
   $('#hK').textContent=$('#hK2').textContent=fmt(CONFIG.k,2); $('#hRR').textContent=fmt(CONFIG.minRewardRisk,1);
   $('#hVM').textContent=fmt(CONFIG.volumeMultiplier,1); $('#hVD').textContent=CONFIG.avgVolumeDays;
@@ -1160,6 +1276,7 @@ function renderChart(){
     candles=chart.addCandlestickSeries({borderVisible:false});
     volSeries=chart.addHistogramSeries({priceFormat:{type:'volume'},priceScaleId:'vol',lastValueVisible:false,priceLineVisible:false});
     chart.priceScale('vol').applyOptions({scaleMargins:{top:.82,bottom:0}});
+    chart.subscribeClick(p=>{ const k=lensKeyFromTime(p?.time); if(k && state.daily) lensSelect(k); });
   }
   const C=cssVars();
   chart.applyOptions({layout:{textColor:C.ink3},grid:{vertLines:{color:C.grid},horzLines:{color:C.grid}},rightPriceScale:{borderColor:C.rule},timeScale:{borderColor:C.rule}});
@@ -1179,14 +1296,14 @@ function renderChart(){
 function applyMarkers(){
   if(!candles) return;
   const r=state.bt?.res, on=$('#btMarks')?.checked;
-  if(!r || !on){ candles.setMarkers([]); return; }
   const first=state.daily.bars.slice(-state.range)[0]?.key || '';
   const mk=[];
-  r.trades.forEach(t=>{
+  if(lens.last && lens.last.key>=first) mk.push({time:lens.last.key,position:'aboveBar',color:'#3B82F6',shape:'circle',text:'Dibaca'});
+  if(r && on) r.trades.forEach(t=>{
     if(t.inKey>=first) mk.push({time:t.inKey,position:'belowBar',color:'#9CC71A',shape:'arrowUp',text:'Beli'});
     if(t.outKey>=first) mk.push({time:t.outKey,position:'aboveBar',color:t.ret>=0?cssVars().up:cssVars().down,shape:'arrowDown',text:(t.ret>=0?'+':'')+fmt(t.ret*100,1)+'%'});
   });
-  if(r.open && r.open.inKey>=first) mk.push({time:r.open.inKey,position:'belowBar',color:'#9CC71A',shape:'arrowUp',text:'Beli (masih terbuka)'});
+  if(r && on && r.open && r.open.inKey>=first) mk.push({time:r.open.inKey,position:'belowBar',color:'#9CC71A',shape:'arrowUp',text:'Beli (masih terbuka)'});
   mk.sort((a,b)=>a.time<b.time?-1:a.time>b.time?1:0);
   candles.setMarkers(mk);
 }
@@ -1513,6 +1630,313 @@ function wlRender(loading){
   }).join('');
 }
 
+/* ===================== Crest Lens ===================== */
+/* =====================================================================
+   CREST LENS — pembacaan price & volume per candle
+   Prinsip disarikan dari dua buku trader juara kompetisi saham AS:
+   tahap siklus harga (1–4), syarat tren, volatilitas yang menyempit,
+   titik pivot, jejak akumulasi/distribusi, dan sinyal jual.
+   Semua hitungan memakai data sampai candle yang dipilih saja
+   (tidak mengintip masa depan).
+   ===================================================================== */
+const LENS = {
+  bigVol: 1.5,        // volume "besar" = ≥1,5× rata-rata 50 hari
+  dryVol: 0.6,        // volume "mengering" = ≤0,6×
+  tight: 0.7,         // rentang "sempit" = ≤0,7× rata-rata rentang 20 hari
+  chaseMax: 0.05,     // jangan kejar lebih dari 5% di atas pivot
+  extended: 0.25,     // ≥25% di atas MA50 = sudah jauh dari base
+  lookback: 120,      // pembanding "terbesar sejak" (± 6 bulan bursa)
+};
+const lens = { sel:null, cache:null, last:null };
+
+function lensPrep(){
+  const B=state.daily.bars, n=B.length, L=B[n-1];
+  const id=`${state.market}:${state.ticker}:${n}:${L.key}:${L.c}:${L.v}`;
+  if(lens.cache && lens.cache.id===id) return lens.cache;
+  const sma=(k,f)=>{ const out=new Array(n).fill(null); let s=0; for(let i=0;i<n;i++){ s+=f(B[i]); if(i>=k) s-=f(B[i-k]); if(i>=k-1) out[i]=s/k; } return out; };
+  const chg=B.map((b,i)=> i ? b.c/B[i-1].c-1 : 0);
+  const cr=B.map(b=> b.h>b.l ? (b.c-b.l)/(b.h-b.l) : 0.5);
+  return (lens.cache={ id, chg, cr,
+    ma20:sma(20,b=>b.c), ma50:sma(50,b=>b.c), ma150:sma(150,b=>b.c), ma200:sma(200,b=>b.c),
+    v50:sma(50,b=>b.v), sp20:sma(20,b=>(b.h-b.l)/b.c) });
+}
+const lensMax=(a,s,e,f)=>{ let m=-Infinity, k=-1; for(let j=Math.max(0,s);j<=e;j++){ const v=f(a[j],j); if(v>m){ m=v; k=j; } } return [m,k]; };
+const lensMin=(a,s,e,f)=>{ let m=Infinity, k=-1; for(let j=Math.max(0,s);j<=e;j++){ const v=f(a[j],j); if(v<m){ m=v; k=j; } } return [m,k]; };
+
+/* Volume candle yang masih berjalan diproyeksikan ke akhir hari */
+function lensLiveFrac(b){
+  if(!state.live || state.live.key!==b.key) return 1;
+  const m=M(), n=local(Date.now()/1000, m.tz), t=n.hh*60+n.mm, s=sessionsFor(m,n.wd);
+  let tot=0, done=0; s.forEach(([a,z])=>{ tot+=z-a; done+=Math.max(0,Math.min(t,z)-a); });
+  return Math.max(0.1, Math.min(1, done/(tot||1)));
+}
+
+/* ---------- 1. Candle yang dipilih ---------- */
+function lensDay(i){
+  const B=state.daily.bars, P=lensPrep(), b=B[i], p=B[i-1];
+  const frac=lensLiveFrac(b), live=frac<1;
+  const vol=b.v/frac, av=P.v50[i-1], vr=av ? vol/av : null;
+  const sp=(b.h-b.l)/b.c, as=P.sp20[i-1], sr=as ? sp/as : 1;
+  const cr=P.cr[i], chg=P.chg[i];
+  const [hi20]=lensMax(B,i-20,i-1,x=>x.h), [lo20]=lensMin(B,i-20,i-1,x=>x.l);
+  const m20=P.ma20[i], m50=P.ma50[i], m200=P.ma200[i];
+  const ext = m50 ? b.c/m50-1 : 0;
+  const [minC15]=lensMin(B,i-15,i,x=>x.c), run15=b.c/minC15-1;
+  let ups10=0; for(let j=Math.max(1,i-9);j<=i;j++) if(P.chg[j]>0) ups10++;
+  const extended = ext>=LENS.extended || (run15>=0.25 && ups10>=7);
+  const big = vr!=null && vr>=LENS.bigVol, heavy = vr!=null && vr>=1.2;
+  const lb=Math.max(1,i-LENS.lookback);
+  const [minChg]=lensMin(P.chg,lb,i-1,x=>x), [maxChg]=lensMax(P.chg,lb,i-1,x=>x), [maxSp]=lensMax(B,lb,i-1,x=>(x.h-x.l)/x.c);
+  const wasUp = m200 && lensMax(B,i-20,i,(x,j)=>P.ma200[j] ? x.c/P.ma200[j] : 0)[0]>1;
+  const S=[];   // {t:'good'|'bad'|'warn'|'info', h, d}
+  const add=(t,h,d)=>S.push({t,h,d});
+
+  // Sinyal jual paling keras dulu
+  if(chg<0 && chg<=minChg && wasUp && (vr==null || vr>=1))
+    add('bad','Penurunan harian terbesar dalam ±6 bulan',`Turun ${pctS(chg)}, terdalam sejak tren naik berjalan, dengan volume ${vr?fmt(vr,1)+'×':'tinggi'} rata-rata. Dalam metode ini, hari seperti ini hampir selalu dibaca sebagai sinyal keluar, sebagus apa pun beritanya.`);
+  let freshBO=false; for(let j=i-1;j>=Math.max(21,i-3);j--){ const [h]=lensMax(B,j-20,j-1,x=>x.h), a=P.v50[j-1]; if(B[j].c>h && a && B[j].v/a>=CONFIG.volumeMultiplier){ freshBO=true; break; } }
+  if(big && b.h>=hi20 && cr<0.35 && b.c<b.o && (extended || !freshBO))
+    add('bad','Pembalikan bervolume besar','Sempat mencetak high baru lalu ditutup dekat low dengan volume besar. Ini jejak pemain besar menjual ke pembeli yang terlambat.');
+  if(m50 && P.ma50[i-1] && b.c<m50 && p.c>=P.ma50[i-1] && heavy)
+    add('bad','Jebol MA50 dengan volume tinggi','Menutup di bawah rata-rata 50 hari dengan volume di atas rata-rata. Tanda pembeli besar tidak lagi menahan harga di area ini.');
+  if(extended){
+    if(chg>0 && chg>=maxChg) add('warn','Kenaikan harian terbesar setelah reli panjang','Lonjakan paling besar justru sering muncul beberapa hari sebelum puncak. Kalau sudah untung, ini saat menjual sebagian ke kekuatan, bukan menambah.');
+    else if(sp>=maxSp && chg>0) add('warn','Rentang harian terlebar setelah reli panjang','Ayunan harga paling lebar di ujung reli biasanya tanda kepanikan beli. Waspadai puncak jangka pendek.');
+    if(b.l>p.h) add('warn','Gap naik saat harga sudah jauh dari base','Gap di ujung reli bisa jadi gap kelelahan (exhaustion gap): tenaga beli terakhir sebelum harga berbalik.');
+    if(big && Math.abs(chg)<0.005) add('warn','Volume besar tapi harga tidak ke mana-mana','Churning: banyak saham berpindah tangan tanpa kemajuan harga. Sering terjadi saat pemain besar diam-diam keluar.');
+  }
+  // Breakout & perilaku sesudahnya
+  const bo = b.c>hi20;
+  if(bo && vr!=null && vr>=CONFIG.volumeMultiplier && cr>=0.5 && !extended)
+    add('good','Tembus pivot dengan volume',`Close di atas high 20 hari (${fp(hi20)}) dengan volume ${fmt(vr,1)}× rata-rata. Ini pola masuk ideal: pasokan di atas sudah tipis, permintaan datang.`);
+  else if(bo && vr!=null && vr<1)
+    add('warn','Tembus tanpa volume',`Harga di atas ${fp(hi20)} tapi volume di bawah rata-rata. Breakout tanpa dorongan institusi lebih sering gagal; tunggu konfirmasi volume.`);
+  if(b.h>hi20 && !bo && cr<0.5)
+    add('warn','Squat: sempat tembus lalu mundur',`Menyentuh di atas ${fp(hi20)} tapi ditutup di separuh bawah rentang. Belum tentu gagal: beri waktu 1–10 hari untuk pulih, selama stop loss tidak tersentuh.`);
+  for(let j=i-1;j>=Math.max(21,i-10);j--){
+    const [h20j]=lensMax(B,j-20,j-1,x=>x.h);
+    if(B[j].h>h20j && P.cr[j]<0.5 && b.c>B[j].h && B.slice(j+1,i).every(x=>x.c<=B[j].h)){
+      add('good','Pulih dari squat',`Close menembus high hari squat ${dateID(B[j].key)}. Pemulihan cepat seperti ini tanda permintaannya nyata.`); break;
+    }
+  }
+  // Support & shakeout
+  if(b.l<lo20 && b.c>lo20 && cr>=0.5)
+    add('good','Shakeout: stop loss tersapu lalu pulih',`Sempat jebol low 20 hari (${fp(lo20)}) lalu ditutup kembali di atasnya. Pemegang lemah tersingkir; base jadi lebih kuat.`);
+  else if(b.c<lo20 && heavy)
+    add('bad','Jebol support dengan volume',`Ditutup di bawah low 20 hari (${fp(lo20)}) dengan volume tinggi. Bukan saatnya membeli murah; harga yang jebol cenderung terus turun.`);
+  // Jejak institusi
+  if(!S.some(s=>s.h.startsWith('Tembus pivot'))){
+    if(b.o>p.h*1.01 && vr!=null && vr>=2 && cr>=0.5 && !extended) add('good','Gap naik bervolume besar','Lompatan harga dengan volume berlipat: permintaan institusi yang tidak bisa terisi di harga kemarin.');
+    else if(chg>0 && big && cr>=0.6) add('good','Hari akumulasi',`Naik ${pctS(chg)} dengan volume ${fmt(vr,1)}× rata-rata dan tutup dekat high. Jejak pembelian besar.`);
+  }
+  if(chg<0 && big && cr<=0.4 && !S.some(s=>s.t==='bad') && !(freshBO && S.some(s=>s.h.startsWith('Squat'))))
+    add('bad','Hari distribusi',`Turun ${pctS(chg)} dengan volume ${fmt(vr,1)}× rata-rata dan tutup dekat low. Jejak penjualan besar.`);
+  // Pengetatan
+  if(vr!=null && vr<=LENS.dryVol && sr<=LENS.tight){
+    const up=m50 && b.c>m50;
+    add(up?'good':'info','Volume mengering, rentang sempit', up ? 'Hampir tidak ada yang mau menjual di harga ini. Di tren naik, ini tanda pasokan habis dan titik pivot sedang terbentuk.' : 'Pasar sepi. Di luar tren naik, sepi belum berarti siap naik.');
+  } else if(Math.abs(chg)<0.01 && sr<=0.8 && vr!=null && vr<1 && b.c>(m50||0))
+    add('good','Close ketat','Harga tutup hampir sama dengan kemarin dengan rentang sempit. Close yang rapat berturut-turut adalah ciri saham yang sedang dikumpulkan.');
+  // Pelanggaran setelah breakout
+  let boIdx=-1; for(let j=i-1;j>=Math.max(21,i-15);j--){ const [h]=lensMax(B,j-20,j-1,x=>x.h); const a=P.v50[j-1]; if(B[j].c>h && a && B[j].v/a>=CONFIG.volumeMultiplier){ boIdx=j; break; } }
+  if(boIdx>0 && m20 && b.c<m20 && p.c>=P.ma20[i-1])
+    add('warn','Close di bawah MA20 tak lama setelah breakout','Menurut studi di buku acuan, kejadian ini kira-kira memotong separuh peluang breakout berhasil. Belum wajib jual, tapi hitung pelanggaran lain.');
+  if(i>=3 && b.l<p.l && p.l<B[i-2].l && B[i-2].l<B[i-3].l){
+    if(cr>=0.5) add('info','Low lebih rendah 3 hari, tapi pembeli masuk','Hari ketiga ditutup di separuh atas rentang. Pembeli mulai menahan; pantau besok.');
+    else if(heavy) add('warn','Tiga low makin rendah dengan volume naik','Tekanan jual berlanjut tanpa perlawanan pembeli. Setiap low berikutnya makin mengkhawatirkan.');
+  }
+
+  const anat = cr>=0.67 ? 'dekat high' : cr<=0.33 ? 'dekat low' : 'di tengah rentang';
+  return { i, b, p, live, frac, vr, sr, cr, chg, sp, ext, extended, hi20, lo20, anat, signals:S.slice(0,4), more:Math.max(0,S.length-4) };
+}
+
+/* ---------- 2. Konteks periode ---------- */
+function lensCtx(i, W){
+  const B=state.daily.bars, P=lensPrep(), b=B[i];
+  const s=Math.max(0,i-W+1), n=i-s+1;
+  const c=b.c, m50=P.ma50[i], m150=P.ma150[i], m200=P.ma200[i], m200p=i>=21?P.ma200[i-21]:null;
+  const [hi52]=lensMax(B,i-251,i,x=>x.h), [lo52]=lensMin(B,i-251,i,x=>x.l);
+  // Syarat tren (7 dari 8 kriteria; peringkat RS tidak tersedia)
+  let tt=null, stage=null;
+  if(m200 && m200p){
+    tt=[
+      ['Harga di atas MA150 dan MA200', c>m150 && c>m200],
+      ['MA150 di atas MA200', m150>m200],
+      ['MA200 naik minimal 1 bulan', m200>m200p],
+      ['MA50 di atas MA150 dan MA200', m50>m150 && m50>m200],
+      ['Harga di atas MA50', c>m50],
+      ['≥30% di atas low 52 minggu', c>=lo52*1.3],
+      ['Maksimal 25% di bawah high 52 minggu', c>=hi52*0.75],
+    ];
+    const ok=tt.filter(x=>x[1]).length, slope=m200/m200p-1;
+    const wasUp=i>=140 && P.ma200[i-120] && m200>P.ma200[i-120]*1.04;
+    if(tt[0][1] && tt[2][1] && ok>=6) stage=2;
+    else if(c<m200 && slope<0 && m50<m200) stage=4;
+    else if(wasUp && (Math.abs(slope)<0.012 || c<m200 || m50<m150)) stage=3;
+    else stage=1;
+    tt.ok=ok;
+  }
+  // Volume & close dalam periode
+  let accD=0, disD=0, up=0, dn=0, good10=0, up10=0, n10=0;
+  for(let j=Math.max(1,s);j<=i;j++){
+    const a=P.v50[j-1]; const ch=P.chg[j];
+    if(ch>0) up++; else if(ch<0) dn++;
+    if(a && B[j].v>a){ if(ch>0) accD++; else if(ch<0) disD++; }
+    if(j>i-10){ n10++; if(ch>0) up10++; if(P.cr[j]>=0.5) good10++; }
+  }
+  // Base: dimulai dari high tertinggi di jendela
+  const [bHi,bHiK]=lensMax(B,s,i,x=>x.h);
+  let base=null;
+  if(i-bHiK>=4){
+    const [bLo,bLoK]=lensMin(B,bHiK,i,x=>x.l);
+    // zigzag sederhana untuk menghitung kontraksi (T)
+    const th=Math.max(0.03, (P.sp20[i]||0.02)*1.6);
+    const piv=[{t:'H',k:bHiK,v:B[bHiK].h}]; let mode='down', ext={k:bHiK,v:B[bHiK].l};
+    for(let j=bHiK+1;j<=i;j++){
+      const x=B[j];
+      if(mode==='down'){
+        if(x.l<ext.v) ext={k:j,v:x.l};
+        else if(x.h>=ext.v*(1+th)){ piv.push({t:'L',k:ext.k,v:ext.v}); mode='up'; ext={k:j,v:x.h}; }
+      } else {
+        if(x.h>ext.v) ext={k:j,v:x.h};
+        else if(x.l<=ext.v*(1-th)){ piv.push({t:'H',k:ext.k,v:ext.v}); mode='down'; ext={k:j,v:x.l}; }
+      }
+    }
+    const depths=[];
+    for(let q=0;q<piv.length;q++) if(piv[q].t==='H'){ const L=piv[q+1]; if(L) depths.push((piv[q].v-L.v)/piv[q].v); }
+    // kontraksi yang sedang berjalan
+    const lastH=[...piv].reverse().find(x=>x.t==='H');
+    if(lastH && piv[piv.length-1].t==='H'){ const [lo]=lensMin(B,lastH.k,i,x=>x.l); depths.push((lastH.v-lo)/lastH.v); }
+    if(mode==='down' && piv[piv.length-1].t==='L'){ /* sudah tercatat */ }
+    const ds=depths.filter(d=>d>=0.015);
+    let T=ds.length?1:0; for(let q=1;q<ds.length;q++){ if(ds[q]<ds[q-1]*0.9) T++; else T=1; }
+    const pivotH = lastH ? lensMax(B,lastH.k,i,x=>x.h)[0] : bHi;
+    const [rHi]=lensMax(B,i-9,i,x=>x.h), [rLo,rLoK]=lensMin(B,i-9,i,x=>x.l);
+    let rv=0, rc=0; for(let j=Math.max(1,i-9);j<=i;j++){ const a=P.v50[j-1]; if(a){ rv+=B[j].v/a; rc++; } }
+    base={ weeks:(i-bHiK+1)/5, depth:(bHi-bLo)/bHi, depths:ds, T, pivot:pivotH, right:(rHi-rLo)/rHi, rightLow:rLo,
+      rvol: rc? rv/rc : null, lowK:bLoK, hi:bHi, vShape: (i-bLoK)<=8 && (bHi-bLo)/bHi>0.15 && c>=bHi*0.95 };
+  }
+  // Breakout terakhir & perilaku sesudahnya
+  let post=null;
+  for(let j=i;j>=Math.max(21,i-20);j--){
+    const [h]=lensMax(B,j-20,j-1,x=>x.h), a=P.v50[j-1];
+    if(B[j].c>h && a && B[j].v/a>=CONFIG.volumeMultiplier){
+      let u=0, d=0, below20=0; for(let q=j+1;q<=i;q++){ if(P.chg[q]>0) u++; else if(P.chg[q]<0) d++; if(P.ma20[q] && B[q].c<P.ma20[q]) below20++; }
+      const [mx,mxK]=lensMax(B,j,i,x=>x.h), pulled = mxK<i && lensMin(B,mxK,i,x=>x.l)[0]<mx*0.97;
+      post={ k:j, lvl:h, days:i-j, u, d, below20, back: c<h, tennis: pulled ? false : (i>j+2 && mxK===i && lensMin(B,j,i,x=>x.l)[0]<B[j].c) };
+      break;
+    }
+  }
+  return { s, n, stage, tt, accD, disD, up, dn, good10, up10, n10, base, post, ext: m50 ? c/m50-1 : null, hi52, lo52 };
+}
+
+/* ---------- 3. Kesimpulan ---------- */
+function lensVerdict(D, C){
+  const bad=D.signals.filter(x=>x.t==='bad').length, warn=D.signals.filter(x=>x.t==='warn').length;
+  const B=C.base, c=D.b.c;
+  let lamp='amber', head='', desc='', acts=[], lv=null;
+  if(C.stage==null){ head='Riwayat data belum cukup'; desc='Butuh sekitar 10 bulan data harga untuk menilai tahap tren. Bacaan candle tetap berlaku, tapi tanpa konteks tren.'; }
+  else if(C.stage===4){ lamp='red'; head='Tren turun: jangan beli'; desc='Harga di bawah MA200 yang menurun. Di tahap ini, base yang tampak bagus pun mudah jebol. Tunggu sampai tren berbalik ke tahap 2.'; acts=['Abaikan sinyal beli jangka pendek','Pantau lagi setelah harga kembali di atas MA200 yang mulai naik']; }
+  else if(C.stage===3){ lamp='red'; head='Gejala puncak (distribusi)'; desc='Tren lama melemah: harga berayun lebar di sekitar rata-rata panjang. Pemain awal sedang menjual ke pembeli yang terlambat.'; acts=['Kalau masih pegang, perketat stop atau ambil untung','Jangan buka posisi baru']; }
+  else if(C.stage===1){ lamp='amber'; head='Belum ada tren'; desc='Harga bergerak menyamping di sekitar MA200. Saham bisa diam di fase ini berbulan-bulan; modal lebih baik diputar di saham yang sudah bergerak.'; acts=['Tunggu syarat tren terpenuhi (tahap 2)','Tanda awal: MA200 berbalik naik dan harga membuat high-high baru']; }
+  else {
+    if(bad){ lamp='red'; head='Tren naik, tapi ada sinyal jual'; desc='Struktur jangka panjang masih naik, namun candle ini memberi peringatan keras. Ikuti harga, bukan harapan.'; acts=['Kalau pegang: pertimbangkan kurangi posisi','Jangan menambah sampai harga kembali tenang']; }
+    else if(D.extended){ lamp='amber'; head='Sudah terlalu jauh dari base'; desc=`Harga ${pctS(D.ext)} di atas MA50. Membeli di sini berarti risiko besar dengan sisa ruang yang mengecil.`; acts=['Jangan kejar','Kalau sudah untung, jual sebagian saat menguat','Tunggu base baru terbentuk']; }
+    else if(D.signals.some(x=>x.h.startsWith('Tembus pivot')||x.h.startsWith('Pulih dari squat'))){ lamp='green'; head='Breakout sehat'; desc='Tahap 2, keluar dari pivot dengan dukungan volume. Ini jenis titik masuk yang dicari metode ini.'; }
+    else if(D.signals.some(x=>x.h.startsWith('Squat'))){ lamp='amber'; head='Breakout tertahan (squat)'; desc='Harga sempat menembus lalu mundur ke dalam rentang. Ini sering terjadi dan belum berarti gagal.'; acts=['Kalau sudah masuk: beri waktu sampai 10 hari, stop loss tetap','Belum masuk: tunggu close kembali di atas high hari ini']; }
+    else if(B && B.T>=2 && B.right<=0.1 && c>=B.pivot*0.95 && c<=B.pivot){ lamp='green'; head='Setup mengetat dekat pivot'; desc=`${B.T} kontraksi makin kecil, rentang 10 hari terakhir hanya ${fmt(B.right*100,1)}%. Pasokan menipis; tinggal menunggu permintaan.`; }
+    else if(B && B.depth>0.6){ lamp='red'; head='Koreksi terlalu dalam'; desc=`Base turun ${fmt(B.depth*100,0)}% dari puncaknya. Penurunan sedalam ini biasanya menandakan masalah serius dan banyak pembeli terjebak di atas.`; }
+    else { lamp='amber'; head='Tren naik, titik beli belum matang'; desc='Struktur tren mendukung, tapi harga belum membentuk area sempit yang rendah risiko. Sabar menunggu base mengetat.'; acts=['Tunggu rentang harian menyempit dan volume mengering','Siapkan alarm di high terakhir']; }
+    if(B && (lamp==='green' || head.startsWith('Tren naik, titik'))){
+      const pv=D.signals.some(x=>x.h.startsWith('Tembus pivot')) ? D.hi20 : B.pivot, stop=Math.min(B.rightLow, pv*0.97), risk=(pv-stop)/pv;
+      lv={ pivot:pv, chase:pv*(1+LENS.chaseMax), stop, risk };
+      if(lamp==='green' && !acts.length) acts=[`Beli hanya di ${fp(pv)}–${fp(lv.chase)} dengan volume di atas rata-rata`, `Stop di bawah low area ketat, sekitar ${fp(stop)} (risiko ${fmt(risk*100,1)}%)`];
+      if(risk>0.1) acts.push('Jarak stop di atas 10%: base masih terlalu longgar untuk masuk');
+    }
+  }
+  if(warn && lamp==='green'){ lamp='amber'; acts.unshift('Ada peringatan di candle ini, perhatikan sebelum masuk'); }
+  return { lamp, head, desc, acts, lv };
+}
+
+/* ---------- Tampilan ---------- */
+const LENS_STAGE=['','Konsolidasi','Tren naik','Puncak','Tren turun'];
+const LENS_STAGE_D=['','Diabaikan pasar, bergerak datar','Fase akumulasi, satu-satunya tahap untuk membeli','Fase distribusi, tren melemah','Fase kapitulasi, hindari'];
+const lensRangeLbl=()=>({22:'1 bulan',66:'3 bulan',130:'6 bulan',250:'1 tahun'})[state.range]||'2 tahun';
+function lensCandleSvg(b){
+  const W=60,H=118, pad=8, lo=b.l, hi=b.h, span=(hi-lo)||1, y=v=>pad+(hi-v)/span*(H-pad*2);
+  const up=b.c>=b.o, col=up?'var(--up)':'var(--down)', top=y(Math.max(b.o,b.c)), bot=y(Math.min(b.o,b.c));
+  return `<svg viewBox="0 0 ${W} ${H}" class="lc-svg" aria-hidden="true"><line x1="30" x2="30" y1="${y(hi)}" y2="${y(lo)}" stroke="${col}" stroke-width="2.4" stroke-linecap="round"/>
+    <rect x="16" y="${top}" width="28" height="${Math.max(2,bot-top)}" rx="3" fill="${col}"/>
+    <line x1="4" x2="56" y1="${y(b.c)}" y2="${y(b.c)}" stroke="var(--ink)" stroke-width="1" stroke-dasharray="2 3" opacity=".5"/></svg>`;
+}
+function renderLens(){
+  const box=$('#lens'); if(!box || !state.daily) return;
+  const B=state.daily.bars;
+  if(B.length<30){ box.innerHTML='<div class="lens-empty">Data harga belum cukup untuk dibaca.</div>'; return; }
+  let i = lens.sel ? B.findIndex(x=>x.key===lens.sel) : -1;
+  if(i<0){ i=B.length-1; lens.sel=null; }
+  i=Math.max(21,i);
+  const D=lensDay(i), C=lensCtx(i, Math.min(state.range, B.length)), V=lensVerdict(D,C), m=M();
+  lens.last={ key:B[i].key, D, C, V };
+  $('#lensDate').innerHTML=`${dateID(B[i].key)}${D.live?' <em>berjalan</em>':i===B.length-1?' <em>terbaru</em>':''}`;
+  $('#lensPrev').disabled = i<=21; $('#lensNext').disabled = i>=B.length-1; $('#lensLast').hidden = i>=B.length-1;
+  const vrTxt = D.vr==null ? '–' : fmt(D.vr,2)+'×';
+  const vW = D.vr==null ? 0 : Math.min(100, D.vr/3*100), vMark=CONFIG.volumeMultiplier/3*100;
+  const sig = D.signals.length ? D.signals.map(x=>`<li class="ls ${x.t}"><i></i><div><b>${esc(x.h)}</b><span>${esc(x.d)}</span></div></li>`).join('')
+    : `<li class="ls info"><i></i><div><b>Candle biasa</b><span>Tidak ada jejak harga atau volume yang menonjol. Lihat konteks periode untuk membaca arah besarnya.</span></div></li>`;
+  const stg = C.stage ? `<div class="lstage">${[1,2,3,4].map(k=>`<span class="${k===C.stage?'on s'+k:''}"><b>${k}</b>${LENS_STAGE[k]}</span>`).join('')}</div><p class="lstage-d"><b>Tahap ${C.stage}.</b> ${LENS_STAGE_D[C.stage]}.</p>` : '<p class="lstage-d">Tahap tren belum bisa dinilai (data kurang dari ±10 bulan).</p>';
+  const ttHtml = C.tt ? `<div class="ltt"><div class="ltt-h">Syarat tren <b>${C.tt.ok}/7</b></div>${C.tt.map(([t,ok])=>`<span class="${ok?'ok':'no'}"><i>${ok?'✓':'✕'}</i>${t}</span>`).join('')}</div>` : '';
+  const Bs=C.base;
+  const baseHtml = Bs ? `<div class="lbase"><div class="lbase-h"><span>Jejak base</span><b>${fmt(Bs.weeks,0)} mgg · ${Bs.depths.length?Bs.depths.map(d=>fmt(d*100,0)+'%').join(' → '):fmt(Bs.depth*100,0)+'%'} · ${Bs.T}T</b></div>
+      <div class="lbars">${(Bs.depths.length?Bs.depths:[Bs.depth]).slice(-6).map((d,k,a)=>`<i style="--h:${Math.max(8,Math.min(100,d/Math.max(...a)*100))}%;--d:${k*70}ms" title="${fmt(d*100,1)}%"></i>`).join('')}</div>
+      <p>${Bs.T>=2 ? `Koreksi menyempit ${Bs.T} kali dari kiri ke kanan: ciri saham yang sedang dikumpulkan.` : 'Belum terlihat penyempitan volatilitas yang berurutan.'} Rentang 10 hari terakhir ${fmt(Bs.right*100,1)}%${Bs.rvol!=null?`, volume ${fmt(Bs.rvol,2)}× rata-rata`:''}.${Bs.vShape?' Naik terlalu cepat dari dasar (bentuk V); base butuh waktu lebih.':''}${Bs.depth>0.35&&Bs.depth<=0.6?' Koreksi cukup dalam (>35%); setup terbaik biasanya 10–35%.':''}</p></div>`
+    : `<div class="lbase"><div class="lbase-h"><span>Jejak base</span><b>Harga di puncak periode</b></div><p>Tidak ada koreksi berarti dalam ${lensRangeLbl()} terakhir; harga sedang di high periode ini.</p></div>`;
+  const tot=C.accD+C.disD||1;
+  const volHtml = `<div class="lvol"><div class="lvol-h"><span>Hari bervolume di atas rata-rata</span><b>${C.accD} naik · ${C.disD} turun</b></div>
+    <div class="lvol-bar"><i class="a" style="width:${C.accD/tot*100}%"></i><i class="d" style="width:${C.disD/tot*100}%"></i></div>
+    <p>${C.accD>=C.disD*1.3?'Volume lebih berat di hari naik: jejak akumulasi.':C.disD>=C.accD*1.3?'Volume lebih berat di hari turun: jejak distribusi.':'Seimbang; belum ada pihak yang dominan.'} 10 hari terakhir: ${C.up10} hari naik, ${C.good10} close di separuh atas.</p></div>`;
+  const postHtml = C.post && C.post.days>0 ? `<div class="lpost"><b>Setelah breakout ${dateID(B[C.post.k].key)}:</b> ${C.post.u} hari naik, ${C.post.d} hari turun${C.post.below20?`, ${C.post.below20}× close di bawah MA20`:''}${C.post.back?'. Harga kembali ke bawah level breakout: tunggu apakah memantul seperti bola tenis atau pecah seperti telur.':C.post.tennis?'. Sempat mundur lalu kembali ke high baru: pantulan bola tenis, tanda sehat.':'.'}</div>` : '';
+  const lv=V.lv;
+  const lvHtml = lv ? `<div class="lv-grid"><div><label>Pivot</label><b>${fp(lv.pivot)}</b></div><div><label>Batas kejar</label><b>${fp(lv.chase)}</b></div><div><label>Stop</label><b>${fp(lv.stop)}</b></div><div><label>Risiko</label><b>${fmt(lv.risk*100,1)}%</b></div></div>` : '';
+  box.classList.remove('swap'); void box.offsetWidth; box.classList.add('swap');
+  box.innerHTML=`
+    <section class="lcard l-day">
+      <div class="lc-top">
+        ${lensCandleSvg(D.b)}
+        <div class="lc-m">
+          <div class="lc-row"><label>Perubahan</label><b class="${D.chg>=0?'up':'down'}">${pctS(D.chg,2)}</b></div>
+          <div class="lc-ohlc"><span><label>Open</label>${fp(D.b.o)}</span><span><label>High</label>${fp(D.b.h)}</span><span><label>Low</label>${fp(D.b.l)}</span><span><label>Close</label>${fp(D.b.c)}</span></div>
+          <div class="lc-row"><label>Posisi close</label><div class="lc-pos"><i style="left:${D.cr*100}%"></i></div><small>${D.anat}</small></div>
+          <div class="lc-row"><label>Volume${D.live?' (proyeksi)':''}</label><div class="lc-vol"><i style="width:${vW}%" class="${D.vr>=CONFIG.volumeMultiplier?'hi':D.vr!=null&&D.vr<=LENS.dryVol?'lo':''}"></i><s style="left:${vMark}%"></s></div><small>${vrTxt}</small></div>
+          <div class="lc-row"><label>Rentang</label><b>${fmt(D.sp*100,2)}%</b><small>${fmt(D.sr,2)}× biasanya</small></div>
+        </div>
+      </div>
+      ${D.live?`<p class="lc-live">Candle masih berjalan (${fmt(D.frac*100,0)}% sesi). Volume diproyeksikan ke akhir hari; perkiraan kasar karena volume biasanya ramai di awal dan akhir sesi.</p>`:''}
+      <ul class="lsig">${sig}</ul>
+      ${D.more?`<p class="lmore">+${D.more} sinyal lain yang lebih lemah.</p>`:''}
+    </section>
+    <section class="lcard l-ctx">
+      <div class="lcard-h">Konteks ${lensRangeLbl()} sampai candle ini</div>
+      ${stg}${ttHtml}${baseHtml}${volHtml}${postHtml}
+    </section>
+    <section class="lcard l-ver ${V.lamp}">
+      <div class="lv-lamp"><i></i><span>${V.lamp==='green'?'Hijau':V.lamp==='red'?'Merah':'Kuning'}</span></div>
+      <h4>${esc(V.head)}</h4>
+      <p>${esc(V.desc)}</p>
+      ${lvHtml}
+      ${V.acts.length?`<ul>${V.acts.map(a=>`<li>${esc(a)}</li>`).join('')}</ul>`:''}
+    </section>`;
+  applyMarkers();
+}
+function lensSelect(key){ const B=state.daily?.bars; if(!B) return; lens.sel = key===B[B.length-1].key ? null : key; renderLens(); }
+function lensStep(d){ const B=state.daily?.bars; if(!B) return; let i=lens.sel?B.findIndex(x=>x.key===lens.sel):B.length-1; i=Math.max(21,Math.min(B.length-1,i+d)); lensSelect(B[i].key); }
+function lensKeyFromTime(t){
+  if(t==null) return null;
+  if(typeof t==='string') return t;
+  if(typeof t==='object') return `${t.year}-${String(t.month).padStart(2,'0')}-${String(t.day).padStart(2,'0')}`;
+  const d=new Date(t*1000); return d.toISOString().slice(0,10);
+}
+
 /* ===================== Tanya AI (akun milik pengunjung) ===================== */
 // Tidak memakai API berbayar. Pertanyaan + data saham dibuka di ChatGPT / Claude
 // milik pengunjung sendiri lewat tab baru, dan juga disalin ke clipboard.
@@ -1541,6 +1965,7 @@ function buildContext(){
     `MA20 ${fp(ma(20))}, MA50 ${fp(ma(50))}, MA200 ${fp(ma(200))}`,
     `Pivot: R2 ${fp(p.R2)}, R1 ${fp(p.R1)}, P ${fp(p.P)}, S1 ${fp(p.S1)}, S2 ${fp(p.S2)}`,
     `Close 10 hari terakhir: ${closes}`,
+    lens.last ? `Bacaan Crest Lens untuk candle ${lens.last.key} (konteks ${lensRangeLbl()}): ${lens.last.V.head}. ${lens.last.C.stage?`Tahap tren ${lens.last.C.stage}, syarat tren ${lens.last.C.tt.ok}/7. `:''}Sinyal candle: ${lens.last.D.signals.map(x=>x.h).join('; ')||'tidak ada yang menonjol'}.` : '',
   ].filter(Boolean).join('\n');
 }
 function buildPrompt(q){
@@ -1581,7 +2006,7 @@ $('#form').addEventListener('submit',e=>{ e.preventDefault(); load($('#q').value
 $('#tabs').addEventListener('click',e=>{
   const b=e.target.closest('.tab'); if(!b||!state.daily) return;
   document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===b));
-  state.range=+b.dataset.n; renderChart();
+  state.range=+b.dataset.n; renderChart(); try{ renderLens(); }catch(e){ console.error(e); }
 });
 window.addEventListener('hashchange',()=>{
   const h=parseHash(); if(h && (h.t!==state.ticker || h.mk!==state.market)) load(h.t,false,h.mk);
@@ -1647,6 +2072,9 @@ function wlOffer(items, src){
   };
   box.scrollIntoView({block:'nearest',behavior:'smooth'});
 }
+$('#lensPrev').addEventListener('click',()=>lensStep(-1));
+$('#lensNext').addEventListener('click',()=>lensStep(1));
+$('#lensLast').addEventListener('click',()=>lensSelect(state.daily.bars[state.daily.bars.length-1].key));
 $('#wlLink').addEventListener('click',async()=>{
   if(!wl.items.length){ wlMsg('Watchlist masih kosong.',true); return; }
   const url=location.origin+location.pathname+'?wl='+encodeURIComponent(wlEncode(wl.items))+location.hash;
