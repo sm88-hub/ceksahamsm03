@@ -921,6 +921,7 @@
   .hero::after{content:'';position:absolute;inset:0;border-radius:inherit;padding:1px;z-index:-1;pointer-events:none;
     background:linear-gradient(135deg,rgba(198,241,53,.55),rgba(45,212,191,.25) 40%,transparent 65%,rgba(99,102,241,.3));
     -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+  @media(max-width:560px){.bar-r{gap:6px}.bar-r .pill{flex:1 1 auto;min-width:0}.bar-r .pill > span:last-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}}
   /* ===== Mode gelap: keterbacaan teks & kolom isian ===== */
   [data-theme="dark"]{color-scheme:dark;--ink2:#B6C0D2;--ink3:#8D99AE}
   :where(input,select,textarea){color:var(--ink)}

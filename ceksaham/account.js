@@ -79,7 +79,43 @@
   .au-forgot{align-self:center;margin-top:8px;border:0;background:none;font:700 13px 'Plus Jakarta Sans',sans-serif;color:var(--ink);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
   .au-note{margin-top:auto;padding-top:14px;font-size:11.5px;color:var(--ink3);line-height:1.5}
   @media(max-width:760px){.au-card{grid-template-columns:1fr}.au-side{padding:24px 22px;gap:10px}.au-side h2{font-size:24px;margin-top:6px}.au-pts{display:none}.au-main{padding:24px 22px}}
-  body.au-open{overflow:hidden}`;
+  body.au-open{overflow:hidden}
+  .acct-av svg{width:100%;height:100%;display:block}
+  .acct-menu .hi{display:block;font-size:11.5px;font-weight:700;color:var(--up);letter-spacing:.02em}
+  .acct-menu .who b{font-size:14.5px}
+  .hi-toast{position:fixed;right:18px;top:calc(var(--barH,64px) + 14px);z-index:140;display:flex;align-items:center;gap:13px;max-width:min(380px,calc(100vw - 28px));padding:13px 42px 13px 13px;border-radius:18px;color:#fff;
+    background:radial-gradient(240px 120px at 0% 0%,rgba(198,241,53,.28),transparent 70%),linear-gradient(150deg,#13254A,#020F29);box-shadow:0 22px 50px -12px rgba(2,15,41,.55),inset 0 0 0 1px rgba(255,255,255,.08);
+    animation:hiIn .55s cubic-bezier(.2,.9,.2,1.15) both}
+  .hi-toast.out{animation:hiOut .35s ease forwards}
+  @keyframes hiIn{from{opacity:0;transform:translateY(-14px) scale(.96)}}
+  @keyframes hiOut{to{opacity:0;transform:translateY(-10px) scale(.97)}}
+  .hi-toast .acct-av{width:46px;height:46px;font-size:18px;box-shadow:0 0 0 3px rgba(198,241,53,.35)}
+  .hi-toast small{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#C6F135}
+  .hi-toast b{display:block;font:800 18px 'Space Grotesk','Plus Jakarta Sans',sans-serif;letter-spacing:-.01em;line-height:1.2}
+  .hi-toast div > span{display:block;font-size:12.5px;color:rgba(255,255,255,.7);margin-top:2px}
+  .hi-toast button{position:absolute;right:10px;top:10px;width:26px;height:26px;border:0;border-radius:8px;background:rgba(255,255,255,.08);color:#fff;cursor:pointer}
+  .hi-toast .bar{position:absolute;left:14px;right:14px;bottom:6px;height:2px;border-radius:2px;background:rgba(255,255,255,.12);overflow:hidden}
+  .hi-toast .bar i{display:block;height:100%;background:#C6F135;animation:hiBar 6s linear forwards}
+  @keyframes hiBar{from{width:100%}to{width:0}}
+  @media(max-width:600px){.hi-toast{left:14px;right:14px;top:auto;bottom:16px;max-width:none}}
+  .avp-card{position:relative;width:min(640px,100%);background:var(--surface);border-radius:24px;padding:26px;box-shadow:0 30px 80px rgba(0,0,0,.4);animation:acctIn .35s cubic-bezier(.2,.8,.2,1) both}
+  .avp-card h3{font:800 22px 'Space Grotesk','Plus Jakarta Sans',sans-serif;margin:0 0 4px;letter-spacing:-.01em}
+  .avp-card > p{margin:0 0 16px;color:var(--ink3);font-size:13.5px}
+  .avp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:10px;max-height:min(58vh,470px);overflow-y:auto;padding:3px}
+  .avp-grid button{display:flex;flex-direction:column;align-items:center;gap:7px;padding:12px 6px 10px;border-radius:16px;border:1px solid var(--rule);background:var(--sunk);cursor:pointer;color:var(--ink2);font:700 12px 'Plus Jakarta Sans',sans-serif;transition:transform .2s,border-color .2s,box-shadow .2s}
+  .avp-grid button:hover{transform:translateY(-3px);border-color:var(--ink3)}
+  .avp-grid button .acct-av{width:58px;height:58px;font-size:22px;transition:transform .3s}
+  .avp-grid button:hover .acct-av{transform:rotate(-6deg) scale(1.06)}
+  .avp-grid button.on{border-color:#84CC16;box-shadow:0 0 0 3px rgba(132,204,22,.3);color:var(--ink);background:var(--surface)}
+  .avp-nick{display:grid;gap:5px;margin:16px 0 0;font-size:13px;font-weight:700;color:var(--ink2)}
+  .avp-nick input{border:1px solid var(--rule2);border-radius:12px;padding:11px 13px;font:600 14.5px 'Plus Jakarta Sans',sans-serif;background:var(--surface);color:var(--ink)}
+  .avp-nick input:focus{outline:0;border-color:var(--ink);box-shadow:0 0 0 4px var(--acc-soft,rgba(198,241,53,.3))}
+  .avp-act{display:flex;justify-content:flex-end;gap:8px;margin-top:16px}
+  .avp-act button{border:0;border-radius:12px;padding:11px 18px;font:800 14px 'Plus Jakarta Sans',sans-serif;cursor:pointer}
+  .avp-act .no{background:var(--sunk);color:var(--ink2)}
+  .avp-act .ok{background:#020F29;color:#fff}
+  [data-theme="dark"] .avp-act .ok{background:#C6F135;color:#0B1220}
+`;
   const st=document.createElement('style'); st.textContent=css; document.head.appendChild(st);
 
   /* ---------- tampilan ---------- */
@@ -143,22 +179,94 @@
     'auth/popup-blocked':'Peramban memblokir jendela masuk. Mohon izinkan pop-up, lalu coba kembali.' };
   const errText=e=>ERR[e?.code] || 'Terjadi kendala: '+(e?.message||'silakan coba kembali.');
 
+
+  /* ---------- avatar & sapaan ---------- */
+  const AVS=[
+    ['bull','Banteng','#15803D','#C6F135','<path d="M13 21c1 9 7 12 13 12M51 21c-1 9-7 12-13 12"/><path d="M24 31h16l-2.5 13a5.5 5.5 0 0 1-11 0z"/><circle cx="28.5" cy="44" r="1.3" fill="#fff"/><circle cx="35.5" cy="44" r="1.3" fill="#fff"/><path d="M27 36.5h.01M37 36.5h.01"/>'],
+    ['bear','Beruang','#B91C1C','#FB923C','<circle cx="21" cy="22" r="5"/><circle cx="43" cy="22" r="5"/><circle cx="32" cy="35" r="13"/><ellipse cx="32" cy="40" rx="5.5" ry="4"/><path d="M27 31h.01M37 31h.01"/>'],
+    ['rocket','Roket','#4338CA','#22D3EE','<path d="M32 10c8 6 10.5 16 8.5 27h-17C21.5 26 24 16 32 10z"/><circle cx="32" cy="24" r="3.5"/><path d="M23.5 33 17 42l7.5-1.5M40.5 33 47 42l-7.5-1.5"/><path d="M28.5 44 32 53l3.5-9"/>'],
+    ['candle','Lilin','#0F766E','#34D399','<path d="M20 14v8M20 40v8M32 20v6M32 46v6M44 12v6M44 34v8"/><rect x="16" y="22" width="8" height="18" rx="2"/><rect x="28" y="26" width="8" height="20" rx="2"/><rect x="40" y="18" width="8" height="16" rx="2"/>'],
+    ['gem','Berlian','#0369A1','#A78BFA','<path d="M19 25l6.5-9h13l6.5 9L32 48z"/><path d="M19 25h26M25.5 16 29 25l3 23M38.5 16 35 25l-3 23"/>'],
+    ['eagle','Elang','#92400E','#FBBF24','<path d="M8 27c9-1 16 3 24 12 8-9 15-13 24-12-6 3-10 8-13 14l-11 6-11-6c-3-6-7-11-13-14z"/><path d="M32 39v-8M29 28l3-6 3 6"/>'],
+    ['owl','Burung Hantu','#6D28D9','#F472B6','<path d="M18 18l5 6M46 18l-5 6"/><rect x="17" y="21" width="30" height="31" rx="15"/><circle cx="25.5" cy="32" r="5"/><circle cx="38.5" cy="32" r="5"/><path d="M30 39l2 3 2-3"/>'],
+    ['whale','Paus','#1E3A8A','#38BDF8','<path d="M9 34c3 9 12 14 24 13 10-1 17-7 19-15-3 1.5-7 1.5-9-1-2 5-7 7-12 7-8 0-14-2-22-4z"/><path d="M52 32l5-6M52 32l6 2"/><path d="M27 23c0-4 2-7 2-10M27 19c-2-1-4-1-5 0M29 15c2-1 4-1 5 0"/><path d="M19 38h.01"/>'],
+    ['gold','Emas','#A16207','#FDE047','<path d="M14 46l4-10h12l4 10zM30 46l4-10h12l4 10zM22 34l4-10h12l4 10z"/>'],
+    ['compass','Kompas','#0F172A','#64748B','<circle cx="32" cy="32" r="18"/><path d="M38.5 25.5 35 35l-9.5 3.5L29 29z"/><path d="M32 10v4M32 50v4M10 32h4M50 32h4"/>'],
+    ['crown','Mahkota','#9A3412','#FBBF24','<path d="M15 44l-3-21 11 9 9-14 9 14 11-9-3 21z"/><path d="M16 50h32"/><circle cx="32" cy="35" r="2.2" fill="#fff"/>'],
+    ['bolt','Petir','#B45309','#EF4444','<path d="M36 9 18 36h12l-4 19 20-29H34z"/>'],
+    ['trend','Tren Naik','#065F46','#A3E635','<path d="M12 50h40M12 50V14"/><path d="M18 42l9-10 7 6 13-15"/><path d="M40 23h7v7"/>'],
+    ['shield','Perisai','#1D4ED8','#22D3EE','<path d="M32 10l17 6v12c0 12-7.5 21-17 26-9.5-5-17-14-17-26V16z"/><path d="M24.5 32l5.5 5.5 10-11"/>'],
+    ['target','Sasaran','#BE123C','#FB7185','<circle cx="32" cy="32" r="18"/><circle cx="32" cy="32" r="11"/><circle cx="32" cy="32" r="4"/><path d="M45 19l8-8M47 11h6v6"/>'],
+    ['globe','Global','#155E75','#2DD4BF','<circle cx="32" cy="32" r="19"/><path d="M13 32h38M32 13c6 6 8 12 8 19s-2 13-8 19c-6-6-8-12-8-19s2-13 8-19z"/>'],
+  ];
+  const AVMAP=Object.fromEntries(AVS.map(a=>[a[0],a]));
+  const avSVG=id=>{ const a=AVMAP[id]; if(!a) return ''; return `<svg viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="avg-${a[0]}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${a[2]}"/><stop offset="1" stop-color="${a[3]}"/></linearGradient></defs><circle cx="32" cy="32" r="32" fill="url(#avg-${a[0]})"/><circle cx="32" cy="32" r="31" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="2"/><g fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">${a[4]}</g></svg>`; };
+  const prof={ avatar:null, nick:null };
+  const profKey=u=>'smcb_prof_'+(u&&u.uid||'');
+  function profLoad(u){ try{ const c=JSON.parse(localStorage.getItem(profKey(u))||'null'); prof.avatar=c&&c.avatar||null; prof.nick=c&&c.nick||null; }catch{ prof.avatar=prof.nick=null; } }
+  function profStore(u){ try{ localStorage.setItem(profKey(u),JSON.stringify(prof)); }catch{} }
+  function nameOf(u){
+    if(prof.nick) return prof.nick;
+    const d=(u&&u.displayName||'').trim(); if(d) return d.split(/\s+/)[0];
+    const l=((u&&u.email)||'').split('@')[0].replace(/[._\-+]+/g,' ').replace(/\d+/g,' ').trim().split(/\s+/)[0]||'Investor';
+    return l.charAt(0).toUpperCase()+l.slice(1).toLowerCase();
+  }
+  function greet(){ const h=new Date().getHours(); return h>=4&&h<11?'Selamat pagi':h>=11&&h<15?'Selamat siang':h>=15&&h<18?'Selamat sore':'Selamat malam'; }
+  function avHTML(u,big){
+    if(prof.avatar && AVMAP[prof.avatar]) return avSVG(prof.avatar);
+    if(u&&u.photoURL && prof.avatar!=='initial') return `<img src="${esc(u.photoURL)}" alt="" referrerpolicy="no-referrer">`;
+    return esc((nameOf(u).trim()[0]||'A').toUpperCase());
+  }
+  function hiToast(u){
+    document.querySelector('.hi-toast')?.remove();
+    const t=document.createElement('div'); t.className='hi-toast'; t.setAttribute('role','status');
+    t.innerHTML=`<span class="acct-av">${avHTML(u)}</span><div><small>${greet()}</small><b>${esc(nameOf(u))} 👋</b><span>Watchlist dan jurnal Anda siap digunakan.</span></div><button type="button" aria-label="Tutup">✕</button><div class="bar"><i></i></div>`;
+    document.body.appendChild(t);
+    const bye=()=>{ t.classList.add('out'); setTimeout(()=>t.remove(),360); };
+    t.querySelector('button').onclick=bye; setTimeout(bye,6000);
+  }
+  function openPicker(){
+    const u=A.user; if(!u) return;
+    document.getElementById('avp')?.remove();
+    let pick=prof.avatar || (u.photoURL?'photo':'initial');
+    const box=document.createElement('div'); box.className='au'; box.id='avp';
+    const opts=[...(u.photoURL?[['photo','Foto Google']]:[]), ['initial','Inisial'], ...AVS.map(a=>[a[0],a[1]])];
+    const face=id=> id==='photo'?`<img src="${esc(u.photoURL)}" alt="" referrerpolicy="no-referrer">`: id==='initial'?esc((nameOf(u)[0]||'A').toUpperCase()) : avSVG(id);
+    box.innerHTML=`<div class="avp-card" role="dialog" aria-modal="true" aria-labelledby="avpT"><button type="button" class="au-x" data-x aria-label="Tutup">✕</button>
+      <h3 id="avpT">Pilih avatar Anda</h3><p>Avatar dan nama panggilan tersimpan di akun, sehingga ikut tampil di setiap perangkat.</p>
+      <div class="avp-grid">${opts.map(([id,l])=>`<button type="button" data-av="${id}" class="${id===pick?'on':''}"><span class="acct-av">${face(id)}</span>${esc(l)}</button>`).join('')}</div>
+      <label class="avp-nick">Nama panggilan <input id="avpNick" maxlength="24" placeholder="${esc(nameOf({...u}))}" value="${esc(prof.nick||'')}"></label>
+      <div class="avp-act"><button type="button" class="no" data-x>Batal</button><button type="button" class="ok" id="avpOk">Simpan</button></div></div>`;
+    document.body.appendChild(box); document.body.classList.add('au-open');
+    const close=()=>{ box.remove(); if($('au').hidden) document.body.classList.remove('au-open'); };
+    box.addEventListener('click',e=>{ if(e.target===box||e.target.closest('[data-x]')) close(); const b=e.target.closest('[data-av]'); if(b){ pick=b.dataset.av; box.querySelectorAll('[data-av]').forEach(x=>x.classList.toggle('on',x===b)); } });
+    box.addEventListener('keydown',e=>{ if(e.key==='Escape') close(); });
+    $('avpOk').onclick=()=>{
+      prof.avatar = pick==='photo' ? null : pick;
+      const n=$('avpNick').value.trim().replace(/\s+/g,' ').slice(0,24); prof.nick=n||null;
+      profStore(u); A.save({ avatar:prof.avatar, nick:prof.nick }); renderSlot(); close();
+    };
+    setTimeout(()=>box.querySelector('.on')?.focus(),60);
+  }
+
   /* ---------- tombol akun di header ---------- */
   let syncing=false;
   function renderSlot(){
     if(!slot) return;
     const u=A.user;
     if(!u){ slot.innerHTML=`<button type="button" class="acct-btn" id="acctIn" aria-label="Masuk"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span class="lbl">Masuk</span></button>`; $('acctIn').onclick=()=>openModal('in'); return; }
-    const name=u.displayName||u.email||'Akun', ini=esc((name.trim()[0]||'A').toUpperCase());
-    slot.innerHTML=`<button type="button" class="acct-btn in" id="acctBtn" aria-haspopup="menu" aria-expanded="false" title="${esc(u.email||'')}"><span class="acct-av">${u.photoURL?`<img src="${esc(u.photoURL)}" alt="" referrerpolicy="no-referrer">`:ini}</span><i class="acct-dot ${syncing?'sync':''}" aria-hidden="true"></i></button>
+    const av=avHTML(u);
+    slot.innerHTML=`<button type="button" class="acct-btn in" id="acctBtn" aria-haspopup="menu" aria-expanded="false" title="${greet()}, ${esc(nameOf(u))}"><span class="acct-av">${av}</span><span class="lbl">${esc(nameOf(u))}</span><i class="acct-dot ${syncing?'sync':''}" aria-hidden="true"></i></button>
       <div class="acct-menu" id="acctMenu" role="menu" hidden>
-        <div class="who"><span class="acct-av" style="width:34px;height:34px;font-size:14px">${u.photoURL?`<img src="${esc(u.photoURL)}" alt="" referrerpolicy="no-referrer">`:ini}</span><div><b>${esc(u.displayName||'Akun Saya')}</b><span>${esc(u.email||'')}</span></div></div>
+        <div class="who"><span class="acct-av" style="width:40px;height:40px;font-size:15px">${av}</span><div><span class="hi">${greet()},</span><b>${esc(nameOf(u))}</b><span>${esc(u.email||'')}</span></div></div>
         <div class="st"><i class="acct-dot ${syncing?'sync':''}"></i>${syncing?'Menyimpan perubahan…':'Watchlist dan jurnal telah tersinkron'}</div>
+        <button type="button" id="acctAv" role="menuitem">Ganti avatar &amp; nama panggilan</button>
         <button type="button" class="out" id="acctOut" role="menuitem">Keluar dari akun</button>
       </div>`;
     const btn=$('acctBtn'), menu=$('acctMenu');
     btn.onclick=e=>{ e.stopPropagation(); menu.hidden=!menu.hidden; btn.setAttribute('aria-expanded',String(!menu.hidden)); };
     $('acctOut').onclick=()=>A.signOut();
+    $('acctAv').onclick=()=>{ menu.hidden=true; openPicker(); };
   }
   document.addEventListener('click',e=>{ const m=$('acctMenu'); if(m && !m.hidden && !e.target.closest('.acct')) m.hidden=true; });
   if(slot){ slot.hidden=false; slot.innerHTML='<button type="button" class="acct-btn" disabled aria-label="Memuat akun"><span class="lbl">…</span></button>'; }
@@ -186,7 +294,8 @@
     A.signOut=async()=>{ reason='signout'; await fu.signOut(auth); };
 
     fu.onAuthStateChanged(auth,u=>{
-      A.user=u; A.ready=true; renderSlot();
+      A.user=u; A.ready=true; if(u) profLoad(u); renderSlot();
+      const wantHi = u && (reason==='signin' || (()=>{ try{ return sessionStorage.getItem('smcb_hi')!==u.uid; }catch{ return false; } })());
       if(unsub){ unsub(); unsub=null; }
       if(u){
         if(!$('au').hidden){ $('au').hidden=true; document.body.classList.remove('au-open'); }
@@ -194,6 +303,8 @@
         unsub=fs.onSnapshot(fs.doc(db,'users',u.uid), snap=>{
           if(snap.metadata.hasPendingWrites) return;
           const data=snap.exists()?snap.data():{};
+          if(('avatar' in data) || ('nick' in data)){ prof.avatar=data.avatar||null; prof.nick=data.nick||null; profStore(u); renderSlot(); }
+          if(first && wantHi){ hiToast(u); try{ sessionStorage.setItem('smcb_hi',u.uid); }catch{} }
           fire('smcb:data',{data, first}); first=false;
         }, err=>console.error('[SM-Crestboard] gagal membaca akun', err));
         fire('smcb:auth',{user:u, reason:reason==='init'?'restore':'signin'});

@@ -464,6 +464,7 @@
   .method-d[open] .method-s i{transform:rotate(180deg)}
   .method-s:hover i{background:var(--sunk)}
   .method-d[open] > summary{margin-bottom:14px}
+  @media(max-width:560px){.bar-r{gap:6px}.bar-r .pill{flex:1 1 auto;min-width:0}.bar-r .pill > span:last-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}}
   /* ===== Mode gelap: keterbacaan teks & kolom isian ===== */
   [data-theme="dark"]{color-scheme:dark;--ink2:#B6C0D2;--ink3:#8D99AE}
   :where(input,select,textarea){color:var(--ink)}
