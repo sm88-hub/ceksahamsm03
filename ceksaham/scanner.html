@@ -1189,8 +1189,9 @@ function fxTag(r){
 }
 function fxRender(){
   const sec=$('#asing'); if(!sec) return;
-  sec.hidden = state.market!=='ID'; { const h=$('#hxFx'); if(h) h.hidden=state.market!=='ID'; }
-  if(state.market!=='ID') return;
+  const off = state.market!=='ID' || fx.err==='blocked';
+  sec.hidden = off; { const h=$('#hxFx'); if(h) h.hidden=off; }
+  if(off) return;
   const body=$('#fxBody');
   if(fx.busy && !fx.data){ body.innerHTML='<div class="stg-wait">Mengambil data transaksi asing dari BEI…</div>'; return; }
   if(!fx.data){ body.innerHTML=`<div class="stg-wait">${fx.err==='blocked'?'Situs BEI sedang membatasi akses otomatis, sehingga data transaksi asing belum dapat ditampilkan. Silakan coba lagi nanti.':'Data transaksi asing dari BEI belum tersedia. Tekan "Pindai ulang" untuk mencoba lagi.'}</div>`; return; }
