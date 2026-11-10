@@ -19,7 +19,8 @@ export async function GET(req) {
 
   try {
     const res = await fetch(target, { headers: { 'User-Agent': 'Mozilla/5.0 (CekSaham)' } });
-    const body = await res.text();
+    let body = await res.text();
+    if (res.ok && interval === '1d') body = fillLastClose(body);
     return new Response(body, {
       status: res.status,
       headers: {
@@ -31,6 +32,27 @@ export async function GET(req) {
   } catch (err) {
     return json({ error: 'Gagal menghubungi sumber data: ' + err.message }, 502);
   }
+}
+
+// Setelah bursa tutup, Yahoo kerap mengirim candle harian terakhir dengan close = null
+// (open/high/low/volume sudah ada) hingga datanya difinalkan. Tanpa perbaikan ini,
+// candle hari itu terbuang dan grafik tertinggal satu hari. Close diisi dari
+// regularMarketPrice, yaitu harga penutupan resmi hari tersebut.
+function fillLastClose(body) {
+  try {
+    const j = JSON.parse(body);
+    const r = j?.chart?.result?.[0], ts = r?.timestamp, q = r?.indicators?.quote?.[0], m = r?.meta;
+    if (!ts?.length || !q || !m) return body;
+    const n = ts.length - 1, px = m.regularMarketPrice;
+    if (q.close?.[n] != null || !(px > 0) || !(m.regularMarketTime >= ts[n])) return body;
+    q.close[n] = px;
+    if (q.open?.[n] == null) q.open[n] = px;
+    if (q.high?.[n] == null) q.high[n] = Math.max(px, m.regularMarketDayHigh || px);
+    if (q.low?.[n] == null) q.low[n] = Math.min(px, m.regularMarketDayLow || px);
+    if (q.volume?.[n] == null && m.regularMarketVolume != null) q.volume[n] = m.regularMarketVolume;
+    const adj = r.indicators.adjclose?.[0]?.adjclose; if (adj && adj[n] == null) adj[n] = px;
+    return JSON.stringify(j);
+  } catch { return body; }
 }
 
 function json(obj, status) {
