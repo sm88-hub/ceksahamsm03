@@ -899,6 +899,34 @@
   [data-theme="dark"] .me-sw button.on i{background:#0A101C;color:var(--acc)}
   .ph-me{flex-wrap:wrap}
   @media(max-width:720px){.me-sw{margin-left:0;width:100%}.me-sw button{flex:1;justify-content:center}}
+
+  /* ===== Catatan pribadi per saham ===== */
+  .note-hero{margin-top:14px;max-width:560px}
+  .note-hero[hidden]{display:none}
+  .nh-view{position:relative;padding:12px 14px 11px 16px;border-radius:14px;background:linear-gradient(135deg,rgba(255,214,102,.16),rgba(255,214,102,.07));border:1px solid rgba(255,214,102,.35);color:#FFF6DA;cursor:pointer;transition:border-color .2s,transform .2s}
+  .nh-view:hover{border-color:rgba(255,214,102,.7);transform:translateY(-1px)}
+  .nh-view::before{content:'';position:absolute;left:0;top:10px;bottom:10px;width:3px;border-radius:0 3px 3px 0;background:#FFD666}
+  .nh-view p{margin:0;font-size:13.5px;line-height:1.55;white-space:pre-wrap;word-break:break-word}
+  .nh-view small{display:flex;justify-content:space-between;gap:10px;margin-top:6px;font-size:11px;color:rgba(255,246,218,.6);font-weight:600}
+  .nh-ed{border-radius:14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18);padding:10px;animation:pnlIn .3s ease both}
+  .nh-ed textarea{width:100%;min-height:86px;resize:vertical;border:0;outline:0;background:transparent;color:#fff;font:500 14px/1.55 'Plus Jakarta Sans',sans-serif;caret-color:#C6F135}
+  .nh-ed textarea::placeholder{color:rgba(255,255,255,.45)}
+  .nh-ed .r{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:6px}
+  .nh-ed .r span{margin-right:auto;font-size:11px;color:rgba(255,255,255,.5)}
+  .nh-ed button{border:0;border-radius:9px;padding:7px 13px;font:700 12.5px 'Plus Jakarta Sans',sans-serif;cursor:pointer;background:rgba(255,255,255,.1);color:#fff}
+  .nh-ed button.ok{background:#C6F135;color:#0D1526}
+  .nh-ed button.del{background:none;color:#FF8D76}
+  .ask-hero.has-note{border-color:rgba(255,214,102,.6);color:#FFE08A}
+  .wl-row .tk .nt{display:inline-block;margin-left:5px;font-size:11px;color:#C88A00;vertical-align:1px}
+  /* ===== Ringkasan di kartu sapaan ===== */
+  .hi-sum{margin-top:9px;display:grid;gap:5px}
+  .hi-sum[hidden]{display:none}
+  .hi-sum button{display:flex;align-items:flex-start;gap:8px;width:100%;text-align:left;border:0;border-radius:10px;padding:7px 9px;background:rgba(255,255,255,.07);color:rgba(255,255,255,.88);font:500 12.5px/1.45 'Plus Jakarta Sans',sans-serif;cursor:pointer;transition:background .2s}
+  .hi-sum button:hover{background:rgba(198,241,53,.16)}
+  .hi-sum button i{flex:none;width:18px;height:18px;display:grid;place-items:center;color:#C6F135;margin-top:1px}
+  .hi-sum button i svg{width:15px;height:15px}
+  .hi-sum b{color:#fff}.hi-sum b.up{color:#5CEBA9}.hi-sum b.down{color:#FF8D76}.hi-sum em{font-style:normal;color:rgba(255,255,255,.6)}
+  .hi-sum .ld{font-size:12px;color:rgba(255,255,255,.55);padding:2px 2px}
   /* ===== Merek & suasana ===== */
   .wordmark{font:800 21px 'Space Grotesk','Montserrat',sans-serif;letter-spacing:-.035em;display:inline-flex;align-items:baseline;gap:1px}
   .wordmark .wm-sm{color:var(--ink)}
@@ -988,7 +1016,12 @@
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
             <span id="askHeroTxt">Tanya AI soal saham ini</span>
           </button>
+          <button class="ask-hero" id="noteBtn" type="button" aria-expanded="false">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg>
+            <span id="noteBtnTxt">Catatan saya</span>
+          </button>
         </div>
+        <div class="note-hero" id="noteBox" hidden></div>
       </div>
       <div class="hero-r">
         <h3><span>Papan breakout</span><span id="planRef"></span></h3>
@@ -2254,7 +2287,7 @@ function wlRender(loading){
     if(!d) return loading ? '<div class="skel-row"></div>' : `<div class="wl-row"><div class="tk" data-go="${wlId(x)}"><b>${esc(x.t)}</b><span class="mt">${m.tag.split('/')[0]}</span><span>Tekan Cek semua</span></div><div></div><div></div><div></div><div></div><div class="acts"><button type="button" data-del="${wlId(x)}" aria-label="Hapus">✕</button></div></div>`;
     if(d.err) return `<div class="wl-row"><div class="tk" data-go="${wlId(x)}"><b>${esc(x.t)}</b><span class="mt">${m.tag.split('/')[0]}</span><span>${esc(d.err)}</span></div><div></div><div></div><div></div><div></div><div class="acts"><button type="button" data-del="${wlId(x)}" aria-label="Hapus">✕</button></div></div>`;
     return `<div class="wl-row">
-      <div class="tk" data-go="${wlId(x)}" title="Buka di halaman ini"><b>${esc(x.t)}</b><span class="mt">${m.tag.split('/')[0]}</span><span>${esc(d.name)}</span></div>
+      <div class="tk" data-go="${wlId(x)}" title="Buka di halaman ini"><b>${esc(x.t)}</b>${notes.map[wlId(x)]?'<span class="nt" title="Ada catatan pribadi">✎</span>':''}<span class="mt">${m.tag.split('/')[0]}</span><span>${esc(d.name)}</span></div>
       <label class="ptw" title="Price to Watch"><input type="number" step="any" data-ptw="${wlId(x)}" value="${x.ptw??''}" placeholder="${fp(d.buy,m)} (auto)" aria-label="Price to Watch ${esc(x.t)}"></label>
       <div class="px"><b>${m.cur} ${fp(d.close,m)}</b><span>close ${dateID(d.refKey)}${d.live?`, kini ${fp(d.price,m)}`:''}</span></div>
       <div class="dist ${st.dist<=0?'up':''}">${st.dist<=0?'+'+fmt(-st.dist,1)+'%':fmt(st.dist,1)+'% lagi'}<span style="display:block;font:500 12px 'Plus Jakarta Sans';color:var(--ink3)">vol ${fmt(d.vr,1)}×</span></div>
@@ -2776,6 +2809,78 @@ $('#wlFile').addEventListener('change',async e=>{
 })();
 
 wlRender(); if(wl.items.length) setTimeout(wlRefresh, 1500);
+
+/* ===================== Catatan pribadi per saham ===================== */
+const NOTE_KEY='smcb_notes', NOTE_MAX=600;
+const notes={ map:{}, edit:false };
+try{ const c=JSON.parse(localStorage.getItem(NOTE_KEY)||'{}'); if(c&&typeof c==='object') notes.map=c; }catch{}
+const noteId=()=>state.market+':'+state.ticker;
+function noteSave(){ try{ localStorage.setItem(NOTE_KEY,JSON.stringify(notes.map)); }catch{} if(typeof syncPush==='function') syncPush('notes'); }
+function noteRender(){
+  const box=$('#noteBox'), btn=$('#noteBtn'); if(!box||!btn) return;
+  const n=state.ticker?notes.map[noteId()]:null;
+  btn.classList.toggle('has-note',!!n); $('#noteBtnTxt').textContent= notes.edit?'Tutup catatan': n?'Edit catatan':'Catatan saya';
+  btn.setAttribute('aria-expanded',String(notes.edit));
+  if(notes.edit){
+    box.hidden=false;
+    if(!box.querySelector('textarea')){
+      box.innerHTML=`<div class="nh-ed"><textarea id="noteTa" maxlength="${NOTE_MAX}" placeholder="Contoh: tunggu breakout 9.800 dengan volume besar, cek jadwal RUPS, target 10.500."></textarea>
+        <div class="r"><span id="noteCnt"></span>${n?'<button type="button" class="del" data-n="del">Hapus</button>':''}<button type="button" data-n="cancel">Batal</button><button type="button" class="ok" data-n="save">Simpan</button></div></div>`;
+      const ta=$('#noteTa'); ta.value=n?n.txt:''; const cnt=()=>$('#noteCnt').textContent=`${ta.value.length}/${NOTE_MAX} · tersimpan ${window.SMCB_ACCOUNT?.user?'di akun Anda':'di browser ini'}`; cnt(); ta.addEventListener('input',cnt);
+      setTimeout(()=>{ ta.focus(); ta.setSelectionRange(ta.value.length,ta.value.length); },40);
+    }
+    return;
+  }
+  if(!n){ box.hidden=true; box.innerHTML=''; return; }
+  box.hidden=false;
+  const at=new Date(n.at).toLocaleString('id-ID',{day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});
+  box.innerHTML=`<div class="nh-view" data-n="edit" title="Klik untuk mengubah catatan"><p>${esc(n.txt)}</p><small><span>Catatan pribadi · ${at}</span><span>Ubah</span></small></div>`;
+}
+$('#noteBtn').addEventListener('click',()=>{ notes.edit=!notes.edit; $('#noteBox').innerHTML=''; noteRender(); });
+$('#noteBox').addEventListener('click',e=>{
+  const a=e.target.closest('[data-n]'); if(!a) return; const k=a.dataset.n, id=noteId();
+  if(k==='edit'){ notes.edit=true; $('#noteBox').innerHTML=''; noteRender(); return; }
+  if(k==='save'){ const v=$('#noteTa').value.trim().slice(0,NOTE_MAX); if(v) notes.map[id]={txt:v,at:Date.now()}; else delete notes.map[id]; noteSave(); }
+  if(k==='del'){ delete notes.map[id]; noteSave(); }
+  notes.edit=false; $('#noteBox').innerHTML=''; noteRender(); if(typeof wlRender==='function') wlRender();
+});
+function syncMergeNotes(a,b){ const out={...a}; for(const [k,v] of Object.entries(b||{})){ if(!v||typeof v.txt!=='string') continue; if(!out[k] || (+v.at||0)>(+out[k].at||0)) out[k]={txt:String(v.txt).slice(0,NOTE_MAX),at:+v.at||Date.now()}; } return out; }
+
+/* ===================== Ringkasan harian (kartu sapaan) ===================== */
+const SUM_ICO={
+  watch:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg>',
+  jr:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>',
+  earn:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>',
+  tip:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>',
+};
+window.SMCB_SUMMARY=async()=>{
+  const wait=ms=>new Promise(r=>setTimeout(r,ms)), out=[];
+  await wait(700); for(let i=0;i<48 && wl.busy;i++) await wait(250);
+  if(wl.items.length && !wl.items.some(x=>wl.data[wlId(x)])){ try{ await wlRefresh(); }catch{} }
+  if(wl.items.length){
+    const rows=wl.items.map(x=>({x,s:wlStatus(x,wl.data[wlId(x)])})).filter(r=>r.s);
+    const go=rows.filter(r=>r.s.k==='go'), rd=rows.filter(r=>r.s.k==='ready'), names=[...go,...rd].slice(0,3).map(r=>r.x.t);
+    out.push({ico:SUM_ICO.watch, go:()=>window.pnShow?.('me','watch'), html: go.length||rd.length
+      ? `<span><b>${go.length}</b> breakout terkonfirmasi · <b>${rd.length}</b> dekat level${names.length?` <em>(${names.map(esc).join(', ')})</em>`:''}</span>`
+      : `<span><b>${wl.items.length}</b> saham dipantau; belum ada yang mendekati level breakout.</span>`});
+  }
+  const open=jr.items.filter(x=>!x.outP);
+  if(open.length){
+    if(!Object.keys(jr.px).length){ try{ await jrRefreshPx(); }catch{} }
+    const u=jrStats().U.unreal;
+    out.push({ico:SUM_ICO.jr, go:()=>window.pnShow?.('me','jr'), html:`<span><b>${open.length}</b> posisi terbuka · belum terealisasi <b class="${u>=0?'up':'down'}">${usdS(u)}</b>${jr.cap?` <em>(${pctS(u/jr.cap,2)} dari modal)</em>`:''}</span>`});
+  }
+  const soon=[];
+  for(const mk of [...new Set(wl.items.map(x=>x.mk))].filter(mk=>MARKETS[mk]&&!MARKETS[mk].crypto)){
+    const d=await erLoad(mk).catch(()=>null); if(!d||d.error||!Array.isArray(d.events)) continue;
+    const today=keyOf(local(Date.now()/1000,MARKETS[mk].tz));
+    d.events.forEach(e=>{ if(e.act!=null || !wl.items.some(x=>x.mk===mk&&x.t===e.code)) return; const k=erKey(e.d,mk), n=Math.round((Date.parse(k)-Date.parse(today))/864e5); if(n>=0&&n<=14 && !soon.some(z=>z.t===e.code)) soon.push({t:e.code,n}); });
+  }
+  soon.sort((a,b)=>a.n-b.n);
+  if(soon.length) out.push({ico:SUM_ICO.earn, go:()=>window.pnShow?.('earn'), html:'<span>'+soon.slice(0,3).map(z=>`<b>${esc(z.t)}</b> rilis laporan ${z.n===0?'hari ini':z.n===1?'besok':z.n+' hari lagi'}`).join(' · ')+'</span>'});
+  if(!out.length) out.push({ico:SUM_ICO.tip, go:()=>window.pnShow?.('me','watch'), html:'<span>Tambahkan saham ke watchlist agar ringkasan harian Anda muncul di sini.</span>'});
+  return out;
+};
 
 /* ===================== Panel & navigasi kategori ===================== */
 const PN_KEY='smcb_panel', PN_LIST=['tech','fund','cmp','tool','earn','me'];
@@ -3315,7 +3420,7 @@ jrInit();
 
 /* ===================== Sinkron akun (Firebase, lihat account.js) ===================== */
 const SYNC={ applying:false };
-function syncPush(what){ const A=window.SMCB_ACCOUNT; if(SYNC.applying || !A || !A.user) return; const p={}; if(!what||what==='watch') p.watch=wl.items; if(!what||what==='journal') p.journal=jr.items; if(!what||what==='journal'||what==='jcap') p.jcap=jr.cap||0; A.save(p); }
+function syncPush(what){ const A=window.SMCB_ACCOUNT; if(SYNC.applying || !A || !A.user) return; const p={}; if(!what||what==='watch') p.watch=wl.items; if(!what||what==='journal') p.journal=jr.items; if(!what||what==='journal'||what==='jcap') p.jcap=jr.cap||0; if(!what||what==='notes') p.notes=notes.map; A.save(p); }
 { const w=wlSave, j=jrSave; wlSave=function(){ w(); syncPush('watch'); }; jrSave=function(){ j(); syncPush('journal'); }; }
 function syncMergeWatch(L,R){ const m=new Map(); R.forEach(x=>m.set(x.mk+':'+x.t,x)); L.forEach(x=>{ const k=x.mk+':'+x.t, r=m.get(k); if(!r) m.set(k,x); else if(!r.ptw && x.ptw) m.set(k,{...r,ptw:x.ptw}); }); return [...m.values()]; }
 function syncMergeJournal(L,R){ const m=new Map(); R.forEach(x=>m.set(x.id,x)); L.forEach(x=>{ const r=m.get(x.id); if(!r || (!r.outP && x.outP)) m.set(x.id,x); }); return [...m.values()]; }
@@ -3333,19 +3438,20 @@ document.addEventListener('smcb:data',e=>{
   const rj=Array.isArray(d.journal)?d.journal.map(jrClean).filter(Boolean):[];
   const W=first?syncMergeWatch(wl.items,rw):rw, J=first?syncMergeJournal(jr.items,rj):rj;
   const rc=+d.jcap>0?+d.jcap:0, C= first ? (rc||jr.cap||0) : ('jcap' in d ? rc : jr.cap);
+  const rn=d.notes&&typeof d.notes==='object'?d.notes:{}, N= first ? syncMergeNotes(notes.map,rn) : ('notes' in d ? syncMergeNotes({},rn) : notes.map);
   const watchChanged=JSON.stringify(W)!==JSON.stringify(wl.items);
-  SYNC.applying=true; wl.items=W; jr.items=J; jr.cap=C; try{ localStorage.setItem(JR_CAP_KEY,String(C||0)); }catch{} wlSave(); jrSave(); SYNC.applying=false;
-  wlRender(); updateWatchBtn(); jrRender(); syncUI();
+  SYNC.applying=true; wl.items=W; jr.items=J; jr.cap=C; notes.map=N; try{ localStorage.setItem(JR_CAP_KEY,String(C||0)); localStorage.setItem(NOTE_KEY,JSON.stringify(N)); }catch{} wlSave(); jrSave(); SYNC.applying=false;
+  wlRender(); updateWatchBtn(); jrRender(); syncUI(); if(!notes.edit) noteRender();
   if(first || watchChanged){ wlRefresh(); }
   jrRefreshPx();
-  if(first && (JSON.stringify(W)!==JSON.stringify(rw) || JSON.stringify(J)!==JSON.stringify(rj) || C!==rc)) syncPush();
+  if(first && (JSON.stringify(W)!==JSON.stringify(rw) || JSON.stringify(J)!==JSON.stringify(rj) || C!==rc || JSON.stringify(N)!==JSON.stringify(rn))) syncPush();
   if(first) wlMsg(`Tersinkron dengan akun Anda: ${W.length} saham di watchlist dan ${J.length} transaksi di jurnal.`);
 });
 document.addEventListener('smcb:auth',e=>{
   const {user,reason}=e.detail||{};
   if(!user && reason==='signout'){
-    SYNC.applying=true; wl.items=[]; wl.data={}; jr.items=[]; jr.px={}; jr.cap=0; try{ localStorage.removeItem(JR_CAP_KEY); }catch{} wlSave(); jrSave(); SYNC.applying=false;
-    wlRender(); updateWatchBtn(); jrRender();
+    SYNC.applying=true; wl.items=[]; wl.data={}; jr.items=[]; jr.px={}; jr.cap=0; notes.map={}; notes.edit=false; try{ localStorage.removeItem(JR_CAP_KEY); localStorage.removeItem(NOTE_KEY); }catch{} wlSave(); jrSave(); SYNC.applying=false;
+    wlRender(); updateWatchBtn(); jrRender(); noteRender();
     wlMsg('Anda telah keluar. Data pada perangkat ini telah dibersihkan dan tetap tersimpan aman pada akun Anda.');
   }
   syncUI();
@@ -3370,6 +3476,7 @@ $('#themeBtn').addEventListener('click',()=>setTheme(document.documentElement.da
 try{ const t=localStorage.getItem('theme'); if(t) document.documentElement.dataset.theme=t; }catch{}
 $('#brandName').innerHTML=esc(CONFIG.appName).replace(/^([^-]+)-(.+)$/,'<span class="wm-sm">$1</span><span class="wm-dash">-</span><b>$2</b>')+'<span class="wm-tag">Breakout Lab</span>'; $('#brandTag').textContent=CONFIG.tagline;
 document.title=`${CONFIG.appName} | level breakout saham`;
+load=(f=>async function(...a){ notes.edit=false; const box=$('#noteBox'); if(box) box.innerHTML=''; const r=await f.apply(this,a); noteRender(); return r; })(load);
 wlRender=(f=>function(...a){ const r=f.apply(this,a); try{ dockBadges(); }catch{} return r; })(wlRender);
 jrRender=(f=>function(...a){ const r=f.apply(this,a); try{ dockBadges(); }catch{} return r; })(jrRender);
 pnApply(false); try{ dockBadges(); }catch{}

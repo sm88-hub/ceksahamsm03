@@ -83,17 +83,20 @@
   .acct-av svg{width:100%;height:100%;display:block}
   .acct-menu .hi{display:block;font-size:11.5px;font-weight:700;color:var(--up);letter-spacing:.02em}
   .acct-menu .who b{font-size:14.5px}
-  .hi-toast{position:fixed;right:18px;top:calc(var(--barH,64px) + 14px);z-index:140;display:flex;align-items:center;gap:13px;max-width:min(380px,calc(100vw - 28px));padding:13px 42px 13px 13px;border-radius:18px;color:#fff;
+  .hi-toast{position:fixed;right:18px;top:calc(var(--barH,64px) + 14px);z-index:140;display:flex;align-items:flex-start;gap:13px;max-width:min(420px,calc(100vw - 28px));padding:13px 42px 13px 13px;border-radius:18px;color:#fff;
     background:radial-gradient(240px 120px at 0% 0%,rgba(198,241,53,.28),transparent 70%),linear-gradient(150deg,#13254A,#020F29);box-shadow:0 22px 50px -12px rgba(2,15,41,.55),inset 0 0 0 1px rgba(255,255,255,.08);
     animation:hiIn .55s cubic-bezier(.2,.9,.2,1.15) both}
   .hi-toast.out{animation:hiOut .35s ease forwards}
   @keyframes hiIn{from{opacity:0;transform:translateY(-14px) scale(.96)}}
   @keyframes hiOut{to{opacity:0;transform:translateY(-10px) scale(.97)}}
   .hi-toast .acct-av{width:46px;height:46px;font-size:18px;box-shadow:0 0 0 3px rgba(198,241,53,.35)}
+  .hi-toast .hi-sum b{display:inline;font:700 12.5px 'Space Grotesk','Plus Jakarta Sans',sans-serif}
   .hi-toast small{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#C6F135}
-  .hi-toast b{display:block;font:800 18px 'Space Grotesk','Plus Jakarta Sans',sans-serif;letter-spacing:-.01em;line-height:1.2}
+  .hi-toast .hi-txt > b{display:block;font:800 18px 'Space Grotesk','Plus Jakarta Sans',sans-serif;letter-spacing:-.01em;line-height:1.2}
   .hi-toast div > span{display:block;font-size:12.5px;color:rgba(255,255,255,.7);margin-top:2px}
-  .hi-toast button{position:absolute;right:10px;top:10px;width:26px;height:26px;border:0;border-radius:8px;background:rgba(255,255,255,.08);color:#fff;cursor:pointer}
+  .hi-toast:hover .bar i{animation-play-state:paused}
+  .hi-toast .hi-txt{min-width:0;flex:1}
+  .hi-toast .hi-x{position:absolute;right:10px;top:10px;width:26px;height:26px;border:0;border-radius:8px;background:rgba(255,255,255,.08);color:#fff;cursor:pointer}
   .hi-toast .bar{position:absolute;left:14px;right:14px;bottom:6px;height:2px;border-radius:2px;background:rgba(255,255,255,.12);overflow:hidden}
   .hi-toast .bar i{display:block;height:100%;background:#C6F135;animation:hiBar 6s linear forwards}
   @keyframes hiBar{from{width:100%}to{width:0}}
@@ -220,10 +223,20 @@
   function hiToast(u){
     document.querySelector('.hi-toast')?.remove();
     const t=document.createElement('div'); t.className='hi-toast'; t.setAttribute('role','status');
-    t.innerHTML=`<span class="acct-av">${avHTML(u)}</span><div><small>${greet()}</small><b>${esc(nameOf(u))} 👋</b><span>Watchlist dan jurnal Anda siap digunakan.</span></div><button type="button" aria-label="Tutup">✕</button><div class="bar"><i></i></div>`;
+    const hasSum=typeof window.SMCB_SUMMARY==='function';
+    t.innerHTML=`<span class="acct-av">${avHTML(u)}</span><div class="hi-txt"><small>${greet()}</small><b>${esc(nameOf(u))} 👋</b><span>${hasSum?'Ringkasan hari ini untuk Anda:':'Watchlist dan jurnal Anda siap digunakan.'}</span>${hasSum?'<div class="hi-sum"><div class="ld">Menyiapkan ringkasan…</div></div>':''}</div><button type="button" class="hi-x" aria-label="Tutup">✕</button><div class="bar"><i style="animation-duration:${hasSum?14:6}s"></i></div>`;
     document.body.appendChild(t);
-    const bye=()=>{ t.classList.add('out'); setTimeout(()=>t.remove(),360); };
-    t.querySelector('button').onclick=bye; setTimeout(bye,6000);
+    let gone=false; const bye=()=>{ if(gone) return; gone=true; t.classList.add('out'); setTimeout(()=>t.remove(),360); };
+    t.querySelector('.hi-x').onclick=bye;
+    t.querySelector('.bar i').addEventListener('animationend',bye);
+    if(hasSum){
+      const box=t.querySelector('.hi-sum');
+      Promise.resolve().then(()=>window.SMCB_SUMMARY()).then(items=>{
+        if(gone) return;
+        if(!items||!items.length){ box.hidden=true; return; }
+        box.innerHTML=''; items.forEach(it=>{ const b=document.createElement('button'); b.type='button'; b.innerHTML=`<i>${it.ico||''}</i>${it.html}`; b.onclick=()=>{ try{ it.go&&it.go(); }catch{} bye(); }; box.appendChild(b); });
+      }).catch(()=>{ box.hidden=true; });
+    }
   }
   function openPicker(){
     const u=A.user; if(!u) return;
