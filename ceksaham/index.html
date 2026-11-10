@@ -1288,7 +1288,7 @@
         <details class="note"><summary>Sumber dan keterangan</summary><div class="note-b"><p class="fine">Sumber: kalender earnings Yahoo Finance; jadwal dapat berubah dan sebagian tanggal masih berupa perkiraan. <b>EPS</b> = laba bersih per saham. <b>Di atas estimasi</b> berarti EPS yang dilaporkan lebih tinggi dari rata-rata perkiraan analis. Cakupan bursa di luar Amerika Serikat bergantung pada ketersediaan data di Yahoo Finance.</p></div></details>
       </article>
 
-      <div class="panel-h ph-me" data-panel="me"><span class="ph-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span><div><h2>Ruang Pribadi</h2><p>Watchlist dan jurnal trading milik Anda. Tersimpan di browser ini dan tersinkronisasi otomatis ketika Anda masuk ke akun.</p></div>
+      <div class="panel-h ph-me" data-panel="me"><span class="ph-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span><div><h2>Ruang Pribadi</h2><p>Watchlist dan jurnal trading Anda. <span class="store-note" data-what="desk">Belum masuk akun: data hanya tersimpan di browser ini. Masuk ke akun agar data tersimpan aman dan dapat dibuka dari browser atau perangkat mana pun.</span></p></div>
         <div class="me-sw" id="meSw" role="tablist" aria-label="Isi Ruang Pribadi"><button type="button" data-sub="watch" class="on">Watchlist <i id="meNW">0</i></button><button type="button" data-sub="jr">Jurnal trading <i id="meNJ">0</i></button></div></div>
       <article data-panel="me" data-sub="watch" class="tile t-watch" style="--i:9">
         <div class="wl-head">
@@ -3320,7 +3320,7 @@ function syncMergeWatch(L,R){ const m=new Map(); R.forEach(x=>m.set(x.mk+':'+x.t
 function syncMergeJournal(L,R){ const m=new Map(); R.forEach(x=>m.set(x.id,x)); L.forEach(x=>{ const r=m.get(x.id); if(!r || (!r.outP && x.outP)) m.set(x.id,x); }); return [...m.values()]; }
 function syncUI(){
   const A=window.SMCB_ACCOUNT, t=$('.wl-sync-t'), b=$('#wlLogin'); if(!t) return;
-  const sn={ watch:[ 'Daftar ini hanya tersimpan di browser ini dan tidak dikirim ke mana pun.', 'Daftar ini tersimpan pada akun Anda dan tersinkronisasi otomatis di setiap perangkat.' ],
+  const sn={ desk:[ 'Belum masuk akun: data hanya tersimpan di browser ini. Masuk ke akun agar data tersimpan aman dan dapat dibuka dari browser atau perangkat mana pun.', 'Tersimpan di akun Anda dan tersinkronisasi otomatis, sehingga dapat dibuka dari browser atau perangkat mana pun setelah masuk.' ], watch:[ 'Daftar ini hanya tersimpan di browser ini dan tidak dikirim ke mana pun.', 'Daftar ini tersimpan pada akun Anda dan tersinkronisasi otomatis di setiap perangkat.' ],
               journal:[ 'Data hanya tersimpan di browser ini; gunakan Backup agar tidak hilang.', 'Data tersimpan pada akun Anda dan tersinkronisasi otomatis; Backup tetap tersedia sebagai cadangan tambahan.' ] };
   document.querySelectorAll('.store-note').forEach(e=>{ const v=sn[e.dataset.what]; if(v) e.textContent=v[A&&A.user?1:0]; });
   if(A && A.user){ t.innerHTML='<b>Tersimpan pada akun Anda.</b> Watchlist dan jurnal tersinkron otomatis di setiap perangkat tempat Anda masuk.'; if(b) b.hidden=true; }
