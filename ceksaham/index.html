@@ -778,6 +778,149 @@
   .er-fine{margin-top:12px}
   @media(max-width:1100px){.er-year{grid-template-columns:repeat(6,minmax(0,1fr))}}
   @media(max-width:720px){.er-year{grid-template-columns:repeat(3,minmax(0,1fr))}.er-row{grid-template-columns:76px 1fr auto}.er-row .hm{display:none}.er-next{grid-auto-columns:minmax(196px,82%)}.er-sum{width:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.er-pill{min-width:0}}
+
+  /* ===== Navigasi panel (dock) ===== */
+  .dock{position:sticky;top:var(--barH,64px);z-index:15;display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;padding:6px;margin:0 0 18px;
+    background:var(--glass);-webkit-backdrop-filter:blur(16px) saturate(1.4);backdrop-filter:blur(16px) saturate(1.4);border:1px solid var(--rule);border-radius:18px;box-shadow:var(--shadow)}
+  .dock::-webkit-scrollbar{display:none}
+  .dock button{flex:1 0 auto;display:flex;align-items:center;justify-content:center;gap:8px;padding:10px 14px;border-radius:13px;border:0;background:none;color:var(--ink2);font-weight:700;font-size:13.5px;cursor:pointer;position:relative;white-space:nowrap;transition:color .2s,background .25s,transform .2s}
+  .dock button svg{width:17px;height:17px;flex:none}
+  .dock button:hover{color:var(--ink);background:var(--sunk)}
+  .dock button.on{color:#fff;background:linear-gradient(135deg,var(--hero2),var(--hero));box-shadow:0 6px 18px -8px rgba(13,21,38,.55),inset 0 1px 0 rgba(255,255,255,.08)}
+  .dock button.on svg{color:var(--acc)}
+  [data-theme="dark"] .dock button.on{color:#0A101C;background:linear-gradient(135deg,#D7FA5C,#9BE15D 55%,#3FD18F);box-shadow:0 6px 20px -8px rgba(198,241,53,.55)}
+  [data-theme="dark"] .dock button.on svg{color:#0A101C}
+  .dock .dk-s{display:none}
+  .dk-b{font-style:normal;font:800 10.5px 'Space Grotesk',sans-serif;min-width:18px;height:18px;padding:0 5px;border-radius:99px;display:inline-grid;place-items:center;background:var(--acc);color:#0D1526}
+  .dk-b[hidden]{display:none}
+  .dk-b.hot{background:var(--warn);color:#0D1526;animation:dkPulse 2s infinite}
+  @keyframes dkPulse{0%,100%{box-shadow:0 0 0 0 rgba(229,161,0,.5)}50%{box-shadow:0 0 0 5px rgba(229,161,0,0)}}
+  @media(max-width:1100px){.dock .dk-l{display:none}.dock .dk-s{display:inline}}
+  @media(max-width:720px){.dock{margin:0 -4px 14px;border-radius:16px}.dock button{flex:0 0 auto;padding:9px 12px;font-size:13px}}
+  .pn-off{display:none!important}
+  .pn-in{animation:pnlIn .38s cubic-bezier(.2,.8,.2,1) both}
+  @keyframes pnlIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .panel-h{grid-column:1/-1;display:flex;align-items:center;gap:14px;padding:4px 4px 2px}
+  .panel-h .ph-ico{flex:none;width:42px;height:42px;border-radius:13px;display:grid;place-items:center;color:#0D1526;background:linear-gradient(145deg,#E2FB7A,#A6D60F);box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 6px 16px -8px rgba(166,214,15,.8)}
+  .panel-h .ph-ico svg{width:21px;height:21px}
+  .panel-h h2{font:700 21px 'Space Grotesk',sans-serif;letter-spacing:-.02em;line-height:1.2}
+  .panel-h p{font-size:13.5px;color:var(--ink3);margin-top:1px}
+  .ph-crypto{margin-left:auto;font-size:12px;font-weight:700;color:var(--ink2);background:var(--sunk);border:1px solid var(--rule);border-radius:99px;padding:5px 12px}
+  .ph-crypto[hidden]{display:none}
+  /* Keterangan dalam dropdown */
+  details.note{margin-top:12px;border:1px solid var(--rule);border-radius:12px;background:var(--sunk);overflow:hidden}
+  details.note > summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:8px;padding:9px 13px;font-size:12.5px;font-weight:700;color:var(--ink2);user-select:none}
+  details.note > summary::-webkit-details-marker{display:none}
+  details.note > summary::before{content:'';width:18px;height:18px;flex:none;border-radius:6px;background:var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238591A6' stroke-width='2.4' stroke-linecap='round'%3E%3Cpath d='M12 8v.01M12 11v5'/%3E%3C/svg%3E") center/14px no-repeat;border:1px solid var(--rule)}
+  details.note > summary::after{content:'';margin-left:auto;width:8px;height:8px;border-right:2px solid var(--ink3);border-bottom:2px solid var(--ink3);transform:rotate(45deg) translate(-2px,-2px);transition:transform .25s}
+  details.note[open] > summary::after{transform:rotate(225deg) translate(-2px,-2px)}
+  details.note > summary:hover{color:var(--ink)}
+  .note-b{padding:2px 14px 12px;animation:pnlIn .3s ease both}
+  .note-b .fine,.note-b .fund-src{margin-top:4px}
+  .note-b ul{margin:4px 0 0 18px;font-size:12.5px;line-height:1.6;color:var(--ink2);display:grid;gap:5px}
+  /* Valuasi */
+  .t-val{grid-column:span 7}.t-fv{grid-column:span 5}.t-cmp{grid-column:span 12}.t-val:hover,.t-fv:hover,.t-cmp:hover{transform:none}
+  @media(max-width:1000px){.t-val,.t-fv{grid-column:span 12}}
+  .val-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+  @media(max-width:640px){.val-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  .vm{position:relative;padding:12px 12px 11px;border-radius:14px;background:var(--sunk);border:1px solid var(--rule);min-width:0;overflow:hidden}
+  .vm::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--vc,var(--rule2))}
+  .vm label{display:block;font-size:11.5px;font-weight:700;color:var(--ink3);letter-spacing:.02em}
+  .vm b{display:block;font:700 21px 'Space Grotesk',sans-serif;letter-spacing:-.01em;margin:3px 0 2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .vm small{display:block;font-size:11.5px;color:var(--ink3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .vm .lv{display:inline-block;font-size:10.5px;font-weight:800;padding:1px 7px;border-radius:99px;margin-top:4px;background:var(--rule);color:var(--ink2)}
+  .vm.lo{--vc:var(--up)}.vm.hi{--vc:var(--down)}.vm.mid{--vc:var(--warn)}
+  .vm.na b{color:var(--ink3)}
+  .val-fx{margin-top:10px;font-size:12px;color:var(--ink2);background:var(--sunk);border-radius:10px;padding:8px 11px;border-left:3px solid var(--warn)}
+  .val-fx[hidden]{display:none}
+  /* Nilai wajar */
+  .fv-in{display:grid;grid-template-columns:120px 1fr;gap:10px;align-items:end}
+  .fv-f{display:flex;flex-direction:column;gap:5px;font-size:12px;font-weight:700;color:var(--ink3)}
+  .fv-f input{border:1px solid var(--rule2);border-radius:10px;padding:9px 11px;background:var(--surface);font:700 18px 'Space Grotesk',sans-serif;width:100%}
+  .fv-f input:focus{outline:0;border-color:var(--ink);box-shadow:0 0 0 3px var(--acc-soft)}
+  @media(max-width:560px){.fv-in{grid-template-columns:1fr}.cmp-add{flex-basis:100%;max-width:none}}
+  .fv-in .mini-seg{flex-wrap:wrap}.cmp-add{min-width:0}
+  .fv-pre{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 12px}
+  .fv-pre button{border:1px solid var(--rule2);background:var(--surface);color:var(--ink2);border-radius:99px;padding:4px 11px;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s}
+  .fv-pre button:hover{border-color:var(--ink);color:var(--ink)}
+  .fv-pre button.on{background:var(--ink);border-color:var(--ink);color:var(--surface)}
+  .fv-out{border-radius:16px;padding:16px;background:linear-gradient(150deg,var(--hero2),var(--hero));color:#fff}
+  .fv-out .fv-l{font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#C6F135}
+  .fv-out .fv-v{font:700 30px 'Space Grotesk',sans-serif;letter-spacing:-.02em;line-height:1.15;margin:2px 0}
+  .fv-out .fv-d{font-size:13px;color:rgba(255,255,255,.75)}
+  .fv-out .fv-d b{color:#fff}
+  .fv-bar{position:relative;height:8px;border-radius:99px;background:rgba(255,255,255,.12);margin:16px 0 22px}
+  .fv-bar i{position:absolute;top:50%;width:14px;height:14px;border-radius:50%;transform:translate(-50%,-50%);border:2px solid #fff}
+  .fv-bar i.p{background:#fff}.fv-bar i.f{background:#C6F135;border-color:#C6F135}
+  .fv-bar span{position:absolute;top:13px;transform:translateX(-50%);font-size:10.5px;font-weight:700;white-space:nowrap;color:rgba(255,255,255,.7)}
+  .fv-sens{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin-top:6px}
+  .fv-sens div{background:rgba(255,255,255,.07);border-radius:9px;padding:6px 4px;text-align:center;font-size:11px;color:rgba(255,255,255,.6)}
+  .fv-sens div b{display:block;font:700 12.5px 'Space Grotesk',sans-serif;color:#fff}
+  .fv-sens div.on{background:rgba(198,241,53,.2);box-shadow:inset 0 0 0 1px rgba(198,241,53,.5)}
+  .fv-empty{font-size:13px;color:rgba(255,255,255,.75)}
+  /* Bandingkan */
+  .cmp-head{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center}
+  .cmp-add{display:flex;gap:6px;flex:1 1 260px;max-width:380px}
+  .cmp-add input{flex:1;min-width:0;border:1px solid var(--rule2);border-radius:10px;padding:9px 12px;background:var(--surface);font-weight:700;text-transform:uppercase}
+  .cmp-add input::placeholder{text-transform:none;font-weight:500;color:var(--ink3)}
+  .cmp-acts{display:flex;gap:6px;flex-wrap:wrap}
+  .cmp-chips{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0}
+  .cmp-chip{display:inline-flex;align-items:center;gap:6px;padding:5px 6px 5px 11px;border-radius:99px;border:1px solid var(--rule2);background:var(--surface);font:700 13px 'Space Grotesk',sans-serif}
+  .cmp-chip button{border:0;background:var(--sunk);color:var(--ink3);width:20px;height:20px;border-radius:50%;cursor:pointer;font-size:13px;line-height:1}
+  .cmp-chip button:hover{background:var(--down-soft);color:var(--down)}
+  .cmp-wrap{overflow-x:auto;border:1px solid var(--rule);border-radius:16px}
+  .cmp-t{width:100%;border-collapse:separate;border-spacing:0;font-size:13px;min-width:560px}
+  .cmp-t th,.cmp-t td{padding:10px 12px;text-align:right;border-bottom:1px solid var(--rule);white-space:nowrap}
+  .cmp-t tr:last-child td{border-bottom:0}
+  .cmp-t th:first-child,.cmp-t td:first-child{text-align:left;position:sticky;left:0;background:var(--surface);z-index:1;font-weight:700;color:var(--ink2);font-size:12.5px}
+  .cmp-t thead th{background:var(--sunk);vertical-align:bottom}
+  .cmp-t thead th:first-child{background:var(--sunk)}
+  .cmp-t thead a{display:block;font:700 15px 'Space Grotesk',sans-serif;color:var(--ink);text-decoration:none;cursor:pointer}
+  .cmp-t thead a:hover{text-decoration:underline}
+  .cmp-t thead small{display:block;font-size:11px;font-weight:500;color:var(--ink3);max-width:130px;margin-left:auto;overflow:hidden;text-overflow:ellipsis}
+  .cmp-t td{font-family:'Space Grotesk',sans-serif;font-weight:600}
+  .cmp-t td.best{color:var(--up);font-weight:800;background:var(--up-soft)}
+  .cmp-t td.best::after,.cmp-best-demo::after{content:'★';margin-left:4px;font-size:10px}
+  .cmp-best-demo{color:var(--up)}
+  .cmp-t td.na{color:var(--ink3)}
+  .cmp-t tr.grp td{background:var(--sunk);font:800 10.5px 'Plus Jakarta Sans',sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);padding:6px 12px;text-align:left}
+  .cmp-empty{padding:22px;text-align:center;color:var(--ink3);font-size:13.5px}
+  .cmp-skel{height:220px;background:linear-gradient(90deg,var(--sunk),var(--rule),var(--sunk));background-size:200% 100%;animation:erSk 1.2s infinite linear}
+  .cmp-msg{margin:10px 0 0;font-size:12.5px;font-weight:600;color:var(--down)}
+  .cmp-msg[hidden]{display:none}
+  .dock .dk-me{margin-left:auto;border:1px dashed var(--rule2)}
+  .dock .dk-me.on{border-color:transparent}
+  .me-sw{margin-left:auto;display:inline-flex;gap:3px;padding:4px;border-radius:14px;background:var(--surface);border:1px solid var(--rule);box-shadow:var(--shadow)}
+  .me-sw button{border:0;background:none;padding:8px 14px;border-radius:10px;font-weight:700;font-size:13.5px;color:var(--ink2);cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
+  .me-sw button i{font-style:normal;font:800 11px 'Space Grotesk',sans-serif;background:var(--sunk);color:var(--ink2);border-radius:99px;padding:1px 7px}
+  .me-sw button.on{background:var(--ink);color:var(--surface)}
+  .me-sw button.on i{background:var(--acc);color:#0D1526}
+  [data-theme="dark"] .me-sw button.on{background:var(--acc);color:#0A101C}
+  [data-theme="dark"] .me-sw button.on i{background:#0A101C;color:var(--acc)}
+  .ph-me{flex-wrap:wrap}
+  @media(max-width:720px){.me-sw{margin-left:0;width:100%}.me-sw button{flex:1;justify-content:center}}
+  /* ===== Merek & suasana ===== */
+  .wordmark{font:800 21px 'Space Grotesk','Montserrat',sans-serif;letter-spacing:-.035em;display:inline-flex;align-items:baseline;gap:1px}
+  .wordmark .wm-sm{color:var(--ink)}
+  .wordmark .wm-dash{color:var(--ink3);font-weight:500;margin:0 1px}
+  .wordmark b{font-weight:800;background:linear-gradient(100deg,#3F6212 0%,#16A34A 30%,#0D9488 55%,#65A30D 80%,#3F6212 100%);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:wmFlow 7s ease-in-out infinite}
+  [data-theme="dark"] .wordmark b{background-image:linear-gradient(100deg,#D9F99D 0%,#C6F135 25%,#4ADE80 50%,#2DD4BF 70%,#C6F135 100%);filter:drop-shadow(0 0 14px rgba(198,241,53,.25))}
+  @keyframes wmFlow{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+  .wm-tag{display:none;font:700 9.5px 'Plus Jakarta Sans',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3);margin-left:8px;padding:3px 7px;border:1px solid var(--rule2);border-radius:6px;align-self:center}
+  @media(min-width:1180px){.wm-tag{display:inline-block}}
+  @media(prefers-reduced-motion:reduce){.wordmark b{animation:none}}
+  .brand-mark{transition:transform .4s cubic-bezier(.2,.8,.2,1)}
+  .brand:hover .brand-mark{transform:rotate(-6deg) scale(1.06)}
+  body::before{content:'';position:fixed;inset:-20% -10% auto -10%;height:70vh;z-index:-1;pointer-events:none;opacity:.9;
+    background:radial-gradient(40% 50% at 15% 10%,rgba(45,212,191,.13),transparent 70%),radial-gradient(35% 45% at 85% 0%,rgba(198,241,53,.22),transparent 70%),radial-gradient(30% 40% at 55% 30%,rgba(99,102,241,.08),transparent 70%);
+    animation:aurora 22s ease-in-out infinite alternate}
+  [data-theme="dark"] body::before{opacity:.75}
+  @keyframes aurora{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(2%,3%,0) scale(1.06)}}
+  @media(prefers-reduced-motion:reduce){body::before{animation:none}}
+  .hero{position:relative;isolation:isolate}
+  .hero::after{content:'';position:absolute;inset:0;border-radius:inherit;padding:1px;z-index:-1;pointer-events:none;
+    background:linear-gradient(135deg,rgba(198,241,53,.55),rgba(45,212,191,.25) 40%,transparent 65%,rgba(99,102,241,.3));
+    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
   /* ===== Mode gelap: keterbacaan teks & kolom isian ===== */
   [data-theme="dark"]{color-scheme:dark;--ink2:#B6C0D2;--ink3:#8D99AE}
   :where(input,select,textarea){color:var(--ink)}
@@ -795,7 +938,7 @@
   <a class="brand" href="#" aria-label="SM-Crestboard">
     <img class="brand-mark" src="logo-mark.png" width="36" height="36" alt="" aria-hidden="true">
     <i class="brand-sep" aria-hidden="true"></i>
-    <span class="wordmark" id="brandName">SM-<b>Crestboard</b></span>
+    <span class="wordmark" id="brandName"><span class="wm-sm">SM</span><span class="wm-dash">-</span><b>Crestboard</b><span class="wm-tag">Breakout Lab</span></span>
   </a>
   <nav class="seg" id="markets" role="tablist" aria-label="Pilih bursa"><i class="seg-ind" id="segInd"></i></nav>
   <div class="bar-r">
@@ -864,8 +1007,18 @@
       </div>
     </section>
 
-    <section class="bento">
-      <article class="tile" style="--i:1">
+    <nav class="dock" id="dock" role="tablist" aria-label="Kategori fitur">
+      <button type="button" role="tab" data-p="tech" class="on" aria-selected="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg><span class="dk-l">Analisis teknikal</span><span class="dk-s">Teknikal</span><i class="dk-b" id="dkb-tech" hidden></i></button>
+      <button type="button" role="tab" data-p="fund" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span class="dk-l">Fundamental & valuasi</span><span class="dk-s">Fundamental</span><i class="dk-b" id="dkb-fund" hidden></i></button>
+      <button type="button" role="tab" data-p="cmp" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 20V10M12 20V4M18 20v-7"/></svg><span class="dk-l">Bandingkan saham</span><span class="dk-s">Bandingkan</span><i class="dk-b" id="dkb-cmp" hidden></i></button>
+      <button type="button" role="tab" data-p="tool" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg><span class="dk-l">Strategi & risiko</span><span class="dk-s">Strategi</span><i class="dk-b" id="dkb-tool" hidden></i></button>
+      <button type="button" role="tab" data-p="earn" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/><path d="M8 14h3v3H8z"/></svg><span class="dk-l">Kalender emiten</span><span class="dk-s">Kalender</span><i class="dk-b" id="dkb-earn" hidden></i></button>
+      <button type="button" role="tab" data-p="me" class="dk-me" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span class="dk-l">Ruang Pribadi</span><span class="dk-s">Pribadi</span><i class="dk-b" id="dkb-me" hidden></i></button>
+    </nav>
+
+    <section class="bento" id="bento" data-show="tech">
+      <div class="panel-h" data-panel="tech"><span class="ph-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg></span><div><h2>Analisis teknikal</h2><p>Harga, volume, grafik, level breakout, dan pembacaan candle untuk saham yang sedang dibuka.</p></div><span class="ph-crypto" hidden>Tidak tersedia untuk aset kripto</span></div>
+      <article class="tile" data-panel="tech" style="--i:1">
         <h3>Harga harian <span class="sub" id="ohlcDate"></span></h3>
         <div class="kv">
           <div><label>Open</label><div class="v" id="o">—</div></div>
@@ -877,7 +1030,7 @@
         </div>
       </article>
 
-      <article class="tile" style="--i:2">
+      <article data-panel="tech" class="tile" style="--i:2">
         <h3>Syarat volume <span class="sub" id="ratioSub"></span></h3>
         <div class="ring-w">
           <div class="ring">
@@ -892,7 +1045,7 @@
         </div>
       </article>
 
-      <article class="tile" style="--i:3">
+      <article data-panel="tech" class="tile" style="--i:3">
         <h3><span id="sessTitle">Volume per sesi</span> <span class="sub" id="sessDate"></span></h3>
         <div class="sess">
           <div><label><i style="background:var(--s1)"></i><span id="s1L">Sesi 1</span></label><div class="v" id="s1">—</div><div class="s" id="s1p">&nbsp;</div></div>
@@ -903,7 +1056,7 @@
         <div class="hist-ax" id="histAx"></div>
       </article>
 
-      <article class="tile t-chart" style="--i:4">
+      <article data-panel="tech" class="tile t-chart" style="--i:4">
         <h3>Grafik harian
           <div class="tabs" id="tabs">
             <button class="tab" data-n="22">1B</button><button class="tab active" data-n="66">3B</button>
@@ -918,12 +1071,12 @@
         </div>
       </article>
 
-      <article class="tile" style="--i:5">
+      <article data-panel="tech" class="tile" style="--i:5">
         <h3>Level pivot <span class="sub">metode klasik</span></h3>
         <div class="ladder" id="ladder"></div>
       </article>
 
-      <article class="tile t-lens" style="--i:6">
+      <article data-panel="tech" class="tile t-lens" style="--i:6">
         <div class="lens-head">
           <div class="lens-brand">
             <span class="lens-ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/><path d="M8 13v-3M11 14V8M14 12v-2"/></svg></span>
@@ -937,12 +1090,12 @@
           </div>
         </div>
         <div class="lens-grid" id="lens"></div>
-        <p class="fine">Disarikan dari prinsip price-volume dua buku trader juara kompetisi saham AS: tahap siklus harga, syarat tren, volatilitas yang menyempit, titik pivot, serta jejak akumulasi dan distribusi. Bacaan hanya memakai data sampai candle yang dipilih, dan konteksnya mengikuti periode grafik (1B–2T). Ini alat bantu membaca, bukan rekomendasi beli atau jual.</p>
+        <details class="note"><summary>Keterangan</summary><div class="note-b"><p class="fine">Disarikan dari prinsip price-volume dua buku trader juara kompetisi saham AS: tahap siklus harga, syarat tren, volatilitas yang menyempit, titik pivot, serta jejak akumulasi dan distribusi. Bacaan hanya memakai data sampai candle yang dipilih, dan konteksnya mengikuti periode grafik (1B–2T). Ini alat bantu membaca, bukan rekomendasi beli atau jual.</p></div></details>
       </article>
 
-      <div class="section-h"><div><h2>Alat trader</h2><p>Uji strategi, hitung ukuran posisi, dan pantau saham pilihan Anda.</p></div></div>
+      <div class="panel-h" data-panel="tool"><span class="ph-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg></span><div><h2>Strategi &amp; risiko</h2><p>Uji aturan breakout pada data historis dan hitung ukuran posisi berdasarkan risiko yang siap ditanggung.</p></div><span class="ph-crypto" hidden>Tidak tersedia untuk aset kripto</span></div>
 
-      <article class="tile t-bt" style="--i:6">
+      <article data-panel="tool" class="tile t-bt" style="--i:6">
         <h3><span>Uji strategi di <span id="btTk">saham ini</span></span> <span class="sub" id="btPeriodTxt"></span></h3>
         <div class="ctrl">
           <div class="mini-seg" id="btMode">
@@ -970,10 +1123,10 @@
         </div>
         <div class="eq" id="eq"><svg viewBox="0 0 600 130" preserveAspectRatio="none" aria-label="Kurva hasil strategi"></svg><div class="eq-lab"><span id="eqL"></span><span>Kurva hasil kumulatif</span><span id="eqR"></span></div></div>
         <div class="trades" id="btTrades"></div>
-        <p class="fine" id="btFine"></p>
+        <details class="note"><summary>Keterangan</summary><div class="note-b"><p class="fine" id="btFine"></p></div></details>
       </article>
 
-      <article class="tile t-calc" style="--i:7">
+      <article data-panel="tool" class="tile t-calc" style="--i:7">
         <h3>Kalkulator ukuran posisi <span class="sub">berbasis risiko</span></h3>
         <div class="calc-f">
           <div class="inp"><label for="cModal">Modal</label><div class="box"><span id="cCur">Rp</span><input type="text" inputmode="numeric" id="cModal" value="10.000.000" autocomplete="off"></div></div>
@@ -995,10 +1148,49 @@
           </div>
           <div class="calc-warn" id="cWarn"></div>
         </div>
-        <p class="fine">Prinsip yang digunakan trader profesional: tentukan terlebih dahulu besaran kerugian yang siap ditanggung (umumnya 1–2% dari modal), kemudian ukuran posisi menyesuaikan jarak ke stop loss.</p>
+        <details class="note"><summary>Keterangan</summary><div class="note-b"><p class="fine">Prinsip yang digunakan trader profesional: tentukan terlebih dahulu besaran kerugian yang siap ditanggung (umumnya 1–2% dari modal), kemudian ukuran posisi menyesuaikan jarak ke stop loss.</p></div></details>
       </article>
 
-      <article class="tile t-fund" style="--i:8">
+      <div class="panel-h" data-panel="fund"><span class="ph-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span><div><h2>Fundamental &amp; valuasi</h2><p>Rasio valuasi, kesehatan keuangan, dividen, kalkulator nilai wajar, dan checklist pertumbuhan laba.</p></div><span class="ph-crypto" hidden>Tidak tersedia untuk aset kripto</span></div>
+      <article data-panel="fund" class="tile t-val" id="valTile" style="--i:7">
+        <h3><span>Valuasi &amp; kesehatan keuangan <span id="valTk"></span></span> <span class="sub" id="valAsOf"></span></h3>
+        <div class="val-grid" id="valGrid"></div>
+        <p class="val-fx" id="valFx" hidden></p>
+        <details class="note">
+          <summary>Apa arti tiap rasio dan cara menghitungnya?</summary>
+          <div class="note-b"><ul>
+            <li><b>PER (Price to Earnings Ratio)</b> = harga saham ÷ laba bersih per saham (EPS) 12 bulan terakhir. Menunjukkan berapa kali laba setahun yang dibayar investor. Makin tinggi, makin besar ekspektasi pertumbuhan yang sudah tercermin di harga.</li>
+            <li><b>PBV (Price to Book Value)</b> = harga saham ÷ nilai buku (ekuitas) per saham. PBV di bawah 1 berarti harga di bawah nilai buku; PBV tinggi lazim pada perusahaan dengan ROE tinggi.</li>
+            <li><b>ROE (Return on Equity)</b> = laba bersih ÷ ekuitas. Mengukur seberapa efisien modal pemegang saham menghasilkan laba.</li>
+            <li><b>DER (Debt to Equity Ratio)</b> = total utang berbunga ÷ ekuitas. Makin tinggi, makin besar porsi utang dalam pendanaan. Untuk bank, rasio ini umumnya tidak relevan dan tidak ditampilkan.</li>
+            <li><b>Dividend yield</b> = total dividen per saham 12 bulan terakhir ÷ harga saham. <b>Payout ratio</b> = porsi laba yang dibagikan sebagai dividen.</li>
+            <li><b>Free float</b> = porsi saham yang beredar bebas di publik (di luar pemegang saham pengendali dan orang dalam). Free float kecil membuat harga lebih mudah digerakkan dan menjadi salah satu syarat masuk indeks seperti MSCI. Angka dari Yahoo dapat berbeda dari data resmi KSEI/BEI.</li>
+            <li><b>Label rendah/menengah/tinggi</b> hanya rentang umum lintas sektor. Wajar atau tidaknya sebuah rasio sangat bergantung pada sektor dan fase bisnis, sehingga perbandingan paling bermakna dilakukan antarsaham sejenis (lihat menu Bandingkan).</li>
+            <li>Sumber: Yahoo Finance (tidak resmi), diperbarui berkala. Mohon verifikasi dengan laporan keuangan resmi emiten.</li>
+          </ul></div>
+        </details>
+      </article>
+
+      <article data-panel="fund" class="tile t-fv" id="fvTile" style="--i:7">
+        <h3><span>Kalkulator nilai wajar</span> <span class="sub">PER × EPS</span></h3>
+        <div class="fv-in">
+          <label class="fv-f"><span>PER acuan</span><input type="number" id="fvPe" min="1" max="200" step="0.5" inputmode="decimal"></label>
+          <div class="fv-f"><span>Dasar EPS</span><div class="mini-seg" id="fvBasis"><button type="button" data-v="ttm" class="on">12 bulan terakhir</button><button type="button" data-v="fwd">Proyeksi analis</button></div></div>
+        </div>
+        <div class="fv-pre" id="fvPre"></div>
+        <div class="fv-out" id="fvOut"></div>
+        <details class="note">
+          <summary>Cara menghitung dan batasannya</summary>
+          <div class="note-b"><ul>
+            <li><b>Nilai hasil hitungan</b> = PER acuan × EPS. EPS (laba bersih ÷ jumlah lembar saham) diambil dari 12 bulan terakhir, atau dari proyeksi rata-rata analis apabila tersedia.</li>
+            <li><b>PER acuan</b> sepenuhnya pilihan Anda. Pembanding yang lazim dipakai: PER rata-rata historis saham itu sendiri, PER rata-rata sektor, atau PER saham sejenis (lihat menu Bandingkan).</li>
+            <li>Hasilnya sangat peka terhadap PER acuan dan tidak memperhitungkan utang, arus kas, kualitas laba, maupun prospek bisnis. Angka ini adalah ilustrasi perhitungan, bukan target harga dan bukan rekomendasi.</li>
+            <li>Apabila EPS negatif (perusahaan merugi), metode ini tidak dapat digunakan.</li>
+          </ul></div>
+        </details>
+      </article>
+
+      <article data-panel="fund" class="tile t-fund" style="--i:8">
         <h3><span>Checklist fundamental <span id="fTk"></span></span> <span class="sub">kriteria C &amp; A dari CAN SLIM (William O'Neil)</span></h3>
         <div class="fund">
           <div class="crit" id="fCrit"></div>
@@ -1017,7 +1209,7 @@
             <div class="bars" id="fBarsQ"></div><div class="bars-x" id="fBarsQx"></div>
           </div>
         </div>
-        <p class="fund-src" id="fSrc">Data laporan keuangan dari Yahoo Finance (sumber tidak resmi). Cakupan saham AS paling lengkap, sedangkan untuk BEI, Jepang, Korea, dan Hong Kong sebagian data mungkin tidak tersedia. Mohon verifikasi dengan laporan keuangan resmi emiten.</p>
+        <details class="note"><summary>Sumber data fundamental</summary><div class="note-b"><p class="fund-src" id="fSrc">Data laporan keuangan dari Yahoo Finance (sumber tidak resmi). Cakupan saham AS paling lengkap, sedangkan untuk BEI, Jepang, Korea, dan Hong Kong sebagian data mungkin tidak tersedia. Mohon verifikasi dengan laporan keuangan resmi emiten.</p></div></details>
         <details class="fx">
           <summary>Apa arti tiap kriteria fundamental?</summary>
           <div class="fx-body">
@@ -1056,7 +1248,49 @@
         </details>
       </article>
 
-      <article class="tile t-watch" style="--i:9">
+      <div class="panel-h" data-panel="cmp"><span class="ph-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 20V10M12 20V4M18 20v-7"/></svg></span><div><h2>Bandingkan saham</h2><p>Sandingkan rasio valuasi hingga enam saham dari bursa yang sama. Nilai terbaik di tiap baris ditandai.</p></div><span class="ph-crypto" hidden>Tidak tersedia untuk aset kripto</span></div>
+      <article data-panel="cmp" class="tile t-cmp" id="cmpTile" style="--i:8">
+        <div class="cmp-head">
+          <form class="cmp-add" id="cmpAdd" autocomplete="off">
+            <input id="cmpCode" placeholder="Tambah kode saham" aria-label="Kode saham untuk dibandingkan" maxlength="12">
+            <button class="btn" type="submit">Tambah</button>
+          </form>
+          <div class="cmp-acts">
+            <button type="button" class="ghost-btn" id="cmpCur">+ Saham yang dibuka</button>
+            <button type="button" class="ghost-btn" id="cmpWl">Isi dari watchlist</button>
+            <button type="button" class="ghost-btn" id="cmpClr">Kosongkan</button>
+          </div>
+        </div>
+        <p class="cmp-msg" id="cmpMsg" role="status" hidden></p>
+        <div class="cmp-chips" id="cmpChips"></div>
+        <div class="cmp-wrap" id="cmpBody"></div>
+        <details class="note">
+          <summary>Cara membaca tabel perbandingan</summary>
+          <div class="note-b"><ul>
+            <li>Tanda <b class="cmp-best-demo">terbaik</b> diberikan pada PER, PBV, dan DER terendah (di atas nol), serta ROE, dividend yield, dan free float tertinggi di antara saham yang dibandingkan.</li>
+            <li>"Terbaik" hanya berarti paling unggul pada rasio tersebut di antara kolom yang ada, bukan penilaian keseluruhan. Perbandingan paling bermakna dilakukan antarsaham dalam sektor yang sama.</li>
+            <li>Klik kode saham di kepala kolom untuk membuka analisis lengkapnya. Daftar perbandingan tersimpan di browser ini untuk tiap bursa.</li>
+          </ul></div>
+        </details>
+      </article>
+
+      <div class="panel-h" data-panel="earn"><span class="ph-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/><path d="M8 14h3v3H8z"/></svg></span><div><h2>Kalender emiten</h2><p>Jadwal dan hasil rilis laporan keuangan sepanjang tahun berjalan.</p></div><span class="ph-crypto" hidden>Tidak tersedia untuk aset kripto</span></div>
+      <article data-panel="earn" class="tile t-earn" id="earn" style="--i:10">
+        <div class="er-head">
+          <div class="er-ttl">
+            <span class="er-kick"><i></i>Kalender Emiten</span>
+            <h3>Laporan keuangan <span id="erYear"></span> <span class="sub" id="erMk"></span></h3>
+            <p class="jr-sub">Jadwal rilis laporan keuangan saham-saham utama di bursa ini sepanjang tahun berjalan, beserta realisasi laba per saham dibandingkan estimasi analis.</p>
+          </div>
+          <div class="er-sum" id="erSum"></div>
+        </div>
+        <div id="erBody"></div>
+        <details class="note"><summary>Sumber dan keterangan</summary><div class="note-b"><p class="fine">Sumber: kalender earnings Yahoo Finance; jadwal dapat berubah dan sebagian tanggal masih berupa perkiraan. <b>EPS</b> = laba bersih per saham. <b>Di atas estimasi</b> berarti EPS yang dilaporkan lebih tinggi dari rata-rata perkiraan analis. Cakupan bursa di luar Amerika Serikat bergantung pada ketersediaan data di Yahoo Finance.</p></div></details>
+      </article>
+
+      <div class="panel-h ph-me" data-panel="me"><span class="ph-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span><div><h2>Ruang Pribadi</h2><p>Watchlist dan jurnal trading milik Anda. Tersimpan di browser ini dan tersinkronisasi otomatis ketika Anda masuk ke akun.</p></div>
+        <div class="me-sw" id="meSw" role="tablist" aria-label="Isi Ruang Pribadi"><button type="button" data-sub="watch" class="on">Watchlist <i id="meNW">0</i></button><button type="button" data-sub="jr">Jurnal trading <i id="meNJ">0</i></button></div></div>
+      <article data-panel="me" data-sub="watch" class="tile t-watch" style="--i:9">
         <div class="wl-head">
           <h3 style="margin:0">Watchlist saya <span class="sub" id="wlCount"></span></h3>
           <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
@@ -1085,23 +1319,10 @@
           <div class="wl-msg" id="wlMsg" role="status"></div>
           <div class="wl-import" id="wlImport" hidden></div>
         </div>
-        <p class="fine">Status mengikuti aturan breakout: <b>Breakout terkonfirmasi</b> apabila harga penutupan berada di atas Price to Watch dengan volume minimal 1,4× rata-rata 50 hari. Kosongkan kolom Price to Watch untuk menggunakan Buy trigger otomatis. <span class="store-note" data-what="watch">Daftar ini hanya tersimpan di browser ini dan tidak dikirim ke mana pun.</span></p>
+        <details class="note"><summary>Keterangan</summary><div class="note-b"><p class="fine">Status mengikuti aturan breakout: <b>Breakout terkonfirmasi</b> apabila harga penutupan berada di atas Price to Watch dengan volume minimal 1,4× rata-rata 50 hari. Kosongkan kolom Price to Watch untuk menggunakan Buy trigger otomatis. <span class="store-note" data-what="watch">Daftar ini hanya tersimpan di browser ini dan tidak dikirim ke mana pun.</span></p></div></details>
       </article>
 
-      <article class="tile t-earn" id="earn" style="--i:10">
-        <div class="er-head">
-          <div class="er-ttl">
-            <span class="er-kick"><i></i>Kalender Emiten</span>
-            <h3>Laporan keuangan <span id="erYear"></span> <span class="sub" id="erMk"></span></h3>
-            <p class="jr-sub">Jadwal rilis laporan keuangan saham-saham utama di bursa ini sepanjang tahun berjalan, beserta realisasi laba per saham dibandingkan estimasi analis.</p>
-          </div>
-          <div class="er-sum" id="erSum"></div>
-        </div>
-        <div id="erBody"></div>
-        <p class="fine er-fine">Sumber: kalender earnings Yahoo Finance; jadwal dapat berubah dan sebagian tanggal masih berupa perkiraan. <b>EPS</b> = laba bersih per saham. <b>Di atas estimasi</b> berarti EPS yang dilaporkan lebih tinggi dari rata-rata perkiraan analis. Cakupan bursa di luar Amerika Serikat bergantung pada ketersediaan data di Yahoo Finance.</p>
-      </article>
-
-      <article class="tile t-journal" style="--i:10">
+      <article data-panel="me" data-sub="jr" class="tile t-journal" style="--i:10">
         <div class="jr-head">
           <div>
             <h3 style="margin:0 0 3px">Jurnal trading <span class="sub" id="jrCount"></span></h3>
@@ -1157,10 +1378,10 @@
         </div>
         <div class="jr-pane" data-pane="list"><div class="jr-list" id="jrList"></div></div>
         <p class="jr-fx" id="jrFx"></p>
-        <p class="fine"><span class="store-note" data-what="journal">Data hanya tersimpan di browser ini; gunakan Backup agar tidak hilang.</span> Seluruh laba/rugi dikonversi ke dolar AS (USD) agar transaksi lintas bursa dapat dijumlahkan, dan persentasenya dihitung terhadap modal trading. Hasil transaksi selesai telah dipotong biaya transaksi sesuai bursa. <b>R</b> adalah hasil dibagi risiko awal (jarak harga beli ke stop loss); +2R berarti keuntungan sebesar dua kali risiko yang dipasang. Rasio tersesuaikan = (win rate × rata-rata untung) ÷ (loss rate × rata-rata rugi); metode acuan menargetkan minimal 2.</p>
+        <details class="note"><summary>Keterangan</summary><div class="note-b"><p class="fine"><span class="store-note" data-what="journal">Data hanya tersimpan di browser ini; gunakan Backup agar tidak hilang.</span> Seluruh laba/rugi dikonversi ke dolar AS (USD) agar transaksi lintas bursa dapat dijumlahkan, dan persentasenya dihitung terhadap modal trading. Hasil transaksi selesai telah dipotong biaya transaksi sesuai bursa. <b>R</b> adalah hasil dibagi risiko awal (jarak harga beli ke stop loss); +2R berarti keuntungan sebesar dua kali risiko yang dipasang. Rasio tersesuaikan = (win rate × rata-rata untung) ÷ (loss rate × rata-rata rugi); metode acuan menargetkan minimal 2.</p></div></details>
       </article>
 
-      <article class="tile t-table" style="--i:11">
+      <article data-panel="tech" class="tile t-table" style="--i:11">
         <h3>10 hari terakhir <span class="sub" id="tblSub"></span></h3>
         <div class="tbl-wrap">
           <table>
@@ -1196,7 +1417,7 @@
     <div class="vz-pop" id="vzPop" hidden>
       <div class="vz-tabs"><button type="button" data-p="month" class="on">Bulan ini</button><button type="button" data-p="year">Tahun ini</button></div>
       <ul id="vzList"></ul>
-      <p>Dihitung sekali per browser per hari, bulan, dan tahun. Negara dibaca dari lokasi server Netlify; tidak ada data pribadi yang disimpan.</p>
+      <p>Dihitung sekali per browser per hari, bulan, dan tahun. Negara dibaca dari lokasi jaringan pengunjung oleh server; tidak ada data pribadi yang disimpan.</p>
     </div>
   </div>
   
@@ -1478,7 +1699,7 @@ function paintMarketUI(){
   $('#tblSub').textContent = m.crypto ? (m.volIsValue?'volume dalam dolar AS':'volume dalam koin') : m.lot>1 ? `volume dalam lot (1 lot = ${m.lot} lembar)` : 'volume dalam lembar saham';
   $('#sessTitle').textContent = m.sessions.length>1 ? 'Volume per sesi' : 'Volume per paruh hari';
   $('#s1L').textContent=m.sessionNames[0]; $('#s2L').textContent=m.sessionNames[1];
-  paintMarket(); moveInd(); window.erOnMarket?.();
+  paintMarket(); moveInd(); window.erOnMarket?.(); window.pnOnMarket?.();
 }
 
 async function load(raw, silent, mk){
@@ -1943,7 +2164,7 @@ function renderFund(f, note){
   else if(pass===items.length){ head='Lolos semua syarat'; desc='Pertumbuhan laba, pendapatan, dan profitabilitas memenuhi standar CAN SLIM. Ini tipe fundamental yang biasanya dimiliki saham pemimpin pasar.'; }
   else if(pass>=3){ head='Fundamental cukup kuat'; desc='Sebagian besar syarat terpenuhi. Perhatikan syarat yang belum lolos sebelum memutuskan.'; }
   else { head='Fundamental belum memenuhi'; desc='Pertumbuhan atau profitabilitasnya di bawah standar CAN SLIM. Breakout di saham seperti ini lebih berisiko gagal bertahan.'; }
-  if(f?.demo){ head+=' (data contoh)'; desc='Angka simulasi untuk melihat tampilan. Setelah di-deploy ke Netlify, memakai laporan keuangan dari Yahoo Finance.'; }
+  if(f?.demo){ head+=' (data contoh)'; desc='Angka simulasi untuk melihat tampilan. Setelah situs dipublikasikan, data diambil dari laporan keuangan dari Yahoo Finance.'; }
   $('#fHead').textContent=head; $('#fDesc').textContent=desc;
   const ae=f?.a?.DilutedEPS||f?.a?.BasicEPS, qe=f?.q?.DilutedEPS||f?.q?.BasicEPS;
   drawBars('#fBarsA','#fBarsAx',ae,d=>d.slice(0,4),5);
@@ -1951,6 +2172,7 @@ function renderFund(f, note){
   $('#fCurA').textContent=$('#fCurQ').textContent = f?.currency ? `mata uang ${f.currency}` : '';
 }
 async function loadFund(){
+  window.loadVal?.();
   const sym=state.symbol, tk=state.ticker, ft=$('.t-fund');
   if(ft) ft.hidden=!!M().crypto;
   if(M().crypto) return;
@@ -2554,6 +2776,184 @@ $('#wlFile').addEventListener('change',async e=>{
 
 wlRender(); if(wl.items.length) setTimeout(wlRefresh, 1500);
 
+/* ===================== Panel & navigasi kategori ===================== */
+const PN_KEY='smcb_panel', PN_LIST=['tech','fund','cmp','tool','earn','me'];
+const pn={ cur:'tech', sub:'watch' };
+try{ let v=localStorage.getItem(PN_KEY); if(v==='watch'||v==='jr'){ pn.sub=v; v='me'; } if(PN_LIST.includes(v)) pn.cur=v; const sb=localStorage.getItem('smcb_panel_sub'); if(sb==='watch'||sb==='jr') pn.sub=sb; }catch{}
+function pnApply(anim){
+  const crypto=!!M().crypto, b=$('#bento'); if(!b) return;
+  b.dataset.show=pn.cur;
+  b.querySelectorAll(':scope > [data-panel]').forEach(el=>{
+    const on=el.dataset.panel===pn.cur && (!el.dataset.sub || el.dataset.sub===pn.sub);
+    el.classList.toggle('pn-off',!on);
+    if(on && anim){ el.classList.remove('pn-in'); void el.offsetWidth; el.classList.add('pn-in'); }
+  });
+  ['valTile','fvTile','cmpTile'].forEach(id=>{ const e=$('#'+id); if(e) e.hidden=crypto; });
+  b.querySelectorAll('.panel-h .ph-crypto').forEach(x=>{ const k=x.closest('.panel-h').dataset.panel; x.hidden=!(crypto && (k==='fund'||k==='cmp')); });
+  document.querySelectorAll('#meSw button').forEach(x=>{ const on=x.dataset.sub===pn.sub; x.classList.toggle('on',on); x.setAttribute('aria-selected',on); });
+  document.querySelectorAll('#dock button').forEach(x=>{ const on=x.dataset.p===pn.cur; x.classList.toggle('on',on); x.setAttribute('aria-selected',on); });
+  { const d=$('#dock'), on=d?.querySelector('button.on'); if(d&&on&&d.scrollWidth>d.clientWidth) d.scrollTo({left:on.offsetLeft-(d.clientWidth-on.offsetWidth)/2,behavior:anim?'smooth':'auto'}); }
+  if(pn.cur==='cmp') cmpRender();
+  if(pn.cur==='fund') fvRender();
+}
+function pnGo(k){
+  if(!PN_LIST.includes(k)) return;
+  pn.cur=k; try{ localStorage.setItem(PN_KEY,k); }catch{}
+  pnApply(true);
+  const d=$('#dock'), top=d.getBoundingClientRect().top+window.scrollY-(parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--barH'))||64)-4;
+  if(window.scrollY>top+2) window.scrollTo({top,behavior:'smooth'});
+}
+$('#dock').addEventListener('click',e=>{ const b=e.target.closest('button[data-p]'); if(b) pnGo(b.dataset.p); });
+$('#meSw').addEventListener('click',e=>{ const b=e.target.closest('button[data-sub]'); if(!b) return; pn.sub=b.dataset.sub; try{ localStorage.setItem('smcb_panel_sub',pn.sub); }catch{} pnApply(true); });
+window.pnShow=(k,sub)=>{ if(sub) pn.sub=sub; pnGo(k); };
+function dockBadges(){
+  const set=(k,n,hot)=>{ const e=$('#dkb-'+k); if(!e) return; e.hidden=!n; e.textContent=n>99?'99+':n; e.classList.toggle('hot',!!hot); };
+  const nW=wl.items.length, nJ=jr.items.filter(x=>!x.outP).length;
+  set('me', nW+nJ);
+  const a=$('#meNW'), b=$('#meNJ'); if(a) a.textContent=nW; if(b){ b.textContent=nJ; b.title='Posisi terbuka'; }
+  set('earn', er.soon||0, true);
+}
+window.dockBadges=dockBadges;
+(()=>{ const bar=document.querySelector('.bar'); if(!bar) return;
+  const f=()=>document.documentElement.style.setProperty('--barH',bar.offsetHeight+'px'); f();
+  if('ResizeObserver' in window) new ResizeObserver(f).observe(bar); else window.addEventListener('resize',f);
+})();
+
+/* ===================== Valuasi ===================== */
+const val={ cache:{} };
+async function valFetch(mk,codes){
+  const key=mk+':'+codes.join(','), hit=val.cache[key];
+  if(hit && Date.now()-hit.t<15*60e3) return hit.v;
+  const r=await fetch(`/api/valuation?market=${mk}&codes=${encodeURIComponent(codes.join(','))}`); if(!r.ok) throw new Error('val');
+  const j=await r.json(); if(!Array.isArray(j.items)) throw new Error('val');
+  val.cache[key]={t:Date.now(),v:j.items}; j.items.forEach(x=>{ if(!x.error) val.cache[mk+':'+x.code]={t:Date.now(),v:[x]}; });
+  return j.items;
+}
+const pctV=(v,d=1)=> v==null||!isFinite(v)?'–':`${fmt(v*100,d)}%`;
+const xV=(v,d=2)=> v==null||!isFinite(v)?'–':`${fmt(v,d)}×`;
+function bigV(v,mk){ if(v==null||!isFinite(v)) return '–'; const c=MARKETS[mk].cur, a=Math.abs(v);
+  return a>=1e12?`${c} ${fmt(v/1e12,a>=1e14?0:1)} T`:a>=1e9?`${c} ${fmt(v/1e9,1)} M`:a>=1e6?`${c} ${fmt(v/1e6,1)} Jt`:`${c} ${fmt(v,0)}`; }
+const VAL_LV={
+  pe:v=>v==null?null:v<10?['lo','Relatif rendah']:v<=20?['mid','Menengah']:['hi','Relatif tinggi'],
+  pb:v=>v==null?null:v<1?['lo','Di bawah nilai buku']:v<=3?['mid','Menengah']:['hi','Relatif tinggi'],
+  roe:v=>v==null?null:v>=.15?['lo','Tinggi']:v>=.08?['mid','Menengah']:['hi','Rendah'],
+  der:v=>v==null?null:v<.5?['lo','Utang rendah']:v<=1.5?['mid','Menengah']:['hi','Utang tinggi'],
+  dy:v=>v==null?null:v>=.04?['lo','Tinggi']:v>=.02?['mid','Menengah']:['','Rendah'],
+  float:v=>v==null?null:v>=.4?['lo','Besar']:v>=.15?['mid','Menengah']:['hi','Kecil'],
+};
+function valRender(x,err){
+  const g=$('#valGrid'); if(!g) return; const mk=state.market, m=MARKETS[mk];
+  $('#valTk').textContent=state.ticker||'';
+  if(err||!x){ g.innerHTML=`<div class="vm na" style="grid-column:1/-1"><b style="font-size:15px">${err||'Data valuasi belum tersedia untuk saham ini.'}</b><small>Data dari Yahoo Finance dapat kosong untuk sebagian emiten.</small></div>`; $('#valFx').hidden=true; $('#valAsOf').textContent=''; return; }
+  const card=(k,label,v,sub)=>{ const lv=VAL_LV[k]?.(x[k]); return `<div class="vm ${v==='–'?'na':(lv?lv[0]:'')}"><label>${label}</label><b>${v}</b><small>${sub||'&nbsp;'}</small>${lv&&v!=='–'?`<span class="lv">${lv[1]}</span>`:''}</div>`; };
+  g.innerHTML=[
+    card('pe','PER (12 bln)',xV(x.pe),x.fpe?`Proyeksi ${xV(x.fpe)}`:'harga ÷ EPS'),
+    card('pb','PBV',xV(x.pb),x.bvps!=null?`Nilai buku ${fp(x.bvps,m)}`:'harga ÷ nilai buku'),
+    card('roe','ROE',pctV(x.roe),x.margin!=null?`Margin laba ${pctV(x.margin)}`:'laba ÷ ekuitas'),
+    card('der','DER',x.der==null?'–':xV(x.der),x.der==null?'tidak tersedia / bank':'utang ÷ ekuitas'),
+    card('dy','Dividend yield',pctV(x.dy,2),x.dps?`Dividen ${fp(x.dps,m)}/lembar`:'12 bulan terakhir'),
+    card('payout','Payout ratio',pctV(x.payout,0),'porsi laba dibagikan'),
+    card('float','Free float',pctV(x.float,1),x.insiders!=null?`Orang dalam ${pctV(x.insiders,1)}`:'saham beredar bebas'),
+    card('eps','EPS (12 bln)',x.eps==null?'–':fp(x.eps,m),`Kap. pasar ${bigV(x.mcap,mk)}`),
+  ].join('');
+  $('#valFx').hidden=!x.fxNote; $('#valFx').textContent=x.fxNote?`${x.fxNote} memakai kurs terkini, sehingga PBV dapat sedikit berbeda dari aplikasi sekuritas.`:'';
+  $('#valAsOf').textContent='Yahoo Finance';
+}
+async function loadVal(){
+  const mk=state.market, tk=state.ticker; val.cur=null;
+  if(M().crypto || !tk) return;
+  $('#valGrid').innerHTML='<div class="vm na" style="grid-column:1/-1;height:96px"></div>'; fvRender();
+  if(state.demo){ valRender(null,'Data valuasi tidak tersedia dalam mode contoh.'); fvRender(); return; }
+  try{
+    const [x]=await valFetch(mk,[tk]); if(state.ticker!==tk) return;
+    if(x.error){ valRender(null); val.cur=null; } else { val.cur=x; valRender(x); }
+  }catch{ if(state.ticker===tk) valRender(null,'Sumber data valuasi sedang tidak merespons.'); }
+  fvRender();
+}
+
+/* ===================== Kalkulator nilai wajar ===================== */
+const fv={ pe:15, basis:'ttm' };
+try{ const c=JSON.parse(localStorage.getItem('smcb_fv')||'{}'); if(c.pe>0) fv.pe=c.pe; if(c.basis) fv.basis=c.basis; }catch{}
+const fvSave=()=>{ try{ localStorage.setItem('smcb_fv',JSON.stringify(fv)); }catch{} };
+function fvRender(){
+  const out=$('#fvOut'); if(!out) return; const x=val.cur, m=M();
+  if(document.activeElement!==$('#fvPe')) $('#fvPe').value=fv.pe;
+  document.querySelectorAll('#fvBasis button').forEach(b=>{ b.classList.toggle('on',b.dataset.v===fv.basis); b.disabled = b.dataset.v==='fwd' && !(x&&x.feps); });
+  const pres=[]; if(x&&x.pe) pres.push([+x.pe.toFixed(1),`PER saat ini ${fmt(x.pe,1)}×`]); if(x&&x.fpe) pres.push([+x.fpe.toFixed(1),`PER proyeksi ${fmt(x.fpe,1)}×`]);
+  [8,10,12,15,20,25].forEach(v=>pres.push([v,`${v}×`]));
+  $('#fvPre').innerHTML=pres.map(([v,l])=>`<button type="button" data-pe="${v}" class="${Math.abs(v-fv.pe)<.05?'on':''}">${l}</button>`).join('');
+  if(!x){ out.innerHTML=`<p class="fv-empty">${state.ticker?'Menunggu data EPS dan harga…':'Buka sebuah saham terlebih dahulu.'}</p>`; return; }
+  const eps= fv.basis==='fwd'&&x.feps ? x.feps : x.eps, price=(state.lastId===state.market+':'+state.ticker && state.lastPrice) || x.price;
+  if(!(eps>0)){ out.innerHTML=`<p class="fv-empty">EPS ${fv.basis==='fwd'?'proyeksi':'12 bulan terakhir'} ${eps==null?'tidak tersedia':'negatif (perusahaan merugi)'}, sehingga metode PER × EPS tidak dapat digunakan.</p>`; return; }
+  const v=fv.pe*eps, d=price/v-1, lo=Math.min(price,v)*.8, hi=Math.max(price,v)*1.15, pos=z=>Math.max(3,Math.min(97,(z-lo)/(hi-lo)*100));
+  const sens=[.6,.8,1,1.2,1.4].map(k=>{ const pe=Math.round(fv.pe*k*2)/2; return `<div class="${k===1?'on':''}">PER ${fmt(pe,pe%1?1:0)}<b>${fp(pe*eps,m)}</b></div>`; }).join('');
+  out.innerHTML=`<div class="fv-l">Nilai hasil hitungan</div><div class="fv-v">${fp(v,m)}</div>
+    <div class="fv-d">${fmt(fv.pe,1)}× × EPS ${fp(eps,m)} · Harga saat ini <b>${fp(price,m)}</b>, ${Math.abs(d)<.005?'setara dengan':`<b>${fmt(Math.abs(d)*100,1)}% ${d>0?'di atas':'di bawah'}</b>`} nilai hasil hitungan.</div>
+    <div class="fv-bar"><i class="p" style="left:${pos(price)}%"></i><span style="left:${pos(price)}%">Harga</span><i class="f" style="left:${pos(v)}%"></i><span style="left:${pos(v)}%;top:-20px;color:#C6F135">Hitungan</span></div>
+    <div class="fv-l" style="color:rgba(255,255,255,.6);letter-spacing:.04em">Kepekaan terhadap PER acuan</div><div class="fv-sens">${sens}</div>`;
+}
+$('#fvPe').addEventListener('input',e=>{ const v=parseFloat(String(e.target.value).replace(',','.')); if(v>0&&v<=500){ fv.pe=v; fvSave(); fvRender(); } });
+$('#fvPe').addEventListener('blur',()=>fvRender());
+$('#fvPre').addEventListener('click',e=>{ const b=e.target.closest('[data-pe]'); if(!b) return; fv.pe=+b.dataset.pe; fvSave(); fvRender(); });
+$('#fvBasis').addEventListener('click',e=>{ const b=e.target.closest('button[data-v]'); if(!b||b.disabled) return; fv.basis=b.dataset.v; fvSave(); fvRender(); });
+
+/* ===================== Bandingkan saham ===================== */
+const CMP_KEY='smcb_cmp', CMP_MAX=6;
+const cmp={ lists:{}, seq:0 };
+try{ const c=JSON.parse(localStorage.getItem(CMP_KEY)||'{}'); if(c&&typeof c==='object') cmp.lists=c; }catch{}
+const cmpList=()=>{ const mk=state.market; if(!Array.isArray(cmp.lists[mk])) cmp.lists[mk]=[]; return cmp.lists[mk]; };
+const cmpMsg=t=>{ const e=$('#cmpMsg'); if(!e) return; e.textContent=t||''; e.hidden=!t; clearTimeout(cmpMsg.t); if(t) cmpMsg.t=setTimeout(()=>{ e.hidden=true; },4000); };
+const cmpSave=()=>{ try{ localStorage.setItem(CMP_KEY,JSON.stringify(cmp.lists)); }catch{} };
+function cmpAdd(code){
+  const t=normalize(code,state.market); if(!t) return 'Kode tidak valid.';
+  const L=cmpList(); if(L.includes(t)) return `${t} sudah ada di perbandingan.`;
+  if(L.length>=CMP_MAX) return `Maksimal ${CMP_MAX} saham per perbandingan.`;
+  L.push(t); cmpSave(); return null;
+}
+const CMP_ROWS=[
+  ['grp','Harga & ukuran'],
+  ['price','Harga',(x,mk)=>fp(x.price,MARKETS[mk])],
+  ['mcap','Kapitalisasi pasar',(x,mk)=>bigV(x.mcap,mk)],
+  ['grp','Valuasi'],
+  ['pe','PER (12 bulan)',x=>xV(x.pe),'min'],
+  ['fpe','PER proyeksi',x=>xV(x.fpe),'min'],
+  ['pb','PBV',x=>xV(x.pb),'min'],
+  ['grp','Profitabilitas & utang'],
+  ['roe','ROE',x=>pctV(x.roe),'max'],
+  ['margin','Margin laba bersih',x=>pctV(x.margin),'max'],
+  ['der','DER',x=>x.der==null?'–':xV(x.der),'min0'],
+  ['grp','Dividen'],
+  ['dy','Dividend yield',x=>pctV(x.dy,2),'max'],
+  ['payout','Payout ratio',x=>pctV(x.payout,0)],
+  ['grp','Kepemilikan'],
+  ['float','Free float',x=>pctV(x.float,1),'max'],
+  ['insiders','Kepemilikan orang dalam',x=>pctV(x.insiders,1)],
+];
+async function cmpRender(){
+  const body=$('#cmpBody'); if(!body || M().crypto) return;
+  const mk=state.market, L=cmpList();
+  $('#cmpChips').innerHTML=L.map(t=>`<span class="cmp-chip">${esc(t)}<button type="button" data-rm="${esc(t)}" aria-label="Hapus ${esc(t)}">×</button></span>`).join('');
+  if(L.length<1){ body.innerHTML='<div class="cmp-empty">Tambahkan 2–6 kode saham untuk mulai membandingkan, atau isi otomatis dari saham yang sedang dibuka dan watchlist Anda.</div>'; return; }
+  const id=++cmp.seq; if(!body.querySelector('table')) body.innerHTML='<div class="cmp-skel"></div>';
+  let items; try{ items=await valFetch(mk,L); }catch{ if(id===cmp.seq) body.innerHTML='<div class="cmp-empty">Data perbandingan belum dapat dimuat. Silakan coba beberapa saat lagi.</div>'; return; }
+  if(id!==cmp.seq || state.market!==mk) return;
+  const ok=items.filter(x=>!x.error), bad=items.filter(x=>x.error);
+  const best={}; CMP_ROWS.forEach(([k,,,rule])=>{ if(!rule) return; const vs=ok.map(x=>x[k]).filter(v=>v!=null&&isFinite(v)&&(rule!=='min'||v>0)&&(rule!=='min0'||v>=0)); if(vs.length<2) return; best[k]=(rule==='max')?Math.max(...vs):Math.min(...vs); });
+  const head=`<tr><th>Rasio</th>${ok.map(x=>`<th><a data-go="${esc(x.code)}" title="Buka analisis ${esc(x.code)}">${esc(x.code)}</a><small>${esc(x.name||'')}</small></th>`).join('')}</tr>`;
+  const rows=CMP_ROWS.map(([k,label,f])=>k==='grp'?`<tr class="grp"><td colspan="${ok.length+1}">${label}</td></tr>`
+    :`<tr><td>${label}</td>${ok.map(x=>{ const v=x[k], t=f(x,mk); return `<td class="${t==='–'?'na':''}${best[k]!=null&&v===best[k]?' best':''}">${t}</td>`; }).join('')}</tr>`).join('');
+  body.innerHTML=(ok.length?`<table class="cmp-t"><thead>${head}</thead><tbody>${rows}</tbody></table>`:'')+(bad.length?`<div class="cmp-empty">Data tidak ditemukan untuk: ${bad.map(x=>esc(x.code)).join(', ')}.</div>`:'');
+}
+$('#cmpAdd').addEventListener('submit',e=>{ e.preventDefault(); const v=$('#cmpCode').value.trim(); if(!v) return; const err=cmpAdd(v); cmpMsg(err); $('#cmpCode').value=''; cmpRender(); });
+$('#cmpCur').addEventListener('click',()=>{ if(!state.ticker) return; cmpMsg(cmpAdd(state.ticker)); cmpRender(); });
+$('#cmpWl').addEventListener('click',()=>{ const mk=state.market, L=cmpList(); wl.items.filter(x=>x.mk===mk).forEach(x=>{ if(L.length<CMP_MAX && !L.includes(x.t)) L.push(x.t); }); cmpSave(); cmpRender(); });
+$('#cmpClr').addEventListener('click',()=>{ cmp.lists[state.market]=[]; cmpSave(); cmpRender(); });
+$('#cmpTile').addEventListener('click',e=>{
+  const r=e.target.closest('[data-rm]'); if(r){ cmp.lists[state.market]=cmpList().filter(t=>t!==r.dataset.rm); cmpSave(); cmpRender(); return; }
+  const g=e.target.closest('[data-go]'); if(g){ window.scrollTo({top:0,behavior:'smooth'}); load(g.dataset.go,false,state.market); }
+});
+window.pnOnMarket=()=>{ pnApply(false); };
+
 /* ===================== Kalender laporan keuangan ===================== */
 const er={ data:{}, busy:{}, sel:null, seen:false };
 const ER_TIME={ BMO:'Sebelum pasar dibuka', AMC:'Setelah pasar ditutup', TAS:'Setelah pasar ditutup', TNS:'Waktu belum diumumkan' };
@@ -2600,6 +3000,7 @@ async function erRender(){
   // pengingat: saham di watchlist atau saham yang sedang dibuka, rilis ≤ 14 hari
   const rem=fut.filter(e=>(e.w || e.code===state.ticker) && days(e.key)<=14);
   const alert = rem.length ? `<div class="er-alert" role="status"><b>⏰ Pengingat</b>${rem.map(e=>`<a data-er="${esc(e.code)}"><b>${esc(e.code)}</b> merilis laporan ${days(e.key)<=0?'hari ini':days(e.key)===1?'besok':`dalam ${days(e.key)} hari`} (${dShort(e.key)})${e.w?'':' · sedang dibuka'}</a>`).join('')}</div>` : '';
+  er.soon=fut.filter(e=>days(e.key)<=7).length; window.dockBadges?.();
   const nx8=fut.slice(0,10);
   const cards = nx8.length ? `<div class="er-next">${nx8.map(e=>{ const n=days(e.key), dt=new Date(e.key+'T00:00:00Z');
       return `<button type="button" class="er-card${n<=7?' soon':''}" data-er="${esc(e.code)}" title="Buka analisis ${esc(e.code)}">
@@ -2902,6 +3303,7 @@ function jrInit(){
   });
   $('#cJournal')?.addEventListener('click',()=>{
     if(!state.ticker) return;
+    window.pnShow?.('me','jr');
     jrOpenForm({ mk:state.market, t:state.ticker, inP:+$('#cEntry').value||state.plan?.buy, stop:+$('#cStop').value||state.plan?.stop, tgt:state.plan?.target, qty:state.calcLots||'', setup:JR_SETUPS[0], inD:todayKey() });
   });
   jrLoad(); jrRender(); if(jr.items.some(x=>!x.outP)) setTimeout(jrRefreshPx, 2500);
@@ -2965,8 +3367,11 @@ function setTheme(t){
 }
 $('#themeBtn').addEventListener('click',()=>setTheme(document.documentElement.dataset.theme==='dark'?'light':'dark'));
 try{ const t=localStorage.getItem('theme'); if(t) document.documentElement.dataset.theme=t; }catch{}
-$('#brandName').innerHTML=esc(CONFIG.appName).replace(/^([^-]+-)(.+)$/,'$1<b>$2</b>'); $('#brandTag').textContent=CONFIG.tagline;
+$('#brandName').innerHTML=esc(CONFIG.appName).replace(/^([^-]+)-(.+)$/,'<span class="wm-sm">$1</span><span class="wm-dash">-</span><b>$2</b>')+'<span class="wm-tag">Breakout Lab</span>'; $('#brandTag').textContent=CONFIG.tagline;
 document.title=`${CONFIG.appName} | level breakout saham`;
+wlRender=(f=>function(...a){ const r=f.apply(this,a); try{ dockBadges(); }catch{} return r; })(wlRender);
+jrRender=(f=>function(...a){ const r=f.apply(this,a); try{ dockBadges(); }catch{} return r; })(jrRender);
+pnApply(false); try{ dockBadges(); }catch{}
 
 setInterval(paintMarket,30000);
 setInterval(()=>{

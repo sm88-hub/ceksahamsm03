@@ -437,6 +437,33 @@
   @media(prefers-reduced-motion:reduce){.ack,.ack-card,.ack-list li,.ack-ico,.ack-hl,.ack-go,.ack-go::before{animation:none}}
   @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 
+
+  /* ===== Merek & suasana ===== */
+  .wordmark{font:800 21px 'Space Grotesk','Montserrat',sans-serif;letter-spacing:-.035em;display:inline-flex;align-items:baseline;gap:1px}
+  .wordmark .wm-sm{color:var(--ink)}
+  .wordmark .wm-dash{color:var(--ink3);font-weight:500;margin:0 1px}
+  .wordmark b{font-weight:800;background:linear-gradient(100deg,#3F6212 0%,#16A34A 30%,#0D9488 55%,#65A30D 80%,#3F6212 100%);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:wmFlow 7s ease-in-out infinite}
+  [data-theme="dark"] .wordmark b{background-image:linear-gradient(100deg,#D9F99D 0%,#C6F135 25%,#4ADE80 50%,#2DD4BF 70%,#C6F135 100%);color:transparent;filter:drop-shadow(0 0 14px rgba(198,241,53,.25))}
+  @keyframes wmFlow{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+  .wm-tag{display:none;font:700 9.5px 'Plus Jakarta Sans',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3);margin-left:8px;padding:3px 7px;border:1px solid var(--rule2);border-radius:6px;align-self:center}
+  @media(min-width:1180px){.wm-tag{display:inline-block}}
+  @media(prefers-reduced-motion:reduce){.wordmark b{animation:none}}
+  body::before{content:'';position:fixed;inset:-20% -10% auto -10%;height:70vh;z-index:-1;pointer-events:none;opacity:.9;
+    background:radial-gradient(40% 50% at 15% 10%,rgba(45,212,191,.13),transparent 70%),radial-gradient(35% 45% at 85% 0%,rgba(198,241,53,.22),transparent 70%),radial-gradient(30% 40% at 55% 30%,rgba(99,102,241,.08),transparent 70%);
+    animation:aurora 22s ease-in-out infinite alternate}
+  [data-theme="dark"] body::before{opacity:.75}
+  @keyframes aurora{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(2%,3%,0) scale(1.06)}}
+  @media(prefers-reduced-motion:reduce){body::before{animation:none}}
+  .method-d{background:var(--surface);border:1px solid var(--rule);border-radius:22px;padding:20px 24px;box-shadow:var(--shadow)}
+  .method-d > summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:14px}
+  .method-d > summary::-webkit-details-marker{display:none}
+  .method-s h2{margin:0}
+  .method-s small{display:block;font-size:13px;color:var(--ink3);font-weight:500;margin-top:2px}
+  .method-s i{flex:none;width:36px;height:36px;border-radius:11px;border:1px solid var(--rule2);display:grid;place-items:center;transition:transform .3s,background .2s}
+  .method-s i::before{content:'';width:9px;height:9px;border-right:2.4px solid var(--ink2);border-bottom:2.4px solid var(--ink2);transform:rotate(45deg) translate(-2px,-2px)}
+  .method-d[open] .method-s i{transform:rotate(180deg)}
+  .method-s:hover i{background:var(--sunk)}
+  .method-d[open] > summary{margin-bottom:14px}
   /* ===== Mode gelap: keterbacaan teks & kolom isian ===== */
   [data-theme="dark"]{color-scheme:dark;--ink2:#B6C0D2;--ink3:#8D99AE}
   :where(input,select,textarea){color:var(--ink)}
@@ -454,7 +481,7 @@
   <a class="brand" href="index.html" aria-label="Kembali ke halaman utama">
     <img class="brand-mark" src="logo-mark.png" width="36" height="36" alt="" aria-hidden="true">
     <i class="brand-sep" aria-hidden="true"></i>
-    <span class="wordmark" id="brandName">SM-<b>Crestboard</b></span>
+    <span class="wordmark" id="brandName"><span class="wm-sm">SM</span><span class="wm-dash">-</span><b>Crestboard</b><span class="wm-tag">Breakout Lab</span></span>
     <span class="page-tag">Scanner</span>
   </a>
   <nav class="seg" id="markets" role="tablist" aria-label="Pilih bursa"><i class="seg-ind" id="segInd"></i></nav>
@@ -620,7 +647,8 @@
   </section>
 
   <section class="method" id="dasar">
-    <h2>Dasar analisis</h2>
+    <details class="method-d" id="dasarD">
+    <summary class="method-s"><span><h2>Dasar analisis</h2><small>Enam faktor penilaian skor, pengurang skor, catatan penting, dan aturan status</small></span><i aria-hidden="true"></i></summary>
     <p class="lead">Tidak ada analisis yang dapat memastikan harga esok hari. Yang dapat dilakukan adalah memilih saham yang punya ciri-ciri paling sering mendahului breakout yang berhasil. Skor di halaman ini menggabungkan enam faktor itu. Sebagian berasal dari riset pasar modal yang sudah diuji puluhan tahun, sebagian dari praktik trader momentum profesional, dan sumbernya disebut di tiap faktor.</p>
     <div class="fgrid">
       <article class="factor"><div class="f-head"><b>Tren jangka menengah</b><span>20 poin</span></div>
@@ -664,6 +692,7 @@
         <li><b>Buy trigger</b> menggunakan rumus yang sama dengan halaman utama: Close + Range × 0,4.</li>
       </ul>
     </details>
+  </details>
   </section>
 
   <footer>Data bersumber dari Yahoo Finance dan dapat tertunda 15–20 menit. Skor ini merupakan penyaring teknikal, bukan rekomendasi investasi. Setup yang baik pun dapat gagal; selalu gunakan stop loss, dan setiap keputusan pembelian sepenuhnya menjadi tanggung jawab Anda.
@@ -677,7 +706,7 @@
     <div class="vz-pop" id="vzPop" hidden>
       <div class="vz-tabs"><button type="button" data-p="month" class="on">Bulan ini</button><button type="button" data-p="year">Tahun ini</button></div>
       <ul id="vzList"></ul>
-      <p>Dihitung sekali per browser per hari, bulan, dan tahun. Negara dibaca dari lokasi server Netlify; tidak ada data pribadi yang disimpan.</p>
+      <p>Dihitung sekali per browser per hari, bulan, dan tahun. Negara dibaca dari lokasi jaringan pengunjung oleh server; tidak ada data pribadi yang disimpan.</p>
     </div>
   </div>
   
@@ -1407,7 +1436,9 @@ window.addEventListener('resize',moveInd);
 if(document.fonts&&document.fonts.ready) document.fonts.ready.then(moveInd);
 $('#themeBtn').addEventListener('click',()=>{ const t=document.documentElement.dataset.theme==='dark'?'light':'dark'; document.documentElement.dataset.theme=t; try{ localStorage.setItem('theme',t); }catch{} });
 try{ const t=localStorage.getItem('theme'); if(t) document.documentElement.dataset.theme=t; }catch{}
-$('#brandName').innerHTML=esc(CONFIG.appName).replace(/^([^-]+-)(.+)$/,'$1<b>$2</b>');
+$('#brandName').innerHTML=esc(CONFIG.appName).replace(/^([^-]+)-(.+)$/,'<span class="wm-sm">$1</span><span class="wm-dash">-</span><b>$2</b>')+'<span class="wm-tag">Breakout Lab</span>';
+document.querySelectorAll('a[href="#dasar"]').forEach(a=>a.addEventListener('click',()=>{ const d=$('#dasarD'); if(d) d.open=true; }));
+if(location.hash==='#dasar'){ const d=$('#dasarD'); if(d) d.open=true; }
 
 const start=(location.hash.slice(1)||'').toUpperCase();
 setMarket(MARKETS[start] ? start : 'ID');
