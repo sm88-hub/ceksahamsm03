@@ -280,6 +280,7 @@
   .fx-d{display:inline-block;width:8px;height:8px;border-radius:50%;margin:0 5px 0 8px;vertical-align:1px}
   .fx-d.ok{background:#16A34A}.fx-d.bad{background:#DC2626}.fx-d.na{background:#9CA3AF}
   .fx-scan{margin:-4px 0 14px}
+  .fx-acc{margin:-4px 0 14px}
   /* Pengunjung (footer) */
   .vz{margin-top:14px;color:var(--ink3);font-size:12.5px;position:relative}
   .vz[hidden]{display:none}
@@ -631,6 +632,44 @@
     </div>
   </details>
 
+  <details class="fx fx-acc" id="accD">
+    <summary>Apa itu Minat beli menguat dan bagaimana cara menghitungnya?</summary>
+    <div class="fx-body">
+      <p class="fx-lead"><b>Minat beli menguat</b> menandai saham yang dalam 20 hari bursa terakhir lebih banyak ditransaksikan pada hari naik daripada hari turun, sementara harganya belum naik jauh. Pola ini sering muncul ketika pembeli mulai masuk secara bertahap sebelum harga bergerak. Perhitungannya hanya memakai harga dan volume harian dari Yahoo Finance, <b>bukan data broker</b>, sehingga tidak menunjukkan siapa pembelinya.</p>
+      <div class="fx-grid">
+        <div class="fx-item"><span class="fx-n">1</span><div>
+          <h5>Volume hari naik vs hari turun (maks. 30 poin)</h5>
+          <p>Volume pada hari harga ditutup naik dijumlahkan, lalu dibagi jumlah volume pada hari harga ditutup turun. Rasio ≥1,5 = 30 poin, ≥1,25 = 20 poin, ≥1,1 = 10 poin.</p>
+          <p class="fx-ex">Contoh: volume hari naik 15 juta lembar, hari turun 10 juta = 1,5×, <b>30 poin</b>.</p>
+        </div></div>
+        <div class="fx-item"><span class="fx-n">2</span><div>
+          <h5>On-Balance Volume menanjak (maks. 20 poin)</h5>
+          <p><b>OBV</b> menambahkan volume pada hari naik dan mengurangkannya pada hari turun. Kenaikan OBV selama 20 hari dibandingkan dengan total volume periode itu: ≥15% = 20 poin, ≥5% = 10 poin.</p>
+        </div></div>
+        <div class="fx-item"><span class="fx-n">3</span><div>
+          <h5>Posisi penutupan harian (maks. 20 poin)</h5>
+          <p>Garis <b>Akumulasi/Distribusi</b> melihat letak harga penutupan di dalam rentang hari itu. Penutupan dekat harga tertinggi dihitung positif, dekat harga terendah dihitung negatif, lalu dibobot dengan volume. Rata-rata ≥0,10 = 20 poin, ≥0,03 = 10 poin.</p>
+        </div></div>
+        <div class="fx-item"><span class="fx-n">4</span><div>
+          <h5>OBV lebih dulu mencapai puncak (10 poin)</h5>
+          <p>OBV sudah berada di titik tertingginya dalam 20 hari, sedangkan harga masih minimal 3% di bawah penutupan tertingginya. Artinya volume beli sudah menguat, tetapi harga belum mengikuti.</p>
+        </div></div>
+        <div class="fx-item"><span class="fx-n">5</span><div>
+          <h5>Harga masih dekat dasar (maks. 15 poin)</h5>
+          <p>Jarak harga dari titik terendah 20 hari ≤10% dan kenaikan 20 hari ≤8% = 15 poin. Jarak ≤15% dan kenaikan ≤12% = 7 poin.</p>
+        </div></div>
+        <div class="fx-item"><span class="fx-n">6</span><div>
+          <h5>Rentang harga menyempit (5 poin)</h5>
+          <p>Rata-rata rentang harian 10 hari terakhir (ATR 10) lebih kecil dari 0,9× rata-rata 50 hari. Pergerakan yang makin tenang sering mendahului pergerakan besar.</p>
+        </div></div>
+      </div>
+      <div class="fx-note">
+        <p><b>Syarat lolos.</b> Total skor minimal <b>60 dari 100</b>. Saham yang sudah naik lebih dari 12% dalam 20 hari atau lebih dari 18% dari dasar 20 hari <b>tidak dimasukkan</b>, karena minat belinya dianggap sudah tercermin pada harga.</p>
+        <p><b>Bedanya dengan Siap breakout.</b> Siap breakout melihat harga yang sudah dekat titik tertinggi 20 hari dengan skor breakout tinggi. Minat beli melihat tahap yang lebih awal, saat harga masih di dekat dasar. Karena itu, satu saham jarang masuk kedua daftar sekaligus.</p>
+        <p><b>Batasannya.</b> Rumus ini berlaku untuk semua bursa dan kripto karena hanya memakai harga dan volume. Volume tinggi bisa berasal dari aksi jual-beli besar yang saling meniadakan, berita sesaat, atau saham yang jarang ditransaksikan. Skor ini adalah penyaring awal, bukan sinyal beli.</p>
+      </div>
+    </div>
+  </details>
   <div class="list" id="list"></div>
 
   <section class="stg fxs" id="asing" hidden>

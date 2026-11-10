@@ -816,6 +816,7 @@
   details.note[open] > summary::after{transform:rotate(225deg) translate(-2px,-2px)}
   details.note > summary:hover{color:var(--ink)}
   .note-b{padding:2px 14px 12px;animation:pnlIn .3s ease both}
+  .note-b .howto{margin:4px 0 0;font-size:13px;line-height:1.6;max-width:none}.note-b .howto li{margin:0 0 5px 18px}
   .note-b .fine,.note-b .fund-src{margin-top:4px}
   .note-b ul{margin:4px 0 0 18px;font-size:12.5px;line-height:1.6;color:var(--ink2);display:grid;gap:5px}
   /* Valuasi */
@@ -1402,6 +1403,18 @@
           <div class="wl-import" id="wlImport" hidden></div>
         </div>
         <details class="note"><summary>Keterangan</summary><div class="note-b"><p class="fine">Status mengikuti aturan breakout: <b>Breakout terkonfirmasi</b> apabila harga penutupan berada di atas Price to Watch dengan volume minimal 1,4× rata-rata 50 hari. Kosongkan kolom Price to Watch untuk menggunakan Buy trigger otomatis. <b>Batas</b> adalah batas bawah pribadi: status berubah merah "Di bawah batas" bila harga penutupan berada di bawahnya. <b>Kinerja sejak dipantau</b> dibandingkan dengan harga penutupan saat saham pertama kali tercatat di watchlist. Label di bawah tiap saham menampilkan minat beli (skor 60 ke atas), tahap siklus harian, jadwal laporan keuangan dalam 3 minggu, dan nada berita 7 hari terakhir. <span class="store-note" data-what="watch">Daftar ini hanya tersimpan di browser ini dan tidak dikirim ke mana pun.</span></p></div></details>
+        <details class="note"><summary>Cara membaca status, batas, kinerja, dan label</summary><div class="note-b"><ul class="howto">
+          <li><b>Price to Watch</b>: level yang Anda isi sendiri. Bila kosong, dipakai Buy trigger otomatis = Close + Range × 0,4 (lihat "Cara level dihitung" di panel Teknikal).</li>
+          <li><b>Breakout terkonfirmasi</b>: harga penutupan di atas Price to Watch dan volume hari itu minimal 1,4× rata-rata 50 hari.</li>
+          <li><b>Di atas, volume lemah</b>: harga penutupan sudah di atas Price to Watch, tetapi volumenya di bawah 1,4× rata-rata 50 hari.</li>
+          <li><b>Dekat level</b>: harga penutupan berada 2% atau kurang di bawah Price to Watch. <b>Menunggu</b>: lebih jauh dari 2%.</li>
+          <li><b>Di bawah batas</b>: harga penutupan lebih rendah dari angka Batas yang Anda isi. Batas bersifat pribadi dan tidak memengaruhi perhitungan lain.</li>
+          <li><b>Kinerja sejak dipantau</b> = (harga terkini ÷ harga penutupan saat saham ditambahkan − 1) × 100%. Belum termasuk biaya transaksi dan dividen.</li>
+          <li><b>Label Minat beli</b>: muncul bila skor minat beli 20 hari minimal 60 dari 100 dan harga belum naik lebih dari 12% dalam 20 hari. Skor disusun dari volume hari naik dibanding hari turun (30 poin), OBV menanjak (20), posisi penutupan harian (20), OBV lebih dulu mencapai puncak (10), harga dekat dasar 20 hari (15), dan rentang menyempit (5). Rincian lengkap ada di Scanner.</li>
+          <li><b>Label Tahap</b> (data harian, rata-rata 50, 150, dan 200 hari). <b>Tahap 2 · Tren naik</b>: harga di atas rata-rata 150 hari dan tidak lebih dari 3% di bawah rata-rata 50 hari, rata-rata 50 di atas 150, 150 di atas 200, dan rata-rata 200 hari menanjak dibanding sebulan lalu. <b>Tahap 4 · Penurunan</b>: harga di bawah rata-rata 200 hari yang sedang menurun. <b>Tahap 3 · Puncak</b>: harga sudah naik minimal 30% dalam setahun, lalu melemah dan tren mendatar. Selain itu dianggap <b>Tahap 1 · Konsolidasi</b>.</li>
+          <li><b>Label Lapkeu</b>: jadwal laporan keuangan dalam 21 hari ke depan, dari kalender emiten.</li>
+          <li><b>Label berita</b>: nada judul berita 7 hari terakhir dari Google News, dinilai dari kata kunci (misalnya laba naik, dividen, rugi, gugatan). Penilaian ini otomatis dan bisa keliru; baca beritanya sebelum menyimpulkan.</li>
+        </ul></div></details>
       </article>
 
       <article data-panel="me" data-sub="news" class="tile t-news" id="newsTile" style="--i:10">
@@ -1482,6 +1495,16 @@
         <div class="jr-pane" data-pane="list"><div class="jr-list" id="jrList"></div></div>
         <p class="jr-fx" id="jrFx"></p>
         <details class="note"><summary>Keterangan</summary><div class="note-b"><p class="fine"><span class="store-note" data-what="journal">Data hanya tersimpan di browser ini; gunakan Backup agar tidak hilang.</span> Seluruh laba/rugi dikonversi ke dolar AS (USD) agar transaksi lintas bursa dapat dijumlahkan, dan persentasenya dihitung terhadap modal trading. Hasil transaksi selesai telah dipotong biaya transaksi sesuai bursa. <b>R</b> adalah hasil dibagi risiko awal (jarak harga beli ke stop loss); +2R berarti keuntungan sebesar dua kali risiko yang dipasang. Rasio tersesuaikan = (win rate × rata-rata untung) ÷ (loss rate × rata-rata rugi); metode acuan menargetkan minimal 2.</p></div></details>
+        <details class="note"><summary>Cara menghitung statistik jurnal</summary><div class="note-b"><ul class="howto">
+          <li><b>Hasil per transaksi</b> = harga jual ÷ harga beli − 1, lalu dikurangi biaya transaksi bursa (BEI 0,4%, US 0,05%, Jepang 0,1%, Korea 0,25%, Hong Kong 0,3%, kripto spot 0,2%, futures 0,1%). Posisi terbuka memakai harga terkini tanpa potongan biaya.</li>
+          <li><b>Win rate</b> = jumlah transaksi untung ÷ jumlah transaksi selesai. Transaksi dengan hasil 0% atau minus dihitung rugi.</li>
+          <li><b>Untung rata-rata</b> dan <b>rugi rata-rata</b> = rata-rata persentase hasil dari transaksi untung saja dan transaksi rugi saja.</li>
+          <li><b>Rasio tersesuaikan</b> = (win rate × untung rata-rata) ÷ (loss rate × rugi rata-rata). Contoh: win rate 40%, untung rata-rata 15%, rugi rata-rata 5% → (0,4 × 15) ÷ (0,6 × 5) = 2 : 1. Di atas 1 berarti total untung lebih besar dari total rugi; metode acuan menargetkan minimal 2.</li>
+          <li><b>R</b> = hasil ÷ risiko awal, dengan risiko awal = (harga beli − stop loss) ÷ harga beli. Contoh: beli 1.000, stop 950 (risiko 5%), jual 1.100 (+10%) = +2R sebelum biaya. <b>Rata-rata R</b> hanya menghitung transaksi yang diisi stop loss.</li>
+          <li><b>Kurva hasil</b> menggabungkan hasil transaksi secara berurutan menurut tanggal jual, seolah seluruh modal dipakai di tiap transaksi.</li>
+          <li><b>Laba/rugi dalam USD</b> = jumlah lembar × (harga jual − harga beli) − biaya, lalu dikonversi ke dolar AS dengan kurs terbaru. Jumlah lembar = lot × ukuran lot bursa (BEI 100 lembar).</li>
+          <li><b>Persentase terhadap modal</b> = total laba/rugi USD ÷ modal trading yang Anda isi. <b>Dana terpakai</b> = nilai beli seluruh posisi terbuka dalam USD.</li>
+        </ul></div></details>
       </article>
 
       <article data-panel="tech" class="tile t-table" style="--i:11">
@@ -1500,6 +1523,7 @@
             <li><b>Buy trigger</b> = Close + Range × <code id="hK">0,4</code>. <b>Stop loss</b> = Close − Range × <code id="hK2">0,4</code>.</li>
             <li><b>Target</b> = Buy trigger + <code id="hRR">1,5</code> × (Buy trigger − Stop loss).</li>
             <li><b>Syarat volume</b>: volume hari referensi minimal <code id="hVM">1,4</code>× rata-rata <code id="hVD">50</code> hari.</li>
+            <li><b>Label RS</b> (kekuatan relatif) = kenaikan harga 3 bulan × 0,4 + 6 bulan × 0,2 + 9 bulan × 0,2 + 12 bulan × 0,2, lalu diperingkat 1–99 dibanding daftar saham pembanding (saham-saham besar) di bursa yang sama. RS 85 berarti lebih kuat dari sekitar 85% saham pembanding.</li>
             <li><b>Pivot</b>: P = (H + L + C) / 3, R1 = 2P − L, S1 = 2P − H, R2 = P + (H − L), S2 = P − (H − L).</li>
             <li><b>Asal rumus.</b> Buy trigger dan stop adalah varian <i>volatility breakout</i> Larry Williams dengan harga penutupan sebagai acuan. Syarat volume mengikuti aturan breakout IBD/William O'Neil: minimal 40% di atas rata-rata 50 hari. Pivot memakai rumus pivot klasik. Pengali 0,4 dan target 1,5× risiko adalah pilihan aplikasi ini, bukan angka baku.</li>
             <li>Harga dibulatkan ke fraksi harga tiap bursa. BEI, Tokyo, dan Hong Kong punya istirahat siang (sesi 1 dan 2); bursa US dan Korea dibagi dua paruh hari. Jam memakai waktu lokal bursa.</li>
