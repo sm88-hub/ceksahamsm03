@@ -10,7 +10,7 @@
 import { UNIVERSE } from './rs.js';
 
 const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36';
-const TTL = 6 * 3600 * 1000;
+const TTL = 3 * 3600 * 1000;
 const memo = new Map();
 let auth = null;
 
@@ -143,7 +143,7 @@ export async function build(market, year) {
   }
   events = [...seen.values()].sort((a, b) => (a.d < b.d ? -1 : 1));
   for (const e of events) if (!names[e.code] && e.name) names[e.code] = e.name;
-  return { market, year, source, note, at: new Date().toISOString(), count: events.length, events, names };
+  return { v: 2, market, year, source, note, at: new Date().toISOString(), count: events.length, events, names };
 }
 
 export async function GET(req) {
@@ -152,11 +152,11 @@ export async function GET(req) {
   const year = Math.min(2100, Math.max(2000, +(u.searchParams.get('year') || new Date().getUTCFullYear())));
   if (!UNIVERSE[market] || market === 'CS') return json({ error: 'Kalender laporan keuangan hanya tersedia untuk bursa saham' }, 400);
   const key = market + year, hit = memo.get(key);
-  if (hit && Date.now() - hit.t < TTL) return json(hit.v, 200, 21600);
+  if (hit && Date.now() - hit.t < TTL) return json(hit.v, 200, 10800);
   try {
     const v = await build(market, year);
     memo.set(key, { t: Date.now(), v });
-    return json(v, 200, 21600);
+    return json(v, 200, 10800);
   } catch (err) {
     return json({ error: 'Gagal mengambil kalender laporan keuangan: ' + err.message }, 502);
   }
