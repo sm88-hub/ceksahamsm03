@@ -598,7 +598,7 @@
   .wl-add select,.wl-add input{border:1px solid var(--rule2);border-radius:11px;padding:9px 11px;background:var(--surface);font-weight:600;min-width:0}
   .wl-add input{text-transform:uppercase}.wl-add input::placeholder{text-transform:none;font-weight:400}
   .wl-list{display:flex;flex-direction:column;gap:8px}
-  .wl-row{display:grid;grid-template-columns:minmax(140px,1.3fr) 130px 1fr .8fr 1.3fr auto;gap:12px;align-items:center;border:1px solid var(--rule);border-radius:14px;padding:11px 14px;transition:border-color .2s,transform .2s;animation:swap .4s ease both}
+  .wl-row{display:grid;grid-template-columns:minmax(140px,1.3fr) 160px 1fr .8fr 1.3fr auto;gap:12px;align-items:center;border:1px solid var(--rule);border-radius:14px;padding:11px 14px;transition:border-color .2s,transform .2s;animation:swap .4s ease both}
   .wl-row:hover{border-color:var(--rule2);transform:translateY(-1px)}
   .wl-row .tk{cursor:pointer}.wl-row .tk b{font:700 15.5px 'Space Grotesk',sans-serif}
   .wl-row .tk span{display:block;font-size:12px;color:var(--ink3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:220px}
@@ -958,6 +958,23 @@
   .nw-it .x{flex:none;margin-left:auto;color:var(--ink3);margin-top:3px}
   .nw-empty{padding:20px;text-align:center;color:var(--ink3);font-size:13.5px;background:var(--sunk);border-radius:14px}
   .me-sw .nn{background:var(--down)!important;color:#fff!important}
+
+  /* ===== Watchlist: batas bawah, kinerja, label ===== */
+  .wl-lv{display:grid;gap:5px}
+  .wl-row .ptw span{font-size:10px;font-weight:800;letter-spacing:.04em;color:var(--ink3);margin-right:6px;text-transform:uppercase}
+  .wl-row .ptw.lo{border-color:color-mix(in srgb,var(--down) 35%,var(--rule2))}
+  .wl-row .ptw.lo span{color:var(--down)}
+  .wl-perf{display:block;font-style:normal;font:700 12px 'Space Grotesk',sans-serif;margin-top:2px;color:var(--ink3)}
+  .wl-perf.up{color:var(--up)}.wl-perf.down{color:var(--down)}
+  .wl-chips{order:10;grid-column:1/-1;display:flex;flex-wrap:wrap;gap:5px;margin-top:-2px}
+  .wx{font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;border:1px solid var(--rule2);color:var(--ink2);background:var(--sunk);white-space:nowrap}
+  .wx.acc{background:rgba(14,165,233,.12);color:#0369A1;border-color:rgba(14,165,233,.35)}
+  .wx.s2{background:var(--up-soft);color:var(--up);border-color:transparent}.wx.s4{background:var(--down-soft);color:var(--down);border-color:transparent}.wx.s3{background:rgba(229,161,0,.14);color:#B7791F;border-color:transparent}
+  .wx.ev{background:rgba(124,58,237,.1);color:#6D28D9;border-color:rgba(124,58,237,.3)}
+  .wx.nneg{background:var(--down-soft);color:var(--down);border-color:transparent;cursor:pointer}.wx.npos{background:var(--up-soft);color:var(--up);border-color:transparent;cursor:pointer}.wx.nneu{cursor:pointer}
+  [data-theme="dark"] .wx.acc{color:#7DD3FC}[data-theme="dark"] .wx.ev{color:#C4B5FD}[data-theme="dark"] .wx.s3{color:#FBD38D}
+  .b-stop{background:var(--down-soft);color:var(--down)}
+  .wl-sum .r{background:var(--down-soft);color:var(--down)}
   /* ===== Merek & suasana ===== */
   .wordmark{font:800 21px 'Space Grotesk','Montserrat',sans-serif;letter-spacing:-.035em;display:inline-flex;align-items:baseline;gap:1px}
   .wordmark .wm-sm{color:var(--ink)}
@@ -1384,7 +1401,7 @@
           <div class="wl-msg" id="wlMsg" role="status"></div>
           <div class="wl-import" id="wlImport" hidden></div>
         </div>
-        <details class="note"><summary>Keterangan</summary><div class="note-b"><p class="fine">Status mengikuti aturan breakout: <b>Breakout terkonfirmasi</b> apabila harga penutupan berada di atas Price to Watch dengan volume minimal 1,4× rata-rata 50 hari. Kosongkan kolom Price to Watch untuk menggunakan Buy trigger otomatis. <span class="store-note" data-what="watch">Daftar ini hanya tersimpan di browser ini dan tidak dikirim ke mana pun.</span></p></div></details>
+        <details class="note"><summary>Keterangan</summary><div class="note-b"><p class="fine">Status mengikuti aturan breakout: <b>Breakout terkonfirmasi</b> apabila harga penutupan berada di atas Price to Watch dengan volume minimal 1,4× rata-rata 50 hari. Kosongkan kolom Price to Watch untuk menggunakan Buy trigger otomatis. <b>Batas</b> adalah batas bawah pribadi: status berubah merah "Di bawah batas" bila harga penutupan berada di bawahnya. <b>Kinerja sejak dipantau</b> dibandingkan dengan harga penutupan saat saham pertama kali tercatat di watchlist. Label di bawah tiap saham menampilkan minat beli (skor 60 ke atas), tahap siklus harian, jadwal laporan keuangan dalam 3 minggu, dan nada berita 7 hari terakhir. <span class="store-note" data-what="watch">Daftar ini hanya tersimpan di browser ini dan tidak dikirim ke mana pun.</span></p></div></details>
       </article>
 
       <article data-panel="me" data-sub="news" class="tile t-news" id="newsTile" style="--i:10">
@@ -2287,13 +2304,39 @@ function updateWatchBtn(){
 }
 function wlAdd(mk,t,ptw){
   if(!t || wlHas(mk,t)) return false;
-  wl.items.unshift({mk,t,ptw: ptw>0 ? ptw : null}); wlSave(); return true;
+  wl.items.unshift({mk,t,ptw: ptw>0 ? ptw : null, at:Date.now(), ap:null, lo:null}); wlSave(); return true;
 }
 function wlRemove(id){ wl.items=wl.items.filter(x=>wlId(x)!==id); delete wl.data[id]; wlSave(); wlRender(); updateWatchBtn(); }
+
+/* Minat beli (sama dengan scanner) & tahap siklus harian untuk watchlist */
+function wxATR(b,n){ if(b.length<n+1) return null; let s=0; for(let i=b.length-n;i<b.length;i++){ const p=b[i-1].c, x=b[i]; s+=Math.max(x.h-x.l,Math.abs(x.h-p),Math.abs(x.l-p)); } return s/n; }
+function wxAcc(done){
+  const N=20; if(done.length<Math.max(N+2,51)) return null;
+  const a10=wxATR(done,10), a50=wxATR(done,50), vc=a50?a10/a50:1;
+  const w=done.slice(-N), prevC=done[done.length-N-1].c; let upV=0,dnV=0,obv=0,obvMax=-Infinity,adNum=0,vSum=0,pc=prevC; const obvs=[];
+  for(const b of w){ if(b.c>pc){ upV+=b.v; obv+=b.v; } else if(b.c<pc){ dnV+=b.v; obv-=b.v; } obvs.push(obv); obvMax=Math.max(obvMax,obv); const rg=b.h-b.l; adNum+=rg>0?((b.c-b.l)-(b.h-b.c))/rg*b.v:0; vSum+=b.v; pc=b.c; }
+  const avgV=vSum/N||1, udr=dnV>0?upV/dnV:(upV>0?3:1), obvN=obv/(avgV*N), adr=vSum?adNum/vSum:0;
+  const c=w[w.length-1].c, lo=Math.min(...w.map(b=>b.l)), fromLo=(c/lo-1)*100, ret20=(c/prevC-1)*100, top=Math.max(...w.map(b=>b.c));
+  let sc=0; if(udr>=1.5) sc+=30; else if(udr>=1.25) sc+=20; else if(udr>=1.1) sc+=10;
+  if(obvN>=.15) sc+=20; else if(obvN>=.05) sc+=10; if(adr>=.1) sc+=20; else if(adr>=.03) sc+=10;
+  if(obvs[obvs.length-1]>=obvMax*.98 && obvMax>0 && c<top*.97) sc+=10;
+  if(fromLo<=10&&ret20<=8) sc+=15; else if(fromLo<=15&&ret20<=12) sc+=7; if(vc<=.9) sc+=5;
+  sc=Math.max(0,Math.min(100,sc)); return { score:sc, pass: sc>=60 && !(ret20>12||fromLo>18) };
+}
+function wxStage(done){
+  const P={f:50,m:150,l:200,lag:21,top:120,yr:250}, c=done.map(b=>b.c), n=c.length; if(n<P.m+P.lag) return null;
+  const sm=(a,k)=>a.slice(-k).reduce((x,y)=>x+y,0)/k;
+  const lN=n>=P.l+P.lag?P.l:P.m, px=c[n-1], f=sm(c,P.f), m=sm(c,P.m), L=sm(c,lN), Lp=sm(c.slice(0,n-P.lag),lN), fP=sm(c.slice(0,n-11),P.f);
+  const slope=(L/Lp-1)*100, fUp=f>fP, w=done.slice(-P.yr); let hi=-Infinity,lo=Infinity,hiI=0,loI=0;
+  w.forEach((b,i)=>{ if(b.h>hi){hi=b.h;hiI=i;} if(b.l<lo){lo=b.l;loI=i;} });
+  const fromHi=(hi-px)/hi*100, advanced=hi/lo>=1.3&&hiI>loI&&(w.length-1-hiI)<=P.top&&fromHi<=30;
+  const struct=px>m&&(lN===P.l?m>L:true)&&slope>0&&f>m&&px>f*.97, topping=advanced&&fromHi>=5&&(!fUp||px<f)&&slope<1.5;
+  if(struct&&!topping) return 2; if(px<L&&slope<-.5&&(px<m||f<m)) return 4; if(advanced&&(!fUp||px<f||Math.abs(slope)<1.5)) return 3; return 1;
+}
 async function wlFetchOne(x){
   const m=MARKETS[x.mk]; let d=null, last;
   for(const suf of m.suffixes){
-    try{ d=await fetchChart(x.t+suf,'6mo','1d',m.tz); break; }
+    try{ d=await fetchChart(x.t+suf,'1y','1d',m.tz); break; }
     catch(e){ if(e instanceof ApiDown) throw e; last=e; }
   }
   if(!d) return {err:'Kode tidak ditemukan'};
@@ -2302,7 +2345,8 @@ async function wlFetchOne(x){
   const idx=bars.indexOf(ref), avgV=bars.slice(Math.max(0,idx-49),idx+1).reduce((s,b)=>s+b.v,0)/Math.min(50,idx+1);
   const H=ref.h,L=ref.l,C=ref.c,C2=prev?prev.c:ref.o, range=Math.max(H-L,Math.abs(H-C2),Math.abs(L-C2));
   const t=m.tick(C+range*CONFIG.k), buy=Number((Math.ceil((C+range*CONFIG.k)/t-1e-9)*t).toFixed(6));
-  return { name:d.meta.longName||d.meta.shortName||x.t, close:ref.c, price: live?live.c:ref.c, live:!!live, vr: avgV? ref.v/avgV : 0, buy, refKey:ref.key };
+  const done=bars.slice(0,idx+1); let acc=null, st=null; try{ acc=wxAcc(done); st=wxStage(done); }catch{}
+  return { name:d.meta.longName||d.meta.shortName||x.t, close:ref.c, price: live?live.c:ref.c, live:!!live, vr: avgV? ref.v/avgV : 0, buy, refKey:ref.key, acc, st };
 }
 async function wlRefresh(){
   if(wl.busy || !wl.items.length){ wlRender(); return; }
@@ -2317,15 +2361,41 @@ async function wlRefresh(){
     }
   }
   await Promise.all([worker(),worker(),worker(),worker()]);
-  wl.busy=false; $('#wlRefresh').disabled=false; wlRender();
+  wl.busy=false; $('#wlRefresh').disabled=false;
+  let ch=false; wl.items.forEach(x=>{ const d=wl.data[wlId(x)]; if(d&&!d.err){ if(!x.ap){ x.ap=d.close; ch=true; } if(!x.at){ x.at=Date.now(); ch=true; } } });
+  if(ch) wlSave();
+  wlRender();
+  (async()=>{ try{ const mks=[...new Set(wl.items.map(x=>x.mk))].filter(mk=>MARKETS[mk]&&!MARKETS[mk].crypto); await Promise.all([...mks.map(mk=>erLoad(mk).catch(()=>null)), newsLoad().catch(()=>null)]); wlRender(); }catch{} })();
 }
 function wlStatus(x,d){
   if(!d || d.err) return null;
   const ptw=x.ptw||d.buy, dist=(ptw-d.close)/d.close*100;
+  if(x.lo && d.close<x.lo) return {k:'stop',lab:'Di bawah batas',ptw,dist,o:-1};
   if(d.close>ptw && d.vr>=CONFIG.volumeMultiplier) return {k:'go',lab:'Breakout terkonfirmasi',ptw,dist,o:0};
   if(d.close>ptw) return {k:'warn',lab:'Di atas, volume lemah',ptw,dist,o:1};
   if(dist<=2) return {k:'ready',lab:'Dekat level',ptw,dist,o:2};
   return {k:'wait',lab:'Menunggu',ptw,dist,o:3};
+}
+
+function wlPerf(x,d){
+  if(!x.ap || !d) return '';
+  const p=(d.live?d.price:d.close)/x.ap-1, since=x.at?new Date(x.at).toLocaleDateString('id-ID',{day:'numeric',month:'short'}):'';
+  if(x.at && new Date(x.at).toDateString()===new Date().toDateString() && Math.abs(p)<0.0005) return `<em class="wl-perf">Mulai dipantau hari ini</em>`;
+  return `<em class="wl-perf ${p>0.0005?'up':p<-0.0005?'down':''}" title="Dibandingkan harga saat mulai dipantau (${fp(x.ap,MARKETS[x.mk])})">${p>=0?'+':''}${fmt(p*100,1)}% sejak ${since}</em>`;
+}
+const WX_STG={1:['Konsolidasi','s1'],2:['Tren naik','s2'],3:['Puncak','s3'],4:['Penurunan','s4']};
+function wlChips(x,d){ try{ return wlChips0(x,d); }catch{ return ''; } }
+function wlChips0(x,d){
+  const out=[];
+  if(d.acc && d.acc.pass) out.push(`<span class="wx acc" title="Pembeli makin aktif sementara harga belum naik banyak (skor 0–100)">Minat beli ${d.acc.score}</span>`);
+  if(d.st) out.push(`<span class="wx ${WX_STG[d.st][1]}" title="Tahap siklus harga harian">Tahap ${d.st} · ${WX_STG[d.st][0]}</span>`);
+  if(!MARKETS[x.mk].crypto){ const y=new Date().getFullYear(), ed=er.data[x.mk+y];
+    if(ed && Array.isArray(ed.events)){ const today=keyOf(local(Date.now()/1000,MARKETS[x.mk].tz)); let best=null;
+      ed.events.forEach(e=>{ if(e.code!==x.t || e.act!=null) return; const k=erKey(e.d,x.mk), n=Math.round((Date.parse(k)-Date.parse(today))/864e5); if(n>=0&&n<=21&&(best==null||n<best)) best=n; });
+      if(best!=null) out.push(`<span class="wx ev" title="Jadwal rilis laporan keuangan">Lapkeu ${best===0?'hari ini':best===1?'besok':best+' hari lagi'}</span>`); } }
+  const ns=nw.data&&Array.isArray(nw.data.stocks)?nw.data.stocks.find(z=>z.mk===x.mk&&z.code===x.t):null;
+  if(ns && (ns.neg||ns.pos)) out.push(`<span class="wx ${ns.neg>ns.pos?'nneg':ns.pos>ns.neg?'npos':'nneu'}" data-news="1" title="Nada berita 7 hari terakhir; klik untuk membaca">${ns.neg>ns.pos?`${ns.neg} berita negatif`:ns.pos>ns.neg?`${ns.pos} berita positif`:'Berita campuran'}</span>`);
+  return out.length?`<div class="wl-chips">${out.join('')}</div>`:'';
 }
 function wlRender(loading){
   const list=$('#wlList'); $('#wlCount').textContent = wl.items.length ? `${wl.items.length} saham` : '';
@@ -2333,17 +2403,19 @@ function wlRender(loading){
   const rows=wl.items.map(x=>({x, d:wl.data[wlId(x)], st:wlStatus(x,wl.data[wlId(x)])}))
     .sort((a,b)=>(a.st?.o??9)-(b.st?.o??9) || (a.st?.dist??99)-(b.st?.dist??99));
   const n=k=>rows.filter(r=>r.st?.k===k).length;
-  $('#wlSum').innerHTML=`<span class="g">${n('go')} terkonfirmasi</span><span class="y">${n('ready')} dekat level</span>`;
+  $('#wlSum').innerHTML=`${n('stop')?`<span class="r">${n('stop')} di bawah batas</span>`:''}<span class="g">${n('go')} terkonfirmasi</span><span class="y">${n('ready')} dekat level</span>`;
   list.innerHTML=rows.map(({x,d,st})=>{
     const m=MARKETS[x.mk];
     if(!d) return loading ? '<div class="skel-row"></div>' : `<div class="wl-row"><div class="tk" data-go="${wlId(x)}"><b>${esc(x.t)}</b><span class="mt">${m.tag.split('/')[0]}</span><span>Tekan Cek semua</span></div><div></div><div></div><div></div><div></div><div class="acts"><button type="button" data-del="${wlId(x)}" aria-label="Hapus">✕</button></div></div>`;
     if(d.err) return `<div class="wl-row"><div class="tk" data-go="${wlId(x)}"><b>${esc(x.t)}</b><span class="mt">${m.tag.split('/')[0]}</span><span>${esc(d.err)}</span></div><div></div><div></div><div></div><div></div><div class="acts"><button type="button" data-del="${wlId(x)}" aria-label="Hapus">✕</button></div></div>`;
     return `<div class="wl-row">
       <div class="tk" data-go="${wlId(x)}" title="Buka di halaman ini"><b>${esc(x.t)}</b>${notes.map[wlId(x)]?'<span class="nt" title="Ada catatan pribadi">✎</span>':''}<span class="mt">${m.tag.split('/')[0]}</span><span>${esc(d.name)}</span></div>
-      <label class="ptw" title="Price to Watch"><input type="number" step="any" data-ptw="${wlId(x)}" value="${x.ptw??''}" placeholder="${fp(d.buy,m)} (auto)" aria-label="Price to Watch ${esc(x.t)}"></label>
-      <div class="px"><b>${m.cur} ${fp(d.close,m)}</b><span>close ${dateID(d.refKey)}${d.live?`, kini ${fp(d.price,m)}`:''}</span></div>
+      <div class="wl-lv"><label class="ptw" title="Price to Watch (level beli yang dipantau)"><span>PTW</span><input type="number" step="any" data-ptw="${wlId(x)}" value="${x.ptw??''}" placeholder="${fp(d.buy,m)} (auto)" aria-label="Price to Watch ${esc(x.t)}"></label>
+        <label class="ptw lo" title="Batas bawah pribadi: status berubah merah bila harga penutupan di bawah angka ini"><span>Batas</span><input type="number" step="any" data-lo="${wlId(x)}" value="${x.lo??''}" placeholder="opsional" aria-label="Batas bawah ${esc(x.t)}"></label></div>
+      <div class="px"><b>${m.cur} ${fp(d.close,m)}</b><span>close ${dateID(d.refKey)}${d.live?`, kini ${fp(d.price,m)}`:''}</span>${wlPerf(x,d)}</div>
       <div class="dist ${st.dist<=0?'up':''}">${st.dist<=0?'+'+fmt(-st.dist,1)+'%':fmt(st.dist,1)+'% lagi'}<span style="display:block;font:500 12px 'Plus Jakarta Sans';color:var(--ink3)">vol ${fmt(d.vr,1)}×</span></div>
       <div class="stat"><span class="badge b-${st.k}"><i></i>${st.lab}</span></div>
+      ${wlChips(x,d)}
       <div class="acts"><button type="button" data-go="${wlId(x)}" aria-label="Lihat detail"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button><button type="button" data-del="${wlId(x)}" aria-label="Hapus">✕</button></div>
     </div>`;
   }).join('');
@@ -2797,9 +2869,11 @@ $('#wlAdd').addEventListener('submit',e=>{
 $('#wlRefresh').addEventListener('click',wlRefresh);
 $('#wlList').addEventListener('click',e=>{
   const del=e.target.closest('[data-del]'); if(del){ wlRemove(del.dataset.del); return; }
+  if(e.target.closest('[data-news]')){ window.pnShow?.('me','news'); return; }
   const go=e.target.closest('[data-go]'); if(go){ const [mk,t]=go.dataset.go.split(':'); load(t,false,mk); window.scrollTo({top:0,behavior:'smooth'}); }
 });
 $('#wlList').addEventListener('change',e=>{
+  const lo=e.target.closest('[data-lo]'); if(lo){ const it=wl.items.find(x=>wlId(x)===lo.dataset.lo); if(it){ const v=parseFloat(lo.value); it.lo=v>0?v:null; wlSave(); wlRender(); } return; }
   const inp=e.target.closest('[data-ptw]'); if(!inp) return;
   const it=wl.items.find(x=>wlId(x)===inp.dataset.ptw); if(!it) return;
   const v=parseFloat(inp.value); it.ptw = v>0 ? v : null; wlSave(); wlRender();
@@ -2952,6 +3026,9 @@ window.SMCB_SUMMARY=async()=>{
   if(wl.items.length){
     const rows=wl.items.map(x=>({x,s:wlStatus(x,wl.data[wlId(x)])})).filter(r=>r.s);
     const go=rows.filter(r=>r.s.k==='go'), rd=rows.filter(r=>r.s.k==='ready'), names=[...go,...rd].slice(0,3).map(r=>r.x.t);
+    const stp=rows.filter(r=>r.s.k==='stop'), mb=wl.items.filter(x=>{ const d=wl.data[wlId(x)]; return d&&d.acc&&d.acc.pass; });
+    if(stp.length) out.push({ico:SUM_ICO.watch, go:()=>window.pnShow?.('me','watch'), html:`<span><b class="down">${stp.length}</b> saham di bawah batas bawah Anda <em>(${stp.slice(0,3).map(r=>esc(r.x.t)).join(', ')})</em></span>`});
+    if(mb.length) out.push({ico:SUM_ICO.jr, go:()=>window.pnShow?.('me','watch'), html:`<span><b>${mb.length}</b> saham watchlist menunjukkan minat beli menguat <em>(${mb.slice(0,3).map(x=>esc(x.t)).join(', ')})</em></span>`});
     out.push({ico:SUM_ICO.watch, go:()=>window.pnShow?.('me','watch'), html: go.length||rd.length
       ? `<span><b>${go.length}</b> breakout terkonfirmasi · <b>${rd.length}</b> dekat level${names.length?` <em>(${names.map(esc).join(', ')})</em>`:''}</span>`
       : `<span><b>${wl.items.length}</b> saham dipantau; belum ada yang mendekati level breakout.</span>`});
@@ -3520,7 +3597,7 @@ jrInit();
 const SYNC={ applying:false };
 function syncPush(what){ const A=window.SMCB_ACCOUNT; if(SYNC.applying || !A || !A.user) return; const p={}; if(!what||what==='watch') p.watch=wl.items; if(!what||what==='journal') p.journal=jr.items; if(!what||what==='journal'||what==='jcap') p.jcap=jr.cap||0; if(!what||what==='notes') p.notes=notes.map; A.save(p); }
 { const w=wlSave, j=jrSave; wlSave=function(){ w(); syncPush('watch'); }; jrSave=function(){ j(); syncPush('journal'); }; }
-function syncMergeWatch(L,R){ const m=new Map(); R.forEach(x=>m.set(x.mk+':'+x.t,x)); L.forEach(x=>{ const k=x.mk+':'+x.t, r=m.get(k); if(!r) m.set(k,x); else if(!r.ptw && x.ptw) m.set(k,{...r,ptw:x.ptw}); }); return [...m.values()]; }
+function syncMergeWatch(L,R){ const m=new Map(); R.forEach(x=>m.set(x.mk+':'+x.t,x)); L.forEach(x=>{ const k=x.mk+':'+x.t, r=m.get(k); if(!r) m.set(k,x); else { const o={...r}; ['ptw','at','ap','lo'].forEach(f=>{ if(!o[f] && x[f]) o[f]=x[f]; }); m.set(k,o); } }); return [...m.values()]; }
 function syncMergeJournal(L,R){ const m=new Map(); R.forEach(x=>m.set(x.id,x)); L.forEach(x=>{ const r=m.get(x.id); if(!r || (!r.outP && x.outP)) m.set(x.id,x); }); return [...m.values()]; }
 function syncUI(){
   const A=window.SMCB_ACCOUNT, t=$('.wl-sync-t'), b=$('#wlLogin'); if(!t) return;
@@ -3532,7 +3609,7 @@ function syncUI(){
 }
 document.addEventListener('smcb:data',e=>{
   const {data,first}=e.detail||{}, d=data||{};
-  const rw=Array.isArray(d.watch)?d.watch.filter(x=>x&&MARKETS[x.mk]&&x.t).map(x=>({mk:x.mk,t:String(x.t),ptw:+x.ptw>0?+x.ptw:null})):[];
+  const rw=Array.isArray(d.watch)?d.watch.filter(x=>x&&MARKETS[x.mk]&&x.t).map(x=>({mk:x.mk,t:String(x.t),ptw:+x.ptw>0?+x.ptw:null,at:+x.at>0?+x.at:null,ap:+x.ap>0?+x.ap:null,lo:+x.lo>0?+x.lo:null})):[];
   const rj=Array.isArray(d.journal)?d.journal.map(jrClean).filter(Boolean):[];
   const W=first?syncMergeWatch(wl.items,rw):rw, J=first?syncMergeJournal(jr.items,rj):rj;
   const rc=+d.jcap>0?+d.jcap:0, C= first ? (rc||jr.cap||0) : ('jcap' in d ? rc : jr.cap);
