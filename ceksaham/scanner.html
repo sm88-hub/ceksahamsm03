@@ -85,7 +85,8 @@
   .hero p{color:rgba(255,255,255,.7);max-width:58ch;margin-top:8px;font-size:14.5px}
   html{scroll-behavior:smooth}
   @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-  .hx{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:18px;max-width:820px}
+  .hx{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin-top:18px;max-width:1080px}
+  .hx-a[hidden]{display:none}
   .hx-a{position:relative;display:flex;align-items:center;gap:11px;padding:11px 12px 11px 11px;border-radius:14px;text-decoration:none;color:#fff;
     background:linear-gradient(180deg,rgba(255,255,255,.085),rgba(255,255,255,.035));border:1px solid rgba(255,255,255,.13);
     -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);overflow:hidden;isolation:isolate;
@@ -109,7 +110,9 @@
   .prog{margin-top:22px;height:6px;border-radius:99px;background:rgba(255,255,255,.12);overflow:hidden}
   .prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--acc),#5CEBA9);transition:width .3s}
   .prog-t{display:flex;justify-content:space-between;color:rgba(255,255,255,.6);font-size:12.5px;margin-top:8px;gap:12px;flex-wrap:wrap}
-  .sum{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:20px}
+  .sum{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:20px}
+  @media(max-width:720px){.sum{grid-template-columns:repeat(2,1fr)}}
+  .sum .s-acc b{color:#7DD3FC}
   @media(max-width:620px){.sum{grid-template-columns:1fr}}
   .sum button{all:unset;cursor:pointer;border-radius:14px;padding:13px 15px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);transition:transform .2s,background .2s}
   .sum button:hover{transform:translateY(-2px);background:rgba(255,255,255,.11)}
@@ -438,6 +441,34 @@
   @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 
 
+
+  .tag.acc{background:rgba(14,165,233,.12);color:#0369A1;border-color:rgba(14,165,233,.35)}
+  [data-theme="dark"] .tag.acc{color:#7DD3FC}
+  .tag.wl{background:rgba(226,164,0,.14);color:#B7791F;border-color:rgba(226,164,0,.35)}
+  [data-theme="dark"] .tag.wl{color:#FBD38D}
+  .acc-strip{grid-column:1/-1;display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-top:8px;padding:10px 12px;border-radius:12px;background:var(--sunk);border:1px solid var(--rule)}
+  .acc-sc{display:flex;flex-direction:column;align-items:center;min-width:64px}
+  .acc-sc b{font:700 22px 'Space Grotesk',sans-serif;color:#0EA5E9}
+  .acc-sc span{font-size:10.5px;color:var(--ink3);font-weight:700}
+  .acc-k{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12.5px;color:var(--ink2)}
+  .acc-k b{font-family:'Space Grotesk',sans-serif}
+  .fxs .rp-ctrl{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .fxs select{border:1px solid var(--rule2);border-radius:10px;padding:8px 10px;background:var(--surface);font:600 13px 'Plus Jakarta Sans',sans-serif}
+  .fx-wrap{overflow-x:auto;border:1px solid var(--rule);border-radius:16px}
+  .fx-t{width:100%;border-collapse:collapse;font-size:13px;min-width:620px}
+  .fx-t th{background:var(--sunk);text-align:right;font-size:11.5px;color:var(--ink3);font-weight:700;padding:9px 12px;border-bottom:1px solid var(--rule)}
+  .fx-t td{white-space:nowrap;padding:10px 12px;border-bottom:1px solid var(--rule);text-align:right;font-family:'Space Grotesk',sans-serif;font-weight:600}
+  .fx-t tr:last-child td{border-bottom:0}
+  .fx-t th:nth-child(-n+2),.fx-t td:nth-child(-n+2){text-align:left}
+  .fx-t td:nth-child(2) b{font-size:14.5px}
+  .fx-t td:nth-child(2) span{display:block;font:500 11.5px 'Plus Jakarta Sans',sans-serif;color:var(--ink3);max-width:220px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .fx-t td:first-child{color:var(--ink3);width:32px}
+  .fx-t .up{color:var(--up)}.fx-t .down{color:var(--down)}
+  .fx-t a{font:700 12.5px 'Plus Jakarta Sans',sans-serif;color:var(--ink);text-decoration:none;border:1px solid var(--rule2);border-radius:8px;padding:4px 10px;white-space:nowrap}
+  .fx-t a:hover{border-color:var(--ink)}
+  .fx-days{display:inline-flex;gap:2px;margin-right:6px;vertical-align:middle}
+  .fx-days i{width:7px;height:12px;border-radius:2px;background:var(--rule2)}
+  .fx-days i.on{background:var(--up)}
   /* ===== Merek & suasana ===== */
   .wordmark{font:800 21px 'Space Grotesk','Montserrat',sans-serif;letter-spacing:-.035em;display:inline-flex;align-items:baseline;gap:1px}
   .wordmark .wm-sm{color:var(--ink)}
@@ -514,6 +545,11 @@
             <span class="hx-t"><b>Rekap tahap siklus</b><small>Peta tahap 1 hingga 4</small></span>
             <svg class="hx-ar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </a>
+          <a class="hx-a" href="#asing" id="hxFx" hidden>
+            <span class="hx-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 4 6 4 9s-1 6-4 9c-3-3-4-6-4-9s1-6 4-9z"/></svg></span>
+            <span class="hx-t"><b>Radar asing</b><small>Aliran dana asing 5 hari</small></span>
+            <svg class="hx-ar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
           <a class="hx-a" href="#rapor">
             <span class="hx-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span>
             <span class="hx-t"><b>Rapor scanner</b><small>Uji ulang 12 bulan</small></span>
@@ -529,6 +565,7 @@
       <button class="s-go" data-f="go" type="button"><b id="nGo">0</b><span>Breakout terkonfirmasi</span></button>
       <button class="s-ready" data-f="ready" type="button"><b id="nReady">0</b><span>Siap breakout</span></button>
       <button class="s-watch" data-f="watch" type="button"><b id="nWatch">0</b><span>Layak dipantau</span></button>
+      <button class="s-acc" data-f="acc" type="button"><b id="nAcc">0</b><span>Akumulasi senyap</span></button>
     </div>
   </section>
 
@@ -595,6 +632,31 @@
   </details>
 
   <div class="list" id="list"></div>
+
+  <section class="stg fxs" id="asing" hidden>
+    <div class="rp-head">
+      <div>
+        <span class="rp-kick">Radar Akumulasi</span>
+        <h2>Aliran dana asing di BEI</h2>
+        <p>Saham dengan pembelian bersih investor asing terbesar dari seluruh saham BEI, bukan hanya daftar pantauan. Gunakan filter "Harga belum lari" untuk mencari saham yang sedang dikumpulkan asing namun harganya belum naik banyak. <span id="fxDates"></span></p>
+      </div>
+      <div class="rp-ctrl">
+        <div class="rp-hz" id="fxFlat" role="tablist" aria-label="Filter harga"><button type="button" data-v="1" class="on">Harga belum lari (≤5%)</button><button type="button" data-v="0">Semua</button></div>
+        <select id="fxLiq" aria-label="Minimal nilai transaksi harian"><option value="1000000000">Transaksi ≥ Rp1 M/hari</option><option value="5000000000" selected>Transaksi ≥ Rp5 M/hari</option><option value="20000000000">Transaksi ≥ Rp20 M/hari</option></select>
+      </div>
+    </div>
+    <div id="fxBody"></div>
+    <details class="rp-how">
+      <summary>Cara membaca dan batasannya</summary>
+      <ul>
+        <li><b>Sumber:</b> Ringkasan Saham harian di situs resmi BEI (kolom pembelian dan penjualan asing). Nilai bersih = (lembar dibeli asing − lembar dijual asing) × harga penutupan hari itu, sehingga merupakan perkiraan.</li>
+        <li><b>Hari net beli</b> menunjukkan berapa hari asing membeli lebih banyak daripada menjual. Pembelian yang konsisten setiap hari lebih bermakna daripada satu hari pembelian besar.</li>
+        <li><b>Porsi asing</b> = rata-rata transaksi asing (beli dan jual) terhadap total nilai transaksi saham tersebut.</li>
+        <li>Data ini <b>tidak menunjukkan broker</b> atau pihak tertentu, dan transaksi asing juga dapat berasal dari investor domestik yang memakai rekening luar negeri. Pembelian asing tidak menjamin harga naik.</li>
+        <li>Situs BEI dapat sewaktu-waktu membatasi akses otomatis. Bila itu terjadi, bagian ini menampilkan pemberitahuan dan akan mencoba kembali pada pemindaian berikutnya.</li>
+      </ul>
+    </details>
+  </section>
 
   <section class="stg" id="tahap">
     <div class="rp-head">
@@ -690,6 +752,8 @@
         <li><b>Breakout terkonfirmasi</b>: close menembus titik tertinggi 20 hari, volume minimal 1,4× rata-rata 50 hari, candle hijau, dan harga di atas rata-rata 50 hari.</li>
         <li><b>Siap breakout</b>: skor minimal 65 dan harga berjarak 3% atau kurang di bawah titik tertinggi 20 hari.</li>
         <li><b>Layak dipantau</b>: skor minimal 45. Sisanya <b>lemah</b>.</li>
+        <li><b>Akumulasi senyap</b> (filter terpisah dari skor breakout): skor akumulasi minimal 60 dari 100, dihitung dari 20 hari terakhir. Komponennya: volume hari naik dibanding hari turun (30), On-Balance Volume yang menanjak (20), garis Akumulasi/Distribusi (20), OBV mencapai puncak sebelum harga (10), harga masih dekat dasar 20 hari (15), dan rentang yang menyempit (5). Saham yang sudah naik lebih dari 12% dalam 20 hari atau lebih dari 18% dari dasarnya tidak dimasukkan. Ini jejak harga dan volume, bukan data broker.</li>
+        <li><b>Saham watchlist</b> Anda di bursa yang sama ikut dipindai dan ditandai ★ Watchlist.</li>
         <li><b>Buy trigger</b> menggunakan rumus yang sama dengan halaman utama: Close + Range × 0,4.</li>
       </ul>
     </details>
@@ -933,9 +997,43 @@ function analyse(code, data){
   if(ext>10){ s-=5; tags.push(['minus',`${fmt(ext,0)}% di atas MA20, rawan koreksi`]); }
   if(value<m.minValue){ s-=10; tags.push(['minus','Kurang likuid']); }
 
-  return { code, name:data.meta.longName||data.meta.shortName||(m.names&&m.names[code])||code,
+  const acc=accOf(done, vc);
+  return { acc, code, name:data.meta.longName||data.meta.shortName||(m.names&&m.names[code])||code,
            price:live?live.c:ref.c, chg: live ? (live.c-ref.c)/ref.c*100 : (ref.c-prev.c)/prev.c*100, live:!!live,
            symbol:data.symbol, base:s, baseTags:tags, ret63, rsw, dist, isBreak, volOK, green, up1, buy, refKey:ref.key };
+}
+
+
+/* ===================== Akumulasi senyap =====================
+   Jejak "uang besar masuk, harga belum lari", dibaca dari harga dan volume
+   20 hari terakhir (bukan data broker):
+   - volume hari naik dibanding volume hari turun (up/down volume),
+   - On-Balance Volume (Granville, 1963) yang menanjak,
+   - garis Akumulasi/Distribusi (Chaikin): posisi close dalam rentang harian × volume,
+   - harga masih dekat dasar 20 hari dan belum naik banyak,
+   - rentang harga yang menyempit. */
+function accOf(done, vc){
+  const N=20; if(done.length<N+2) return null;
+  const w=done.slice(-N), prevC=done[done.length-N-1].c;
+  let upV=0, dnV=0, obv=0, obvMax=-Infinity, adNum=0, vSum=0, pc=prevC;
+  const obvs=[];
+  for(const b of w){
+    if(b.c>pc){ upV+=b.v; obv+=b.v; } else if(b.c<pc){ dnV+=b.v; obv-=b.v; }
+    obvs.push(obv); obvMax=Math.max(obvMax,obv);
+    const rg=b.h-b.l; adNum += rg>0 ? ((b.c-b.l)-(b.h-b.c))/rg*b.v : 0; vSum+=b.v; pc=b.c;
+  }
+  const avgV=vSum/N||1, udr=dnV>0?upV/dnV:(upV>0?3:1), obvN=obv/(avgV*N), adr=vSum?adNum/vSum:0;
+  const c=w[w.length-1].c, lo=Math.min(...w.map(b=>b.l)), fromLo=(c/lo-1)*100, ret20=(c/prevC-1)*100;
+  const priceTop=Math.max(...w.map(b=>b.c)), obvTopNow=obvs[obvs.length-1]>=obvMax*0.98 && obvMax>0, priceNotTop=c<priceTop*0.97;
+  let sc=0; const why=[];
+  if(udr>=1.5){ sc+=30; why.push(`volume naik ${fmt(udr,1)}× volume turun`); } else if(udr>=1.25){ sc+=20; why.push(`volume naik ${fmt(udr,1)}× volume turun`); } else if(udr>=1.1) sc+=10;
+  if(obvN>=0.15){ sc+=20; why.push('OBV menanjak'); } else if(obvN>=0.05) sc+=10;
+  if(adr>=0.1){ sc+=20; why.push('penutupan cenderung di atas'); } else if(adr>=0.03) sc+=10;
+  if(obvTopNow && priceNotTop){ sc+=10; why.push('OBV di puncak saat harga belum'); }
+  if(fromLo<=10 && ret20<=8){ sc+=15; why.push(`baru ${fmt(fromLo,1)}% dari dasar 20 hari`); } else if(fromLo<=15 && ret20<=12) sc+=7;
+  if(vc<=0.9) sc+=5;
+  const ran=ret20>12||fromLo>18;
+  return { score:Math.max(0,Math.min(100,sc)), pass: sc>=60 && !ran, ran, udr, obvN, adr, fromLo, ret20, why };
 }
 
 /* Kondisi pasar: indeks bursa di atas atau di bawah rata-rata 50 hari */
@@ -1066,12 +1164,56 @@ async function runFund(){
   if(id===fundState.run){ prog.textContent = total ? `Fundamental selesai untuk ${total} saham` : prog.textContent; render(); }
 }
 
+
+function accStrip(r){
+  const a=r.acc;
+  return `<div class="acc-strip"><div class="acc-sc"><b>${a.score}</b><span>skor akumulasi</span></div>
+    <div class="acc-k"><span>Volume naik/turun <b>${fmt(a.udr,2)}×</b></span><span>OBV 20 hari <b class="${a.obvN>=0?'up':'down'}">${a.obvN>=0?'+':''}${fmt(a.obvN*100,0)}%</b></span><span>A/D <b class="${a.adr>=0?'up':'down'}">${a.adr>=0?'+':''}${fmt(a.adr*100,0)}%</b></span><span>Dari dasar 20 hari <b>${fmt(a.fromLo,1)}%</b></span><span>Perubahan 20 hari <b class="${a.ret20>=0?'up':'down'}">${a.ret20>=0?'+':''}${fmt(a.ret20,1)}%</b></span></div></div>`;
+}
+/* ===================== Aliran dana asing (BEI) ===================== */
+const fx={ data:null, busy:null, err:null, onlyFlat:true };
+async function fxLoad(){
+  if(fx.data && Date.now()-fx.at<20*60e3) return fx.data;
+  if(fx.busy) return fx.busy;
+  fx.busy=(async()=>{ try{ const r=await fetch('/api/foreign?days=5'); const j=await r.json().catch(()=>null);
+      if(!r.ok||!j||!Array.isArray(j.stocks)){ fx.err=(j&&j.error)||'unavailable'; fx.data=null; return null; }
+      fx.data=j; fx.err=null; fx.at=Date.now(); fx.map=new Map(j.stocks.map(x=>[x.c,x])); return j; }
+    catch{ fx.err='unavailable'; return null; } finally{ fx.busy=null; fxRender(); render(); } })();
+  return fx.busy;
+}
+function rupiahS(v){ const a=Math.abs(v), sgn=v<0?'−':'+'; return a>=1e12?`${sgn}Rp${fmt(a/1e12,2)} T`:a>=1e9?`${sgn}Rp${fmt(a/1e9,1)} M`:`${sgn}Rp${fmt(a/1e6,0)} Jt`; }
+function fxTag(r){
+  if(state.market!=='ID' || !fx.map) return '';
+  const x=fx.map.get(r.code); if(!x || !x.nv) return '';
+  return `<span class="tag ${x.nv>0?'plus':'minus'}">Asing ${x.nv>0?'net beli':'net jual'} ${rupiahS(x.nv).replace(/^[+−]/,'')} · ${fx.data.days} hari</span>`;
+}
+function fxRender(){
+  const sec=$('#asing'); if(!sec) return;
+  sec.hidden = state.market!=='ID'; { const h=$('#hxFx'); if(h) h.hidden=state.market!=='ID'; }
+  if(state.market!=='ID') return;
+  const body=$('#fxBody');
+  if(fx.busy && !fx.data){ body.innerHTML='<div class="stg-wait">Mengambil data transaksi asing dari BEI…</div>'; return; }
+  if(!fx.data){ body.innerHTML=`<div class="stg-wait">${fx.err==='blocked'?'Situs BEI sedang membatasi akses otomatis, sehingga data transaksi asing belum dapat ditampilkan. Silakan coba lagi nanti.':'Data transaksi asing dari BEI belum tersedia. Tekan "Pindai ulang" untuk mencoba lagi.'}</div>`; return; }
+  const d=fx.data, minAv=+($('#fxLiq')?.value||5e9);
+  let rows=d.stocks.filter(x=>x.nv>0 && x.av>=minAv);
+  if(fx.onlyFlat) rows=rows.filter(x=>x.ch!=null && x.ch<=5);
+  rows.sort((a,b)=>b.nv-a.nv); rows=rows.slice(0,15);
+  document.querySelectorAll('#fxFlat button').forEach(b=>b.classList.toggle('on',(b.dataset.v==='1')===fx.onlyFlat));
+  $('#fxDates').textContent=`${d.days} hari bursa: ${d.dates[0].split('-').reverse().slice(0,2).join('/')}–${d.dates[d.dates.length-1].split('-').reverse().slice(0,2).join('/')}`;
+  body.innerHTML = rows.length ? `<div class="fx-wrap"><table class="fx-t"><thead><tr><th>#</th><th>Saham</th><th>Asing bersih</th><th>Hari net beli</th><th>Harga ${d.days} hari</th><th>Porsi asing</th><th></th></tr></thead><tbody>
+    ${rows.map((x,i)=>`<tr><td>${i+1}</td><td><b>${esc(x.c)}</b><span>${esc(x.n||'')}</span></td><td class="up">${rupiahS(x.nv)}</td><td><span class="fx-days">${'<i class="on"></i>'.repeat(x.bd)}${'<i></i>'.repeat(Math.max(0,d.days-x.bd))}</span>${x.bd}/${d.days}</td><td class="${x.ch>=0?'up':'down'}">${x.ch>=0?'+':''}${fmt(x.ch,1)}%</td><td>${fmt(x.fs*100,0)}%</td><td><a href="index.html#${encodeURIComponent(x.c)}">Analisis</a></td></tr>`).join('')}</tbody></table></div>`
+    : '<div class="stg-wait">Tidak ada saham yang memenuhi filter ini.</div>';
+}
+
 /* ===================== Pindai ===================== */
 async function scan(){
   const id=++state.scanId, m=M(); let codes=m.list.slice();
   if(m.perp){ try{ const r=await fetch('/api/perp?list=30'); if(r.ok){ const j=await r.json(); if(j.list&&j.list.length>=10) codes=j.list.map(x=>String(x.coin).replace(/^k(?=[A-Z])/,'')); } }catch{} if(id!==state.scanId) return; }
+  let wlCodes=[]; try{ wlCodes=JSON.parse(localStorage.getItem('smcb_watch')||'[]').filter(x=>x&&x.mk===state.market&&x.t).map(x=>String(x.t).toUpperCase()); }catch{}
+  state.wlSet=new Set(wlCodes); wlCodes.forEach(c=>{ if(!codes.includes(c)) codes.push(c); });
   const uw=m.unitWord||'saham';
   state.results=[]; state.scanning=true; render();
+  if(state.market==='ID') fxLoad();
   $('#scanBtn').disabled=true; banner(null); regime(null);
   let done=0, failed=0, apiDown=false;
   try{ regime(indexInfo(await fetchDaily(m.index))); }
@@ -1289,7 +1431,7 @@ async function askAI(provider){
 
 /* ===================== Tampilan ===================== */
 const ORDER={go:0,ready:1,watch:2,weak:3};
-const LABEL={go:'Breakout terkonfirmasi',ready:'Siap breakout',watch:'Layak dipantau',weak:'Lemah'};
+const LABEL={go:'Breakout terkonfirmasi',ready:'Siap breakout',watch:'Layak dipantau',weak:'Lemah',acc:'Akumulasi senyap'};
 const COLOR={go:'var(--up)',ready:'var(--acc)',watch:'var(--warn)',weak:'var(--ink3)'};
 function banner(html){ const b=$('#banner'); if(!html){ b.className='banner'; b.innerHTML=''; return; } b.className='banner show'; b.innerHTML=html; }
 function hashFor(code){ return state.market==='ID' ? code : `${state.market}-${code}`; }
@@ -1308,10 +1450,11 @@ function render(){
   const fOn=fundState.on && !M().crypto, uw=M().unitWord||'saham';
   const m=M(), all=state.results.slice().sort((a,b)=>ORDER[a.status]-ORDER[b.status]||b.score-a.score);
   const n=s=>all.filter(r=>r.status===s).length;
-  $('#nGo').textContent=n('go'); $('#nReady').textContent=n('ready'); $('#nWatch').textContent=n('watch');
+  $('#nGo').textContent=n('go'); $('#nReady').textContent=n('ready'); $('#nWatch').textContent=n('watch'); $('#nAcc').textContent=all.filter(r=>r.acc&&r.acc.pass).length;
+  if(state.filter==='acc') all.sort((a,b)=>(b.acc?.score||0)-(a.acc?.score||0));
   document.querySelectorAll('.sum button').forEach(b=>b.classList.toggle('on',b.dataset.f===state.filter));
   const q=state.q.trim().toLowerCase();
-  const rows=all.filter(r=>(state.filter==='all'||r.status===state.filter)&&(!q||r.code.toLowerCase().includes(q)||r.name.toLowerCase().includes(q))&&(!fOn||!fundState.min||(r.fund&&r.fund.pass>=fundState.min)));
+  const rows=all.filter(r=>(state.filter==='all'||(state.filter==='acc'?r.acc&&r.acc.pass:r.status===state.filter))&&(!q||r.code.toLowerCase().includes(q)||r.name.toLowerCase().includes(q))&&(!fOn||!fundState.min||(r.fund&&r.fund.pass>=fundState.min)));
   $('#countTxt').textContent = state.filter==='all' ? `${rows.length} ${uw}, diurutkan dari setup terkuat` : `${rows.length} ${uw} dengan status "${LABEL[state.filter]}", klik kartunya lagi untuk melihat semua`;
   const list=$('#list');
   if(!rows.length){
@@ -1327,7 +1470,8 @@ function render(){
       <div class="score"><b>${r.score}</b><div class="meter"><i style="width:${r.score}%;background:${COLOR[r.status]}"></i></div></div>
       <div class="stat"><span class="badge b-${r.status}"><i></i>${LABEL[r.status]}</span><div class="trig">Buy trigger <b>${fp(r.buy,m)}</b></div></div>
       <div class="act"><a href="index.html#${encodeURIComponent(hashFor(r.code))}">Lihat detail</a></div>
-      <div class="tags">${r.tags.map(([c,t])=>`<span class="tag ${c}">${esc(t)}</span>`).join('')}</div>
+      <div class="tags">${state.wlSet&&state.wlSet.has(r.code)?'<span class="tag wl">★ Watchlist</span>':''}${r.acc&&r.acc.pass&&state.filter!=='acc'?`<span class="tag acc">Akumulasi senyap ${r.acc.score}</span>`:''}${r.tags.map(([c,t])=>`<span class="tag ${c}">${esc(t)}</span>`).join('')}${fxTag(r)}</div>
+      ${state.filter==='acc'&&r.acc ? accStrip(r) : ''}
       ${fOn ? fundStrip(r) : ''}
     </article>`).join('');
 }
@@ -1401,11 +1545,14 @@ function stgRender(){
     <details class="stg-four"${by[4].length?'':' hidden'}><summary><span class="stg-n">4</span> ${STG_INFO[4].n}: ${by[4].length} ${uw} (${pct(4)}%)</summary><p class="stg-d">${STG_INFO[4].d}</p><div class="stg-chips">${by[4].map(chip).join('')}</div></details>
     ${state.scanning?`<p class="stg-live">Pemindaian masih berjalan; rekap akan diperbarui otomatis.</p>`:''}`;
 }
+$('#fxFlat')?.addEventListener('click',e=>{ const b=e.target.closest('button[data-v]'); if(!b) return; fx.onlyFlat=b.dataset.v==='1'; fxRender(); });
+$('#fxLiq')?.addEventListener('change',()=>fxRender());
 $('#stgTf')?.addEventListener('click',e=>{ const b=e.target.closest('button[data-tf]'); if(!b) return; stg.tf=b.dataset.tf; try{ localStorage.setItem('smcb_stgtf',stg.tf); }catch{} stgRender(); });
 try{ const t=localStorage.getItem('smcb_stgtf'); if(t==='d'||t==='w') stg.tf=t; }catch{}
 
 function moveInd(){ const a=document.querySelector('.mk.active'), ind=$('#segInd'); if(!a) return; ind.style.width=a.offsetWidth+'px'; ind.style.transform=`translateX(${a.offsetLeft}px)`; }
 function setMarket(k){
+  setTimeout(()=>{ try{ fxRender(); }catch{} },0);
   state.market=k; state.filter='all';
   const mm=MARKETS[k];
   document.querySelectorAll('.mk').forEach(b=>{ const on=b.dataset.mk===k || !!(mm.crypto && MARKETS[b.dataset.mk].crypto); b.classList.toggle('active',on); b.setAttribute('aria-selected',on); });
