@@ -2564,13 +2564,14 @@ function erEPS(v,mk){ if(v==null) return '–'; const m=MARKETS[mk]; return `${m
 async function erLoad(mk,force){
   const y=new Date().getFullYear(), k=mk+y;
   if(!force && er.data[k]) return er.data[k];
-  if(!force){ try{ const c=JSON.parse(localStorage.getItem('smcb_earn_'+k)||'null'); if(c && Date.now()-c.t<6*3600e3){ er.data[k]=c.v; return c.v; } }catch{} }
+  try{ Object.keys(localStorage).filter(x=>x.startsWith('smcb_earn_')).forEach(x=>localStorage.removeItem(x)); }catch{}
+  if(!force){ try{ const c=JSON.parse(localStorage.getItem('smcb_earn2_'+k)||'null'); if(c && c.v && c.v.v>=2 && Date.now()-c.t<3*3600e3){ er.data[k]=c.v; return c.v; } }catch{} }
   if(er.busy[k]) return er.busy[k];
   er.busy[k]=(async()=>{
     try{
-      const r=await fetch(`/api/earnings?market=${mk}&year=${y}`); if(!r.ok) throw 0;
+      const r=await fetch(`/api/earnings?market=${mk}&year=${y}&v=2`); if(!r.ok) throw 0;
       const j=await r.json(); if(!Array.isArray(j.events)) throw 0;
-      er.data[k]=j; try{ localStorage.setItem('smcb_earn_'+k,JSON.stringify({t:Date.now(),v:j})); }catch{}
+      er.data[k]=j; try{ localStorage.setItem('smcb_earn2_'+k,JSON.stringify({t:Date.now(),v:j})); }catch{}
       return j;
     }catch{ er.data[k]={ error:true, events:[] }; return er.data[k]; }
     finally{ delete er.busy[k]; }
