@@ -565,7 +565,7 @@
       <button class="s-go" data-f="go" type="button"><b id="nGo">0</b><span>Breakout terkonfirmasi</span></button>
       <button class="s-ready" data-f="ready" type="button"><b id="nReady">0</b><span>Siap breakout</span></button>
       <button class="s-watch" data-f="watch" type="button"><b id="nWatch">0</b><span>Layak dipantau</span></button>
-      <button class="s-acc" data-f="acc" type="button"><b id="nAcc">0</b><span>Akumulasi senyap</span></button>
+      <button class="s-acc" data-f="acc" type="button"><b id="nAcc">0</b><span>Minat beli menguat</span></button>
     </div>
   </section>
 
@@ -636,7 +636,7 @@
   <section class="stg fxs" id="asing" hidden>
     <div class="rp-head">
       <div>
-        <span class="rp-kick">Radar Akumulasi</span>
+        <span class="rp-kick">Radar Asing</span>
         <h2>Aliran dana asing di BEI</h2>
         <p>Saham dengan pembelian bersih investor asing terbesar dari seluruh saham BEI, bukan hanya daftar pantauan. Gunakan filter "Harga belum lari" untuk mencari saham yang sedang dikumpulkan asing namun harganya belum naik banyak. <span id="fxDates"></span></p>
       </div>
@@ -752,7 +752,7 @@
         <li><b>Breakout terkonfirmasi</b>: close menembus titik tertinggi 20 hari, volume minimal 1,4× rata-rata 50 hari, candle hijau, dan harga di atas rata-rata 50 hari.</li>
         <li><b>Siap breakout</b>: skor minimal 65 dan harga berjarak 3% atau kurang di bawah titik tertinggi 20 hari.</li>
         <li><b>Layak dipantau</b>: skor minimal 45. Sisanya <b>lemah</b>.</li>
-        <li><b>Akumulasi senyap</b> (filter terpisah dari skor breakout): skor akumulasi minimal 60 dari 100, dihitung dari 20 hari terakhir. Komponennya: volume hari naik dibanding hari turun (30), On-Balance Volume yang menanjak (20), garis Akumulasi/Distribusi (20), OBV mencapai puncak sebelum harga (10), harga masih dekat dasar 20 hari (15), dan rentang yang menyempit (5). Saham yang sudah naik lebih dari 12% dalam 20 hari atau lebih dari 18% dari dasarnya tidak dimasukkan. Ini jejak harga dan volume, bukan data broker.</li>
+        <li><b>Minat beli menguat</b> (filter terpisah dari skor breakout): skor minat beli minimal 60 dari 100, dihitung dari 20 hari terakhir. Komponennya: volume hari naik dibanding hari turun (30), On-Balance Volume yang menanjak (20), garis Akumulasi/Distribusi (20), OBV mencapai puncak sebelum harga (10), harga masih dekat dasar 20 hari (15), dan rentang yang menyempit (5). Saham yang sudah naik lebih dari 12% dalam 20 hari atau lebih dari 18% dari dasarnya tidak dimasukkan. Ini jejak harga dan volume, bukan data broker.</li>
         <li><b>Saham watchlist</b> Anda di bursa yang sama ikut dipindai dan ditandai ★ Watchlist.</li>
         <li><b>Buy trigger</b> menggunakan rumus yang sama dengan halaman utama: Close + Range × 0,4.</li>
       </ul>
@@ -1004,7 +1004,7 @@ function analyse(code, data){
 }
 
 
-/* ===================== Akumulasi senyap =====================
+/* ===================== Minat beli menguat =====================
    Jejak "uang besar masuk, harga belum lari", dibaca dari harga dan volume
    20 hari terakhir (bukan data broker):
    - volume hari naik dibanding volume hari turun (up/down volume),
@@ -1167,7 +1167,7 @@ async function runFund(){
 
 function accStrip(r){
   const a=r.acc;
-  return `<div class="acc-strip"><div class="acc-sc"><b>${a.score}</b><span>skor akumulasi</span></div>
+  return `<div class="acc-strip"><div class="acc-sc"><b>${a.score}</b><span>skor minat beli</span></div>
     <div class="acc-k"><span>Volume naik/turun <b>${fmt(a.udr,2)}×</b></span><span>OBV 20 hari <b class="${a.obvN>=0?'up':'down'}">${a.obvN>=0?'+':''}${fmt(a.obvN*100,0)}%</b></span><span>A/D <b class="${a.adr>=0?'up':'down'}">${a.adr>=0?'+':''}${fmt(a.adr*100,0)}%</b></span><span>Dari dasar 20 hari <b>${fmt(a.fromLo,1)}%</b></span><span>Perubahan 20 hari <b class="${a.ret20>=0?'up':'down'}">${a.ret20>=0?'+':''}${fmt(a.ret20,1)}%</b></span></div></div>`;
 }
 /* ===================== Aliran dana asing (BEI) ===================== */
@@ -1432,7 +1432,7 @@ async function askAI(provider){
 
 /* ===================== Tampilan ===================== */
 const ORDER={go:0,ready:1,watch:2,weak:3};
-const LABEL={go:'Breakout terkonfirmasi',ready:'Siap breakout',watch:'Layak dipantau',weak:'Lemah',acc:'Akumulasi senyap'};
+const LABEL={go:'Breakout terkonfirmasi',ready:'Siap breakout',watch:'Layak dipantau',weak:'Lemah',acc:'Minat beli menguat'};
 const COLOR={go:'var(--up)',ready:'var(--acc)',watch:'var(--warn)',weak:'var(--ink3)'};
 function banner(html){ const b=$('#banner'); if(!html){ b.className='banner'; b.innerHTML=''; return; } b.className='banner show'; b.innerHTML=html; }
 function hashFor(code){ return state.market==='ID' ? code : `${state.market}-${code}`; }
@@ -1471,7 +1471,7 @@ function render(){
       <div class="score"><b>${r.score}</b><div class="meter"><i style="width:${r.score}%;background:${COLOR[r.status]}"></i></div></div>
       <div class="stat"><span class="badge b-${r.status}"><i></i>${LABEL[r.status]}</span><div class="trig">Buy trigger <b>${fp(r.buy,m)}</b></div></div>
       <div class="act"><a href="index.html#${encodeURIComponent(hashFor(r.code))}">Lihat detail</a></div>
-      <div class="tags">${state.wlSet&&state.wlSet.has(r.code)?'<span class="tag wl">★ Watchlist</span>':''}${r.acc&&r.acc.pass&&state.filter!=='acc'?`<span class="tag acc">Akumulasi senyap ${r.acc.score}</span>`:''}${r.tags.map(([c,t])=>`<span class="tag ${c}">${esc(t)}</span>`).join('')}${fxTag(r)}</div>
+      <div class="tags">${state.wlSet&&state.wlSet.has(r.code)?'<span class="tag wl">★ Watchlist</span>':''}${r.acc&&r.acc.pass&&state.filter!=='acc'?`<span class="tag acc">Minat beli ${r.acc.score}</span>`:''}${r.tags.map(([c,t])=>`<span class="tag ${c}">${esc(t)}</span>`).join('')}${fxTag(r)}</div>
       ${state.filter==='acc'&&r.acc ? accStrip(r) : ''}
       ${fOn ? fundStrip(r) : ''}
     </article>`).join('');
