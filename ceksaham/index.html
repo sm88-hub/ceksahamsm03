@@ -327,11 +327,21 @@
   .jr-x{border:0;background:none;font-size:16px;cursor:pointer;color:var(--ink3);width:30px;height:30px;border-radius:8px}.jr-x:hover{background:var(--rule)}
   .jr-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px 12px}
   .jr-grid label{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:700;color:var(--ink2);min-width:0}
+  .jr-grid [hidden]{display:none!important}
+  @media(max-width:720px){#jCapW,.jr-lab.jr-sz,.jr-lab.jr-by{grid-column:1 / -1}.jr-seg button{padding:7px 4px;font-size:13px}.jr-size{min-height:0;padding-top:2px}}
+  .jr-grid .jr-lab{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:700;color:var(--ink2);min-width:0}
   .jr-grid label small{font-weight:500;color:var(--ink3)}
   .jr-grid input,.jr-grid select{border:1px solid var(--rule2);border-radius:10px;padding:9px 11px;background:var(--surface);font:600 14px 'Plus Jakarta Sans',sans-serif;color:var(--ink);min-width:0;width:100%}
   .jr-grid input:focus,.jr-grid select:focus{outline:0;border-color:var(--ink);box-shadow:0 0 0 4px var(--acc-soft)}
   #jT{text-transform:uppercase}
   .jr-wide{grid-column:1 / -1}.jr-wide2{grid-column:span 1}
+  .jr-seg{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:3px;border:1px solid var(--rule2);border-radius:10px;background:var(--sunk)}
+  .jr-seg button{border:0;border-radius:8px;padding:7px 8px;background:transparent;font:700 13.5px 'Plus Jakarta Sans',sans-serif;color:var(--ink3);cursor:pointer;white-space:nowrap}
+  .jr-seg button.on{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+  #jSide button.on[data-side="L"]{color:var(--up)} #jSide button.on[data-side="S"]{color:var(--down)}
+  .jr-cap-in{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px}
+  .jr-cap-in select{width:auto!important}
+  .jr-size{display:block;padding:10px 2px 0;min-height:40px;font:600 13px 'Plus Jakarta Sans',sans-serif;color:var(--ink2);line-height:1.35}
   .jr-toggle{display:inline-flex;align-items:center;gap:8px;margin:14px 0 4px;font-size:13.5px;font-weight:700;cursor:pointer}
   .jr-toggle input{width:17px;height:17px;accent-color:#7FB800}
   .jr-close{border-top:1px dashed var(--rule2);margin-top:10px;padding-top:12px}
@@ -400,13 +410,14 @@
   .jr-tabs button i{font-style:normal;font-size:11px;background:var(--rule2);border-radius:99px;padding:1px 7px;margin-left:4px;color:var(--ink2)}
   .jr-tabs .on{background:var(--surface);color:var(--ink);box-shadow:0 0 0 1px var(--rule2)}
   .jr-list{display:flex;flex-direction:column;gap:8px}
-  .jr-row{display:grid;grid-template-columns:minmax(150px,1.3fr) 1fr 1.25fr .7fr .6fr 1fr auto;gap:12px;align-items:center;border:1px solid var(--rule);border-radius:14px;padding:11px 14px;animation:swap .35s ease both;font-size:13px}
+  .jr-row{display:grid;grid-template-columns:minmax(150px,1.3fr) 1fr 1.25fr .7fr .6fr 1fr .75fr auto;gap:12px;align-items:center;border:1px solid var(--rule);border-radius:14px;padding:11px 14px;animation:swap .35s ease both;font-size:13px}
   .jr-row .tk b{font:700 15px 'Space Grotesk',sans-serif}.jr-row .tk span{display:block;font-size:11.5px;color:var(--ink3)}
   .jr-row .tk .mt{display:inline-block;font:700 10px 'Plus Jakarta Sans',sans-serif;background:var(--sunk);border-radius:5px;padding:1px 5px;margin-left:5px;vertical-align:2px;color:var(--ink2)}
   .jr-row .c label{display:block;font-size:11px;color:var(--ink3)}
   .jr-row .c b{font:600 13.5px 'Space Grotesk',sans-serif}
   .jr-row .up{color:var(--up)}.jr-row .down{color:var(--down)}
   .jr-row .c small.pc{display:block;font-size:11px;color:var(--ink3);font-weight:600}
+  .jr-row .tk .sd{background:var(--up-soft,rgba(14,138,92,.12));color:var(--up)}.jr-row .tk .sd.s{background:var(--down-soft);color:var(--down)}
   .jr-row .warn-b{display:inline-block;font-size:10.5px;font-weight:800;color:#fff;background:var(--down);border-radius:5px;padding:1px 6px;margin-left:4px}
   .jr-row .errs{grid-column:1 / -1;display:flex;flex-wrap:wrap;gap:5px;margin-top:-4px}
   .jr-row .errs span{font-size:11px;font-weight:700;color:var(--down);background:var(--down-soft);border-radius:6px;padding:2px 7px}
@@ -416,7 +427,7 @@
   .jr-row .acts button:hover{border-color:var(--ink)}
   .jr-empty{border:1px dashed var(--rule2);border-radius:14px;padding:22px;text-align:center;color:var(--ink3);font-size:13.5px}
   .jr-pl{margin-top:8px;font-size:12.5px;color:var(--ink2)}
-  @media(max-width:1100px){.jr-cap{grid-template-columns:repeat(3,minmax(0,1fr))}.jr-stats{grid-template-columns:repeat(3,minmax(0,1fr))}.jr-row{grid-template-columns:minmax(120px,1fr) 1fr 1fr auto}.jr-row .hide-m{display:none}}
+  @media(max-width:1100px){.jr-cap{grid-template-columns:repeat(3,minmax(0,1fr))}.jr-stats{grid-template-columns:repeat(3,minmax(0,1fr))}.jr-row{grid-template-columns:minmax(120px,1.2fr) 1fr 1fr 1fr auto}.jr-row .hide-m{display:none}}
   @media(max-width:720px){.jr-cap{grid-template-columns:repeat(2,minmax(0,1fr))}.jr-capm{grid-column:1 / -1}.jr-mid{grid-template-columns:1fr}.jr-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.jr-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
     .jr-row{grid-template-columns:1fr auto;gap:8px 10px}.jr-row .c{grid-column:auto}.jr-row .acts{grid-column:1 / -1;justify-content:flex-start}}
   /* Pengunjung (footer) */
@@ -1464,19 +1475,23 @@
             <label>Bursa<select id="jMk"></select></label>
             <label>Kode saham<input id="jT" required placeholder="BBCA"></label>
             <label>Setup<select id="jSetup"></select></label>
-            <label>Tanggal beli<input type="date" id="jInD" required></label>
-            <label>Harga beli<input type="number" step="any" min="0" id="jInP" required></label>
-            <label><span id="jQtyL">Jumlah (lot)</span><input type="number" step="1" min="1" id="jQty" required></label>
+            <div class="jr-lab"><span>Posisi</span><div class="jr-seg" id="jSide" role="radiogroup" aria-label="Arah posisi"><button type="button" data-side="L" class="on" role="radio" aria-checked="true">Long</button><button type="button" data-side="S" role="radio" aria-checked="false">Short</button></div></div>
+            <label><span id="jInDL">Tanggal beli</span><input type="date" id="jInD" required></label>
+            <label><span id="jInPL">Harga beli</span><input type="number" step="any" min="0" id="jInP" required></label>
+            <div class="jr-lab jr-by"><span>Ukuran posisi</span><div class="jr-seg" id="jBy" role="radiogroup" aria-label="Ukuran posisi berdasarkan"><button type="button" data-by="qty" class="on" role="radio" aria-checked="true" id="jByQ">Jumlah lot</button><button type="button" data-by="cap" role="radio" aria-checked="false">Modal</button></div></div>
+            <label id="jQtyW"><span id="jQtyL">Jumlah (lot)</span><input type="number" step="1" min="1" id="jQty"></label>
+            <label id="jCapW" hidden><span>Modal yang dimasukkan</span><div class="jr-cap-in"><input type="number" step="any" min="0" id="jCap" inputmode="decimal" placeholder="Contoh: 1000"><select id="jCapCur" aria-label="Mata uang modal"></select></div></label>
+            <div class="jr-lab jr-sz"><span>Perkiraan ukuran</span><output id="jSizeH" class="jr-size">–</output></div>
             <label>Stop loss<input type="number" step="any" min="0" id="jStop" placeholder="Wajib diisi"></label>
             <label>Target <small>(opsional)</small><input type="number" step="any" min="0" id="jTgt"></label>
             <label class="jr-wide">Catatan<input id="jNote" maxlength="240" placeholder="Alasan beli, kondisi pasar, dsb."></label>
           </div>
-          <label class="jr-toggle"><input type="checkbox" id="jClosed"> Posisi ini sudah dijual</label>
+          <label class="jr-toggle"><input type="checkbox" id="jClosed"> <span id="jClosedL">Posisi ini sudah dijual</span></label>
           <div class="jr-close" id="jrClose" hidden>
             <div class="jr-grid">
-              <label>Tanggal jual<input type="date" id="jOutD"></label>
-              <label>Harga jual<input type="number" step="any" min="0" id="jOutP"></label>
-              <label class="jr-wide2">Alasan jual<select id="jWhy"></select></label>
+              <label><span id="jOutDL">Tanggal jual</span><input type="date" id="jOutD"></label>
+              <label><span id="jOutPL">Harga jual</span><input type="number" step="any" min="0" id="jOutP"></label>
+              <label class="jr-wide2"><span id="jWhyL">Alasan jual</span><select id="jWhy"></select></label>
             </div>
             <div class="jr-errs"><span>Apakah terdapat kesalahan dalam transaksi ini? <small>Catatan ini hanya dapat dilihat oleh Anda.</small></span><div id="jErrs"></div></div>
           </div>
@@ -1496,13 +1511,15 @@
         <p class="jr-fx" id="jrFx"></p>
         <details class="note"><summary>Keterangan</summary><div class="note-b"><p class="fine"><span class="store-note" data-what="journal">Data hanya tersimpan di browser ini; gunakan Backup agar tidak hilang.</span> Seluruh laba/rugi dikonversi ke dolar AS (USD) agar transaksi lintas bursa dapat dijumlahkan, dan persentasenya dihitung terhadap modal trading. Hasil transaksi selesai telah dipotong biaya transaksi sesuai bursa. <b>R</b> adalah hasil dibagi risiko awal (jarak harga beli ke stop loss); +2R berarti keuntungan sebesar dua kali risiko yang dipasang. Rasio tersesuaikan = (win rate × rata-rata untung) ÷ (loss rate × rata-rata rugi); metode acuan menargetkan minimal 2.</p></div></details>
         <details class="note"><summary>Cara menghitung statistik jurnal</summary><div class="note-b"><ul class="howto">
-          <li><b>Hasil per transaksi</b> = harga jual ÷ harga beli − 1, lalu dikurangi biaya transaksi bursa (BEI 0,4%, US 0,05%, Jepang 0,1%, Korea 0,25%, Hong Kong 0,3%, kripto spot 0,2%, futures 0,1%). Posisi terbuka memakai harga terkini tanpa potongan biaya.</li>
+          <li><b>Hasil per transaksi</b> untuk posisi long = harga jual ÷ harga beli − 1. Untuk posisi short = (harga masuk − harga keluar) ÷ harga masuk, sehingga hasilnya positif ketika harga turun. Keduanya lalu dikurangi biaya transaksi bursa (BEI 0,4%, US 0,05%, Jepang 0,1%, Korea 0,25%, Hong Kong 0,3%, kripto spot 0,2%, futures 0,1%). Posisi terbuka memakai harga terkini tanpa potongan biaya.</li>
           <li><b>Win rate</b> = jumlah transaksi untung ÷ jumlah transaksi selesai. Transaksi dengan hasil 0% atau minus dihitung rugi.</li>
           <li><b>Untung rata-rata</b> dan <b>rugi rata-rata</b> = rata-rata persentase hasil dari transaksi untung saja dan transaksi rugi saja.</li>
           <li><b>Rasio tersesuaikan</b> = (win rate × untung rata-rata) ÷ (loss rate × rugi rata-rata). Contoh: win rate 40%, untung rata-rata 15%, rugi rata-rata 5% → (0,4 × 15) ÷ (0,6 × 5) = 2 : 1. Di atas 1 berarti total untung lebih besar dari total rugi; metode acuan menargetkan minimal 2.</li>
-          <li><b>R</b> = hasil ÷ risiko awal, dengan risiko awal = (harga beli − stop loss) ÷ harga beli. Contoh: beli 1.000, stop 950 (risiko 5%), jual 1.100 (+10%) = +2R sebelum biaya. <b>Rata-rata R</b> hanya menghitung transaksi yang diisi stop loss.</li>
+          <li><b>R</b> = hasil ÷ risiko awal, dengan risiko awal = (harga beli − stop loss) ÷ harga beli. Untuk posisi short, risiko awal = (stop loss − harga masuk) ÷ harga masuk. Contoh: beli 1.000, stop 950 (risiko 5%), jual 1.100 (+10%) = +2R sebelum biaya. <b>Rata-rata R</b> hanya menghitung transaksi yang diisi stop loss.</li>
           <li><b>Kurva hasil</b> menggabungkan hasil transaksi secara berurutan menurut tanggal jual, seolah seluruh modal dipakai di tiap transaksi.</li>
-          <li><b>Laba/rugi dalam USD</b> = jumlah lembar × (harga jual − harga beli) − biaya, lalu dikonversi ke dolar AS dengan kurs terbaru. Jumlah lembar = lot × ukuran lot bursa (BEI 100 lembar).</li>
+          <li><b>Laba/rugi dalam USD</b> = jumlah lembar × (harga jual − harga beli) − biaya, lalu dikonversi ke dolar AS dengan kurs terbaru. Untuk posisi short, selisih harganya dibalik. Jumlah lembar = lot × ukuran lot bursa (BEI 100 lembar).</li>
+          <li><b>Ukuran berdasarkan modal</b>: jumlah lembar = modal ÷ harga masuk. Bila modal diisi dalam USD untuk saham non-USD, modal dikonversi dengan kurs pada saat transaksi disimpan, lalu jumlah lembarnya dikunci.</li>
+          <li><b>Holding period</b> = jumlah hari kalender dari tanggal masuk sampai hari ini, atau sampai tanggal keluar untuk transaksi selesai.</li>
           <li><b>Persentase terhadap modal</b> = total laba/rugi USD ÷ modal trading yang Anda isi. <b>Dana terpakai</b> = nilai beli seluruh posisi terbuka dalam USD.</li>
         </ul></div></details>
       </article>
@@ -3347,7 +3364,7 @@ window.erOnMarket=()=>{ er.sel=null; if(er.seen) erRender(); };
 
 /* ===================== Jurnal trading ===================== */
 const JR_KEY='smcb_journal';
-const JR_SETUPS=['Breakout pivot','VCP / base ketat','Pullback ke MA','Low cheat','Power play','Lainnya'];
+const JR_SETUPS=['Breakout pivot','VCP / base ketat','Pullback ke MA','Low cheat','Power play','Consolidation','Cup & Handle','Earnings report','Falling wedge','Fundamental jangka panjang','HH-HL (higher high, higher low)','Head & Shoulders (HNS)','Inverse Head & Shoulders','LL-LH (lower low, lower high)','News','Resistance','Retrace Fibo 0.618','Retrace Fibo 0.786','Support','Lainnya'];
 const JR_WHY=['Kena stop loss','Capai target','Jual saat menguat','Sinyal jual / pelanggaran','Batas waktu','Lainnya'];
 const JR_ERRS=[['chase','Beli >5% di atas pivot'],['nostop','Tanpa stop loss'],['movestop','Menggeser stop ke bawah'],['avgdown','Average down'],['early','Jual terlalu cepat'],['late','Telat cut loss'],['plan','Melanggar rencana']];
 const jr={ items:[], px:{}, view:'sum', edit:null, cap:0, capEdit:false };
@@ -3384,7 +3401,10 @@ function jrClean(x){
     setup:JR_SETUPS.includes(x.setup)?x.setup:'Lainnya', inD:/^\d{4}-\d{2}-\d{2}$/.test(x.inD)?x.inD:todayKey(), inP:n(x.inP), qty:Math.max(1,Math.round(+x.qty||1)),
     stop:n(x.stop), tgt:n(x.tgt), note:String(x.note||'').slice(0,240),
     outD:/^\d{4}-\d{2}-\d{2}$/.test(x.outD)?x.outD:null, outP:n(x.outP), why:JR_WHY.includes(x.why)?x.why:null,
-    errs:Array.isArray(x.errs)?x.errs.filter(e=>JR_ERRS.some(([k])=>k===e)):[] };
+    errs:Array.isArray(x.errs)?x.errs.filter(e=>JR_ERRS.some(([k])=>k===e)):[],
+    side:x.side==='S'?'S':'L', by:x.by==='cap'?'cap':'qty', cap:n(x.cap), capCur:x.capCur==='USD'?'USD':'LOC', sh:n(x.sh) };
+  if(o.by==='cap' && !(o.cap && o.sh)){ o.by='qty'; o.cap=null; o.sh=null; }
+  if(o.by==='qty'){ o.cap=null; o.sh=null; o.capCur='LOC'; }
   if(!o.t || !o.inP) return null;
   if(!o.outP){ o.outD=null; o.why=null; o.errs=o.errs.filter(e=>['chase','nostop','avgdown','movestop','plan'].includes(e)); }
   return o;
@@ -3394,14 +3414,16 @@ function jrSave(){ try{ localStorage.setItem(JR_KEY,JSON.stringify(jr.items)); }
 const jrD=k=>{ const [y,m,d]=k.split('-').map(Number); return new Date(Date.UTC(y,m-1,d)).toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'2-digit',timeZone:'UTC'}); };
 const jrDays=(a,b)=>Math.max(0,Math.round((new Date(b)-new Date(a))/864e5));
 function jrCalc(x){
-  const m=MARKETS[x.mk], fee=(CONFIG.fees[x.mk]??0.2)/100, sh=x.qty*m.lot, closed=!!x.outP;
+  const m=MARKETS[x.mk], fee=(CONFIG.fees[x.mk]??0.2)/100, closed=!!x.outP, short=x.side==='S', dir=short?-1:1;
+  const sh= x.by==='cap' && x.sh ? x.sh : x.qty*m.lot;
   const px= closed ? x.outP : jr.px[x.mk+':'+x.t]?.price ?? null;
-  const ret= px ? px/x.inP-1-(closed?fee:0) : null;
-  const risk= x.stop && x.stop<x.inP ? (x.inP-x.stop)/x.inP : null;
+  const ret= px ? dir*(px/x.inP-1)-(closed?fee:0) : null;
+  const risk= !x.stop ? null : short ? (x.stop>x.inP ? (x.stop-x.inP)/x.inP : null) : (x.stop<x.inP ? (x.inP-x.stop)/x.inP : null);
   const R= ret!=null && risk ? ret/risk : null;
-  const pl= px ? sh*(px-x.inP)-(closed?sh*x.inP*fee:0) : null;
+  const pl= px ? dir*sh*(px-x.inP)-(closed?sh*x.inP*fee:0) : null;
   const days= jrDays(x.inD, closed ? (x.outD||todayKey()) : todayKey());
-  return { m, sh, closed, px, ret, risk, R, pl, days, belowStop: !closed && px && x.stop && px<=x.stop };
+  const hitStop= !closed && px && x.stop && (short ? px>=x.stop : px<=x.stop);
+  return { m, sh, closed, short, px, ret, risk, R, pl, days, belowStop: hitStop };
 }
 function jrStats(){
   const cl=jr.items.filter(x=>x.outP).map(x=>({x,...jrCalc(x)})).sort((a,b)=>(a.x.outD||'').localeCompare(b.x.outD||''));
@@ -3508,18 +3530,20 @@ function jrRender(){
   if(!rows.length){ list.innerHTML=`<div class="jr-empty">${jr.view==='open'?'Tidak ada posisi terbuka.':'Belum ada transaksi selesai.'} Tekan <b>+ Catat transaksi</b>, atau gunakan tombol <b>Catat ke jurnal</b> pada kalkulator.</div>`; return; }
   list.innerHTML=rows.map(x=>{
     const c=jrCalc(x), m=c.m, unit=m.lot>1?'lot':'lembar';
+    const size = x.by==='cap' ? `modal ${jrCapS(x)} · ≈${fmt(c.sh/m.lot, c.sh/m.lot<10?2:0)} ${unit}` : `${fmt(x.qty)} ${unit}`;
     const pxTxt = c.closed ? `${fp(x.inP,m)} → ${fp(x.outP,m)}` : `${fp(x.inP,m)} → ${c.px?fp(c.px,m):'…'}`;
     const res = c.ret==null ? '–' : `<b class="${c.ret>=0?'up':'down'}">${pctS(c.ret)}</b>`;
     const R = c.R==null ? '–' : `<b class="${c.R>=0?'up':'down'}">${c.R>0?'+':''}${fmt(c.R,2)}R</b>`;
     const plU=toUSD(c.pl,x.mk), pl = c.pl==null ? '–' : `<b class="${c.pl>=0?'up':'down'}" title="${CCY[x.mk]!=='USD'?`${c.pl>=0?'+':'−'}${m.cur} ${fmt(Math.abs(c.pl),m.dec?2:0)}`:''}">${usdS(plU)}</b>${jr.cap?`<small class="pc">${pctS(plU/jr.cap,2)} modal</small>`:''}`;
     return `<div class="jr-row">
-      <div class="tk"><b>${esc(x.t)}</b><span class="mt">${m.tag.split('/')[0]}</span><span>${esc(x.setup)} · ${fmt(x.qty)} ${unit}</span></div>
-      <div class="c"><label>${c.closed?'Beli → jual':'Dibeli'}</label><b>${jrD(x.inD)}${c.closed?` → ${jrD(x.outD||x.inD)}`:''}</b></div>
-      <div class="c"><label>${c.closed?'Harga':'Harga beli → sekarang'}</label><b>${pxTxt}</b>${c.belowStop?'<span class="warn-b">di bawah stop</span>':''}</div>
+      <div class="tk"><b>${esc(x.t)}</b><span class="mt">${m.tag.split('/')[0]}</span><span class="mt sd${c.short?' s':''}">${c.short?'SHORT':'LONG'}</span><span>${esc(x.setup)} · ${size}</span></div>
+      <div class="c"><label>${c.closed?(c.short?'Masuk → keluar':'Beli → jual'):(c.short?'Dibuka':'Dibeli')}</label><b>${jrD(x.inD)}${c.closed?` → ${jrD(x.outD||x.inD)}`:''}</b></div>
+      <div class="c"><label>${c.closed?'Harga':(c.short?'Harga masuk → sekarang':'Harga beli → sekarang')}</label><b>${pxTxt}</b>${c.belowStop?`<span class="warn-b">${c.short?'di atas stop':'di bawah stop'}</span>`:''}</div>
       <div class="c"><label>${c.closed?'Hasil':'Berjalan'}</label>${res}</div>
       <div class="c hide-m"><label>R</label>${R}</div>
       <div class="c"><label>${c.closed?'Laba/rugi (USD)':'Belum terealisasi (USD)'}</label>${pl}</div>
-      <div class="acts">${c.closed?'':`<button type="button" class="pri" data-jclose="${x.id}">Jual</button>`}<button type="button" data-jedit="${x.id}">Ubah</button><button type="button" data-jdel="${x.id}" aria-label="Hapus">✕</button></div>
+      <div class="c"><label>Holding period</label><b>${c.days} hari</b></div>
+      <div class="acts">${c.closed?'':`<button type="button" class="pri" data-jclose="${x.id}">${c.short?'Tutup':'Jual'}</button>`}<button type="button" data-jedit="${x.id}">Ubah</button><button type="button" data-jdel="${x.id}" aria-label="Hapus">✕</button></div>
       ${x.errs.length||x.note?`<div class="errs">${x.errs.map(e=>`<span>${JR_ERRS.find(([k])=>k===e)[1]}</span>`).join('')}${x.note?`<span style="background:var(--sunk);color:var(--ink2);font-weight:600">${esc(x.note)}</span>`:''}</div>`:''}
     </div>`;
   }).join('');
@@ -3529,16 +3553,45 @@ async function jrRefreshPx(){
   let i=0; async function w(){ while(i<uniq.length){ const x=uniq[i++]; try{ const d=await wlFetchOne({mk:x.mk,t:x.t}); if(d && d.price) jr.px[x.mk+':'+x.t]={price:d.price,at:Date.now()}; }catch{} } }
   if(!uniq.length) return; await Promise.all([w(),w(),w()]); jrRender();
 }
-function jrFormUnit(){ const m=MARKETS[$('#jMk').value]; $('#jQtyL').textContent=`Jumlah (${m.lot>1?'lot':'lembar'})`; }
+const jrCapS=x=>{ const cur=x.capCur==='USD'?'USD':CCY[x.mk]; return cur==='USD'?`$${fmt(x.cap,2)}`:`${CCY_SYM[cur]||cur} ${fmt(x.cap,x.cap<1000?2:0)}`; };
+const jrF={ side:'L', by:'qty' };
+function jrSegSet(id,attr,v){ $(id).querySelectorAll('button').forEach(b=>{ const on=b.dataset[attr]===v; b.classList.toggle('on',on); b.setAttribute('aria-checked',on); }); }
+/* jumlah lembar dari modal; kurs dipakai saat transaksi disimpan */
+function jrCapShares(mk, cap, cur, inP){ if(!(cap>0 && inP>0)) return null; const loc= cur==='USD' ? cap*(fx.r[CCY[mk]]||1) : cap; return loc/inP; }
+function jrFormSize(){
+  const mk=$('#jMk').value, m=MARKETS[mk], unit=m.lot>1?'lot':'lembar', inP=+$('#jInP').value, out=$('#jSizeH');
+  let sh=null;
+  if(jrF.by==='qty'){ const q=+$('#jQty').value; if(q>0) sh=q*m.lot; }
+  else sh=jrCapShares(mk, +$('#jCap').value, $('#jCapCur').value, inP);
+  if(!(sh>0) || !(inP>0)){ out.textContent = jrF.by==='cap' ? 'Isi harga dan modal untuk melihat jumlah lot.' : 'Isi harga dan jumlah untuk melihat nilai posisi.'; return; }
+  const loc=sh*inP, usd=toUSD(loc,mk), cur=CCY[mk];
+  const val= cur==='USD' ? `$${fmt(usd,2)}` : `${CCY_SYM[cur]||cur} ${fmt(loc,0)} (≈ $${fmt(usd,2)})`;
+  out.innerHTML = jrF.by==='cap' ? `≈ <b>${fmt(sh/m.lot, sh/m.lot<10?2:0)} ${unit}</b>&nbsp;· nilai ${val}` : `Nilai posisi ${val}`;
+}
+function jrFormUnit(){
+  const mk=$('#jMk').value, m=MARKETS[mk], cur=CCY[mk], S=jrF.side==='S';
+  $('#jQtyL').textContent=`Jumlah (${m.lot>1?'lot':'lembar'})`;
+  $('#jByQ').textContent= m.lot>1 ? 'Jumlah lot' : 'Jumlah lembar';
+  const cs=$('#jCapCur'), prev=cs.value;
+  cs.innerHTML= cur==='USD' ? '<option value="USD">USD</option>' : `<option value="LOC">${cur}</option><option value="USD">USD</option>`;
+  cs.value=[...cs.options].some(o=>o.value===prev)?prev:cs.options[0].value; cs.hidden= cur==='USD';
+  $('#jQtyW').hidden= jrF.by!=='qty'; $('#jCapW').hidden= jrF.by!=='cap';
+  $('#jInDL').textContent= S?'Tanggal masuk':'Tanggal beli'; $('#jInPL').textContent= S?'Harga masuk':'Harga beli';
+  $('#jClosedL').textContent= S?'Posisi ini sudah ditutup':'Posisi ini sudah dijual';
+  $('#jOutDL').textContent= S?'Tanggal keluar':'Tanggal jual'; $('#jOutPL').textContent= S?'Harga keluar':'Harga jual'; $('#jWhyL').textContent= S?'Alasan keluar':'Alasan jual';
+  $('#jStop').placeholder= S?'Wajib diisi, di atas harga masuk':'Wajib diisi';
+  jrFormSize();
+}
 function jrOpenForm(x, closing){
   const f=$('#jrForm'); jr.edit=x?.id||null; f.hidden=false; $('#jrFerr').textContent='';
-  $('#jrFormT').textContent = closing ? `Jual ${x.t}` : x?.id ? `Ubah transaksi ${x.t}` : 'Catat transaksi';
+  $('#jrFormT').textContent = closing ? (x.side==='S'?`Tutup short ${x.t}`:`Jual ${x.t}`) : x?.id ? `Ubah transaksi ${x.t}` : 'Catat transaksi';
+  jrF.side=x?.side==='S'?'S':'L'; jrF.by=x?.by==='cap'?'cap':'qty'; jrSegSet('#jSide','side',jrF.side); jrSegSet('#jBy','by',jrF.by);
   $('#jMk').value=x?.mk||state.market; $('#jT').value=x?.t||''; $('#jSetup').value=x?.setup||JR_SETUPS[0];
-  $('#jInD').value=x?.inD||todayKey(); $('#jInP').value=x?.inP??''; $('#jQty').value=x?.qty??''; $('#jStop').value=x?.stop??''; $('#jTgt').value=x?.tgt??''; $('#jNote').value=x?.note||'';
+  $('#jInD').value=x?.inD||todayKey(); $('#jInP').value=x?.inP??''; $('#jQty').value=x?.by==='cap'?'':(x?.qty??''); $('#jCap').value=x?.cap??''; $('#jStop').value=x?.stop??''; $('#jTgt').value=x?.tgt??''; $('#jNote').value=x?.note||'';
   const cl=closing || !!x?.outP; $('#jClosed').checked=cl; $('#jrClose').hidden=!cl;
   $('#jOutD').value=x?.outD||todayKey(); const lp=jr.px[x?.mk+':'+x?.t]?.price; $('#jOutP').value=x?.outP ?? (closing && lp ? Number(lp.toFixed(priceDec(lp,MARKETS[x.mk]))) : ''); $('#jWhy').value=x?.why||JR_WHY[0];
   $('#jErrs').querySelectorAll('input').forEach(i=>i.checked=!!x?.errs?.includes(i.value));
-  jrFormUnit(); f.scrollIntoView({block:'nearest',behavior:'smooth'});
+  jrFormUnit(); if(x?.capCur) $('#jCapCur').value=x.capCur==='USD'?'USD':($('#jCapCur').options[0].value); jrFormSize(); f.scrollIntoView({block:'nearest',behavior:'smooth'});
   setTimeout(()=>(closing?$('#jOutP'):x?.t?$('#jInP'):$('#jT')).focus(),200);
 }
 function jrInit(){
@@ -3547,17 +3600,30 @@ function jrInit(){
   $('#jWhy').innerHTML=JR_WHY.map(s=>`<option>${s}</option>`).join('');
   $('#jErrs').innerHTML=JR_ERRS.map(([k,l])=>`<label><input type="checkbox" value="${k}">${l}</label>`).join('');
   $('#jMk').addEventListener('change',jrFormUnit);
+  $('#jSide').addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; jrF.side=b.dataset.side; jrSegSet('#jSide','side',jrF.side); jrFormUnit(); });
+  $('#jBy').addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; jrF.by=b.dataset.by; jrSegSet('#jBy','by',jrF.by); jrFormUnit(); setTimeout(()=>(jrF.by==='cap'?$('#jCap'):$('#jQty')).focus(),0); });
+  ['#jInP','#jQty','#jCap'].forEach(id=>$(id).addEventListener('input',jrFormSize)); $('#jCapCur').addEventListener('change',jrFormSize);
   $('#jClosed').addEventListener('change',e=>{ $('#jrClose').hidden=!e.target.checked; });
   $('#jrNew').addEventListener('click',()=>jrOpenForm(null));
   $('#jrCancel').addEventListener('click',()=>{ $('#jrForm').hidden=true; jr.edit=null; });
   $('#jrForm').addEventListener('submit',e=>{
     e.preventDefault();
-    const raw={ id:jr.edit||undefined, mk:$('#jMk').value, t:normalize($('#jT').value,$('#jMk').value)||$('#jT').value, setup:$('#jSetup').value, inD:$('#jInD').value, inP:$('#jInP').value, qty:$('#jQty').value,
+    const raw={ id:jr.edit||undefined, mk:$('#jMk').value, t:normalize($('#jT').value,$('#jMk').value)||$('#jT').value, setup:$('#jSetup').value, inD:$('#jInD').value, inP:$('#jInP').value, qty:$('#jQty').value, side:jrF.side, by:jrF.by, cap:$('#jCap').value, capCur:$('#jCapCur').value,
       stop:$('#jStop').value, tgt:$('#jTgt').value, note:$('#jNote').value.trim(),
       outD: $('#jClosed').checked?$('#jOutD').value:null, outP: $('#jClosed').checked?$('#jOutP').value:null, why: $('#jClosed').checked?$('#jWhy').value:null,
       errs:[...$('#jErrs').querySelectorAll('input:checked')].map(i=>i.value) };
-    const err = !raw.t ? 'Isi kode saham.' : !(+raw.inP>0) ? 'Isi harga beli.' : !(+raw.qty>=1) ? 'Isi jumlah.' : (+raw.stop && +raw.stop>=+raw.inP) ? 'Stop loss harus di bawah harga beli.'
-      : ($('#jClosed').checked && !(+raw.outP>0)) ? 'Isi harga jual.' : ($('#jClosed').checked && raw.outD<raw.inD) ? 'Tanggal jual tidak boleh sebelum tanggal beli.' : '';
+    const S=raw.side==='S', mkL=MARKETS[raw.mk];
+    if(raw.by==='cap'){
+      const old=jr.items.find(y=>y.id===raw.id);
+      raw.sh = old && old.by==='cap' && old.mk===raw.mk && +old.cap===+raw.cap && old.capCur===raw.capCur && +old.inP===+raw.inP ? old.sh : jrCapShares(raw.mk, +raw.cap, raw.capCur, +raw.inP);
+      raw.qty=raw.sh?Math.max(1,Math.round(raw.sh/mkL.lot)):1;
+    }
+    const err = !raw.t ? 'Isi kode saham.' : !(+raw.inP>0) ? (S?'Isi harga masuk.':'Isi harga beli.')
+      : raw.by==='qty' && !(+raw.qty>=1) ? 'Isi jumlah.' : raw.by==='cap' && !(+raw.cap>0) ? 'Isi jumlah modal.'
+      : raw.by==='cap' && mkL.lot>1 && raw.sh<mkL.lot ? 'Modal lebih kecil dari nilai 1 lot.'
+      : (+raw.stop && !S && +raw.stop>=+raw.inP) ? 'Stop loss posisi long harus di bawah harga beli.'
+      : (+raw.stop && S && +raw.stop<=+raw.inP) ? 'Stop loss posisi short harus di atas harga masuk.'
+      : ($('#jClosed').checked && !(+raw.outP>0)) ? (S?'Isi harga keluar.':'Isi harga jual.') : ($('#jClosed').checked && raw.outD<raw.inD) ? (S?'Tanggal keluar tidak boleh sebelum tanggal masuk.':'Tanggal jual tidak boleh sebelum tanggal beli.') : '';
     if(err){ $('#jrFerr').textContent=err; return; }
     const x=jrClean(raw); if(!x){ $('#jrFerr').textContent='Data belum lengkap.'; return; }
     const i=jr.items.findIndex(y=>y.id===x.id); if(i>=0) jr.items[i]=x; else jr.items.push(x);
@@ -3577,9 +3643,9 @@ function jrInit(){
   $('#jrCsv').addEventListener('click',()=>{
     if(!jr.items.length){ jrMsg('Jurnal masih kosong.',true); return; }
     const num=v=> v==null||v==='' ? '' : String(+(+v).toFixed(6)).replace('.',',');
-    const head=['Bursa','Kode','Setup','Tanggal beli','Harga beli','Jumlah','Satuan','Stop loss','Target','Tanggal jual','Harga jual','Alasan jual','Hasil %','R','Laba/rugi','Mata uang','Laba/rugi (USD)','Kesalahan','Catatan'];
+    const head=['Bursa','Kode','Setup','Posisi','Tanggal masuk','Harga masuk','Jumlah','Satuan','Modal','Mata uang modal','Stop loss','Target','Tanggal keluar','Harga keluar','Alasan keluar','Holding period (hari)','Hasil %','R','Laba/rugi','Mata uang','Laba/rugi (USD)','Kesalahan','Catatan'];
     const q=s=>`"${String(s??'').replace(/"/g,'""')}"`;
-    const lines=jr.items.map(x=>{ const c=jrCalc(x); return [x.mk,x.t,x.setup,x.inD,num(x.inP),x.qty,c.m.lot>1?'lot':'lembar',num(x.stop),num(x.tgt),x.outD||'',num(x.outP),x.why||'',c.closed&&c.ret!=null?num(c.ret*100):'',c.closed&&c.R!=null?num(c.R):'',c.closed?num(c.pl):'',c.m.cur,c.closed&&c.pl!=null?num(toUSD(c.pl,x.mk).toFixed(2)):'',x.errs.map(e=>JR_ERRS.find(([k])=>k===e)[1]).join(', '),x.note].map(q).join(';'); });
+    const lines=jr.items.map(x=>{ const c=jrCalc(x); return [x.mk,x.t,x.setup,x.side==='S'?'Short':'Long',x.inD,num(x.inP),num(c.sh/c.m.lot),c.m.lot>1?'lot':'lembar',x.by==='cap'?num(x.cap):'',x.by==='cap'?(x.capCur==='USD'?'USD':CCY[x.mk]):'',num(x.stop),num(x.tgt),x.outD||'',num(x.outP),x.why||'',c.days,c.closed&&c.ret!=null?num(c.ret*100):'',c.closed&&c.R!=null?num(c.R):'',c.closed?num(c.pl):'',c.m.cur,c.closed&&c.pl!=null?num(toUSD(c.pl,x.mk).toFixed(2)):'',x.errs.map(e=>JR_ERRS.find(([k])=>k===e)[1]).join(', '),x.note].map(q).join(';'); });
     jrDownload('﻿sep=;\n'+[head.map(q).join(';'),...lines].join('\n'),'text/csv;charset=utf-8',`sm-crestboard-jurnal-${todayKey()}.csv`);
     jrMsg('File CSV telah diunduh dan dapat dibuka langsung di Excel atau Google Sheets.');
   });
