@@ -425,6 +425,20 @@
   .jr-row .acts button{border:1px solid var(--rule2);background:var(--surface);border-radius:8px;padding:5px 9px;font-size:12px;font-weight:700;cursor:pointer;color:var(--ink)}
   .jr-row .acts button.pri{background:var(--ink);color:var(--surface);border-color:var(--ink)}
   .jr-row .acts button:hover{border-color:var(--ink)}
+  .jr-pf{border:1px solid var(--rule);border-radius:16px;padding:14px 16px;margin-bottom:12px;display:grid;grid-template-columns:auto 1fr;gap:6px 18px;align-items:center}
+  .jr-pf[hidden]{display:none}
+  .jr-pf .pv{display:flex;flex-direction:column;gap:2px;min-width:118px}
+  .jr-pf .pv label{font-size:11.5px;font-weight:800;color:var(--ink3);letter-spacing:.02em}
+  .jr-pf .pv b{font:800 30px/1 'Space Grotesk','Plus Jakarta Sans',sans-serif;letter-spacing:-.02em}
+  .jr-pf .pv .cat{align-self:flex-start;margin-top:5px;padding:3px 9px;border-radius:999px;font-size:12px;font-weight:800;background:var(--sunk);color:var(--ink2)}
+  .jr-pf .pv .cat.bad{background:var(--down-soft);color:var(--down)} .jr-pf .pv .cat.good{background:var(--up-soft);color:var(--up)} .jr-pf .pv .cat.mid{background:rgba(229,161,0,.16);color:var(--warn)}
+  .jr-pf .sc{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+  .jr-pf .sc span{display:flex;flex-direction:column;gap:3px;padding:6px 4px 5px;border-radius:9px;background:var(--sunk);text-align:center;font-size:10.5px;line-height:1.2;color:var(--ink3);font-weight:700;min-width:0}
+  .jr-pf .sc span i{font-style:normal;font-size:11px;color:var(--ink2);font-weight:800;font-variant-numeric:tabular-nums}
+  .jr-pf .sc span.on{background:var(--ink);color:var(--surface)} .jr-pf .sc span.on i{color:var(--surface)}
+  .jr-pf .ft{grid-column:1 / -1;margin:2px 0 0;font-size:12.5px;color:var(--ink3);line-height:1.5}
+  .jr-pf .ft b:not(.up):not(.down){color:var(--ink2)}
+  @media(max-width:720px){ .jr-pf{grid-template-columns:1fr} .jr-pf .sc{grid-template-columns:repeat(4,minmax(0,1fr))} }
   .jr-empty{border:1px dashed var(--rule2);border-radius:14px;padding:22px;text-align:center;color:var(--ink3);font-size:13.5px}
   .jr-pl{margin-top:8px;font-size:12.5px;color:var(--ink2)}
   @media(max-width:1100px){.jr-cap{grid-template-columns:repeat(3,minmax(0,1fr))}.jr-stats{grid-template-columns:repeat(3,minmax(0,1fr))}.jr-row{grid-template-columns:minmax(120px,1.2fr) 1fr 1fr 1fr auto}.jr-row .hide-m{display:none}}
@@ -1507,7 +1521,7 @@
         <div class="jr-pane" data-pane="eval">
           <div class="jr-mid"><div class="jr-ins" id="jrIns"></div><div class="jr-evl" id="jrEvl"></div></div>
         </div>
-        <div class="jr-pane" data-pane="list"><div class="jr-list" id="jrList"></div></div>
+        <div class="jr-pane" data-pane="list"><div class="jr-pf" id="jrPF" hidden></div><div class="jr-list" id="jrList"></div></div>
         <p class="jr-fx" id="jrFx"></p>
         <details class="note"><summary>Keterangan</summary><div class="note-b"><p class="fine"><span class="store-note" data-what="journal">Data hanya tersimpan di browser ini; gunakan Backup agar tidak hilang.</span> Seluruh laba/rugi dikonversi ke dolar AS (USD) agar transaksi lintas bursa dapat dijumlahkan, dan persentasenya dihitung terhadap modal trading. Hasil transaksi selesai telah dipotong biaya transaksi sesuai bursa. <b>R</b> adalah hasil dibagi risiko awal (jarak harga beli ke stop loss); +2R berarti keuntungan sebesar dua kali risiko yang dipasang. Rasio tersesuaikan = (win rate × rata-rata untung) ÷ (loss rate × rata-rata rugi); metode acuan menargetkan minimal 2.</p></div></details>
         <details class="note"><summary>Cara menghitung statistik jurnal</summary><div class="note-b"><ul class="howto">
@@ -1515,6 +1529,7 @@
           <li><b>Win rate</b> = jumlah transaksi untung ÷ jumlah transaksi selesai. Transaksi dengan hasil 0% atau minus dihitung rugi.</li>
           <li><b>Untung rata-rata</b> dan <b>rugi rata-rata</b> = rata-rata persentase hasil dari transaksi untung saja dan transaksi rugi saja.</li>
           <li><b>Rasio tersesuaikan</b> = (win rate × untung rata-rata) ÷ (loss rate × rugi rata-rata). Contoh: win rate 40%, untung rata-rata 15%, rugi rata-rata 5% → (0,4 × 15) ÷ (0,6 × 5) = 2 : 1. Di atas 1 berarti total untung lebih besar dari total rugi; metode acuan menargetkan minimal 2.</li>
+          <li><b>Profit factor</b> (tab Riwayat) = total laba seluruh transaksi untung ÷ total rugi seluruh transaksi rugi, dalam USD setelah biaya. Contoh: untung $1.500 dan rugi $1.000 = 1,5. Kategori: di bawah 1,0 Losing system; 1,0 Break-even; 1,1–1,3 Tipis; 1,3–1,5 Lumayan; 1,5–2,0 Bagus; 2,0–3,0 Sangat bagus; di atas 3,0 Excellent.</li>
           <li><b>R</b> = hasil ÷ risiko awal, dengan risiko awal = (harga beli − stop loss) ÷ harga beli. Untuk posisi short, risiko awal = (stop loss − harga masuk) ÷ harga masuk. Contoh: beli 1.000, stop 950 (risiko 5%), jual 1.100 (+10%) = +2R sebelum biaya. <b>Rata-rata R</b> hanya menghitung transaksi yang diisi stop loss.</li>
           <li><b>Kurva hasil</b> menggabungkan hasil transaksi secara berurutan menurut tanggal jual, seolah seluruh modal dipakai di tiap transaksi.</li>
           <li><b>Laba/rugi dalam USD</b> = jumlah lembar × (harga jual − harga beli) − biaya, lalu dikonversi ke dolar AS dengan kurs terbaru. Untuk posisi short, selisih harganya dibalik. Jumlah lembar = lot × ukuran lot bursa (BEI 100 lembar).</li>
@@ -3437,7 +3452,9 @@ function jrStats(){
   cl.forEach(c=>{ const v=toUSD(c.pl,c.x.mk)||0; U.real+=v; cum+=v; capCurve.push(jr.cap?cum/jr.cap:0); });
   jr.items.filter(x=>!x.outP).forEach(x=>{ const c=jrCalc(x); U.nOpen++; U.cost+=toUSD(c.sh*x.inP,x.mk); if(c.pl!=null) U.unreal+=toUSD(c.pl,x.mk); });
   const errs={}; jr.items.forEach(x=>x.errs.forEach(e=>errs[e]=(errs[e]||0)+1));
-  return { cl, n, wins:W.length, wr, aw, al, adj, expR, nR:Rs.length, total:eq-1, curve, capCurve, U, errs,
+  let gp=0, gl=0; cl.forEach(c=>{ const v=toUSD(c.pl,c.x.mk)||0; if(v>0) gp+=v; else gl-=v; });
+  const pf= gl>0 ? gp/gl : (gp>0 ? Infinity : null);
+  return { cl, n, gp, gl, pf, wins:W.length, wr, aw, al, adj, expR, nR:Rs.length, total:eq-1, curve, capCurve, U, errs,
     worst: n?Math.min(...cl.map(c=>c.ret)):0, holdW:avg(W.map(c=>c.days)), holdL:avg(L.map(c=>c.days)), nostop:jr.items.filter(x=>!x.stop).length };
 }
 function jrInsights(S){
@@ -3488,6 +3505,18 @@ function jrFxNote(){
   const live=used.every(c=>fx.live[c]);
   return `Kurs konversi${live?' (Yahoo Finance)':' perkiraan; kurs terkini belum berhasil dimuat'}: 1 USD = ${used.map(c=>`${CCY_SYM[c]} ${fmt(fx.r[c],fx.r[c]<100?2:0)}`).join(' · ')}.`;
 }
+/* profit factor = total untung kotor ÷ total rugi kotor (USD, setelah biaya) */
+const PF_SCALE=[['< 1,0','Losing system','bad'],['1,0','Break-even','mid'],['1,1–1,3','Tipis','mid'],['1,3–1,5','Lumayan','mid'],['1,5–2,0','Bagus','good'],['2,0–3,0','Sangat bagus','good'],['> 3,0','Excellent','good']];
+function pfIdx(v){ return v<1?0 : v<1.1?1 : v<1.3?2 : v<1.5?3 : v<2?4 : v<=3?5 : 6; }
+function jrPFHTML(S){
+  const v=S.pf, inf=v===Infinity, i= v==null||inf ? -1 : pfIdx(v), cat= i>=0 ? PF_SCALE[i] : null;
+  const val= v==null ? '–' : inf ? '∞' : fmt(v,2);
+  const tag= cat ? `<span class="cat ${cat[2]}">${cat[1]}</span>` : `<span class="cat${inf?' good':''}">${inf?'Belum ada transaksi rugi':'Belum ada laba/rugi'}</span>`;
+  const sc=PF_SCALE.map((c,k)=>`<span class="${k===i?'on':''}"><i>${c[0]}</i>${c[1]}</span>`).join('');
+  const few= S.n<30 ? ` Sampel masih ${S.n} transaksi; angka ini biasanya baru stabil setelah sekitar 30 transaksi.` : '';
+  return `<div class="pv"><label>PROFIT FACTOR</label><b class="${cat?(cat[2]==='bad'?'down':cat[2]==='good'?'up':''):''}">${val}</b>${tag}</div><div class="sc">${sc}</div>
+    <p class="ft">Total untung <b class="up">${usdS(S.gp)}</b> ÷ total rugi <b class="down">${usdS(-S.gl)}</b>, dari ${S.n} transaksi selesai, setelah biaya transaksi.${few}</p>`;
+}
 function jrRender(){
   const S=jrStats(), open=jr.items.filter(x=>!x.outP);
   const art=$('.t-journal'); if(art) art.dataset.jv=jr.view;
@@ -3524,6 +3553,7 @@ function jrRender(){
   }
   $('#jrIns').innerHTML='<h5>Evaluasi otomatis</h5>'+jrInsights(S).map(([c,t])=>`<p class="${c}">${t}</p>`).join('');
   // daftar
+  const pfBox=$('#jrPF'); if(pfBox){ const show=jr.view==='closed' && S.n>0; pfBox.hidden=!show; if(show) pfBox.innerHTML=jrPFHTML(S); }
   if(jr.view!=='open' && jr.view!=='closed') return;
   const rows=(jr.view==='open'?open:jr.items.filter(x=>x.outP)).slice().sort((a,b)=>(b.outD||b.inD).localeCompare(a.outD||a.inD));
   const list=$('#jrList');
