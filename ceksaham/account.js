@@ -118,6 +118,27 @@
   .avp-act .no{background:var(--sunk);color:var(--ink2)}
   .avp-act .ok{background:#020F29;color:#fff}
   [data-theme="dark"] .avp-act .ok{background:#C6F135;color:#0B1220}
+  .lg-card{position:relative;width:min(720px,100%);max-height:calc(100vh - 36px);display:flex;flex-direction:column;background:var(--surface);border-radius:24px;padding:24px;box-shadow:0 30px 80px rgba(0,0,0,.4);animation:acctIn .35s cubic-bezier(.2,.8,.2,1) both}
+  .lg-card h3{font:800 22px 'Space Grotesk','Plus Jakarta Sans',sans-serif;margin:0 0 4px;letter-spacing:-.01em}
+  .lg-card > p{margin:0 0 14px;color:var(--ink3);font-size:13px}
+  .lg-stat{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+  .lg-stat div{background:var(--sunk);border-radius:12px;padding:9px 11px}
+  .lg-stat small{display:block;font-size:11px;color:var(--ink3);font-weight:700}
+  .lg-stat b{font:800 20px 'Space Grotesk','Plus Jakarta Sans',sans-serif}
+  .lg-bar{display:flex;gap:8px;margin-bottom:10px}
+  .lg-bar input{flex:1;min-width:0;border:1px solid var(--rule2);border-radius:10px;padding:9px 11px;background:var(--surface);color:var(--ink);font:500 13.5px 'Plus Jakarta Sans',sans-serif;outline:0}
+  .lg-bar button{border:0;border-radius:10px;padding:0 14px;background:var(--sunk);color:var(--ink);font:700 13px 'Plus Jakarta Sans',sans-serif;cursor:pointer}
+  .lg-list{overflow-y:auto;flex:1;min-height:120px;border:1px solid var(--rule);border-radius:14px}
+  .lg-day{position:sticky;top:0;background:var(--sunk);padding:6px 12px;font-size:11.5px;font-weight:800;color:var(--ink2);letter-spacing:.02em}
+  .lg-row{display:grid;grid-template-columns:52px 1fr auto;gap:10px;align-items:center;padding:8px 12px;border-top:1px solid var(--rule);font-size:13px}
+  .lg-row time{font-weight:800;font-variant-numeric:tabular-nums;color:var(--ink2)}
+  .lg-row .em{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .lg-row .em small{display:block;color:var(--ink3);font-size:11.5px}
+  .lg-row .tg{font-size:11px;font-weight:700;color:var(--ink3);text-align:right;white-space:nowrap}
+  .lg-row .tg i{font-style:normal;display:inline-block;padding:2px 7px;border-radius:999px;background:var(--sunk);margin-left:4px}
+  .lg-row .tg i.in{background:rgba(198,241,53,.25);color:var(--ink)}
+  .lg-empty{padding:28px 12px;text-align:center;color:var(--ink3);font-size:13px}
+  @media (max-width:560px){ .lg-card{padding:18px;border-radius:18px} .lg-row{grid-template-columns:44px 1fr} .lg-row .tg{grid-column:2;text-align:left} .lg-row .tg i:first-child{margin-left:0} }
 `;
   const st=document.createElement('style'); st.textContent=css; document.head.appendChild(st);
 
@@ -274,15 +295,79 @@
         <div class="who"><span class="acct-av" style="width:40px;height:40px;font-size:15px">${av}</span><div><span class="hi">${greet()},</span><b>${esc(nameOf(u))}</b><span>${esc(u.email||'')}</span></div></div>
         <div class="st"><i class="acct-dot ${syncing?'sync':''}"></i>${syncing?'Menyimpan perubahan…':'Watchlist dan jurnal telah tersinkron'}</div>
         <button type="button" id="acctAv" role="menuitem">Ganti avatar &amp; nama panggilan</button>
+        ${isAdmin?'<button type="button" id="acctLog" role="menuitem">Log akses pengguna</button>':''}
         <button type="button" class="out" id="acctOut" role="menuitem">Keluar dari akun</button>
       </div>`;
     const btn=$('acctBtn'), menu=$('acctMenu');
     btn.onclick=e=>{ e.stopPropagation(); menu.hidden=!menu.hidden; btn.setAttribute('aria-expanded',String(!menu.hidden)); };
     $('acctOut').onclick=()=>A.signOut();
     $('acctAv').onclick=()=>{ menu.hidden=true; openPicker(); };
+    if(isAdmin) $('acctLog').onclick=()=>{ menu.hidden=true; openLog(); };
   }
   document.addEventListener('click',e=>{ const m=$('acctMenu'); if(m && !m.hidden && !e.target.closest('.acct')) m.hidden=true; });
   if(slot){ slot.hidden=false; slot.innerHTML='<button type="button" class="acct-btn" disabled aria-label="Memuat akun"><span class="lbl">…</span></button>'; }
+
+  /* ---------- log akses (hanya dapat dibaca pemilik; dijaga oleh Firestore rules) ---------- */
+  const ADMIN_H='0f1fa6dbd849ec426fe42ac6ecb2150939dab01ed1e0871474a42e1a4be35a67'; // SHA-256 email pemilik
+  let isAdmin=false, LOG={ write:null, read:null };
+  async function checkAdmin(u){
+    isAdmin=false;
+    try{
+      if(u && u.email && u.emailVerified && crypto.subtle){
+        const h=await crypto.subtle.digest('SHA-256', new TextEncoder().encode(u.email.trim().toLowerCase()));
+        isAdmin=[...new Uint8Array(h)].map(b=>b.toString(16).padStart(2,'0')).join('')===ADMIN_H;
+      }
+    }catch{}
+    if(isAdmin && A.user===u) renderSlot();
+  }
+  function logVisit(u, via){
+    if(!u || !LOG.write) return;
+    const page=(location.pathname.split('/').pop()||'index.html').replace(/\.html$/,'')||'index';
+    const key='smcb_lg_'+page;
+    try{ if(via!=='signin' && sessionStorage.getItem(key)===u.uid) return; sessionStorage.setItem(key,u.uid); }catch{}
+    const dev=/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)?'HP':'Komputer';
+    LOG.write({ uid:u.uid, email:u.email||null, name:(u.displayName||'').slice(0,60)||null, page:page.slice(0,30), dev, via:via==='signin'?'masuk':'buka' })
+      .catch(e=>{ try{ sessionStorage.removeItem(key); }catch{} console.warn('[SM-Crestboard] log akses gagal', e?.code||e); });
+  }
+  function openLog(){
+    if(!isAdmin || !LOG.read) return;
+    document.getElementById('lgp')?.remove();
+    const box=document.createElement('div'); box.className='au'; box.id='lgp';
+    box.innerHTML=`<div class="lg-card" role="dialog" aria-modal="true" aria-labelledby="lgT"><button type="button" class="au-x" data-x aria-label="Tutup">✕</button>
+      <h3 id="lgT">Log akses pengguna</h3><p>Pengguna lain yang membuka SM-Crestboard dalam keadaan masuk ke akun (kunjungan Anda sendiri tidak dicatat). Satu catatan per sesi browser per halaman. Waktu dalam WIB.</p>
+      <div class="lg-stat"><div><small>Pengguna hari ini</small><b id="lgU">–</b></div><div><small>Kunjungan hari ini</small><b id="lgV">–</b></div><div><small>Pengguna 7 hari</small><b id="lgW">–</b></div></div>
+      <div class="lg-bar"><input id="lgQ" type="search" placeholder="Cari email…" autocomplete="off"><button type="button" id="lgR">Muat ulang</button></div>
+      <div class="lg-list" id="lgL"><div class="lg-empty">Memuat log…</div></div></div>`;
+    document.body.appendChild(box); document.body.classList.add('au-open');
+    const close=()=>{ box.remove(); if($('au').hidden) document.body.classList.remove('au-open'); };
+    box.addEventListener('click',e=>{ if(e.target===box||e.target.closest('[data-x]')) close(); });
+    box.addEventListener('keydown',e=>{ if(e.key==='Escape') close(); });
+    let rows=[];
+    const wib=d=>new Date(d.getTime()+7*3600e3);
+    const dayKey=d=>wib(d).toISOString().slice(0,10);
+    const dayLab=k=>{ const t=dayKey(new Date()), y=dayKey(new Date(Date.now()-864e5)); return k===t?'Hari ini':k===y?'Kemarin':new Date(k+'T00:00:00Z').toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric',timeZone:'UTC'}); };
+    const draw=()=>{
+      const q=$('lgQ').value.trim().toLowerCase(), list=rows.filter(r=>!q||(r.email||'').toLowerCase().includes(q)||(r.name||'').toLowerCase().includes(q));
+      const today=dayKey(new Date()), wk=Date.now()-7*864e5;
+      const tdy=rows.filter(r=>dayKey(r.at)===today);
+      $('lgU').textContent=new Set(tdy.map(r=>r.uid)).size; $('lgV').textContent=tdy.length;
+      $('lgW').textContent=new Set(rows.filter(r=>r.at.getTime()>=wk).map(r=>r.uid)).size;
+      if(!list.length){ $('lgL').innerHTML=`<div class="lg-empty">${rows.length?'Tidak ada email yang cocok.':'Belum ada catatan akses.'}</div>`; return; }
+      let html='', last='';
+      for(const r of list){
+        const k=dayKey(r.at); if(k!==last){ html+=`<div class="lg-day">${esc(dayLab(k))}</div>`; last=k; }
+        const hm=wib(r.at).toISOString().slice(11,16);
+        html+=`<div class="lg-row"><time>${hm}</time><div class="em">${esc(r.email||'(tanpa email)')}${r.name?`<small>${esc(r.name)}</small>`:''}</div><div class="tg"><i class="${r.via==='masuk'?'in':''}">${r.via==='masuk'?'Masuk':'Buka'}</i><i>${esc(r.page==='index'?'Utama':r.page==='scanner'?'Scanner':r.page)}</i><i>${esc(r.dev||'')}</i></div></div>`;
+      }
+      $('lgL').innerHTML=html;
+    };
+    const load=async()=>{
+      $('lgL').innerHTML='<div class="lg-empty">Memuat log…</div>';
+      try{ rows=await LOG.read(500); draw(); }
+      catch(e){ $('lgL').innerHTML=`<div class="lg-empty">Log belum dapat dibaca${e?.code==='permission-denied'?': aturan Firestore untuk access_log belum dipasang.':'.'}</div>`; console.error(e); }
+    };
+    $('lgQ').oninput=draw; $('lgR').onclick=load; load();
+  }
 
   /* ---------- Firebase ---------- */
   const base=`https://www.gstatic.com/firebasejs/${FB_VERSION}/`;
@@ -291,6 +376,9 @@
     auth.languageCode='id';
     let unsub=null, first=true, timer=null, pending=null, reason='init';
     const fire=(n,d)=>document.dispatchEvent(new CustomEvent(n,{detail:d}));
+    LOG.write=data=>fs.addDoc(fs.collection(db,'access_log'),{...data, at:fs.serverTimestamp()});
+    LOG.read=async n=>{ const snap=await fs.getDocs(fs.query(fs.collection(db,'access_log'),fs.orderBy('at','desc'),fs.limit(n)));
+      return snap.docs.map(d=>({...d.data(), at:d.data().at?.toDate?.()||new Date()})); };
 
     A.save=(partial)=>{
       if(!A.user) return;
@@ -307,7 +395,7 @@
     A.signOut=async()=>{ reason='signout'; await fu.signOut(auth); };
 
     fu.onAuthStateChanged(auth,u=>{
-      A.user=u; A.ready=true; if(u) profLoad(u); renderSlot();
+      A.user=u; A.ready=true; if(u) profLoad(u); isAdmin=false; renderSlot(); if(u){ const via=reason; checkAdmin(u).then(()=>{ if(!isAdmin) logVisit(u, via); }); }
       const wantHi = u && (reason==='signin' || (()=>{ try{ return sessionStorage.getItem('smcb_hi')!==u.uid; }catch{ return false; } })());
       if(unsub){ unsub(); unsub=null; }
       if(u){
