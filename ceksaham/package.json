@@ -1,5 +1,9 @@
 {
   "name": "sm-crestboard",
   "private": true,
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "firebase-admin": "^14.5.1",
+    "nodemailer": "^10.6.0"
+  }
 }

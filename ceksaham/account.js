@@ -121,6 +121,25 @@
   .acct-menu a.kopi-m{display:block;text-decoration:none;padding:9px 8px;border-radius:9px;font:700 13px 'Plus Jakarta Sans',sans-serif;color:#8A5A2B}
   .acct-menu a.kopi-m:hover{background:var(--sunk)}
   [data-theme="dark"] .acct-menu a.kopi-m{color:#E9CFAE}
+  .acct-menu button.del{color:var(--ink3);font-weight:600;font-size:12.5px}
+  .acct-menu button.del:hover{color:var(--down)}
+  .del-card{position:relative;width:min(520px,100%);background:var(--surface);color:var(--ink);border-radius:24px;padding:26px;box-shadow:0 30px 80px rgba(0,0,0,.4);animation:acctIn .35s cubic-bezier(.2,.8,.2,1) both}
+  .del-card .ic{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;background:var(--down-soft,rgba(209,63,43,.12));color:var(--down);margin-bottom:12px}
+  .del-card h3{font:800 22px 'Space Grotesk','Plus Jakarta Sans',sans-serif;margin:0 0 6px;letter-spacing:-.01em}
+  .del-card p{margin:0 0 12px;color:var(--ink2);font-size:13.5px;line-height:1.6}
+  .del-card ul{margin:0 0 12px 18px;padding:0;color:var(--ink2);font-size:13.5px;line-height:1.7}
+  .del-card .tip{background:var(--sunk);border-radius:12px;padding:10px 12px;font-size:12.5px;color:var(--ink2)}
+  .del-card label{display:block;font-size:12.5px;font-weight:700;color:var(--ink2);margin:12px 0 6px}
+  .del-card input{width:100%;box-sizing:border-box;border:1px solid var(--rule2);border-radius:12px;padding:11px 13px;background:var(--surface);color:var(--ink);font:600 14px 'Plus Jakarta Sans',sans-serif;outline:0}
+  .del-card input:focus{border-color:var(--down)}
+  .del-card .act{display:flex;gap:8px;justify-content:flex-end;margin-top:16px;flex-wrap:wrap}
+  .del-card .act button{border:0;border-radius:12px;padding:11px 16px;font:800 13.5px 'Plus Jakarta Sans',sans-serif;cursor:pointer}
+  .del-card .act .no{background:var(--sunk);color:var(--ink)}
+  .del-card .act .go{background:var(--down);color:#fff}
+  .del-card .act .go:disabled{opacity:.4;cursor:not-allowed}
+  .del-card .msg{min-height:18px;margin-top:10px;font-size:12.5px;font-weight:700;color:var(--down)}
+  .del-card .ok-ic{background:var(--up-soft,rgba(14,138,92,.12));color:var(--up)}
+  .del-card .ref{font:700 12.5px ui-monospace,Menlo,monospace;background:var(--sunk);padding:2px 8px;border-radius:6px}
   .lg-card{position:relative;width:min(720px,100%);max-height:calc(100vh - 36px);display:flex;flex-direction:column;background:var(--surface);border-radius:24px;padding:24px;box-shadow:0 30px 80px rgba(0,0,0,.4);animation:acctIn .35s cubic-bezier(.2,.8,.2,1) both}
   .lg-card h3{font:800 22px 'Space Grotesk','Plus Jakarta Sans',sans-serif;margin:0 0 4px;letter-spacing:-.01em}
   .lg-card > p{margin:0 0 14px;color:var(--ink3);font-size:13px}
@@ -301,12 +320,14 @@
         ${isAdmin?'<button type="button" id="acctLog" role="menuitem">Log akses pengguna</button>':''}
         <a href="https://trakteer.id/sm-crestboard" target="_blank" rel="noopener" role="menuitem" class="kopi-m">☕ Traktir kopi admin</a>
         <button type="button" class="out" id="acctOut" role="menuitem">Keluar dari akun</button>
+        <button type="button" class="del" id="acctDel" role="menuitem">Hapus akun saya</button>
       </div>`;
     const btn=$('acctBtn'), menu=$('acctMenu');
     btn.onclick=e=>{ e.stopPropagation(); menu.hidden=!menu.hidden; btn.setAttribute('aria-expanded',String(!menu.hidden)); };
     $('acctOut').onclick=()=>A.signOut();
     $('acctAv').onclick=()=>{ menu.hidden=true; openPicker(); };
     if(isAdmin) $('acctLog').onclick=()=>{ menu.hidden=true; openLog(); };
+    $('acctDel').onclick=()=>{ menu.hidden=true; openDelete(); };
   }
   document.addEventListener('click',e=>{ const m=$('acctMenu'); if(m && !m.hidden && !e.target.closest('.acct')) m.hidden=true; });
   if(slot){ slot.hidden=false; slot.innerHTML='<button type="button" class="acct-btn" disabled aria-label="Memuat akun"><span class="lbl">…</span></button>'; }
@@ -373,6 +394,48 @@
     $('lgQ').oninput=draw; $('lgR').onclick=load; load();
   }
 
+  /* ---------- hapus akun (dilakukan pemilik akun sendiri) ---------- */
+  function openDelete(){
+    const u=A.user; if(!u || !A.deleteAccount) return;
+    document.getElementById('delp')?.remove();
+    const pwAcct=(u.providerData||[]).some(p=>p.providerId==='password') && !(u.providerData||[]).some(p=>p.providerId==='google.com');
+    const box=document.createElement('div'); box.className='au'; box.id='delp';
+    box.innerHTML=`<div class="del-card" role="dialog" aria-modal="true" aria-labelledby="delT"><button type="button" class="au-x" data-x aria-label="Tutup">✕</button>
+      <div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6M10 11v6M14 11v6"/></svg></div>
+      <h3 id="delT">Hapus akun saya</h3>
+      <p>Penghapusan bersifat <b>permanen dan tidak dapat dibatalkan</b>. Yang akan dihapus dari SM-Crestboard:</p>
+      <ul><li>Akun login <b>${esc(u.email||'')}</b></li><li>Nama panggilan dan avatar</li><li>Watchlist, jurnal trading, modal, checklist, dan catatan pribadi</li><li>Riwayat akses</li></ul>
+      <p class="tip">Ingin menyimpan jurnal? Gunakan <b>Backup</b> atau <b>Ekspor CSV</b> di Jurnal trading sebelum melanjutkan. Konfirmasi penghapusan akan dikirim ke email akun Anda.</p>
+      ${pwAcct?'<label for="delPw">Kata sandi akun</label><input id="delPw" type="password" autocomplete="current-password">':''}
+      <label for="delTx">Ketik <b>HAPUS</b> untuk melanjutkan</label><input id="delTx" autocomplete="off" spellcheck="false" placeholder="HAPUS">
+      <div class="msg" id="delMsg" role="status"></div>
+      <div class="act"><button type="button" class="no" data-x>Batal</button><button type="button" class="go" id="delGo" disabled>Hapus akun permanen</button></div></div>`;
+    document.body.appendChild(box); document.body.classList.add('au-open');
+    let busy=false;
+    const close=()=>{ if(busy) return; box.remove(); if($('au').hidden) document.body.classList.remove('au-open'); };
+    box.addEventListener('click',e=>{ if(e.target===box||e.target.closest('[data-x]')) close(); });
+    box.addEventListener('keydown',e=>{ if(e.key==='Escape') close(); });
+    const chk=()=>{ $('delGo').disabled= $('delTx').value.trim().toUpperCase()!=='HAPUS' || (pwAcct && !$('delPw').value); };
+    $('delTx').oninput=chk; if(pwAcct) $('delPw').oninput=chk;
+    setTimeout(()=>(pwAcct?$('delPw'):$('delTx')).focus(),80);
+    $('delGo').onclick=async()=>{
+      if(busy) return; busy=true; const go=$('delGo'), m=$('delMsg'); go.disabled=true; m.style.color='var(--ink2)';
+      try{
+        const r=await A.deleteAccount(pwAcct?$('delPw').value:null, t=>{ m.textContent=t; });
+        try{ Object.keys(localStorage).filter(k=>k.startsWith('smcb_')).forEach(k=>localStorage.removeItem(k)); sessionStorage.clear(); }catch{}
+        box.querySelector('.del-card').innerHTML=`<div class="ic ok-ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+          <h3>Akun Anda telah dihapus</h3>
+          <p>Seluruh data akun Anda di SM-Crestboard telah dihapus secara permanen, termasuk data di browser ini.</p>
+          <p>${r.emailSent?`Konfirmasi resmi telah dikirim ke <b>${esc(r.email)}</b>. Mohon periksa juga folder spam.`:`Email konfirmasi belum berhasil dikirim otomatis; pengelola akan mengirimkannya secara manual ke <b>${esc(r.email)}</b>.`}</p>
+          <p>Nomor rujukan: <span class="ref">${esc(r.ref)}</span></p>
+          <div class="act"><button type="button" class="go" id="delDone" style="background:var(--ink);color:var(--surface)">Selesai</button></div>`;
+        busy=false; $('delDone').onclick=()=>location.reload(); box.onclick=e=>{ if(e.target===box) location.reload(); };
+      }catch(e){
+        busy=false; m.style.color='var(--down)'; m.textContent=e.message||'Penghapusan gagal. Silakan coba lagi.'; chk();
+      }
+    };
+  }
+
   /* ---------- Firebase ---------- */
   const base=`https://www.gstatic.com/firebasejs/${FB_VERSION}/`;
   Promise.all([import(base+'firebase-app.js'), import(base+'firebase-auth.js'), import(base+'firebase-firestore.js')]).then(([fa,fu,fs])=>{
@@ -397,6 +460,29 @@
       },400);
     };
     A.signOut=async()=>{ reason='signout'; await fu.signOut(auth); };
+    A.deleteAccount=async(pw, step=()=>{})=>{
+      const u=auth.currentUser; if(!u) throw new Error('Anda belum masuk.');
+      const email=u.email||'';
+      step('Memverifikasi ulang akun Anda…');
+      try{
+        if(pw!=null) await fu.reauthenticateWithCredential(u, fu.EmailAuthProvider.credential(email,pw));
+        else { const p=new fu.GoogleAuthProvider(); p.setCustomParameters({prompt:'select_account', login_hint:email}); await fu.reauthenticateWithPopup(u,p); }
+      }catch(e){
+        if(e?.code==='auth/user-mismatch') throw new Error('Akun Google yang dipilih berbeda dengan akun yang sedang masuk.');
+        if(e?.code==='auth/popup-closed-by-user'||e?.code==='auth/cancelled-popup-request') throw new Error('Verifikasi dibatalkan.');
+        throw new Error(errText(e));
+      }
+      clearTimeout(timer); pending=null; syncing=false;
+      step('Menghapus data akun…');
+      const t=await u.getIdToken(true);
+      let r, j={};
+      try{ r=await fetch('/api/delete-account',{method:'POST',headers:{Authorization:'Bearer '+t}}); j=await r.json().catch(()=>({})); }
+      catch{ throw new Error('Tidak dapat terhubung ke server. Periksa koneksi lalu coba lagi.'); }
+      if(!r.ok || !j.ok) throw new Error(j.detail||j.error||'Penghapusan gagal. Silakan coba lagi.');
+      if(unsub){ unsub(); unsub=null; }
+      reason='deleted'; try{ await fu.signOut(auth); }catch{}
+      return { ...j, email };
+    };
 
     fu.onAuthStateChanged(auth,u=>{
       A.user=u; A.ready=true; if(u) profLoad(u); isAdmin=false; renderSlot(); if(u){ const via=reason; checkAdmin(u).then(()=>{ if(!isAdmin) logVisit(u, via); }); }
