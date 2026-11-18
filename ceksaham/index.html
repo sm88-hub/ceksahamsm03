@@ -185,6 +185,10 @@
   .lv .s{font-size:12px;color:rgba(255,255,255,.55);margin-top:2px}
   .lv.buy{background:var(--acc);border-color:var(--acc);color:#0D1526}.lv.buy label,.lv.buy .s{color:rgba(13,21,38,.7)}
   .lv.sl .v{color:#FF8D76}.lv.tp .v{color:#5CEBA9}
+  .plan-note{margin:12px 0 0;padding:9px 12px;border-radius:12px;background:rgba(255,200,61,.12);border:1px solid rgba(255,200,61,.35);color:#FFE3A1;font-size:12.5px;line-height:1.5}
+  .plan-note b{color:#fff}
+  .plan-note.dn{background:rgba(255,122,98,.12);border-color:rgba(255,122,98,.4);color:#FFD2C8}
+  .plan-note.up{background:rgba(63,209,143,.12);border-color:rgba(63,209,143,.4);color:#C9F7DE}
   .rr{display:flex;justify-content:space-between;color:rgba(255,255,255,.55);font-size:12.5px;margin-top:12px}
 
   /* Bento */
@@ -476,6 +480,19 @@
   .jr-row .c small.pc{display:block;font-size:11px;color:var(--ink3);font-weight:600}
   .jr-row .tk .sd{background:var(--up-soft,rgba(14,138,92,.12));color:var(--up)}.jr-row .tk .sd.s{background:var(--down-soft);color:var(--down)}
   .jr-row .warn-b{display:inline-block;font-size:10.5px;font-weight:800;color:#fff;background:var(--down);border-radius:5px;padding:1px 6px;margin-left:4px}
+  .jr-wk{position:fixed;inset:0;z-index:90;background:rgba(6,10,20,.55);backdrop-filter:blur(4px);display:grid;place-items:center;padding:18px}
+  .jr-wk-c{position:relative;width:min(520px,100%);max-height:calc(100vh - 36px);overflow:auto;background:var(--surface);color:var(--ink);border-radius:22px;padding:22px;box-shadow:0 30px 80px rgba(0,0,0,.4);display:flex;flex-direction:column;gap:12px}
+  .jr-wk-c h3{margin:0;font:800 20px 'Space Grotesk',sans-serif}
+  .jr-wk-c p{margin:0;color:var(--ink3);font-size:13px}
+  .jr-wk-c .jr-x{position:absolute;top:14px;right:14px}
+  .jr-wk-c textarea{width:100%;min-height:260px;border:1px solid var(--rule2);border-radius:12px;padding:12px;background:var(--sunk);color:var(--ink);font:500 13px/1.55 ui-monospace,SFMono-Regular,Menlo,monospace;resize:vertical}
+  .jr-wk-a{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+  .jr-wk-a span{margin-right:auto;font-size:12.5px;color:var(--up);font-weight:700}
+  .jr-wk-a a.btn{text-decoration:none;display:inline-flex;align-items:center}
+  .jr-row .trl{grid-column:1 / -1;display:flex;flex-wrap:wrap;align-items:center;gap:4px 12px;margin-top:-4px;font-size:12px;color:var(--ink3)}
+  .jr-row .trl b{color:var(--ink2);font-family:'Space Grotesk',sans-serif}
+  .jr-row .trl .lb{font-weight:800;color:var(--ink3)}
+  .jr-row .trl .hit{color:var(--warn)}
   .jr-row .errs{grid-column:1 / -1;display:flex;flex-wrap:wrap;gap:5px;margin-top:-4px}
   .jr-row .errs span{font-size:11px;font-weight:700;color:var(--down);background:var(--down-soft);border-radius:6px;padding:2px 7px}
   .jr-row .acts{display:flex;gap:6px;justify-content:flex-end}
@@ -1170,6 +1187,7 @@
           <div class="lv tp"><label>Target</label><div class="v" id="tp">—</div><div class="s" id="tpS">&nbsp;</div></div>
         </div>
         <div class="rr"><span id="riskTxt">&nbsp;</span><span id="rrTxt">&nbsp;</span></div>
+        <p class="plan-note" id="planNote" hidden></p>
       </div>
     </section>
 
@@ -1532,6 +1550,7 @@
           </div>
           <div class="jr-acts">
             <button type="button" class="btn" id="jrNew">+ Catat transaksi</button>
+            <button type="button" class="ghost-btn" id="jrWeek">Rekap mingguan</button>
             <button type="button" class="ghost-btn" id="jrCsv">Ekspor CSV</button>
             <button type="button" class="ghost-btn" id="jrBackup">Backup</button>
             <button type="button" class="ghost-btn" id="jrRestore">Pulihkan</button>
@@ -1603,6 +1622,8 @@
           <li><b>Checklist sebelum entry</b>: setiap transaksi menyimpan aturan yang Anda centang. <b>Kepatuhan</b> = jumlah aturan yang dicentang ÷ jumlah aturan saat itu. Tab Evaluasi membandingkan hasil transaksi yang memenuhi semua aturan dengan yang melewatkan sebagian.</li>
           <li><b>Kalender laba/rugi</b>: laba/rugi terealisasi (USD, setelah biaya) dijumlahkan per tanggal jual. Warna makin pekat berarti nilainya makin besar dibanding hari lain pada bulan yang sama.</li>
           <li><b>Risiko terbuka</b> (di kalkulator ukuran posisi) = total kerugian bila seluruh posisi terbuka menyentuh stop loss dari harga terkini, dibagi modal jurnal. Posisi tanpa stop loss tidak dapat dihitung.</li>
+          <li><b>Acuan trailing stop</b> (posisi terbuka): rata-rata harga penutupan 20 dan 50 hari, serta harga terendah 10 hari (untuk short: tertinggi 10 hari), dari candle terakhir yang sudah selesai. Angka di dalam kurung adalah jarak harga terkini ke level tersebut. Level ini hanya informasi pembanding, bukan perintah jual.</li>
+          <li><b>Rekap mingguan</b>: transaksi dengan tanggal jual Senin–Minggu pada minggu yang dipilih.</li>
           <li><b>Holding period</b> = jumlah hari kalender dari tanggal masuk sampai hari ini, atau sampai tanggal keluar untuk transaksi selesai.</li>
           <li><b>Persentase terhadap modal</b> = total laba/rugi USD ÷ modal trading yang Anda isi. <b>Dana terpakai</b> = nilai beli seluruh posisi terbuka dalam USD.</li>
         </ul></div></details>
@@ -2051,6 +2072,12 @@ function render(silent){
   $('#riskTxt').textContent=`Risiko ${fmt(plan.riskPct,2)}%, potensi ${fmt(plan.rewardPct,2)}%`;
   $('#rrTxt').textContent=`Rasio 1 : ${fmt(plan.rr,1)}`;
   renderGauge(plan,cur);
+  { const pn=$('#planNote'), tail=` Level di papan ini tetap sepanjang sesi berjalan; Buy, Stop, dan Target baru dihitung setelah sesi ${live?dateID(live.key):'berikutnya'} ditutup.`;
+    let t='', c='';
+    if(live && cur>=plan.target){ c='up'; t=`<b>Harga sudah melewati target</b> dari data ${refLbl}.`+tail; }
+    else if(live && cur<=plan.stop){ c='dn'; t=`<b>Harga berada di bawah stop loss</b> dari data ${refLbl}.`+tail; }
+    else if(live && cur>plan.buy*1.05){ t=`<b>Harga sudah lebih dari 5% di atas Buy trigger</b> dari data ${refLbl}, sehingga jarak ke stop loss lebih lebar dari rencana awal.`+tail; }
+    pn.hidden=!t; pn.className='plan-note '+c; pn.innerHTML=t; }
 
   const vtxt=`volume ${refLbl} ${fmt(plan.volRatio,2)}× rata-rata`;
   let st,tt,dd;
@@ -2533,7 +2560,9 @@ async function wlFetchOne(x){
   const H=ref.h,L=ref.l,C=ref.c,C2=prev?prev.c:ref.o, range=Math.max(H-L,Math.abs(H-C2),Math.abs(L-C2));
   const t=m.tick(C+range*CONFIG.k), buy=Number((Math.ceil((C+range*CONFIG.k)/t-1e-9)*t).toFixed(6));
   const done=bars.slice(0,idx+1); let acc=null, st=null; try{ acc=wxAcc(done); st=wxStage(done); }catch{}
-  return { name:d.meta.longName||d.meta.shortName||x.t, close:ref.c, price: live?live.c:ref.c, live:!!live, vr: avgV? ref.v/avgV : 0, buy, refKey:ref.key, acc, st };
+  const cl=done.map(b=>b.c), smaN=k=>cl.length>=k?cl.slice(-k).reduce((a,v)=>a+v,0)/k:null, l10=done.slice(-10);
+  const tr={ ma20:smaN(20), ma50:smaN(50), lo10:Math.min(...l10.map(b=>b.l)), hi10:Math.max(...l10.map(b=>b.h)), key:ref.key };
+  return { name:d.meta.longName||d.meta.shortName||x.t, close:ref.c, price: live?live.c:ref.c, live:!!live, vr: avgV? ref.v/avgV : 0, buy, refKey:ref.key, acc, st, tr };
 }
 async function wlRefresh(){
   if(wl.busy || !wl.items.length){ wlRender(); return; }
@@ -3690,6 +3719,41 @@ function jrCalHTML(S){
     <div class="jr-cal-s"><span>Total bulan ini <b class="${tot>0?'up':tot<0?'down':''}">${usdS(tot)}</b></span><span>Hari untung <b>${win}</b></span><span>Hari rugi <b>${los}</b></span>${mv.length?`<span>Hari terbaik <b class="up">${short(Math.max(...mv))}</b></span><span>Hari terburuk <b class="down">${short(Math.min(...mv))}</b></span>`:''}</div>`;
 }
 document.addEventListener('click',e=>{ const b=e.target.closest('[data-calm]'); if(!b||b.disabled) return; const [y,m]=jr.calM.split('-').map(Number), d=new Date(Date.UTC(y,m-1+(+b.dataset.calm),1)); jr.calM=d.toISOString().slice(0,7); $('#jrCal').innerHTML=jrCalHTML(jrStats()); });
+/* Rekap mingguan siap kirim (WhatsApp) */
+function jrWeekRange(off){ const t=new Date(todayKey()+'T00:00:00Z'), dw=(t.getUTCDay()+6)%7; const a=new Date(t.getTime()-(dw+7*off)*864e5), b=new Date(a.getTime()+6*864e5); return [a.toISOString().slice(0,10), b.toISOString().slice(0,10)]; }
+function jrWeekText(off){
+  const [a,b]=jrWeekRange(off), S=jrStats(), nick=(()=>{ try{ return JSON.parse(localStorage.getItem('smcb_prof_'+(window.SMCB_ACCOUNT?.user?.uid||''))||'{}').nick||''; }catch{ return ''; } })();
+  const cl=S.cl.filter(c=>c.x.outD>=a && c.x.outD<=b), w=cl.filter(c=>c.ret>0), u=v=>usdS(v);
+  const tot=cl.reduce((s,c)=>s+(toUSD(c.pl,c.x.mk)||0),0), best=cl.slice().sort((p,q)=>q.ret-p.ret)[0], worst=cl.slice().sort((p,q)=>p.ret-q.ret)[0];
+  const opened=jr.items.filter(x=>x.inD>=a && x.inD<=b).length, open=jr.items.filter(x=>!x.outP);
+  const D=k=>new Date(k+'T00:00:00Z').toLocaleDateString('id-ID',{day:'numeric',month:'short',timeZone:'UTC'});
+  const L=[`*Rekap Trading Mingguan${nick?' · '+nick:''}*`, `${D(a)} – ${D(b)} ${b.slice(0,4)}`, ''];
+  L.push(`Transaksi selesai: ${cl.length}${cl.length?` (${w.length} untung, ${cl.length-w.length} rugi)`:''}`);
+  if(cl.length){ L.push(`Win rate: ${fmt(w.length/cl.length*100,0)}%`); L.push(`Laba/rugi terealisasi: ${u(tot)}${jr.cap?` (${tot>=0?'+':'−'}${fmt(Math.abs(tot/jr.cap*100),2)}% modal)`:''}`);
+    L.push(`Terbaik: ${best.x.t} ${pctS(best.ret)}`); if(cl.length>1) L.push(`Terburuk: ${worst.x.t} ${pctS(worst.ret)}`); }
+  L.push(`Posisi baru dibuka: ${opened}`);
+  if(open.length){ const ur=open.reduce((s,x)=>{ const c=jrCalc(x); return s+(c.pl!=null?toUSD(c.pl,x.mk)||0:0); },0); L.push(`Posisi masih terbuka: ${open.length} (belum terealisasi ${u(ur)})`); }
+  const ck=cl.filter(c=>c.x.chkN>0); if(ck.length) L.push(`Kepatuhan checklist: ${fmt(ck.reduce((s,c)=>s+Math.min(1,c.x.chk.length/c.x.chkN),0)/ck.length*100,0)}%`);
+  if(S.n) L.push(`Profit factor keseluruhan: ${S.pf===Infinity?'∞':S.pf==null?'–':fmt(S.pf,2)}`);
+  L.push('', '_Dicatat dengan SM-Crestboard_');
+  return L.join('\n');
+}
+function jrWeekOpen(){
+  document.getElementById('jrWk')?.remove();
+  const box=document.createElement('div'); box.id='jrWk'; box.className='jr-wk';
+  box.innerHTML=`<div class="jr-wk-c" role="dialog" aria-modal="true" aria-labelledby="jrWkT"><button type="button" class="jr-x" data-x aria-label="Tutup">✕</button>
+    <h3 id="jrWkT">Rekap mingguan</h3><p>Ringkasan jurnal per minggu (Senin–Minggu), siap disalin atau dikirim lewat WhatsApp.</p>
+    <div class="jr-seg" id="jrWkSeg" style="max-width:280px"><button type="button" data-off="0" class="on">Minggu ini</button><button type="button" data-off="1">Minggu lalu</button></div>
+    <textarea id="jrWkTx" readonly></textarea>
+    <div class="jr-wk-a"><span id="jrWkMsg"></span><button type="button" class="ghost-btn" id="jrWkCp">Salin teks</button><a class="btn" id="jrWkWa" target="_blank" rel="noopener">Kirim ke WhatsApp</a></div></div>`;
+  document.body.appendChild(box);
+  const set=off=>{ const t=jrWeekText(off); $('#jrWkTx').value=t; $('#jrWkWa').href='https://wa.me/?text='+encodeURIComponent(t); jrSegSet('#jrWkSeg','off',String(off)); };
+  set(0);
+  box.addEventListener('click',async e=>{ if(e.target===box||e.target.closest('[data-x]')) box.remove();
+    const sb=e.target.closest('#jrWkSeg button'); if(sb) set(+sb.dataset.off);
+    if(e.target.closest('#jrWkCp')){ try{ await navigator.clipboard.writeText($('#jrWkTx').value); $('#jrWkMsg').textContent='Teks tersalin.'; }catch{ $('#jrWkTx').select(); document.execCommand('copy'); $('#jrWkMsg').textContent='Teks tersalin.'; } } });
+  box.addEventListener('keydown',e=>{ if(e.key==='Escape') box.remove(); });
+}
 function jrRender(){
   const S=jrStats(), open=jr.items.filter(x=>!x.outP);
   const art=$('.t-journal'); if(art) art.dataset.jv=jr.view;
@@ -3749,14 +3813,24 @@ function jrRender(){
       <div class="c"><label>${c.closed?'Laba/rugi (USD)':'Belum terealisasi (USD)'}</label>${pl}</div>
       <div class="c"><label>Holding period</label><b>${c.days} hari</b></div>
       <div class="acts">${c.closed?'':`<button type="button" class="pri" data-jclose="${x.id}">${c.short?'Tutup':'Jual'}</button>`}<button type="button" data-jedit="${x.id}">Ubah</button><button type="button" data-jdel="${x.id}" aria-label="Hapus">✕</button></div>
+      ${!c.closed && jr.px[x.mk+':'+x.t]?.tr ? jrTrailHTML(x,c,jr.px[x.mk+':'+x.t]) : ''}
       ${x.errs.length||x.note?`<div class="errs">${x.errs.map(e=>`<span>${JR_ERRS.find(([k])=>k===e)[1]}</span>`).join('')}${x.note?`<span style="background:var(--sunk);color:var(--ink2);font-weight:600">${esc(x.note)}</span>`:''}</div>`:''}
     </div>`;
   }).join('');
 }
 async function jrRefreshPx(){
   const open=jr.items.filter(x=>!x.outP), uniq=[...new Map(open.map(x=>[x.mk+':'+x.t,x])).values()].filter(x=>!jr.px[x.mk+':'+x.t] || Date.now()-jr.px[x.mk+':'+x.t].at>60e3);
-  let i=0; async function w(){ while(i<uniq.length){ const x=uniq[i++]; try{ const d=await wlFetchOne({mk:x.mk,t:x.t}); if(d && d.price) jr.px[x.mk+':'+x.t]={price:d.price,at:Date.now()}; }catch{} } }
+  let i=0; async function w(){ while(i<uniq.length){ const x=uniq[i++]; try{ const d=await wlFetchOne({mk:x.mk,t:x.t}); if(d && d.price) jr.px[x.mk+':'+x.t]={price:d.price,at:Date.now(),tr:d.tr||null}; }catch{} } }
   if(!uniq.length) return; await Promise.all([w(),w(),w()]); jrRender();
+}
+/* Level acuan trailing stop (informasi): MA20, MA50, dan titik terendah/tertinggi 10 hari */
+function jrTrailHTML(x,c,P){
+  const t=P.tr, px=P.price, m=MARKETS[x.mk], f=v=>fmt(v,priceDec(v,m));
+  const L= c.short ? [['MA20',t.ma20],['MA50',t.ma50],['Tertinggi 10 hari',t.hi10]] : [['MA20',t.ma20],['MA50',t.ma50],['Terendah 10 hari',t.lo10]];
+  const items=L.filter(([,v])=>v>0).map(([n,v])=>{ const beyond= c.short ? px>=v : px<=v, gap=(px/v-1)*100;
+    return `<span${beyond?' class="hit"':''} title="${beyond?'Harga sudah melewati level ini':'Jarak harga ke level ini'}">${n} <b>${f(v)}</b> (${gap>=0?'+':'−'}${fmt(Math.abs(gap),1)}%)</span>`; });
+  if(!items.length) return '';
+  return `<div class="trl"><span class="lb">Acuan trailing stop</span>${items.join('')}${x.stop?`<span>Stop Anda <b>${f(x.stop)}</b></span>`:''}</div>`;
 }
 const jrCapS=x=>{ const cur=x.capCur==='USD'?'USD':CCY[x.mk]; return cur==='USD'?`$${fmt(x.cap,2)}`:`${CCY_SYM[cur]||cur} ${fmt(x.cap,x.cap<1000?2:0)}`; };
 const jrF={ side:'L', by:'qty' };
@@ -3823,6 +3897,7 @@ function jrInit(){
   $('#jChkDef').addEventListener('click',()=>{ $('#jChkTa').value=JR_RULES_DEF.join('\n'); });
   $('#jChkOk').addEventListener('click',()=>{ const keep=[...$('#jChkL').querySelectorAll('input:checked')].map(i=>i.value); jrRulesSet($('#jChkTa').value.split('\n')); $('#jChkEd').hidden=true; $('#jChkL').hidden=false; jrChkRender(keep.filter(t=>jrRules.includes(t))); jrRender(); });
   $('#jrNew').addEventListener('click',()=>jrOpenForm(null));
+  $('#jrWeek').addEventListener('click',jrWeekOpen);
   $('#jrCancel').addEventListener('click',()=>{ $('#jrForm').hidden=true; jr.edit=null; });
   $('#jrForm').addEventListener('submit',e=>{
     e.preventDefault();

@@ -339,6 +339,23 @@
   .cx-note{flex:1 1 320px;margin:0;font-size:12.5px;line-height:1.55;color:var(--ink2)}
   .cx-note b{color:var(--down)}
   .fund-bar[hidden],.fx-scan[hidden]{display:none}
+  .sec-sk[hidden]{display:none}
+  .sk-t{width:100%;border-collapse:collapse;font-size:13.5px}
+  .sk-t th{text-align:left;font-size:11.5px;font-weight:800;color:var(--ink3);padding:8px 8px;border-bottom:1px solid var(--rule);white-space:nowrap}
+  .sk-t td{padding:10px 8px;border-bottom:1px solid var(--rule);vertical-align:middle}
+  .sk-t th.r,.sk-t td.r{text-align:right;font-family:'Space Grotesk',sans-serif;font-weight:700;white-space:nowrap}
+  .sk-t .rk{font:800 13px 'Space Grotesk',sans-serif;color:var(--ink3);width:28px}
+  .sk-t .nm b{display:block;font-weight:800}.sk-t .nm small{color:var(--ink3);font-size:12px}
+  .sk-t .rs{display:inline-flex;align-items:center;gap:8px}
+  .sk-t .rs i{display:inline-block;width:64px;height:6px;border-radius:99px;background:var(--sunk);overflow:hidden;position:relative}
+  .sk-t .rs i u{position:absolute;inset:0 auto 0 0;border-radius:99px;background:var(--acc2,#84AA00)}
+  .sk-t .up{color:var(--up)}.sk-t .down{color:var(--down)}
+  .sk-t .few{font-size:11px;font-weight:700;color:var(--warn);margin-left:4px}
+  .sk-ch{display:flex;flex-wrap:wrap;gap:4px}
+  .sk-ch a{font:700 11.5px 'Plus Jakarta Sans',sans-serif;padding:2px 7px;border-radius:999px;border:1px solid var(--rule2);color:var(--ink);text-decoration:none}
+  .sk-ch a:hover{border-color:var(--ink3)}
+  .sk-wait{color:var(--ink3);font-size:13.5px;padding:10px 0}
+  @media(max-width:760px){ .sk-t .hm{display:none} .sk-t .rs i{width:40px} }
   .stg{margin-top:36px;scroll-margin-top:90px;background:var(--surface);border:1px solid var(--rule);border-radius:22px;padding:24px;box-shadow:var(--shadow)}
   .stg{--s1:#8a94a6;--s2:var(--up);--s3:#d99a1e;--s4:var(--down)}
   .stg-bar{display:flex;height:8px;border-radius:99px;overflow:hidden;gap:2px;margin:4px 0 16px;background:var(--sunk)}
@@ -578,6 +595,11 @@
             <span class="hx-t"><b>Radar asing</b><small>Aliran dana asing 5 hari</small></span>
             <svg class="hx-ar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </a>
+          <a class="hx-a" href="#sektor" id="hxSk" hidden>
+            <span class="hx-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9v9z"/><path d="M15 3.5A9 9 0 0 1 20.5 9H15z"/></svg></span>
+            <span class="hx-t"><b>Peringkat sektor</b><small>Sektor yang paling diminati</small></span>
+            <svg class="hx-ar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
           <a class="hx-a" href="#rapor">
             <span class="hx-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span>
             <span class="hx-t"><b>Rapor scanner</b><small>Uji ulang 12 bulan</small></span>
@@ -747,6 +769,26 @@
         <li><b>Tahap 1, konsolidasi:</b> kondisi selain ketiga tahap di atas, umumnya harga bergerak di sekitar rata-rata panjang yang mendatar.</li>
         <li><b>Harian</b> memakai rata-rata 50, 150, dan 200 hari, dengan kemiringan rata-rata panjang dibandingkan 21 hari bursa sebelumnya. <b>Mingguan</b> memakai rata-rata 10, 30, dan 40 minggu, dibandingkan 4 minggu sebelumnya. Kerangka mingguan lebih lambat berubah tetapi lebih tahan terhadap gejolak sesaat.</li>
         <li><b>Keterbatasan.</b> Data yang dipakai adalah 12 bulan terakhir, sehingga tahap pada aset yang baru melantai atau baru diperdagangkan dapat kurang akurat. Tahap adalah gambaran kondisi, bukan sinyal beli atau jual.</li>
+      </ul>
+    </details>
+  </section>
+
+  <section class="stg sec-sk" id="sektor" hidden>
+    <div class="rp-head">
+      <div>
+        <span class="rp-kick">Rotasi Sektor</span>
+        <h2>Peringkat sektor</h2>
+        <p>Sektor diurutkan dari rata-rata kekuatan relatif (RS) anggotanya pada pindaian terakhir. Sektor di urutan atas sedang lebih diminati pasar dibanding sektor lain. Klik kode untuk membuka analisis lengkapnya.</p>
+      </div>
+    </div>
+    <div id="skBody"></div>
+    <details class="rp-how">
+      <summary>Cara menghitung peringkat sektor</summary>
+      <ul>
+        <li><b>Sektor</b> diambil dari profil emiten di Yahoo Finance dan diterjemahkan ke bahasa Indonesia.</li>
+        <li><b>RS rata-rata</b> = rata-rata peringkat kekuatan relatif (1–99) seluruh saham sektor tersebut yang ikut dipindai.</li>
+        <li><b>Tahap 2</b> = persentase anggota sektor yang berada dalam tren naik (data harian). <b>Di atas MA50</b> = persentase anggota dengan harga penutupan di atas rata-rata 50 hari. <b>Kinerja 3 bulan</b> = rata-rata perubahan harga 63 sesi bursa.</li>
+        <li>Sektor dengan 1–2 anggota ditandai karena hasilnya mudah dipengaruhi satu saham. Peringkat ini hanya mencakup saham yang dipindai Crestboard, bukan seluruh bursa.</li>
       </ul>
     </details>
   </section>
@@ -1290,7 +1332,7 @@ async function scan(){
   let wlCodes=[]; try{ wlCodes=JSON.parse(localStorage.getItem('smcb_watch')||'[]').filter(x=>x&&x.mk===state.market&&x.t).map(x=>String(x.t).toUpperCase()); }catch{}
   state.wlSet=new Set(wlCodes); wlCodes.forEach(c=>{ if(!codes.includes(c)) codes.push(c); });
   const uw=m.unitWord||'saham';
-  state.results=[]; state.scanning=true; render();
+  state.results=[]; state.scanning=true; render(); try{ skRender(); }catch{}
   if(state.market==='ID') fxLoad();
   $('#scanBtn').disabled=true; banner(null); regime(null);
   let done=0, failed=0, apiDown=false;
@@ -1321,6 +1363,7 @@ async function scan(){
   if(id!==state.scanId) return;
   state.demo=apiDown; state.scanning=false; $('#scanBtn').disabled=false;
   if(fundState.on && !m.crypto) runFund();
+  skFetch();
   if(rapor.seen && !rapor.data[state.market]) setTimeout(()=>raporBuild(false),300);
   $('#progTxt').textContent=`Selesai: ${state.results.length} ${uw} dianalisis`+(failed?`, ${failed} tidak ditemukan`:'');
   $('#lastScan').textContent='Dipindai '+new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'})+' WIB';
@@ -1573,6 +1616,43 @@ function mktRender(){
   try{ if(!state.scanning && !state.demo && B){ const all=JSON.parse(localStorage.getItem('smcb_mkt')||'{}');
     all[state.market]={ at:Date.now(), cls, lab, idx:m.indexName, c:I?.c, d1:I?.d1, st:I?.st, dd:I?.dd, p50:B.p50, n:B.n, nh:B.nh, nl:B.nl, nNew:state.nNew||0 };
     localStorage.setItem('smcb_mkt',JSON.stringify(all)); } }catch{}
+}
+/* ===================== Peringkat sektor ===================== */
+const SK_ID={'Financial Services':'Keuangan','Basic Materials':'Bahan baku','Energy':'Energi','Consumer Defensive':'Barang konsumen primer','Consumer Cyclical':'Barang konsumen non-primer','Industrials':'Perindustrian','Healthcare':'Kesehatan','Technology':'Teknologi','Communication Services':'Komunikasi','Real Estate':'Properti','Utilities':'Utilitas'};
+const sk={ map:{}, busy:false, mk:null };
+function skLoadCache(mk){ try{ const c=JSON.parse(localStorage.getItem('smcb_sector_'+mk)||'{}'); if(c.at && Date.now()-c.at<30*864e5) return c.map||{}; }catch{} return {}; }
+async function skFetch(){
+  const m=M(), mk=state.market;
+  if(m.crypto || state.demo){ $('#sektor').hidden=true; $('#hxSk').hidden=true; return; }
+  if(sk.mk!==mk){ sk.map=skLoadCache(mk); sk.mk=mk; }
+  const need=state.results.map(r=>r.code).filter(c=>!(c in sk.map));
+  if(need.length && !sk.busy){
+    sk.busy=true; skRender();
+    const chunks=[]; for(let i=0;i<need.length;i+=12) chunks.push(need.slice(i,i+12));
+    let k=0; const w=async()=>{ while(k<chunks.length){ const c=chunks[k++];
+      try{ const r=await fetch(`/api/sector?market=${mk}&codes=${encodeURIComponent(c.join(','))}`); const j=await r.json(); (j.items||[]).forEach(x=>{ sk.map[x.code]=x.sector||''; }); }catch{} } };
+    await Promise.all([w(),w()]);
+    sk.busy=false;
+    if(sk.mk!==mk) return;
+    try{ localStorage.setItem('smcb_sector_'+mk, JSON.stringify({at:Date.now(), map:sk.map})); }catch{}
+  }
+  skRender();
+}
+function skRender(){
+  const box=$('#skBody'); if(!box) return;
+  const m=M(), uw=m.unitWord||'saham';
+  if(m.crypto){ $('#sektor').hidden=true; $('#hxSk').hidden=true; return; }
+  $('#sektor').hidden=false; $('#hxSk').hidden=false;
+  const by={}; state.results.forEach(r=>{ const sc=sk.map[r.code]; if(!sc) return; (by[sc]=by[sc]||[]).push(r); });
+  const rows=Object.entries(by).map(([sc,L])=>{ const a=f=>L.reduce((s,r)=>s+f(r),0)/L.length;
+    return { sc, L, n:L.length, rs:a(r=>r.rs||0), t2:L.filter(r=>r.stg?.d?.st===2).length/L.length*100, a50:L.filter(r=>r.br?.a50).length/L.length*100, r3:a(r=>r.ret63||0) }; }).sort((a,b)=>b.rs-a.rs);
+  if(!rows.length){ box.innerHTML=`<div class="sk-wait">${sk.busy||state.scanning?'Mengambil data sektor…':'Data sektor belum tersedia. Pindai ulang untuk mencoba lagi.'}</div>`; return; }
+  const pc=v=>`<span class="${v>=0?'up':'down'}">${v>=0?'+':'−'}${fmt(Math.abs(v),1)}%</span>`;
+  box.innerHTML=`<div style="overflow-x:auto"><table class="sk-t"><thead><tr><th>#</th><th>Sektor</th><th>RS rata-rata</th><th class="r hm">Tahap 2</th><th class="r hm">Di atas MA50</th><th class="r">Kinerja 3 bulan</th><th class="hm">${uw[0].toUpperCase()+uw.slice(1)} terkuat</th></tr></thead><tbody>${
+    rows.map((x,i)=>`<tr><td class="rk">${i+1}</td><td class="nm"><b>${esc(SK_ID[x.sc]||x.sc)}</b><small>${x.n} ${uw}${x.n<=2?'<span class="few">sampel kecil</span>':''}</small></td>
+      <td><span class="rs"><i><u style="width:${x.rs}%"></u></i><b>${fmt(x.rs,0)}</b></span></td><td class="r hm">${fmt(x.t2,0)}%</td><td class="r hm">${fmt(x.a50,0)}%</td><td class="r">${pc(x.r3)}</td>
+      <td class="hm"><div class="sk-ch">${x.L.slice().sort((a,b)=>(b.rs||0)-(a.rs||0)).slice(0,4).map(r=>`<a href="index.html#${encodeURIComponent(hashFor(r.code))}" title="${esc(r.name)} · RS ${r.rs}">${esc(r.code)}</a>`).join('')}</div></td></tr>`).join('')
+  }</tbody></table></div>${sk.busy?'<p class="sk-wait">Sebagian data sektor masih dimuat…</p>':''}`;
 }
 function newMark(list){
   const prev=list.map(r=>r.prev).filter(Boolean);
