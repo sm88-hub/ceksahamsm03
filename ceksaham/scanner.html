@@ -355,6 +355,8 @@
   .sk-ch a{font:700 11.5px 'Plus Jakarta Sans',sans-serif;padding:2px 7px;border-radius:999px;border:1px solid var(--rule2);color:var(--ink);text-decoration:none}
   .sk-ch a:hover{border-color:var(--ink3)}
   .sk-wait{color:var(--ink3);font-size:13.5px;padding:10px 0}
+  .sk-t tr.sk-sep td{padding:14px 8px 6px;font-size:12px;font-weight:800;color:var(--ink3);border-bottom:1px dashed var(--rule2)}
+  .sk-t tr.sm td{opacity:.72}
   @media(max-width:760px){ .sk-t .hm{display:none} .sk-t .rs i{width:40px} }
   .stg{margin-top:36px;scroll-margin-top:90px;background:var(--surface);border:1px solid var(--rule);border-radius:22px;padding:24px;box-shadow:var(--shadow)}
   .stg{--s1:#8a94a6;--s2:var(--up);--s3:#d99a1e;--s4:var(--down)}
@@ -521,7 +523,7 @@
   .wordmark b{font-weight:800;background:linear-gradient(100deg,#3F6212 0%,#16A34A 30%,#0D9488 55%,#65A30D 80%,#3F6212 100%);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:wmFlow 7s ease-in-out infinite}
   [data-theme="dark"] .wordmark b{background-image:linear-gradient(100deg,#D9F99D 0%,#C6F135 25%,#4ADE80 50%,#2DD4BF 70%,#C6F135 100%);color:transparent;filter:drop-shadow(0 0 14px rgba(198,241,53,.25))}
   @keyframes wmFlow{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
-  .wm-tag{display:none;font:700 9.5px 'Plus Jakarta Sans',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3);margin-left:8px;padding:3px 7px;border:1px solid var(--rule2);border-radius:6px;align-self:center}
+  .wm-tag{display:none;font:700 9.5px 'Plus Jakarta Sans',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3);margin-left:8px;padding:3px 7px;border:1px solid var(--rule2);border-radius:6px;align-self:baseline;line-height:1;position:relative;top:-1px}
   @media(min-width:1180px){.wm-tag{display:inline-block}}
   @media(prefers-reduced-motion:reduce){.wordmark b{animation:none}}
   body::before{content:'';position:fixed;inset:-20% -10% auto -10%;height:70vh;z-index:-1;pointer-events:none;opacity:.9;
@@ -788,7 +790,7 @@
         <li><b>Sektor</b> diambil dari profil emiten di Yahoo Finance dan diterjemahkan ke bahasa Indonesia.</li>
         <li><b>RS rata-rata</b> = rata-rata peringkat kekuatan relatif (1–99) seluruh saham sektor tersebut yang ikut dipindai.</li>
         <li><b>Tahap 2</b> = persentase anggota sektor yang berada dalam tren naik (data harian). <b>Di atas MA50</b> = persentase anggota dengan harga penutupan di atas rata-rata 50 hari. <b>Kinerja 3 bulan</b> = rata-rata perubahan harga 63 sesi bursa.</li>
-        <li>Sektor dengan 1–2 anggota ditandai karena hasilnya mudah dipengaruhi satu saham. Peringkat ini hanya mencakup saham yang dipindai Crestboard, bukan seluruh bursa.</li>
+        <li>Hanya sektor dengan minimal 3 anggota yang diberi peringkat. Sektor dengan 1–2 anggota ditampilkan terpisah di bawah tanpa peringkat, karena hasilnya ditentukan oleh satu-dua saham saja. Peringkat ini hanya mencakup saham yang dipindai Crestboard, bukan seluruh bursa.</li>
       </ul>
     </details>
   </section>
@@ -1648,11 +1650,13 @@ function skRender(){
     return { sc, L, n:L.length, rs:a(r=>r.rs||0), t2:L.filter(r=>r.stg?.d?.st===2).length/L.length*100, a50:L.filter(r=>r.br?.a50).length/L.length*100, r3:a(r=>r.ret63||0) }; }).sort((a,b)=>b.rs-a.rs);
   if(!rows.length){ box.innerHTML=`<div class="sk-wait">${sk.busy||state.scanning?'Mengambil data sektor…':'Data sektor belum tersedia. Pindai ulang untuk mencoba lagi.'}</div>`; return; }
   const pc=v=>`<span class="${v>=0?'up':'down'}">${v>=0?'+':'−'}${fmt(Math.abs(v),1)}%</span>`;
-  box.innerHTML=`<div style="overflow-x:auto"><table class="sk-t"><thead><tr><th>#</th><th>Sektor</th><th>RS rata-rata</th><th class="r hm">Tahap 2</th><th class="r hm">Di atas MA50</th><th class="r">Kinerja 3 bulan</th><th class="hm">${uw[0].toUpperCase()+uw.slice(1)} terkuat</th></tr></thead><tbody>${
-    rows.map((x,i)=>`<tr><td class="rk">${i+1}</td><td class="nm"><b>${esc(SK_ID[x.sc]||x.sc)}</b><small>${x.n} ${uw}${x.n<=2?'<span class="few">sampel kecil</span>':''}</small></td>
+  const main=rows.filter(x=>x.n>=3), small=rows.filter(x=>x.n<3);
+  const tr=(x,rk)=>`<tr${rk?'':' class="sm"'}><td class="rk">${rk||'–'}</td><td class="nm"><b>${esc(SK_ID[x.sc]||x.sc)}</b><small>${x.n} ${uw}</small></td>
       <td><span class="rs"><i><u style="width:${x.rs}%"></u></i><b>${fmt(x.rs,0)}</b></span></td><td class="r hm">${fmt(x.t2,0)}%</td><td class="r hm">${fmt(x.a50,0)}%</td><td class="r">${pc(x.r3)}</td>
-      <td class="hm"><div class="sk-ch">${x.L.slice().sort((a,b)=>(b.rs||0)-(a.rs||0)).slice(0,4).map(r=>`<a href="index.html#${encodeURIComponent(hashFor(r.code))}" title="${esc(r.name)} · RS ${r.rs}">${esc(r.code)}</a>`).join('')}</div></td></tr>`).join('')
-  }</tbody></table></div>${sk.busy?'<p class="sk-wait">Sebagian data sektor masih dimuat…</p>':''}`;
+      <td class="hm"><div class="sk-ch">${x.L.slice().sort((a,b)=>(b.rs||0)-(a.rs||0)).slice(0,4).map(r=>`<a href="index.html#${encodeURIComponent(hashFor(r.code))}" title="${esc(r.name)} · RS ${r.rs}">${esc(r.code)}</a>`).join('')}</div></td></tr>`;
+  const none = main.length ? '' : `<tr><td colspan="7" class="sk-wait">Belum ada sektor dengan minimal 3 ${uw} pada pindaian ini.</td></tr>`;
+  const sep = small.length ? `<tr class="sk-sep"><td colspan="7">Sampel kecil (1–2 ${uw}): tidak diperingkat karena hasilnya ditentukan oleh satu-dua ${uw} saja</td></tr>` : '';
+  box.innerHTML=`<div style="overflow-x:auto"><table class="sk-t"><thead><tr><th>#</th><th>Sektor</th><th>RS rata-rata</th><th class="r hm">Tahap 2</th><th class="r hm">Di atas MA50</th><th class="r">Kinerja 3 bulan</th><th class="hm">${uw[0].toUpperCase()+uw.slice(1)} terkuat</th></tr></thead><tbody>${none}${main.map((x,i)=>tr(x,i+1)).join('')}${sep}${small.map(x=>tr(x,0)).join('')}</tbody></table></div>${sk.busy?'<p class="sk-wait">Sebagian data sektor masih dimuat…</p>':''}`;
 }
 function newMark(list){
   const prev=list.map(r=>r.prev).filter(Boolean);
