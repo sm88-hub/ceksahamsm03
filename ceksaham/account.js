@@ -118,6 +118,9 @@
   .avp-act .no{background:var(--sunk);color:var(--ink2)}
   .avp-act .ok{background:#020F29;color:#fff}
   [data-theme="dark"] .avp-act .ok{background:#C6F135;color:#0B1220}
+  .acct-menu a.kopi-m{display:block;text-decoration:none;padding:9px 8px;border-radius:9px;font:700 13px 'Plus Jakarta Sans',sans-serif;color:#8A5A2B}
+  .acct-menu a.kopi-m:hover{background:var(--sunk)}
+  [data-theme="dark"] .acct-menu a.kopi-m{color:#E9CFAE}
   .lg-card{position:relative;width:min(720px,100%);max-height:calc(100vh - 36px);display:flex;flex-direction:column;background:var(--surface);border-radius:24px;padding:24px;box-shadow:0 30px 80px rgba(0,0,0,.4);animation:acctIn .35s cubic-bezier(.2,.8,.2,1) both}
   .lg-card h3{font:800 22px 'Space Grotesk','Plus Jakarta Sans',sans-serif;margin:0 0 4px;letter-spacing:-.01em}
   .lg-card > p{margin:0 0 14px;color:var(--ink3);font-size:13px}
@@ -296,6 +299,7 @@
         <div class="st"><i class="acct-dot ${syncing?'sync':''}"></i>${syncing?'Menyimpan perubahan…':'Watchlist dan jurnal telah tersinkron'}</div>
         <button type="button" id="acctAv" role="menuitem">Ganti avatar &amp; nama panggilan</button>
         ${isAdmin?'<button type="button" id="acctLog" role="menuitem">Log akses pengguna</button>':''}
+        <a href="https://trakteer.id/sm-crestboard" target="_blank" rel="noopener" role="menuitem" class="kopi-m">☕ Traktir kopi admin</a>
         <button type="button" class="out" id="acctOut" role="menuitem">Keluar dari akun</button>
       </div>`;
     const btn=$('acctBtn'), menu=$('acctMenu');
