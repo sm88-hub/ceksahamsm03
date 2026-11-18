@@ -12,15 +12,20 @@
 //   GMAIL_USER                smcrestboard@gmail.com
 //   GMAIL_APP_PASSWORD        App Password 16 karakter dari akun Google tersebut
 
-import { initializeApp, cert, getApps } from 'firebase-admin/app';
-import { getAuth } from 'firebase-admin/auth';
-import { getFirestore } from 'firebase-admin/firestore';
-import nodemailer from 'nodemailer';
+// Pustaka dimuat saat dibutuhkan, agar kegagalan memuat terbaca sebagai pesan, bukan error server kosong.
+let L = null;
+async function libs() {
+  if (L) return L;
+  const [app, auth, fs, nm] = await Promise.all([import('firebase-admin/app'), import('firebase-admin/auth'), import('firebase-admin/firestore'), import('nodemailer')]);
+  L = { initializeApp: app.initializeApp, cert: app.cert, getApps: app.getApps, getAuth: auth.getAuth, getFirestore: fs.getFirestore, nodemailer: nm.default || nm };
+  return L;
+}
 
 const ADMIN_EMAIL = 'smcrestboard@gmail.com';
 const MAX_AUTH_AGE = 10 * 60; // detik sejak login ulang
 
-function admin() {
+async function admin() {
+  const { initializeApp, cert, getApps, getAuth, getFirestore } = await libs();
   if (!getApps().length) {
     const raw = process.env.FIREBASE_SERVICE_ACCOUNT;
     if (!raw) throw new Error('FIREBASE_SERVICE_ACCOUNT belum diatur');
@@ -77,7 +82,7 @@ export async function POST(req) {
   if (!m) return json({ error: 'Token tidak ditemukan' }, 401);
 
   let A;
-  try { A = admin(); } catch (e) { return json({ error: 'Server belum dikonfigurasi: ' + e.message }, 500); }
+  try { A = await admin(); } catch (e) { return json({ error: 'Server belum dikonfigurasi: ' + e.message }, 500); }
 
   let tok;
   try { tok = await A.auth.verifyIdToken(m[1], true); }
@@ -119,7 +124,7 @@ export async function POST(req) {
   // 3) email konfirmasi
   let sent = null, adminSent = false;
   if (email && process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD) {
-    const tx = nodemailer.createTransport({ service: 'gmail', auth: { user: process.env.GMAIL_USER, pass: process.env.GMAIL_APP_PASSWORD } });
+    const tx = (await libs()).nodemailer.createTransport({ service: 'gmail', auth: { user: process.env.GMAIL_USER, pass: process.env.GMAIL_APP_PASSWORD } });
     const mail = userMail({ email, name, when: wib(when), ref });
     try {
       const info = await tx.sendMail({
@@ -162,7 +167,13 @@ ${ok ? '' : '\nTINDAKAN: kirim ulang konfirmasi secara manual ke alamat di atas 
   return json({ ok: true, ref, emailSent: !!(sent && !sent.error && sent.accepted?.length), adminSent, done });
 }
 
-export async function GET() { return json({ error: 'Gunakan POST' }, 405); }
+// Cek kesiapan tanpa membuka rahasia: hanya menyebut apakah pustaka dan variabel lingkungan tersedia.
+export async function GET() {
+  let libsOk = false, keyOk = false, err = null;
+  try { await libs(); libsOk = true; } catch (e) { err = String(e.message || e).slice(0, 160); }
+  try { const sa = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT || ''); keyOk = !!(sa.private_key && sa.client_email && sa.project_id); } catch {}
+  return json({ ready: libsOk && keyOk && !!process.env.GMAIL_USER && !!process.env.GMAIL_APP_PASSWORD, libs: libsOk, firebaseKey: keyOk, gmailUser: !!process.env.GMAIL_USER, gmailPassword: !!process.env.GMAIL_APP_PASSWORD, err });
+}
 
 function json(o, status = 200) {
   return new Response(JSON.stringify(o), { status, headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' } });
