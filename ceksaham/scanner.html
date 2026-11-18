@@ -110,10 +110,11 @@
   .prog{margin-top:22px;height:6px;border-radius:99px;background:rgba(255,255,255,.12);overflow:hidden}
   .prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--acc),#5CEBA9);transition:width .3s}
   .prog-t{display:flex;justify-content:space-between;color:rgba(255,255,255,.6);font-size:12.5px;margin-top:8px;gap:12px;flex-wrap:wrap}
-  .sum{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:20px}
+  .sum{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:20px}
+  @media(max-width:1000px){.sum{grid-template-columns:repeat(3,1fr)}}
   @media(max-width:720px){.sum{grid-template-columns:repeat(2,1fr)}}
   .sum .s-acc b{color:#7DD3FC}
-  @media(max-width:620px){.sum{grid-template-columns:1fr}}
+  @media(max-width:620px){.sum{grid-template-columns:repeat(2,1fr)}}
   .sum button{all:unset;cursor:pointer;border-radius:14px;padding:13px 15px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);transition:transform .2s,background .2s}
   .sum button:hover{transform:translateY(-2px);background:rgba(255,255,255,.11)}
   .sum button.on{border-color:var(--acc);background:rgba(198,241,53,.12)}
@@ -206,6 +207,32 @@
   .regime{display:none;align-items:flex-start;gap:10px;background:var(--surface);border:1px solid var(--rule);border-radius:14px;padding:11px 14px;margin-bottom:12px;font-size:14px;color:var(--ink2);line-height:1.5}
   .regime.show{display:flex}.regime i{width:9px;height:9px;border-radius:50%;flex:none;margin-top:6px}
   .regime.ok i{background:var(--up)}.regime.mid i{background:var(--warn)}.regime.bad i{background:var(--down)}.regime b{color:var(--ink)}
+  /* Kondisi pasar */
+  .mkt{display:none;background:var(--surface);border:1px solid var(--rule);border-radius:18px;padding:16px 18px 6px;margin-bottom:14px}
+  .mkt.show{display:block}
+  .mkt-h{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+  .mkt-h h3{margin:0;font:800 16px 'Space Grotesk','Plus Jakarta Sans',sans-serif;letter-spacing:-.01em}
+  .mkt-h h3 small{font:600 12.5px 'Plus Jakarta Sans',sans-serif;color:var(--ink3);margin-left:6px}
+  .mkt-pill{display:inline-flex;align-items:center;gap:7px;padding:5px 12px;border-radius:999px;font-weight:800;font-size:13px;background:var(--sunk)}
+  .mkt-pill i{width:8px;height:8px;border-radius:50%;background:currentColor}
+  .mkt-pill.ok{background:var(--up-soft);color:var(--up)}.mkt-pill.mid{background:var(--warn-soft);color:var(--warn)}.mkt-pill.bad{background:var(--down-soft);color:var(--down)}
+  .mkt-lead{margin:8px 0 12px;color:var(--ink2);font-size:14px;line-height:1.55}
+  .mkt-g{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+  .mkt-g>div{border:1px solid var(--rule);border-radius:12px;padding:9px 11px;min-width:0}
+  .mkt-g label{display:block;font-size:11.5px;font-weight:700;color:var(--ink3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .mkt-g b{display:block;font:800 18px/1.25 'Space Grotesk','Plus Jakarta Sans',sans-serif;margin-top:2px}
+  .mkt-g small{display:block;font-size:11.5px;color:var(--ink3);margin-top:1px;line-height:1.35}
+  .mkt-g .up{color:var(--up)}.mkt-g .down{color:var(--down)}.mkt-g .mid{color:var(--warn)}
+  .mkt-bar{height:5px;border-radius:99px;background:var(--sunk);margin-top:6px;overflow:hidden}.mkt-bar i{display:block;height:100%;border-radius:99px;background:var(--up)}
+  .mkt details{margin:12px 0 8px;padding:10px 14px;border-radius:12px}
+  .mkt details summary{font-size:13px}
+  .mkt .howto{font-size:13px}
+  @media(max-width:900px){ .mkt-g{grid-template-columns:repeat(3,minmax(0,1fr))} }
+  @media(max-width:560px){ .mkt{padding:14px 14px 4px} .mkt-g{grid-template-columns:repeat(2,minmax(0,1fr))} .mkt-g b{font-size:16px} }
+  /* Baru masuk daftar */
+  .tag.new{background:rgba(198,241,53,.22);color:#4D6B00;border-color:rgba(132,170,0,.5);font-weight:800}
+  [data-theme="dark"] .tag.new{color:#C6F135;background:rgba(198,241,53,.12)}
+  .sum .s-new b{color:#C6F135}
   /* Chatbot AI */
   .ai-fab{position:fixed;right:22px;bottom:84px;z-index:40;display:inline-flex;align-items:center;gap:10px;padding:11px 18px 11px 12px;border:0;border-radius:999px;background:#0D1526;color:#fff;font-weight:800;font-size:14px;cursor:pointer;
     box-shadow:0 14px 34px -12px rgba(13,21,38,.6);transition:transform .2s,opacity .2s}
@@ -567,6 +594,7 @@
       <button class="s-ready" data-f="ready" type="button"><b id="nReady">0</b><span>Siap breakout</span></button>
       <button class="s-watch" data-f="watch" type="button"><b id="nWatch">0</b><span>Layak dipantau</span></button>
       <button class="s-acc" data-f="acc" type="button"><b id="nAcc">0</b><span>Minat beli menguat</span></button>
+      <button class="s-new" data-f="new" type="button" title="Saham yang baru masuk daftar Siap breakout, Breakout terkonfirmasi, atau Minat beli menguat dibanding sesi bursa sebelumnya"><b id="nNew">0</b><span>Baru masuk hari ini</span></button>
     </div>
   </section>
 
@@ -576,6 +604,7 @@
     <p class="cx-note">Pasar kripto beroperasi 24 jam; satu candle harian ditutup pada pukul 00.00 UTC (07.00 WIB). Data spot bersumber dari Yahoo Finance, data futures dari Hyperliquid. <span id="cxLev" hidden><b>Futures memakai leverage:</b> kerugian dapat menghabiskan seluruh margin melalui likuidasi, sehingga ukuran posisi perlu diperhitungkan dengan cermat.</span></p>
   </div>
   <div id="regime" class="regime" role="status"></div>
+  <section id="mkt" class="mkt" aria-live="polite"></section>
   <div id="banner" class="banner" role="status"></div>
 
   <div class="tools">
@@ -1038,7 +1067,9 @@ function analyse(code, data){
   if(value<m.minValue){ s-=10; tags.push(['minus','Kurang likuid']); }
 
   const acc=accOf(done, vc);
-  return { acc, code, name:data.meta.longName||data.meta.shortName||(m.names&&m.names[code])||code,
+  const lo52=Math.min(...done.slice(-250).map(b=>b.l)), ma200x=closes.length>=200?sma(closes,200):null;
+  const br={ a50: ref.c>ma50, a200: ma200x==null?null:ref.c>ma200x, nh: done.length>=200 && ref.h>=hi52, nl: done.length>=200 && ref.l<=lo52, up: ref.c>prev.c };
+  return { br, acc, code, name:data.meta.longName||data.meta.shortName||(m.names&&m.names[code])||code,
            price:live?live.c:ref.c, chg: live ? (live.c-ref.c)/ref.c*100 : (ref.c-prev.c)/prev.c*100, live:!!live,
            symbol:data.symbol, base:s, baseTags:tags, ret63, rsw, dist, isBreak, volOK, green, up1, buy, refKey:ref.key };
 }
@@ -1079,10 +1110,16 @@ function accOf(done, vc){
 /* Kondisi pasar: indeks bursa di atas atau di bawah rata-rata 50 hari */
 function indexInfo(data){
   const {done}=pickBars(data.bars); if(done.length<60) return null;
-  const closes=done.map(b=>b.c), c=closes[closes.length-1], ma50=sma(closes,50), ma200=closes.length>=200?sma(closes,200):null;
-  return { c, ma50, ma200, above50:c>ma50, above200: ma200==null ? null : c>ma200 };
+  const closes=done.map(b=>b.c), n=closes.length, c=closes[n-1], ma50=sma(closes,50), ma200=n>=200?sma(closes,200):null;
+  const ch=k=> n>k ? (c/closes[n-1-k]-1)*100 : null;
+  // hari distribusi: indeks turun ≥0,2% dengan volume lebih besar dari hari sebelumnya (25 sesi terakhir)
+  const w=done.slice(-26); let dd=null;
+  if(w.filter(b=>b.v>0).length>=20){ dd=0; for(let i=1;i<w.length;i++) if(w[i].c<w[i-1].c*0.998 && w[i].v>w[i-1].v) dd++; }
+  let st=null; try{ st=stageOf(done,STG_P.d); }catch{}
+  return { c, ma50, ma200, above50:c>ma50, above200: ma200==null ? null : c>ma200, d1:ch(1), w1:ch(5), m1:ch(21), dd, st:st&&st.st, key:done[n-1].key };
 }
 function regime(info){
+  state.idx=info; mktRender(); return;
   const el=$('#regime'), m=M();
   if(!info){ el.className='regime'; el.innerHTML=''; return; }
   const strong=info.above50 && info.above200!==false;
@@ -1273,7 +1310,9 @@ async function scan(){
       if(apiDown && !data) data=demoStock(code);
       if(id!==state.scanId) return;
       const r=data && analyse(code,data);
-      if(r){ try{ r.stg=stagePair(data.bars); }catch{} state.results.push(r); }
+      if(r){ try{ r.stg=stagePair(data.bars); }catch{}
+        try{ const {done}=pickBars(data.bars); if(done.length>121) r.prev=analyse(code,{...data, bars:done.slice(0,-1)}); }catch{}
+        state.results.push(r); }
       done++; tick();
       if(done%4===0) render();
     }
@@ -1472,7 +1511,7 @@ async function askAI(provider){
 
 /* ===================== Tampilan ===================== */
 const ORDER={go:0,ready:1,watch:2,weak:3};
-const LABEL={go:'Breakout terkonfirmasi',ready:'Siap breakout',watch:'Layak dipantau',weak:'Lemah',acc:'Minat beli menguat'};
+const LABEL={go:'Breakout terkonfirmasi',ready:'Siap breakout',watch:'Layak dipantau',weak:'Lemah',acc:'Minat beli menguat',new:'Baru masuk hari ini'};
 const COLOR={go:'var(--up)',ready:'var(--acc)',watch:'var(--warn)',weak:'var(--ink3)'};
 function banner(html){ const b=$('#banner'); if(!html){ b.className='banner'; b.innerHTML=''; return; } b.className='banner show'; b.innerHTML=html; }
 function hashFor(code){ return state.market==='ID' ? code : `${state.market}-${code}`; }
@@ -1486,16 +1525,71 @@ function fundStrip(r){
   return `<div class="fstrip"><span class="fs-h ${cls}">Fundamental ${r.fund.pass}/${r.fund.total}</span>${r.fund.items.map(x=>
     `<span class="fc ${x.st}" title="${esc(x.det||'')}"><i>${FUND_ICON[x.st]}</i>${esc(FUND_SHORT[x.key]||x.key)} <b>${esc(x.st==='na'?'data kosong':x.val)}</b></span>`).join('')}</div>`;
 }
+/* ===================== Kondisi pasar =====================
+   Indeks (posisi terhadap rata-rata 50/200 hari, tahap tren, hari distribusi)
+   + luas pasar dari saham yang dipindai (di atas MA50/MA200, tertinggi/terendah 52 minggu). */
+function breadthOf(list){
+  const r=list.filter(x=>x.br); if(!r.length) return null;
+  const n=r.length, a50=r.filter(x=>x.br.a50).length, w200=r.filter(x=>x.br.a200!=null), a200=w200.filter(x=>x.br.a200).length;
+  return { n, a50, p50:a50/n*100, p200: w200.length? a200/w200.length*100 : null, nh:r.filter(x=>x.br.nh).length, nl:r.filter(x=>x.br.nl).length, adv:r.filter(x=>x.br.up).length };
+}
+function mktJudge(I,B){
+  let p=0;
+  if(I){ p+= I.above50?1:-1; if(I.above200!=null) p+= I.above200?1:-1; if(I.st===2) p+=1; else if(I.st===4) p-=1; if(I.dd!=null && I.dd>=5) p-=1; }
+  if(B){ if(B.p50>=60) p+=1; else if(B.p50<40) p-=1; if(B.nh>B.nl) p+=1; else if(B.nl>B.nh) p-=1; }
+  return p>=3 ? ['ok','Mendukung'] : p>=0 ? ['mid','Campuran'] : ['bad','Lemah'];
+}
+const STG_SHORT={1:'Konsolidasi',2:'Tren naik',3:'Puncak',4:'Penurunan'};
+function mktRender(){
+  const el=$('#mkt'); if(!el) return;
+  const m=M(), I=state.idx, B=breadthOf(state.results), uw=m.unitWord||'saham';
+  if(!I && !B){ el.className='mkt'; el.innerHTML=''; return; }
+  const [cls,lab]=mktJudge(I,B), pc=v=>v==null?'–':`${v>=0?'+':'−'}${fmt(Math.abs(v),1)}%`, ud=v=>v==null?'':v>=0?'up':'down';
+  const lead = cls==='ok' ? `${m.indexName} berada dalam tren naik dan sebagian besar ${uw} yang dipindai ikut menguat. Dalam kondisi seperti ini, breakout secara historis lebih sering berlanjut.`
+    : cls==='mid' ? `Sinyal pasar bercampur: sebagian indikator menguat, sebagian melemah. Dalam kondisi ini, ${uw} dengan kekuatan relatif tinggi cenderung lebih tahan.`
+    : `${m.indexName} dan mayoritas ${uw} yang dipindai sedang melemah. Secara historis, breakout lebih sering gagal dalam kondisi ini.`;
+  const box=(l,v,sub,c='')=>`<div><label>${l}</label><b class="${c}">${v}</b>${sub?`<small>${sub}</small>`:''}</div>`;
+  const g=[];
+  if(I){
+    g.push(box(m.indexName, fp(I.c,{...m,dec:m.crypto?2:(I.c<100?2:0)}), `<span class="${ud(I.d1)}">${pc(I.d1)}</span> sesi terakhir · <span class="${ud(I.w1)}">${pc(I.w1)}</span> 1 minggu`));
+    g.push(box(m.crypto?'Tahap tren Bitcoin':'Tahap tren indeks', I.st?`Tahap ${I.st}`:'–', I.st?STG_SHORT[I.st]+(I.above200!=null?` · ${I.above200?'di atas':'di bawah'} MA200`:''):'', I.st===2?'up':I.st===4?'down':I.st===3?'mid':''));
+  }
+  if(B){
+    g.push(box('Di atas MA50', `${fmt(B.p50,0)}%`, `${B.a50} dari ${B.n} ${uw}<div class="mkt-bar"><i style="width:${B.p50}%;background:${B.p50>=60?'var(--up)':B.p50<40?'var(--down)':'var(--warn)'}"></i></div>`, B.p50>=60?'up':B.p50<40?'down':'mid'));
+    g.push(box('Rekor 52 minggu', `${B.nh} : ${B.nl}`, `tertinggi : terendah${B.p200!=null?` · ${fmt(B.p200,0)}% di atas MA200`:''}`, B.nh>B.nl?'up':B.nl>B.nh?'down':''));
+  }
+  if(I) g.push(box('Hari distribusi', I.dd==null?'–':I.dd, I.dd==null?'volume indeks tidak tersedia':'dalam 25 sesi terakhir', I.dd==null?'':I.dd>=5?'down':I.dd>=3?'mid':'up'));
+  el.className='mkt show';
+  el.innerHTML=`<div class="mkt-h"><h3>Kondisi pasar <small>${m.name}${B?` · ${B.n} ${uw} dipindai${state.scanning?' (berjalan)':''}`:''}</small></h3><span class="mkt-pill ${cls}"><i></i>${lab}</span></div>
+    <p class="mkt-lead">${lead}</p><div class="mkt-g">${g.join('')}</div>
+    <details><summary>Cara membaca kondisi pasar</summary><ul class="howto">
+      <li><b>Indeks</b>: perubahan penutupan sesi terakhir dan 5 sesi. <b>Tahap tren indeks</b> memakai aturan yang sama dengan rekap tahap siklus (rata-rata 50, 150, dan 200 hari).</li>
+      <li><b>Di atas MA50</b>: persentase ${uw} yang dipindai dengan harga penutupan di atas rata-rata 50 hari. Di atas 60% berarti penguatan meluas; di bawah 40% berarti mayoritas melemah.</li>
+      <li><b>Rekor 52 minggu</b>: jumlah ${uw} yang mencetak harga tertinggi 52 minggu dibanding yang mencetak harga terendah 52 minggu pada sesi terakhir.</li>
+      <li><b>Hari distribusi</b>: sesi ketika indeks turun minimal 0,2% dengan volume lebih besar dari sesi sebelumnya, dihitung dalam 25 sesi terakhir. Lima atau lebih menandakan tekanan jual institusi yang tinggi (metode William O'Neil).</li>
+      <li><b>Label kondisi</b> menjumlahkan sinyal di atas: indeks di atas/di bawah MA50 dan MA200, tahap 2 atau 4, luas pasar, rasio tertinggi/terendah, dan hari distribusi. Hasilnya Mendukung, Campuran, atau Lemah.</li>
+      <li>Luas pasar dihitung dari daftar ${uw} yang dipindai Crestboard, bukan seluruh ${uw} di bursa. Informasi ini bersifat gambaran umum, bukan rekomendasi.</li>
+    </ul></details>`;
+  try{ if(!state.scanning && !state.demo && B){ const all=JSON.parse(localStorage.getItem('smcb_mkt')||'{}');
+    all[state.market]={ at:Date.now(), cls, lab, idx:m.indexName, c:I?.c, d1:I?.d1, st:I?.st, dd:I?.dd, p50:B.p50, n:B.n, nh:B.nh, nl:B.nl, nNew:state.nNew||0 };
+    localStorage.setItem('smcb_mkt',JSON.stringify(all)); } }catch{}
+}
+function newMark(list){
+  const prev=list.map(r=>r.prev).filter(Boolean);
+  if(prev.length) finalize(prev);
+  const on=x=>x&&(x.status==='go'||x.status==='ready');
+  list.forEach(r=>{ r.isNew = !!r.prev && on(r) && !on(r.prev); r.accNew = !!r.prev && !!r.acc?.pass && !r.prev.acc?.pass; r.anyNew=r.isNew||r.accNew; });
+}
 function render(){
-  finalize(state.results); stgRender();
+  finalize(state.results); newMark(state.results); stgRender();
   const fOn=fundState.on && !M().crypto, uw=M().unitWord||'saham';
   const m=M(), all=state.results.slice().sort((a,b)=>ORDER[a.status]-ORDER[b.status]||b.score-a.score);
   const n=s=>all.filter(r=>r.status===s).length;
-  $('#nGo').textContent=n('go'); $('#nReady').textContent=n('ready'); $('#nWatch').textContent=n('watch'); $('#nAcc').textContent=all.filter(r=>r.acc&&r.acc.pass).length;
+  $('#nGo').textContent=n('go'); $('#nReady').textContent=n('ready'); $('#nWatch').textContent=n('watch'); $('#nAcc').textContent=all.filter(r=>r.acc&&r.acc.pass).length; state.nNew=all.filter(r=>r.anyNew).length; $('#nNew').textContent=state.nNew; mktRender();
   if(state.filter==='acc') all.sort((a,b)=>(b.acc?.score||0)-(a.acc?.score||0));
   document.querySelectorAll('.sum button').forEach(b=>b.classList.toggle('on',b.dataset.f===state.filter));
   const q=state.q.trim().toLowerCase();
-  const rows=all.filter(r=>(state.filter==='all'||(state.filter==='acc'?r.acc&&r.acc.pass:r.status===state.filter))&&(!q||r.code.toLowerCase().includes(q)||r.name.toLowerCase().includes(q))&&(!fOn||!fundState.min||(r.fund&&r.fund.pass>=fundState.min)));
+  const rows=all.filter(r=>(state.filter==='all'||(state.filter==='acc'?r.acc&&r.acc.pass:state.filter==='new'?r.anyNew:r.status===state.filter))&&(!q||r.code.toLowerCase().includes(q)||r.name.toLowerCase().includes(q))&&(!fOn||!fundState.min||(r.fund&&r.fund.pass>=fundState.min)));
   $('#countTxt').textContent = state.filter==='all' ? `${rows.length} ${uw}, diurutkan dari setup terkuat` : `${rows.length} ${uw} dengan status "${LABEL[state.filter]}", klik kartunya lagi untuk melihat semua`;
   const list=$('#list');
   if(!rows.length){
@@ -1511,7 +1605,7 @@ function render(){
       <div class="score"><b>${r.score}</b><div class="meter"><i style="width:${r.score}%;background:${COLOR[r.status]}"></i></div></div>
       <div class="stat"><span class="badge b-${r.status}"><i></i>${LABEL[r.status]}</span><div class="trig">Buy trigger <b>${fp(r.buy,m)}</b></div></div>
       <div class="act"><a href="index.html#${encodeURIComponent(hashFor(r.code))}">Lihat detail</a></div>
-      <div class="tags">${state.wlSet&&state.wlSet.has(r.code)?'<span class="tag wl">★ Watchlist</span>':''}${r.acc&&r.acc.pass&&state.filter!=='acc'?`<span class="tag acc">Minat beli ${r.acc.score}</span>`:''}${r.tags.map(([c,t])=>`<span class="tag ${c}">${esc(t)}</span>`).join('')}${fxTag(r)}</div>
+      <div class="tags">${r.isNew?`<span class="tag new" title="Belum berstatus ini pada sesi sebelumnya">BARU · ${LABEL[r.status]}</span>`:''}${r.accNew?'<span class="tag new" title="Belum lolos Minat beli pada sesi sebelumnya">BARU · Minat beli</span>':''}${state.wlSet&&state.wlSet.has(r.code)?'<span class="tag wl">★ Watchlist</span>':''}${r.acc&&r.acc.pass&&state.filter!=='acc'?`<span class="tag acc">Minat beli ${r.acc.score}</span>`:''}${r.tags.map(([c,t])=>`<span class="tag ${c}">${esc(t)}</span>`).join('')}${fxTag(r)}</div>
       ${state.filter==='acc'&&r.acc ? accStrip(r) : ''}
       ${fOn ? fundStrip(r) : ''}
     </article>`).join('');
