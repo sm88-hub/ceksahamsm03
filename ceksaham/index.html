@@ -144,21 +144,38 @@
   .perp-info .pos b{color:#5CEBA9}.perp-info .neg b{color:#FF8D76}
   .mkt-strip{display:flex;align-items:center;gap:4px 8px;flex-wrap:wrap;margin:-8px 0 14px;padding:9px 14px;border:1px solid var(--rule);border-radius:12px;background:var(--surface);color:var(--ink2);font-size:13px;text-decoration:none;line-height:1.45;transition:border-color .2s}
   .mkt-strip[hidden]{display:none}
-  .fx{margin:-6px 0 14px;padding:10px 12px 11px;border:1px solid var(--rule);border-radius:14px;background:var(--surface)}
-  .fx[hidden]{display:none}
-  .fx-h{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:12px;color:var(--ink3);margin:0 2px 8px}
-  .fx-h b{font:800 13px 'Space Grotesk','Plus Jakarta Sans',sans-serif;color:var(--ink);letter-spacing:-.01em}
-  .fx-i{margin-left:auto;width:20px;height:20px;border-radius:50%;border:1px solid var(--rule2);background:transparent;color:var(--ink3);font:800 11px Georgia,serif;font-style:italic;cursor:pointer;flex:none}
-  .fx-i[aria-expanded="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
-  .fx-row{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;scroll-snap-type:x proximity;padding-bottom:1px}
-  .fx-row::-webkit-scrollbar{display:none}
-  .fx-c{flex:none;scroll-snap-align:start;display:flex;flex-direction:column;gap:1px;min-width:92px;padding:7px 10px;border-radius:11px;background:var(--sunk);animation:fxIn .4s ease both;animation-delay:calc(var(--i,0)*40ms)}
-  .fx-c em{font-style:normal;font-size:11px;font-weight:800;color:var(--ink3);letter-spacing:.02em}
-  .fx-c b{font:800 14px 'Space Grotesk',sans-serif;color:var(--ink);font-variant-numeric:tabular-nums}
-  .fx-c.sk{min-height:44px;background:linear-gradient(90deg,var(--sunk) 25%,var(--rule) 50%,var(--sunk) 75%);background-size:200% 100%;animation:sh 1.3s linear infinite}
-  .fx-note{margin:8px 2px 0;font-size:11.5px;line-height:1.5;color:var(--ink3)}
-  .fx-note[hidden]{display:none}
-  @media(max-width:640px){ .fx-h span{order:3;flex-basis:100%} }
+  .kr{position:relative;display:grid;grid-template-columns:auto minmax(0,1fr);align-items:stretch;margin:-6px 0 14px;border-radius:20px;overflow:hidden;color:#fff;isolation:isolate;
+    background:radial-gradient(420px 180px at 0% 0%,rgba(198,241,53,.20),transparent 65%),radial-gradient(360px 160px at 100% 120%,rgba(97,165,255,.18),transparent 70%),linear-gradient(155deg,var(--hero2),var(--hero));box-shadow:0 16px 40px -26px rgba(13,21,38,.9)}
+  .kr[hidden]{display:none}
+  .kr::before{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(115deg,transparent 40%,rgba(255,255,255,.06) 50%,transparent 60%);background-size:260% 100%;animation:fxSheen 7s ease-in-out infinite}
+  @keyframes fxSheen{0%{background-position:120% 0}60%,100%{background-position:-120% 0}}
+  .kr-lead{position:relative;padding:14px 18px 12px;min-width:230px;border-right:1px solid rgba(255,255,255,.10)}
+  .kr-lab{display:flex;align-items:center;gap:7px;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.62)}
+  .kr-lab i{width:7px;height:7px;border-radius:50%;background:#C6F135;box-shadow:0 0 0 0 rgba(198,241,53,.6);animation:fxPulse 2s infinite}
+  @keyframes fxPulse{0%{box-shadow:0 0 0 0 rgba(198,241,53,.55)}70%{box-shadow:0 0 0 8px rgba(198,241,53,0)}100%{box-shadow:0 0 0 0 rgba(198,241,53,0)}}
+  .kr-pair{margin-top:6px;font:700 12.5px 'Plus Jakarta Sans',sans-serif;color:rgba(255,255,255,.75)}
+  .kr-big{display:flex;align-items:baseline;gap:4px;font:800 30px/1.05 'Space Grotesk',sans-serif;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+  .kr-big small{font-size:15px;font-weight:700;color:rgba(255,255,255,.6)}
+  .kr-lead svg{display:block;width:100%;height:34px;margin-top:6px}
+  .kr-when{font-size:11px;color:rgba(255,255,255,.5);margin-top:2px}
+  .kr-tape{position:relative;overflow:hidden;display:flex;align-items:center;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+  .kr-track{display:flex;gap:10px;padding:14px 10px;width:max-content;animation:fxRun var(--dur,48s) linear infinite}
+  .kr-tape:hover .kr-track,.kr-tape.hold .kr-track{animation-play-state:paused}
+  @keyframes fxRun{to{transform:translateX(-50%)}}
+  .kr-c{flex:none;display:grid;grid-template-columns:auto auto;grid-template-rows:auto auto;column-gap:10px;align-items:center;padding:9px 12px 9px 10px;border-radius:14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);backdrop-filter:blur(6px);transition:background .25s,transform .25s}
+  .kr-c:hover{background:rgba(255,255,255,.11);transform:translateY(-2px)}
+  .kr-b{grid-row:1/3;width:34px;height:34px;border-radius:11px;display:grid;place-items:center;font:800 13px 'Space Grotesk',sans-serif;color:#0D1526;background:var(--c,#C6F135)}
+  .kr-c em{font-style:normal;font-size:11px;font-weight:700;color:rgba(255,255,255,.6);white-space:nowrap}
+  .kr-c em b{color:#fff;font-weight:800;margin-right:4px}
+  .kr-c strong{display:flex;align-items:center;gap:8px;font:800 15px 'Space Grotesk',sans-serif;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .kr-c strong svg{width:44px;height:16px}
+  .kr-sk{display:block;width:150px;height:52px;border-radius:14px;background:linear-gradient(90deg,rgba(255,255,255,.05) 25%,rgba(255,255,255,.12) 50%,rgba(255,255,255,.05) 75%);background-size:200% 100%;animation:sh 1.3s linear infinite}
+  .kr-i{position:absolute;top:10px;right:10px;z-index:2;width:22px;height:22px;border-radius:50%;border:1px solid rgba(255,255,255,.28);background:rgba(13,21,38,.55);color:#fff;font:800 11px Georgia,serif;font-style:italic;cursor:pointer}
+  .kr-i[aria-expanded="true"]{background:#C6F135;color:#0D1526;border-color:#C6F135}
+  .kr-note{grid-column:1/-1;margin:0;padding:10px 18px 13px;font-size:11.5px;line-height:1.55;color:rgba(255,255,255,.7);border-top:1px solid rgba(255,255,255,.1)}
+  .kr-note[hidden]{display:none}
+  @media(max-width:640px){ .kr{grid-template-columns:1fr} .kr-lead{border-right:0;border-bottom:1px solid rgba(255,255,255,.10);min-width:0;display:grid;grid-template-columns:1fr 120px;column-gap:12px;align-items:end} .kr-lead svg{grid-column:2;grid-row:1/4;height:44px;align-self:center;margin:0} .kr-big{font-size:26px} .kr-track{padding:11px 10px} }
+  @media(prefers-reduced-motion:reduce){ .kr::before,.kr-lab i{animation:none} .kr-track{animation:none} .kr-tape{overflow-x:auto} }
   @keyframes fxIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
   .mkt-strip:hover{border-color:var(--rule2)}
   .mkt-strip>i{width:8px;height:8px;border-radius:50%;background:var(--ink3);flex:none}
@@ -1218,10 +1235,11 @@
   <div class="cx-toggle" id="cxToggle" role="tablist" aria-label="Jenis pasar kripto" hidden><span>Pasar kripto</span><button type="button" data-mk="CS">Spot</button><button type="button" data-mk="CF">Futures <small>perpetual</small></button></div>
   <div class="chips" id="chips"></div>
   <a class="mkt-strip" id="mktStrip" href="scanner.html" hidden></a>
-  <section class="fx" id="fx" aria-label="Kurs rupiah" hidden>
-    <div class="fx-h"><b>Kurs rupiah</b><span id="fxSub">Rupiah per 1 unit mata uang asing</span><button type="button" class="fx-i" id="fxInfo" aria-expanded="false" aria-controls="fxNote" title="Tentang data kurs">i</button></div>
-    <div class="fx-row" id="fxRow"></div>
-    <p class="fx-note" id="fxNote" hidden>Kurs referensi pasar internasional dari Yahoo Finance, dapat tertunda atau berbeda dari kurs di tempat lain, dan bukan kurs jual-beli bank, money changer, atau kurs resmi Bank Indonesia (JISDOR). Ditampilkan hanya sebagai informasi, bukan ajakan untuk bertransaksi valuta asing.</p>
+  <section class="kr" id="fx" aria-label="Kurs rupiah" hidden>
+    <div class="kr-lead" id="fxLead"></div>
+    <div class="kr-tape" id="fxTape"><div class="kr-track" id="fxRow"></div></div>
+    <button type="button" class="kr-i" id="fxInfo" aria-expanded="false" aria-controls="fxNote" title="Tentang data kurs">i</button>
+    <p class="kr-note" id="fxNote" hidden>Kurs referensi pasar internasional dari Yahoo Finance, dapat tertunda atau berbeda dari kurs di tempat lain, dan bukan kurs jual-beli bank, money changer, atau kurs resmi Bank Indonesia (JISDOR). Grafik kecil menunjukkan pergerakan hari ini. Ditampilkan hanya sebagai informasi, bukan ajakan untuk bertransaksi valuta asing.</p>
   </section>
   <div id="banner" class="banner" role="status"></div>
 
@@ -2073,31 +2091,48 @@ async function mktStrip(){
 }
 document.addEventListener('visibilitychange',()=>{ if(!document.hidden){ mktStrip(); fxLoad(); } });
 /* Kurs rupiah: murni informasi, tanpa tautan atau ajakan transaksi */
-const FX=[['USD','IDR=X'],['EUR','EURIDR=X'],['SGD','SGDIDR=X'],['JPY','JPYIDR=X'],['CNY','CNYIDR=X'],['AUD','AUDIDR=X'],['GBP','GBPIDR=X'],['MYR','MYRIDR=X'],['HKD','HKDIDR=X'],['KRW','KRWIDR=X']];
+const FX=[['USD','IDR=X','Dolar AS','$','#C6F135'],['EUR','EURIDR=X','Euro','€','#8FB8FF'],['SGD','SGDIDR=X','Dolar Singapura','S$','#FFB27A'],['JPY','JPYIDR=X','Yen Jepang','¥','#FF8FA3'],['CNY','CNYIDR=X','Yuan Tiongkok','¥','#FFD166'],
+  ['AUD','AUDIDR=X','Dolar Australia','A$','#7EE0C3'],['GBP','GBPIDR=X','Pound Inggris','£','#C9A8FF'],['MYR','MYRIDR=X','Ringgit Malaysia','RM','#9BE15D'],['HKD','HKDIDR=X','Dolar Hong Kong','HK$','#7FD1FF'],['KRW','KRWIDR=X','Won Korea','₩','#FFC6E0']];
 const fxS={at:0,busy:false,data:null};
-async function fxLoad(){
+const fxMed=a=>a.map((v,i)=>{ const w=[a[i-1],v,a[i+1]].filter(x=>x!=null).sort((p,q)=>p-q); return w[Math.floor(w.length/2)]; });
+async function fxLoad(force){
   const box=$('#fx'), row=$('#fxRow'); if(!box||!row||fxS.busy) return;
-  if(fxS.data && Date.now()-fxS.at<10*60e3) return fxPaint();
-  try{ const c=JSON.parse(sessionStorage.getItem('smcb_fx')||'null'); if(c && Date.now()-c.at<10*60e3){ fxS.data=c.data; fxS.at=c.at; return fxPaint(); } }catch{}
-  fxS.busy=true; if(!fxS.data){ box.hidden=false; row.innerHTML='<span class="fx-c sk"></span>'.repeat(6); }
-  const out=await Promise.all(FX.map(async([k,sym])=>{ try{
+  if(!force && fxS.data && Date.now()-fxS.at<5*60e3) return;
+  if(!force) try{ const c=JSON.parse(sessionStorage.getItem('smcb_fx2')||'null'); if(c && Date.now()-c.at<5*60e3){ fxS.data=c.data; fxS.at=c.at; return fxPaint(); } }catch{}
+  fxS.busy=true; if(!fxS.data){ box.hidden=false; $('#fxLead').innerHTML='<span class="kr-sk" style="width:100%"></span>'; row.innerHTML='<span class="kr-sk"></span>'.repeat(5); }
+  const out=await Promise.all(FX.map(async([k,sym,nm,sg,col])=>{ try{
     const j=await fetch(`${CONFIG.apiPath}?symbol=${encodeURIComponent(sym)}&range=1d&interval=15m`).then(r=>r.json());
-    const r=j.chart?.result?.[0]; const cl=(r?.indicators?.quote?.[0]?.close||[]).filter(v=>v>0); const px=r?.meta?.regularMarketPrice||cl[cl.length-1];
+    const r=j.chart?.result?.[0]; const cl=fxMed((r?.indicators?.quote?.[0]?.close||[]).filter(v=>v>0)); const px=r?.meta?.regularMarketPrice||cl[cl.length-1];
     if(!(px>0)) return null;
-    return {k,px,t:r?.meta?.regularMarketTime||null};
+    return {k,nm,sg,col,px,s:cl.slice(-40),t:r?.meta?.regularMarketTime||null};
   }catch{ return null; } }));
   fxS.busy=false;
   const data=out.filter(Boolean); if(!data.length){ if(!fxS.data) box.hidden=true; return; }
-  fxS.data=data; fxS.at=Date.now(); try{ sessionStorage.setItem('smcb_fx',JSON.stringify({at:fxS.at,data})); }catch{}
-  fxPaint();
+  const prev=fxS.data; fxS.data=data; fxS.at=Date.now(); try{ sessionStorage.setItem('smcb_fx2',JSON.stringify({at:fxS.at,data})); }catch{}
+  fxPaint(prev);
 }
-function fxPaint(){
-  const box=$('#fx'), row=$('#fxRow'); if(!fxS.data) return;
+function fxSpark(a,w,h,area){
+  if(!a||a.length<2) return '';
+  const mn=Math.min(...a), mx=Math.max(...a), rg=mx-mn||1, pts=a.map((v,i)=>[(i/(a.length-1))*w, h-2-((v-mn)/rg)*(h-4)]);
+  const d=pts.map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1)).join(' '), id='fg'+Math.random().toString(36).slice(2,7);
+  return `<svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" aria-hidden="true">${area?`<defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C6F135" stop-opacity=".35"/><stop offset="1" stop-color="#C6F135" stop-opacity="0"/></linearGradient></defs><path d="${d} L${w} ${h} L0 ${h} Z" fill="url(#${id})"/>`:''}<path d="${d}" fill="none" stroke="${area?'#C6F135':'rgba(255,255,255,.75)'}" stroke-width="${area?2:1.5}" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/><circle cx="${pts[pts.length-1][0]}" cy="${pts[pts.length-1][1]}" r="${area?3:2}" fill="${area?'#C6F135':'#fff'}"/></svg>`;
+}
+const fxNum=x=>fmt(x.px,x.px>=1000?0:x.px>=10?2:3);
+function fxPaint(prev){
+  const box=$('#fx'), row=$('#fxRow'), lead=$('#fxLead'); if(!fxS.data) return;
   box.hidden=false;
-  row.innerHTML=fxS.data.map((x,i)=>{ const d=x.px>=1000?0:x.px>=10?2:3;
-    return `<span class="fx-c" style="--i:${i}"><em>${x.k}</em><b>Rp${fmt(x.px,d)}</b></span>`; }).join('');
-  const t=Math.max(...fxS.data.map(x=>x.t||0)); $('#fxSub').textContent='Rupiah per 1 unit mata uang asing'+(t?` · pembaruan terakhir ${new Date(t*1000).toLocaleString('id-ID',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}`:'');
+  const u=fxS.data.find(x=>x.k==='USD')||fxS.data[0], rest=fxS.data.filter(x=>x!==u);
+  const t=Math.max(...fxS.data.map(x=>x.t||0));
+  lead.innerHTML=`<div class="kr-lab"><i></i>Kurs rupiah</div><div class="kr-pair">${u.nm} · ${u.k}/IDR</div><div class="kr-big"><small>Rp</small><span data-fxc="${u.px}">${fxNum(u)}</span></div>${fxSpark(u.s,200,34,true)}<div class="kr-when">${t?'Diperbarui '+new Date(t*1000).toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'})+' · per 1 '+u.k:''}</div>`;
+  const chip=x=>`<span class="kr-c"><span class="kr-b" style="--c:${x.col}">${x.sg}</span><em><b>${x.k}</b>${x.nm}</em><strong>Rp${fxNum(x)}${fxSpark(x.s,44,16,false)}</strong></span>`;
+  const one=rest.map(chip).join('');
+  row.innerHTML=one+one; row.style.setProperty('--dur',(rest.length*5.5)+'s');
+  const el=lead.querySelector('[data-fxc]'), from=prev?.find(x=>x.k===u.k)?.px;
+  if(el && !matchMedia('(prefers-reduced-motion: reduce)').matches){ const to=u.px, a=from&&from!==to?from:to*0.985, t0=performance.now();
+    const st=n=>{ const p=Math.min(1,(n-t0)/800), e=1-Math.pow(1-p,3); el.textContent=fmt(a+(to-a)*e,to>=1000?0:2); if(p<1&&el.isConnected) requestAnimationFrame(st); }; requestAnimationFrame(st); }
 }
+document.addEventListener('click',e=>{ const tp=e.target.closest('#fxTape'); if(tp) tp.classList.toggle('hold'); });
+setInterval(()=>{ if(!document.hidden && fxS.data) fxLoad(true); },5*60e3);
 document.addEventListener('click',e=>{ const b=e.target.closest('#fxInfo'); if(!b) return; const n=$('#fxNote'), open=n.hidden; n.hidden=!open; b.setAttribute('aria-expanded',open); });
 function paintMarketUI(){
   setTimeout(mktStrip,0); setTimeout(fxLoad,600);
