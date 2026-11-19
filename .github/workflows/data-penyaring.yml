@@ -1,0 +1,43 @@
+# SM-Crestboard: data Penyaring "Seluruh bursa"
+# Berjalan otomatis setiap hari pukul 05.17 WIB (setelah bursa Amerika tutup).
+# Bisa juga dijalankan manual: tab Actions → Data penyaring seluruh bursa → Run workflow.
+name: Data penyaring seluruh bursa
+
+on:
+  schedule:
+    - cron: '17 22 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: data-penyaring
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 340
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Ambil data seluruh bursa
+        run: |
+          if [ -d ceksaham/scripts ]; then D=ceksaham; else D=.; fi
+          node "$D/scripts/build-fund.mjs"
+        env:
+          BUDGET_MIN: '300'
+          CONC: '4'
+      - name: Simpan ke repositori
+        run: |
+          git config user.name "crestboard-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if [ -d ceksaham/scripts ]; then D=ceksaham; else D=.; fi
+          git add "$D/public/data"
+          if git diff --cached --quiet; then echo "Tidak ada perubahan"; exit 0; fi
+          git commit -m "Data penyaring seluruh bursa $(date -u +%F)"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
