@@ -417,6 +417,66 @@
   .fs-t .up{color:var(--up)}.fs-t .down{color:var(--down)}.fs-t .na{color:var(--ink3)}
   .fs-t td.hit{background:rgba(198,241,53,.10)}
   .fs-empty{padding:22px;text-align:center;color:var(--ink3);font-size:13.5px;border:1px dashed var(--rule2);border-radius:14px}
+  /* Penyaring: mode, hero, daftar dinamis */
+  .fs-mode{position:relative;display:grid;grid-template-columns:1fr 1fr;padding:5px;border-radius:20px;background:var(--sunk);border:1px solid var(--rule);margin:0 0 14px;max-width:600px}
+  .fs-mode button{position:relative;z-index:1;border:0;background:transparent;padding:11px 14px;border-radius:15px;cursor:pointer;text-align:left;font-family:inherit;color:var(--ink2);display:flex;flex-direction:column;gap:2px;transition:color .35s}
+  .fs-mode button b{display:flex;align-items:center;gap:8px;font:800 14.5px 'Space Grotesk','Plus Jakarta Sans',sans-serif;letter-spacing:-.01em}
+  .fs-mode button b svg{width:17px;height:17px;flex:none;transition:transform .5s cubic-bezier(.2,.9,.25,1.3)}
+  .fs-mode button small{font-size:11.5px;color:var(--ink3);transition:color .35s;padding-left:25px}
+  .fs-mode button.on{color:#fff}.fs-mode button.on small{color:rgba(255,255,255,.72)}
+  .fs-mode button.on b svg{color:#C6F135;transform:rotate(-12deg) scale(1.08)}
+  .fs-mode-ind{position:absolute;z-index:0;top:5px;bottom:5px;left:5px;width:calc(50% - 5px);border-radius:15px;background:linear-gradient(135deg,var(--hero2),var(--hero));box-shadow:0 12px 26px -16px rgba(13,21,38,.9),inset 0 0 0 1.5px rgba(198,241,53,.5);transition:transform .5s cubic-bezier(.2,.9,.25,1.12)}
+  .fs-mode[data-m="all"] .fs-mode-ind{transform:translateX(100%)}
+  .fs-mode .lv{width:7px;height:7px;border-radius:50%;background:#C6F135;margin-left:2px;animation:vzp 1.8s infinite}
+  .fs-hero{position:relative;overflow:hidden;display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:16px 18px;margin:14px 0 12px;border-radius:22px;border:1px solid var(--rule);background:radial-gradient(120% 160% at 0% 0%,rgba(198,241,53,.17),transparent 55%),var(--surface)}
+  .fs-ring{position:relative;width:64px;height:64px;flex:none}
+  .fs-ring svg{width:64px;height:64px;transform:rotate(-90deg)}
+  .fs-ring circle{fill:none;stroke-width:6}
+  .fs-ring .tr{stroke:var(--sunk)}
+  .fs-ring .br{stroke:#84AA00;stroke-linecap:round;stroke-dasharray:169.65;transition:stroke-dashoffset 1s cubic-bezier(.2,.8,.2,1)}
+  [data-theme="dark"] .fs-ring .br{stroke:#C6F135}
+  .fs-ring span{position:absolute;inset:0;display:grid;place-items:center;font:800 12.5px 'Space Grotesk',sans-serif;color:var(--ink)}
+  .fs-hero.busy .fs-ring svg{animation:fsSpin 1.4s linear infinite}
+  @keyframes fsSpin{to{transform:rotate(270deg)}}
+  .fs-hero-t{flex:1;min-width:210px}
+  .fs-hero .big{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
+  .fs-hero .big b{font:800 36px/1 'Space Grotesk',sans-serif;letter-spacing:-.03em;color:var(--ink);font-variant-numeric:tabular-nums}
+  .fs-hero .big span{font-weight:800;font-size:14.5px;color:var(--ink2)}.fs-hero.busy .big span:only-child{font:800 20px 'Space Grotesk',sans-serif;color:var(--ink)}
+  .fs-hero .sub{font-size:12.5px;color:var(--ink3);margin-top:6px;line-height:1.55}
+  .fs-prog{position:absolute;left:0;right:0;bottom:0;height:3px;background:linear-gradient(90deg,transparent,#C6F135,transparent) no-repeat;background-size:40% 100%;animation:fsProg 1.1s linear infinite}
+  @keyframes fsProg{from{background-position:-60% 0}to{background-position:160% 0}}
+  .fs-more{border:0;border-radius:999px;padding:10px 18px;font:800 12.5px 'Plus Jakarta Sans',sans-serif;background:var(--ink);color:var(--surface);cursor:pointer;transition:transform .2s,box-shadow .2s}
+  .fs-more:hover{transform:translateY(-2px);box-shadow:0 10px 20px -12px rgba(0,0,0,.6)}
+  .fs-foot{display:flex;justify-content:center;margin-top:12px}
+  .fs-skel{display:flex;flex-direction:column;gap:8px}
+  .fs-skel i{display:block;height:44px;border-radius:12px;background:linear-gradient(90deg,var(--sunk) 25%,var(--rule) 50%,var(--sunk) 75%);background-size:200% 100%;animation:sh 1.3s linear infinite}
+  .fs-skel i:nth-child(2n){opacity:.7}
+  .fs-new{animation:fsIn .5s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i,0)*35ms)}
+  @keyframes fsIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .fs-chips button{animation:fsPop .3s cubic-bezier(.2,.9,.3,1.3) both}
+  .fs-chips button.off{text-decoration:line-through;opacity:.55}
+  @keyframes fsPop{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:none}}
+  .fs-pre{overflow:hidden}
+  .fs-pre.on::after{content:'';position:absolute;inset:0;border-radius:inherit;background:linear-gradient(110deg,transparent 35%,rgba(255,255,255,.13) 50%,transparent 65%);background-size:250% 100%;animation:ackSheen 3.4s ease-in-out infinite;pointer-events:none}
+  .fs-pre:active{transform:scale(.98)}
+  .fs-row{transition:background .3s}
+  .fs-row.na{opacity:.45}
+  .fs-tw{overflow-x:auto;border:1px solid var(--rule);border-radius:18px;background:var(--surface)}
+  .fs-tw .fs-t tr:last-child td{border-bottom:0}
+  .fs-t thead th{position:sticky;top:0;background:var(--surface)}
+  .fs-t tbody tr{transition:background .2s}.fs-t tbody tr:hover{background:var(--sunk)}
+  .fs-cards{display:none;grid-template-columns:1fr;gap:10px}
+  .fs-card{display:block;padding:13px 14px;border:1px solid var(--rule);border-radius:18px;background:var(--surface);text-decoration:none;color:var(--ink);transition:transform .2s,border-color .2s}
+  .fs-card:active{transform:scale(.985);border-color:var(--rule2)}
+  .fs-card .h{display:flex;align-items:baseline;gap:8px}.fs-card .h b{font:800 16px 'Space Grotesk',sans-serif}.fs-card .h .p{margin-left:auto;font-weight:800;font-variant-numeric:tabular-nums}
+  .fs-card .h span:not(.p){font-size:12.5px;font-weight:800}
+  .fs-card>small{display:block;color:var(--ink3);font-size:12px;margin:2px 0 10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .fs-card .kv{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+  .fs-card .kv span{display:flex;flex-direction:column;gap:2px;padding:7px 8px;border-radius:11px;background:var(--sunk);font-size:12.5px;font-weight:800;font-variant-numeric:tabular-nums;min-width:0}
+  .fs-card .kv em{font-style:normal;font-size:10.5px;font-weight:700;color:var(--ink3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .fs-card .kv span.hit{background:rgba(198,241,53,.2)}
+  .fs-card .up{color:var(--up)}.fs-card .down{color:var(--down)}.fs-card .na{color:var(--ink3)}
+  @media(max-width:640px){ .fs-tw{display:none} .fs-cards{display:grid} .fs-hero{padding:14px} .fs-hero .big b{font-size:30px} .fs-ring,.fs-ring svg{width:54px;height:54px} .fs-mode{max-width:none} .fs-mode button{padding:10px 11px} .fs-mode button b{font-size:13.5px;gap:6px} .fs-mode button small{padding-left:0;font-size:11px} .fs-hero{gap:12px} .fs-hero-t{min-width:0} .fs-hero .fs-more{width:100%} .fs-card .kv{grid-template-columns:repeat(2,minmax(0,1fr))} .fs-act .fs-chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding-bottom:2px;flex-basis:100%} .fs-act .fs-chips button,.fs-act .fs-chips .lbl{white-space:nowrap;flex:none} }
   .sk-t{width:100%;border-collapse:collapse;font-size:13.5px}
   .sk-t th{text-align:left;font-size:11.5px;font-weight:800;color:var(--ink3);padding:8px 8px;border-bottom:1px solid var(--rule);white-space:nowrap}
   .sk-t td{padding:10px 8px;border-bottom:1px solid var(--rule);vertical-align:middle}
@@ -913,8 +973,13 @@
       <div>
         <span class="rp-kick">Penyaring</span>
         <h2>Penyaring fundamental</h2>
-        <p>Pilih preset atau atur syarat sendiri. Saham yang dipindai disaring berdasarkan laporan keuangan terbaru, estimasi analis, dan kondisi teknikalnya. Gunakan preset untuk memulai lebih cepat.</p>
+        <p>Saring saham berdasarkan laporan keuangan terbaru, estimasi analis, dan kondisi teknikalnya. Pilih cakupannya: hasil pindaian Crestboard, atau seluruh saham di bursa.</p>
       </div>
+    </div>
+    <div class="fs-mode" id="fsMode" role="tablist" aria-label="Cakupan penyaringan" data-m="scan">
+      <i class="fs-mode-ind" aria-hidden="true"></i>
+      <button type="button" data-fsm="scan" role="tab"><b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>Saham pindaian</b><small id="fsmScan">Hasil pindaian Crestboard</small></button>
+      <button type="button" data-fsm="all" role="tab"><b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>Seluruh bursa<i class="lv"></i></b><small id="fsmAll">Ribuan saham di bursa</small></button>
     </div>
     <div class="fs-pres" id="fsPres" role="radiogroup" aria-label="Preset penyaring"></div>
     <div class="fs-act"><div class="fs-chips" id="fsChips"></div><button type="button" class="fs-reset" id="fsReset">Atur ulang</button></div>
@@ -931,8 +996,9 @@
         <li><b>Penjualan kuartal</b>: kuartal terakhir dibanding kuartal yang sama tahun lalu. <b>Penjualan tahun buku terakhir</b>: tahun buku terakhir dibanding tahun sebelumnya.</li>
         <li><b>ROE</b> = laba bersih ÷ ekuitas. <b>ROIC</b> = laba operasi setelah pajak ÷ modal yang diinvestasikan (utang + ekuitas). <b>Margin operasi meningkat</b> = margin tahun buku terakhir lebih tinggi dari tahun sebelumnya.</li>
         <li><b>Current ratio</b> = aset lancar ÷ liabilitas lancar. <b>Quick ratio</b> sama, tanpa persediaan. <b>Debt/Equity</b> = total utang ÷ ekuitas. Bank tidak memiliki angka current dan quick ratio, sehingga tidak lolos bila filter tersebut dipakai.</li>
-        <li><b>Forward P/E</b> = harga ÷ estimasi laba 12 bulan ke depan. <b>PEG</b> = PER ÷ pertumbuhan laba; di bawah 1 berarti valuasi relatif murah terhadap pertumbuhannya.</li>
-        <li>Seperti di Finviz, saham yang datanya tidak tersedia untuk filter yang dipilih dianggap tidak lolos. Sumber data: Yahoo Finance, dapat tertunda dan berbeda dengan laporan resmi emiten. Hanya saham yang dipindai Crestboard yang ikut disaring. Hasil penyaringan bukan rekomendasi.</li>
+        <li><b>Forward P/E</b> = harga ÷ estimasi laba 12 bulan ke depan. <b>PEG</b> = PER ÷ pertumbuhan laba; di bawah 1 berarti PER tergolong rendah dibanding laju pertumbuhan labanya.</li>
+        <li><b>Mode Seluruh bursa</b> menyaring semua saham yang tercatat di bursa terpilih, dengan semua filter sekaligus. Datanya disiapkan otomatis setiap pagi: harga, MA50, MA200, PER, dan kapitalisasi dari penutupan hari bursa terakhir; data laporan keuangan dan estimasi analis diperbarui paling lama setiap 7 hari karena laporan hanya berubah per kuartal. Tanggal data tertera di kotak hasil. Filter Tahap siklus hanya tersedia untuk saham pindaian.</li>
+        <li>Seperti di Finviz, saham yang datanya tidak tersedia untuk filter yang dipilih dianggap tidak lolos. Sumber data: Yahoo Finance, dapat tertunda dan berbeda dengan laporan resmi emiten. Hasil penyaringan bukan rekomendasi.</li>
       </ul>
     </details>
   </section>
@@ -1825,17 +1891,26 @@ function skRender(){
   const sep = small.length ? `<tr class="sk-sep"><td colspan="7">Sampel kecil (1–2 ${uw}): tidak diperingkat karena hasilnya ditentukan oleh satu-dua ${uw} saja</td></tr>` : '';
   box.innerHTML=`<div style="overflow-x:auto"><table class="sk-t"><thead><tr><th>#</th><th>Sektor</th><th>RS rata-rata</th><th class="r hm">Tahap 2</th><th class="r hm">Di atas MA50</th><th class="r">Kinerja 3 bulan</th><th class="hm">${uw[0].toUpperCase()+uw.slice(1)} terkuat</th></tr></thead><tbody>${none}${main.map((x,i)=>tr(x,i+1)).join('')}${sep}${small.map(x=>tr(x,0)).join('')}</tbody></table></div>${sk.busy?'<p class="sk-wait">Sebagian data sektor masih dimuat…</p>':''}`;
 }
-/* ===================== Penyaring fundamental (ala Finviz) ===================== */
+/* ===================== Penyaring fundamental ===================== */
 const FS_TYPE=k=>(FS.find(f=>f[0]===k)||[])[3];
+const FS_MCAP={
+  ID:[[1e12,'> Rp1 triliun'],[1e13,'> Rp10 triliun'],[5e13,'> Rp50 triliun'],[1e14,'> Rp100 triliun'],[-1e12,'< Rp1 triliun']],
+  US:[[3e8,'> $300 juta'],[2e9,'> $2 miliar'],[1e10,'> $10 miliar'],[2e11,'> $200 miliar'],[-3e8,'< $300 juta']],
+  JP:[[5e10,'> ¥50 miliar'],[3e11,'> ¥300 miliar'],[1e12,'> ¥1 triliun'],[1e13,'> ¥10 triliun'],[-5e10,'< ¥50 miliar']],
+  KR:[[1e11,'> ₩100 miliar'],[1e12,'> ₩1 triliun'],[1e13,'> ₩10 triliun'],[5e13,'> ₩50 triliun'],[-1e11,'< ₩100 miliar']],
+  HK:[[1e9,'> HK$1 miliar'],[1e10,'> HK$10 miliar'],[1e11,'> HK$100 miliar'],[5e11,'> HK$500 miliar'],[-1e9,'< HK$1 miliar']],
+};
+const fsOpt=t=> t==='mcap' ? [['any','Semua'],...(FS_MCAP[state.market]||[]).map(([n,l])=>[(n<0?'u:':'o:')+Math.abs(n).toFixed(0),l])] : FS_OPT[t];
 const FS_SHORT=(v,t)=>{ const pc=t==='pct'||t==='opm';
+  if(t==='mcap'&&v!=='any') return (fsOpt('mcap').find(o=>o[0]===v)||[])[1]||'Kapitalisasi';
   if(v==='any') return 'Semua'; if(v==='pos') return pc?'> 0%':'> 0'; if(v==='neg') return pc?'< 0%':'< 0'; if(v==='up') return 'Positif & naik';
   if(v==='above') return 'Di atas'; if(v==='below') return 'Di bawah'; if(v.startsWith('s:')) return 'Tahap '+v.slice(2);
   const n=+v.slice(2); return (v[0]==='o'?'> ':'< ')+(pc?fmt(n*100,0)+'%':String(n).replace('.',',')); };
-const FS_HINT={eps0y:'Estimasi analis untuk tahun berjalan',eps1y:'Estimasi analis untuk tahun depan',eps3y:'Rata-rata per tahun, 3 tahun terakhir',salesQ:'Kuartal terakhir vs kuartal sama tahun lalu',salesY:'Tahun buku terakhir vs sebelumnya',rev3y:'Rata-rata per tahun, 3 tahun terakhir',
+const FS_HINT={eps0y:'Estimasi analis untuk tahun berjalan',eps1y:'Estimasi analis untuk tahun depan',epsY:'Laba per saham terakhir vs periode sebelumnya',eps3y:'Rata-rata per tahun, 3 tahun terakhir',salesQ:'Kuartal terakhir vs kuartal sama tahun lalu',salesY:'Tahun buku terakhir vs sebelumnya',rev3y:'Rata-rata per tahun, 3 tahun terakhir',
   roe:'Laba bersih ÷ ekuitas',roic:'Laba operasi setelah pajak ÷ modal',opm:'Laba operasi ÷ penjualan',npm:'Laba bersih ÷ penjualan',cr:'Aset lancar ÷ liabilitas lancar',qr:'Seperti current ratio, tanpa persediaan',de:'Total utang ÷ ekuitas',
-  pe:'Harga ÷ laba per saham',fpe:'Harga ÷ estimasi laba ke depan',peg:'PER ÷ pertumbuhan laba',ma200:'Rata-rata 200 hari, tren jangka panjang',ma50:'Rata-rata 50 hari, tren menengah',stage:'Fase siklus harga dari data harian'};
+  mcap:'Harga × jumlah saham beredar',pe:'Harga ÷ laba per saham',fpe:'Harga ÷ estimasi laba ke depan',peg:'PER ÷ pertumbuhan laba',ma200:'Rata-rata 200 hari, tren jangka panjang',ma50:'Rata-rata 50 hari, tren menengah',stage:'Fase siklus harga dari data harian'};
 const FS_GROUP=[['gr','Pertumbuhan','<path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/>'],['pr','Profitabilitas','<circle cx="12" cy="12" r="9"/><path d="M12 7v10M9 9.5c0-1.4 1.3-2.2 3-2.2s3 .8 3 2.1c0 3.1-6 1.6-6 4.6 0 1.3 1.3 2.2 3 2.2s3-.9 3-2.3"/>'],['kh','Kesehatan keuangan','<path d="M12 21s-7-4.4-9.3-9A5.2 5.2 0 0 1 12 6.2 5.2 5.2 0 0 1 21.3 12C19 16.6 12 21 12 21z"/>'],['va','Valuasi','<path d="M3 6h18M6 6l-3 7a3 3 0 0 0 6 0zM18 6l-3 7a3 3 0 0 0 6 0zM12 3v18M8 21h8"/>'],['te','Teknikal','<path d="M4 19V5M4 19h16"/><path d="M7 15l3-4 3 2 5-6"/>']];
-const FS_PRE_UI=[['finviz','Tren naik + tumbuh','Harga di atas MA200, EPS dan penjualan tumbuh 3 tahun','<path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/>'],['growth','Growth berkualitas','Tumbuh cepat, untung, dan neraca sehat','<path d="M12 2l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17l-5.9 3 1.2-6.5L2.5 8.9 9.1 8z"/>'],['value','Murah dan sehat','Valuasi rendah dengan ROE baik dan utang terkendali','<path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.5"/>'],['','Atur sendiri','Pilih syarat Anda sendiri dari daftar di bawah','<path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/>']];
+const FS_PRE_UI=[['finviz','Tren naik + tumbuh','Harga di atas MA200, EPS dan penjualan tumbuh 3 tahun','<path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/>'],['growth','Growth berkualitas','Tumbuh cepat, untung, dan neraca sehat','<path d="M12 2l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17l-5.9 3 1.2-6.5L2.5 8.9 9.1 8z"/>'],['value','Value berkualitas','PER dan PEG rendah, ROE baik, utang terkendali','<path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.5"/>'],['','Atur sendiri','Pilih syarat Anda sendiri dari daftar di bawah','<path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/>']];
 const FS_OPT={
   pct:[['any','Semua'],['pos','Positif (>0%)'],['o:0.05','Di atas 5%'],['o:0.1','Di atas 10%'],['o:0.15','Di atas 15%'],['o:0.2','Di atas 20%'],['o:0.25','Di atas 25%'],['o:0.3','Di atas 30%'],['o:0.5','Di atas 50%'],['neg','Negatif (<0%)']],
   opm:[['any','Semua'],['pos','Positif (>0%)'],['up','Positif dan meningkat'],['o:0.1','Di atas 10%'],['o:0.2','Di atas 20%'],['o:0.3','Di atas 30%'],['neg','Negatif (<0%)']],
@@ -1848,90 +1923,200 @@ const FS_OPT={
   stage:[['any','Semua'],['s:2','Tahap 2 · Tren naik'],['s:1','Tahap 1 · Konsolidasi'],['s:3','Tahap 3 · Puncak'],['s:4','Tahap 4 · Penurunan']],
 };
 const FS=[
-  ['eps0y','gr','EPS tahun ini (estimasi)','pct'],['eps1y','gr','EPS tahun depan (estimasi)','pct'],['eps3y','gr','EPS 3 tahun (per tahun)','pct'],
+  ['eps0y','gr','EPS tahun ini (estimasi)','pct'],['eps1y','gr','EPS tahun depan (estimasi)','pct'],['epsY','gr','EPS 1 tahun terakhir','pct'],['eps3y','gr','EPS 3 tahun (per tahun)','pct'],
   ['salesQ','gr','Penjualan kuartal (YoY)','pct'],['salesY','gr','Penjualan tahun buku terakhir','pct'],['rev3y','gr','Penjualan 3 tahun (per tahun)','pct'],
   ['roe','pr','ROE','pct'],['roic','pr','ROIC','pct'],['opm','pr','Margin operasi','opm'],['npm','pr','Margin laba bersih','pct'],
   ['cr','kh','Current ratio','cr'],['qr','kh','Quick ratio','qr'],['de','kh','Debt/Equity','de'],
-  ['pe','va','PER','pe'],['fpe','va','Forward P/E','pe'],['peg','va','PEG','peg'],
+  ['mcap','va','Kapitalisasi pasar','mcap'],['pe','va','PER','pe'],['fpe','va','Forward P/E','pe'],['peg','va','PEG','peg'],
   ['ma200','te','Harga vs MA200','ma'],['ma50','te','Harga vs MA50','ma'],['stage','te','Tahap siklus (harian)','stage'],
 ];
+const FS_COL={eps0y:'EPS thn ini',eps1y:'EPS thn depan',epsY:'EPS 1 th',eps3y:'EPS 3 th',salesQ:'Penj. kuartal',salesY:'Penj. 1 th',rev3y:'Penj. 3 th',roe:'ROE',roic:'ROIC',opm:'Margin op.',npm:'Margin bersih',cr:'Current',qr:'Quick',de:'D/E',mcap:'Kap. pasar',pe:'PER',fpe:'Fwd P/E',peg:'PEG'};
 const FS_PRESET={
   finviz:{ma200:'above',eps3y:'o:0.15',rev3y:'o:0.2'},
   growth:{eps0y:'o:0.2',eps3y:'o:0.15',salesQ:'o:0.2',salesY:'o:0.15',eps1y:'o:0.15',roe:'o:0.15',roic:'o:0.1',opm:'up',npm:'pos',cr:'o:1.2',qr:'o:1',de:'u:1'},
   value:{pe:'u:15',peg:'u:1.5',roe:'o:0.15',de:'u:1',npm:'pos'},
 };
-const fs={ sel:{}, tab:'gr', map:{}, mk:null, busy:false, sort:'rs', asc:false, seen:false };
+const fs={ sel:{}, tab:'gr', map:{}, mk:null, busy:false, sort:'rs', asc:false, seen:false, mode:'scan',
+  mx:{mk:'',busy:false,err:'',at:'',rows:[],lim:50,tok:0,all:{}}, anim:{n:0,off:null,seen:null} };
 try{ fs.sel=JSON.parse(localStorage.getItem('smcb_fs')||'{}')||{}; }catch{}
-function fsSave(){ try{ localStorage.setItem('smcb_fs',JSON.stringify(fs.sel)); }catch{} }
+try{ if(localStorage.getItem('smcb_fs_mode')==='all'){ fs.mode='all'; fs.sort='mcap'; } }catch{}
+function fsSave(){ try{ localStorage.setItem('smcb_fs',JSON.stringify(fs.sel)); localStorage.setItem('smcb_fs_mode',fs.mode); }catch{} }
+const fsAct=()=>FS.filter(f=>fs.sel[f[0]]&&fs.sel[f[0]]!=='any');
+function fsSet(el,html){ if(el && el._h!==html){ el.innerHTML=html; el._h=html; } }
 function fsVal(r,k){
   if(k==='ma200') return r.br?.a200; if(k==='ma50') return r.br?.a50; if(k==='stage') return r.stg?.d?.st ?? null;
   const d=fs.map[r.code]; if(!d) return null; return d[k];
 }
-function fsTest(r,k,c){
-  const v=fsVal(r,k); if(v==null) return null;
+function fsMV(r,k){
+  if(k==='ma200') return r.ma200>0&&r.price!=null ? r.price>r.ma200 : null;
+  if(k==='ma50') return r.ma50>0&&r.price!=null ? r.price>r.ma50 : null;
+  if(k==='sector') return r.sector||'';
+  return r[k] ?? null;
+}
+function fsCheck(v,k,c,d){
+  if(v==null) return null;
   if(c==='above') return v===true; if(c==='below') return v===false;
   if(c.startsWith('s:')) return v===+c.slice(2);
   if(c==='pos') return v>0; if(c==='neg') return v<0;
-  if(c==='up') return fs.map[r.code]?.opmUp===true && v>0;
-  if(c.startsWith('o:')) return v>+c.slice(2); if(c.startsWith('u:')) return k==='pe'||k==='fpe'||k==='peg' ? v>0 && v<+c.slice(2) : v<+c.slice(2);
+  if(c==='up') return d?.opmUp===true && v>0;
+  if(c.startsWith('o:')) return v>+c.slice(2);
+  if(c.startsWith('u:')) return k==='pe'||k==='fpe'||k==='peg' ? v>0 && v<+c.slice(2) : v<+c.slice(2);
   return true;
 }
-function fsCacheLoad(mk){ try{ const c=JSON.parse(localStorage.getItem('smcb_fs_'+mk)||'{}'); if(c.at && Date.now()-c.at<12*3600e3) return c.map||{}; }catch{} return {}; }
+const fsTest=(r,k,c)=>fsCheck(fsVal(r,k),k,c,fs.map[r.code]);
+function fsCacheLoad(mk){ try{ const c=JSON.parse(localStorage.getItem('smcb_fs2_'+mk)||'{}'); if(c.at && Date.now()-c.at<12*3600e3) return c.map||{}; }catch{} return {}; }
+function fsEnsureMk(){ if(fs.mk!==state.market){ fs.map=fsCacheLoad(state.market); fs.mk=state.market; } }
+async function fsFund(codes,mk,step){
+  const need=[...new Set(codes)].filter(c=>!(c in fs.map)); if(!need.length) return;
+  const ch=[]; for(let i=0;i<need.length;i+=10) ch.push(need.slice(i,i+10));
+  let k=0; const w=async()=>{ while(k<ch.length){ const c=ch[k++]; try{ const r=await fetch(`/api/sector?mode=fund&v=2&market=${mk}&codes=${encodeURIComponent(c.join(','))}`); const j=await r.json(); if(fs.mk!==mk) return; (j.items||[]).forEach(x=>{ fs.map[x.code]=x.missing||x.error?null:x; }); c.forEach(x=>{ if(!(x in fs.map)) fs.map[x]=null; }); }catch{} if(fs.mk===mk&&step) step(); } };
+  await Promise.all([w(),w()]);
+  if(fs.mk===mk) try{ localStorage.setItem('smcb_fs2_'+mk,JSON.stringify({at:Date.now(),map:fs.map})); }catch{}
+}
 async function fsFetch(){
   const m=M(), mk=state.market; if(m.crypto||state.demo) return;
-  if(fs.mk!==mk){ fs.map=fsCacheLoad(mk); fs.mk=mk; }
+  fsEnsureMk();
   const need=state.results.map(r=>r.code).filter(c=>!(c in fs.map));
   if(!need.length||fs.busy) return fsRender();
   fs.busy=true; fsRender();
-  const ch=[]; for(let i=0;i<need.length;i+=10) ch.push(need.slice(i,i+10));
-  let k=0; const w=async()=>{ while(k<ch.length){ const c=ch[k++]; try{ const r=await fetch(`/api/sector?mode=fund&market=${mk}&codes=${encodeURIComponent(c.join(','))}`); const j=await r.json(); (j.items||[]).forEach(x=>{ fs.map[x.code]=x.missing||x.error?null:x; }); }catch{} if(fs.mk===mk) fsRender(); } };
-  await Promise.all([w(),w()]); fs.busy=false;
-  if(fs.mk!==mk) return;
-  try{ localStorage.setItem('smcb_fs_'+mk,JSON.stringify({at:Date.now(),map:fs.map})); }catch{}
-  fsRender();
+  await fsFund(need,mk,()=>{ if(fs.mode==='scan') fsRender(); });
+  fs.busy=false; fsRender();
 }
+/* ---------- Seluruh bursa ---------- */
+async function fsMxRun(){
+  const m=M(), mk=state.market, X=fs.mx; if(m.crypto||state.demo||fs.mode!=='all') return;
+  if(X.mk===mk && (X.busy||X.rows.length)) return;
+  const tok=++X.tok; X.mk=mk; X.busy=true; X.err=''; X.lim=50; X.rows=[]; fsRender();
+  try{
+    const res=await fetch(`/public/data/fs-${mk}.json`);
+    if(res.status===404) throw new Error('belum-ada');
+    const j=await res.json(); if(tok!==X.tok) return;
+    if(!res.ok||!j.rows) throw new Error('HTTP '+res.status);
+    X.rows=j.rows.map(a=>{ const o={}; j.cols.forEach((c,i)=>{ o[c]=a[i]; }); o.opmUp=o.opmUp==null?null:!!o.opmUp; return o; })
+      .filter(o=>(o.mcap!=null||o.sector) && !(mk==='US'&&/-(P|W|U|R)[A-Z]*$/.test(o.code)));
+    X.at=j.at||''; X.all[mk]=X.rows.length;
+  }catch(e){ if(tok!==X.tok) return; X.err=String(e.message||e); }
+  X.busy=false; fsRender();
+}
+/* ---------- Tampilan ---------- */
 function fsPresetOf(){ for(const [k,v] of Object.entries(FS_PRESET)){ const a=Object.keys(v), b=Object.keys(fs.sel); if(a.length===b.length && a.every(x=>fs.sel[x]===v[x])) return k; } return ''; }
 function fsGrid(){
   const g=$('#fsGrid'); if(!g) return;
-  const pk=fsPresetOf();
-  $('#fsPres').innerHTML=FS_PRE_UI.map(([k,t,d,ic])=>{ const n=k?Object.keys(FS_PRESET[k]).length:0, on= k ? pk===k : (pk==='' && Object.keys(fs.sel).length>0);
-    return `<button type="button" class="fs-pre${on?' on':''}" data-fsp="${k}" role="radio" aria-checked="${on}"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ic}</svg></span><b>${t}</b><small>${d}</small>${n?`<span class="n">${n} filter</span>`:''}</button>`; }).join('');
+  const pk=fsPresetOf(), all=fs.mode==='all';
+  fsSet($('#fsPres'),FS_PRE_UI.map(([k,t,d,ic])=>{ const n=k?Object.keys(FS_PRESET[k]).length:0, on= k ? pk===k : (pk==='' && Object.keys(fs.sel).length>0);
+    return `<button type="button" class="fs-pre${on?' on':''}" data-fsp="${k}" role="radio" aria-checked="${on}"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ic}</svg></span><b>${t}</b><small>${d}</small>${n?`<span class="n">${n} filter</span>`:''}</button>`; }).join(''));
   const cnt=gk=>FS.filter(f=>f[1]===gk&&fs.sel[f[0]]).length;
   if(fs.tab==='all') fs.tab='gr';
-  $('#fsTabs').innerHTML=FS_GROUP.map(([k,l,ic])=>`<button type="button" data-g="${k}" class="${fs.tab===k?'on':''}" role="tab" aria-selected="${fs.tab===k}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ic}</svg>${l}${cnt(k)?`<span class="c">${cnt(k)}</span>`:''}</button>`).join('');
-  g.innerHTML=FS.filter(f=>f[1]===fs.tab).map(([k,,l,t])=>{ const cur=fs.sel[k]||'any';
-    return `<div class="fs-row${cur!=='any'?' on':''}"><div class="l"><b>${l}</b><small>${FS_HINT[k]||''}</small></div><div class="fs-ops" role="radiogroup" aria-label="${l}">${FS_OPT[t].map(([v])=>`<button type="button" data-fsk="${k}" data-fsv="${v}" class="${v===cur?'on'+(v!=='any'?' hl':''):''}" role="radio" aria-checked="${v===cur}">${FS_SHORT(v,t)}</button>`).join('')}</div></div>`; }).join('');
+  fsSet($('#fsTabs'),FS_GROUP.map(([k,l,ic])=>`<button type="button" data-g="${k}" class="${fs.tab===k?'on':''}" role="tab" aria-selected="${fs.tab===k}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ic}</svg>${l}${cnt(k)?`<span class="c">${cnt(k)}</span>`:''}</button>`).join(''));
+  fsSet(g,FS.filter(f=>f[1]===fs.tab).map(([k,,l,t])=>{ const cur=fs.sel[k]||'any', na=all&&k==='stage';
+    const hint=na?'Hanya tersedia untuk saham pindaian':(FS_HINT[k]||'');
+    return `<div class="fs-row${cur!=='any'?' on':''}${na?' na':''}"><div class="l"><b>${l}</b><small>${hint}</small></div><div class="fs-ops" role="radiogroup" aria-label="${l}">${fsOpt(t).map(([v])=>`<button type="button" data-fsk="${k}" data-fsv="${v}" class="${v===cur?'on'+(v!=='any'?' hl':''):''}" role="radio" aria-checked="${v===cur}"${na?' disabled':''}>${FS_SHORT(v,t)}</button>`).join('')}</div></div>`; }).join(''));
 }
 const fsPct=v=>v==null?'<span class="na">–</span>':`<span class="${v>=0?'up':'down'}">${v>=0?'+':'−'}${fmt(Math.abs(v*100),Math.abs(v)<0.1?1:0)}%</span>`;
 const fsNum=(v,d=1)=>v==null||!isFinite(v)?'<span class="na">–</span>':fmt(v,d);
+function fsCap(v,m){ if(v==null||!isFinite(v)) return '<span class="na">–</span>'; const c=m.cur||'', a=Math.abs(v);
+  return a>=1e12?`${c}${fmt(v/1e12,a>=1e13?0:1)} T`:a>=1e9?`${c}${fmt(v/1e9,a>=1e10?0:1)} M`:a>=1e6?`${c}${fmt(v/1e6,0)} jt`:c+fmt(v,0); }
+function fsCell(k,v,r,m){
+  if(k==='code') return `<a href="index.html#${encodeURIComponent(hashFor(r.code))}">${esc(r.code)}</a><small>${esc(r.name||'')}</small>`;
+  if(k==='sector'){ const S=typeof SK_ID!=='undefined'?SK_ID:{}; return esc(S[v]||v||'–'); }
+  if(k==='st') return esc(LABEL[r.status]||'');
+  if(k==='price') return fp(v,m);
+  if(k==='chg') return v==null?'<span class="na">–</span>':`<span class="${v>=0?'up':'down'}">${v>=0?'+':'−'}${fmt(Math.abs(v),2)}%</span>`;
+  if(k==='rs') return v??'–';
+  if(k==='mcap') return fsCap(v,m);
+  if(k==='pe'||k==='fpe') return fsNum(v,1);
+  if(k==='de'||k==='peg'||k==='cr'||k==='qr') return fsNum(v,2);
+  return fsPct(v);
+}
+function fsHero({n,base,title,sub,busy,act}){
+  const C=169.65, ratio=base>0?Math.max(0,Math.min(1,n/base)):0, off=(C*(1-ratio)).toFixed(2), prev=fs.anim.off??C.toFixed(2);
+  const pct=base>0?(ratio>0&&ratio<0.01?'<1':fmt(ratio*100,0))+'%':'–';
+  return `<div class="fs-hero${busy?' busy':''}"><div class="fs-ring" title="Persentase yang lolos"><svg viewBox="0 0 64 64" aria-hidden="true"><circle class="tr" cx="32" cy="32" r="27"/><circle class="br" cx="32" cy="32" r="27" style="stroke-dashoffset:${prev}" data-off="${off}"/></svg><span>${pct}</span></div>
+    <div class="fs-hero-t"><div class="big">${n==null?'':`<b data-cu="${n}">${fmt(fs.anim.n,0)}</b>`}<span>${title}</span></div><div class="sub">${sub}</div></div>${act||''}${busy?'<i class="fs-prog"></i>':''}</div>`;
+}
+function fsAnim(){
+  const out=$('#fsOut'), b=out.querySelector('[data-cu]'), c=out.querySelector('.fs-ring .br');
+  if(c){ const off=c.dataset.off; fs.anim.off=off; requestAnimationFrame(()=>requestAnimationFrame(()=>{ c.style.strokeDashoffset=off; })); }
+  if(!b) return; const to=+b.dataset.cu, from=fs.anim.n; fs.anim.n=to;
+  if(from===to||matchMedia('(prefers-reduced-motion: reduce)').matches){ b.textContent=fmt(to,0); return; }
+  const t0=performance.now(), D=650; const st=t=>{ const p=Math.min(1,(t-t0)/D), e=1-Math.pow(1-p,3); b.textContent=fmt(Math.round(from+(to-from)*e),0); if(p<1&&b.isConnected) requestAnimationFrame(st); }; requestAnimationFrame(st);
+}
+function fsList(list,col,get,m,lim){
+  list.sort((a,b)=>{ const x=get(a,fs.sort), y=get(b,fs.sort); if(x==null&&y==null) return 0; if(x==null) return 1; if(y==null) return -1; const c=typeof x==='string'?x.localeCompare(y):x-y; return fs.asc?c:-c; });
+  if(lim) list=list.slice(0,lim);
+  const seen=fs.anim.seen||new Set(); fs.anim.seen=new Set(list.map(r=>r.code)); let ni=0; const nw=r=>seen.has(r.code)?'':` class="fs-new" style="--i:${Math.min(ni++,16)}"`;
+  const hit=k=>fs.sel[k]&&fs.sel[k]!=='any';
+  const ck=[...new Set([...fsAct().map(f=>f[0]).filter(k=>FS_COL[k]),'roe','eps3y','pe','de'])].slice(0,4);
+  const table=`<div class="fs-tw"><table class="fs-t"><thead><tr>${col.map(([k,l])=>`<th data-fss="${k}" class="${fs.sort===k?'s'+(fs.asc?' asc':''):''}">${l}</th>`).join('')}</tr></thead><tbody>${list.map(r=>`<tr${nw(r)}>${col.map(([k])=>`<td${hit(k)?' class="hit"':''}>${fsCell(k,get(r,k),r,m)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+  ni=0; const cards=`<div class="fs-cards">${list.map(r=>`<a${nw(r).replace('class="fs-new"','class="fs-card fs-new"')||' class="fs-card"'} href="index.html#${encodeURIComponent(hashFor(r.code))}"><div class="h"><b>${esc(r.code)}</b>${fsCell('chg',get(r,'chg'),r,m)}<span class="p">${fp(get(r,'price'),m)}</span></div><small>${esc(r.name||'')}</small><div class="kv">${ck.map(k=>`<span${hit(k)?' class="hit"':''}><em>${FS_COL[k]}</em>${fsCell(k,get(r,k),r,m)}</span>`).join('')}</div></a>`).join('')}</div>`;
+  return `<div class="fs-list">${table}${cards}</div>`;
+}
+function fsModeUI(){
+  const el=$('#fsMode'); if(!el) return; el.dataset.m=fs.mode;
+  el.querySelectorAll('[data-fsm]').forEach(b=>{ const on=b.dataset.fsm===fs.mode; b.classList.toggle('on',on); b.setAttribute('aria-selected',on); });
+  const uw=M().unitWord||'saham', all=fs.mx.all[state.market];
+  $('#fsmScan').textContent=state.results.length?`${state.results.length} ${uw} hasil pindaian`:'Hasil pindaian Crestboard';
+  $('#fsmAll').textContent=all?`${fmt(all,0)} ${uw} terdaftar`:'Ribuan saham di bursa';
+}
 function fsRender(){
   const out=$('#fsOut'); if(!out) return;
   const m=M(); if(m.crypto){ $('#saring').hidden=true; $('#hxFs').hidden=true; return; }
   $('#saring').hidden=false; $('#hxFs').hidden=false;
-  fsGrid();
-  const act=FS.filter(f=>fs.sel[f[0]]&&fs.sel[f[0]]!=='any');
-  $('#fsChips').innerHTML= act.length ? `<span class="lbl">Filter aktif</span>`+act.map(([k,,l])=>`<button type="button" data-fsx="${k}" title="Hapus filter ini">${l} ${FS_SHORT(fs.sel[k],FS_TYPE(k))}</button>`).join('') : `<span class="lbl">Belum ada filter. Pilih preset atau atur sendiri.</span>`;
+  fsEnsureMk();
+  if(fs.sel.mcap && !fsOpt('mcap').some(o=>o[0]===fs.sel.mcap)) delete fs.sel.mcap;
+  fsModeUI(); fsGrid();
+  const act=fsAct(), uw=m.unitWord||'saham';
+  fsSet($('#fsChips'), act.length ? `<span class="lbl">Filter aktif</span>`+act.map(([k,,l])=>`<button type="button" data-fsx="${k}" title="Hapus filter ini"${fs.mode==='all'&&k==='stage'?' class="off"':''}>${l} ${FS_SHORT(fs.sel[k],FS_TYPE(k))}</button>`).join('') : `<span class="lbl">Belum ada filter. Pilih preset atau atur sendiri.</span>`);
+  if(fs.mode==='all') return fsRenderAll(out,m,act,uw);
   const R=state.results; if(!R.length){ out.innerHTML=`<div class="fs-empty">${state.scanning?'Menunggu pindaian selesai…':'Belum ada hasil pindaian.'}</div>`; return; }
   const loaded=R.filter(r=>r.code in fs.map).length;
   let pass=[], nodata=0;
   R.forEach(r=>{ let ok=true, miss=false; for(const [k] of act){ const t=fsTest(r,k,fs.sel[k]); if(t===null){ miss=true; ok=false; } else if(!t) ok=false; } if(ok) pass.push(r); else if(miss) nodata++; });
-  const col=[['code','Kode'],['sector','Sektor'],['st','Status'],['price','Harga'],['chg','Ubah'],['eps0y','EPS thn ini'],['eps3y','EPS 3th'],['salesQ','Penj. kuartal'],['rev3y','Penj. 3th'],['roe','ROE'],['roic','ROIC'],['de','D/E'],['fpe','Fwd P/E'],['peg','PEG'],['rs','RS']];
-  const val=(r,k)=> k==='code'?r.code : k==='sector'?(fs.map[r.code]?.sector||'') : k==='st'?ORDER[r.status] : k==='price'?r.price : k==='chg'?r.chg : k==='rs'?(r.rs||0) : fsVal(r,k);
-  pass.sort((a,b)=>{ const x=val(a,fs.sort), y=val(b,fs.sort); if(x==null&&y==null) return 0; if(x==null) return 1; if(y==null) return -1; const c=typeof x==='string'?x.localeCompare(y):x-y; return fs.asc?c:-c; });
-  const hit=(r,k)=>fs.sel[k]&&fs.sel[k]!=='any'?' class="hit"':'';
-  const SKID=typeof SK_ID!=='undefined'?SK_ID:{};
-  out.innerHTML=`<div class="fs-sum"><span><b>${pass.length}</b> dari ${R.length} ${m.unitWord||'saham'} ${act.length?`memenuhi ${act.length===1?'filter':`semua ${act.length} filter`}`:'(belum ada filter)'}</span>${nodata?`<span>· ${nodata} tidak lolos karena datanya tidak tersedia</span>`:''}${fs.busy||loaded<R.length?`<span>· memuat data fundamental ${loaded}/${R.length}…</span>`:''}</div>
-    ${pass.length?`<div style="overflow-x:auto"><table class="fs-t"><thead><tr>${col.map(([k,l])=>`<th data-fss="${k}" class="${fs.sort===k?'s'+(fs.asc?' asc':''):''}">${l}</th>`).join('')}</tr></thead><tbody>${pass.map(r=>{ const d=fs.map[r.code]||{};
-      return `<tr><td><a href="index.html#${encodeURIComponent(hashFor(r.code))}">${esc(r.code)}</a><small>${esc(r.name)}</small></td><td>${esc(SKID[d.sector]||d.sector||'–')}</td><td>${esc(LABEL[r.status]||'')}</td><td>${fp(r.price,m)}</td><td class="${r.chg>=0?'up':'down'}">${r.chg>=0?'+':'−'}${fmt(Math.abs(r.chg),2)}%</td>
-        <td${hit(r,'eps0y')}>${fsPct(d.eps0y)}</td><td${hit(r,'eps3y')}>${fsPct(d.eps3y)}</td><td${hit(r,'salesQ')}>${fsPct(d.salesQ)}</td><td${hit(r,'rev3y')}>${fsPct(d.rev3y)}</td><td${hit(r,'roe')}>${fsPct(d.roe)}</td><td${hit(r,'roic')}>${fsPct(d.roic)}</td><td${hit(r,'de')}>${fsNum(d.de,2)}</td><td${hit(r,'fpe')}>${fsNum(d.fpe,1)}</td><td${hit(r,'peg')}>${fsNum(d.peg,2)}</td><td>${r.rs??'–'}</td></tr>`; }).join('')}</tbody></table></div>`
-      : `<div class="fs-empty">${act.length?'Tidak ada saham yang memenuhi semua filter. Longgarkan salah satu syarat, atau gunakan preset lain.':'Pilih filter atau preset untuk mulai menyaring.'}</div>`}`;
+  const busy=fs.busy||loaded<R.length;
+  const sub=(act.length?`dari ${R.length} ${uw} hasil pindaian memenuhi ${act.length===1?'filter':`semua ${act.length} filter`}`:`Belum ada filter. Pilih preset atau atur sendiri.`)
+    +(nodata?` · ${nodata} tidak lolos karena datanya tidak tersedia`:'')+(busy?` · memuat data fundamental ${loaded}/${R.length}…`:'');
+  const col=[['code','Kode'],['sector','Sektor'],['st','Status'],['price','Harga'],['chg','Ubah'],['eps0y','EPS thn ini'],['eps3y','EPS 3 th'],['salesQ','Penj. kuartal'],['rev3y','Penj. 3 th'],['roe','ROE'],['roic','ROIC'],['de','D/E'],['fpe','Fwd P/E'],['peg','PEG'],['rs','RS']];
+  if(!col.some(c=>c[0]===fs.sort)){ fs.sort='rs'; fs.asc=false; }
+  const get=(r,k)=> k==='code'?r.code : k==='sector'?(fs.map[r.code]?.sector||'') : k==='st'?ORDER[r.status] : k==='price'?r.price : k==='chg'?r.chg : k==='rs'?(r.rs||0) : fsVal(r,k);
+  out.innerHTML=fsHero({n:pass.length,base:R.length,title:act.length?`${uw} lolos`:`${uw} dipindai`,sub,busy})
+    +(pass.length?fsList(pass,col,get,m):`<div class="fs-empty">${act.length?'Tidak ada saham yang memenuhi semua filter. Longgarkan salah satu syarat, atau gunakan preset lain.':'Pilih filter atau preset untuk mulai menyaring.'}</div>`);
+  fsAnim();
+}
+function fsRenderAll(out,m,act,uw){
+  const X=fs.mx;
+  if(state.demo){ out.innerHTML=`<div class="fs-empty">Penyaringan seluruh bursa tidak tersedia dalam mode demo.</div>`; return; }
+  if(X.mk!==state.market && !X.busy) fsMxRun();
+  if(X.busy || X.mk!==state.market){ out.innerHTML=fsHero({n:null,base:0,title:'Memuat data seluruh bursa…',sub:`Data ${esc(m.name)} sedang diunduh. Setelah itu semua filter langsung bekerja.`,busy:true})+`<div class="fs-skel">${'<i></i>'.repeat(6)}</div>`; return; }
+  if(X.err){ out.innerHTML= X.err==='belum-ada'
+      ? `<div class="fs-empty">Data seluruh bursa ${esc(m.name)} belum tersedia. Data disiapkan otomatis setiap pagi.</div>`
+      : `<div class="fs-empty">Gagal memuat data seluruh bursa (${esc(X.err)}). <button type="button" class="fs-reset" data-fsretry>Coba lagi</button></div>`; return; }
+  const N=X.rows.length, asOf=X.at?new Date(X.at).toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'}):'';
+  const use=act.filter(([k])=>k!=='stage'), stageOff=use.length<act.length;
+  if(!use.length){ out.innerHTML=fsHero({n:N,base:N,title:`${uw} di bursa ${esc(m.name)}`,sub:`Pilih preset atau filter di atas. Semua ${fmt(N,0)} ${uw} langsung disaring.${asOf?` Data per ${asOf}.`:''}`}); fsAnim(); return; }
+  let pass=[], nodata=0;
+  for(const r of X.rows){ let ok=true, miss=false; for(const [k] of use){ const t=fsCheck(fsMV(r,k),k,fs.sel[k],r); if(t===null){ miss=true; ok=false; break; } if(!t){ ok=false; break; } } if(ok) pass.push(r); else if(miss) nodata++; }
+  const notes=[]; if(asOf) notes.push(`data per ${asOf}`);
+  if(nodata) notes.push(`${fmt(nodata,0)} tidak lolos karena datanya tidak tersedia`);
+  if(stageOff) notes.push('filter Tahap siklus hanya untuk saham pindaian');
+  const col=[['code','Kode'],['sector','Sektor'],['price','Harga'],['chg','Ubah'],['mcap','Kap. pasar'],['pe','PER'],['fpe','Fwd P/E'],['eps3y','EPS 3 th'],['salesQ','Penj. kuartal'],['roe','ROE'],['de','D/E'],['peg','PEG']];
+  use.forEach(([k])=>{ if(FS_COL[k]&&!col.some(c=>c[0]===k)) col.splice(col.length-1,0,[k,FS_COL[k]]); });
+  if(!col.some(c=>c[0]===fs.sort)){ fs.sort='mcap'; fs.asc=false; }
+  const shown=Math.min(pass.length,X.lim), more=pass.length>X.lim;
+  const btn=more?`<button type="button" class="fs-more" data-fsmore>Tampilkan 50 berikutnya</button>`:'';
+  out.innerHTML=fsHero({n:pass.length,base:N,title:`${uw} lolos`,sub:`dari seluruh ${fmt(N,0)} ${uw} di bursa ${esc(m.name)}${pass.length?` · menampilkan ${fmt(shown,0)}`:''} · ${notes.join(' · ')}`})
+    +(pass.length?fsList(pass,col,fsMV,m,X.lim):`<div class="fs-empty">Tidak ada saham yang memenuhi semua filter. Longgarkan salah satu syarat, atau gunakan preset lain.</div>`)
+    +(more?`<div class="fs-foot">${btn}</div>`:'');
+  fsAnim();
 }
 document.addEventListener('click',e=>{
-  const o=e.target.closest('[data-fsk]'); if(o){ const k=o.dataset.fsk, v=o.dataset.fsv; if(v==='any') delete fs.sel[k]; else fs.sel[k]=v; fsSave(); fsRender(); return; }
+  const md=e.target.closest('[data-fsm]'); if(md){ const v=md.dataset.fsm; if(v!==fs.mode){ fs.mode=v; fs.sort=v==='all'?'mcap':'rs'; fs.asc=false; fs.anim.seen=null; fsSave(); fsRender(); if(v==='scan') fsFetch(); } return; }
+  const o=e.target.closest('[data-fsk]'); if(o){ if(o.disabled) return; const k=o.dataset.fsk, v=o.dataset.fsv; if(v==='any') delete fs.sel[k]; else fs.sel[k]=v; fsSave(); fsRender(); return; }
   const p=e.target.closest('[data-fsp]'); if(p){ const k=p.dataset.fsp; if(k){ fs.sel={...FS_PRESET[k]}; fs.tab=FS.find(f=>fs.sel[f[0]])?.[1]||'gr'; } fsSave(); fsRender(); if(!k) document.getElementById('fsGrid').scrollIntoView({behavior:'smooth',block:'nearest'}); return; }
   const t=e.target.closest('#fsTabs button'); if(t){ fs.tab=t.dataset.g; fsGrid(); return; }
   const x=e.target.closest('[data-fsx]'); if(x){ delete fs.sel[x.dataset.fsx]; fsSave(); fsRender(); return; }
-  const h=e.target.closest('[data-fss]'); if(h){ const k=h.dataset.fss; if(fs.sort===k) fs.asc=!fs.asc; else { fs.sort=k; fs.asc=k==='code'||k==='sector'||k==='st'||k==='de'||k==='fpe'||k==='peg'; } fsRender(); return; }
+  const h=e.target.closest('[data-fss]'); if(h){ const k=h.dataset.fss; if(fs.sort===k) fs.asc=!fs.asc; else { fs.sort=k; fs.asc=k==='code'||k==='sector'||k==='st'||k==='de'||k==='pe'||k==='fpe'||k==='peg'; } fsRender(); return; }
+  if(e.target.closest('[data-fsmore]')){ fs.mx.lim+=50; fsRender(); return; }
+  if(e.target.closest('[data-fsretry]')){ fs.mx.mk=''; fs.mx.err=''; fsRender(); return; }
   if(e.target.id==='fsReset'){ fs.sel={}; fsSave(); fsRender(); }
 });
 function newMark(list){
