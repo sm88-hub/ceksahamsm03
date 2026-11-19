@@ -978,7 +978,7 @@
       <li><b>Bukan Rekomendasi Investasi</b> Seluruh skor, sinyal, level harga, maupun ulasan berbasis AI dihasilkan secara otomatis semata-mata untuk keperluan edukasi dan analisis, dan tidak dimaksudkan sebagai ajakan untuk membeli atau menjual efek apa pun.</li>
       <li><b>Keputusan dan Risiko Sepenuhnya Tanggung Jawab Pengguna</b> Setiap keputusan jual, beli, maupun tindakan lainnya merupakan tanggung jawab pribadi Anda. Nilai investasi dapat menurun secara signifikan dan kerugian dapat melampaui perkiraan.</li>
       <li><b>Keterbatasan Data</b> Data harga dan laporan keuangan bersumber dari pihak ketiga serta dapat mengalami keterlambatan 15–20 menit atau ketidakakuratan. Mohon verifikasi kembali melalui perusahaan efek atau sumber resmi sebelum bertransaksi.</li>
-      <li><b>Data Akun</b> Apabila Anda masuk ke akun, alamat email, waktu akses, dan halaman yang dibuka dicatat untuk keperluan keamanan dan pemantauan layanan. Watchlist, jurnal, dan catatan yang disinkronkan disimpan di Firebase (Google) dan dapat diakses pengelola hanya untuk keperluan teknis.</li>
+      <li><b>Data Akun</b> Apabila Anda masuk ke akun, alamat email, waktu akses, halaman yang dibuka, dan jenis perangkat dicatat untuk keperluan keamanan dan pemantauan layanan. Watchlist, jurnal, dan catatan yang disinkronkan disimpan di Firebase (Google) dan dapat diakses pengelola hanya untuk keperluan teknis.</li>
       <li><b>Penghapusan Akun</b> Anda dapat menghapus akun beserta seluruh datanya kapan saja melalui menu akun, pilih <i>Hapus akun saya</i>. Konfirmasi penghapusan dikirim ke email akun Anda. Pertanyaan lain dapat disampaikan ke <a href="mailto:smcrestboard@gmail.com">smcrestboard@gmail.com</a>.</li>
       <li><b>Tidak Berafiliasi</b> SM-Crestboard adalah proyek independen dan tidak berafiliasi dengan Bursa Efek Indonesia, bursa lain, Yahoo, maupun pemilik metode yang dirujuk. CAN SLIM® merupakan merek dagang milik pemiliknya dan disebut hanya sebagai rujukan metode.</li>
     </ul>
@@ -1581,13 +1581,13 @@ function buildContext(){
   const top=state.results.slice().sort((a,b)=>ORDER[a.status]-ORDER[b.status]||b.score-a.score).slice(0,15);
   return [
     `Bursa: ${m.name}, mata uang ${m.cur}. ${state.demo?'Catatan: data contoh, bukan harga asli.':''}`,
-    `Kondisi indeks: ${$('#regime').textContent.trim()||'tidak tersedia'}`,
+    `Kondisi pasar: ${(()=>{ const p=document.querySelector('#mkt .mkt-pill'), l=document.querySelector('#mkt .mkt-lead'); return p ? `${p.textContent.trim()}. ${l?l.textContent.trim():''}` : 'tidak tersedia'; })()}`,
     `Hasil scanner (skor 0-100; faktor: tren MA50/MA200, momentum 3 bulan, jarak ke high 52 minggu, penyempitan volatilitas, breakout high 20 hari + volume, kualitas candle):`,
     ...top.map((r,i)=>`${i+1}. ${r.code} (${r.name}): skor ${r.score}, ${LABEL[r.status]}, harga ${fp(r.price,m)}, buy trigger ${fp(r.buy,m)}${r.fund&&r.fund.items?`, fundamental ${r.fund.pass}/${r.fund.total} (${r.fund.items.map(x=>`${FUND_SHORT[x.key]} ${x.st==='pass'?'lolos':x.st==='fail'?'gagal':'data kosong'} ${x.st==='na'?'':x.val}`.trim()).join('; ')})`:''}; ${r.tags.map(t=>t[1]).join(', ')}`),
   ].join('\n');
 }
 function buildPrompt(q){
-  return `Anda adalah analis teknikal saham yang berhati-hati. Jawab dalam bahasa Indonesia yang baku, ringkas, dan mudah dipahami, dengan menggunakan angka dari data di bawah. Apabila memerlukan info lain (berita, fundamental rinci), sebutkan bahwa itu di luar data ini. Akhiri dengan pengingat singkat bahwa ini bukan rekomendasi investasi.
+  return `Anda adalah analis teknikal saham yang berhati-hati. Jawab dalam bahasa Indonesia yang baku, ringkas, dan mudah dipahami, dengan menggunakan angka dari data di bawah. Apabila memerlukan info lain (berita, fundamental rinci), sebutkan bahwa itu di luar data ini. Jelaskan secara deskriptif: kondisi, makna angka, dan risikonya. Jangan memberi perintah beli atau jual, target harga, maupun saran jumlah pembelian. Akhiri dengan pengingat singkat bahwa ini bukan rekomendasi investasi.
 
 Pertanyaan: ${q}
 
@@ -1601,7 +1601,7 @@ function openChat(){
 }
 function closeChat(){ const pnl=$('#aiPanel'); pnl.classList.remove('open'); pnl.setAttribute('aria-hidden','true'); $('#aiFab').classList.remove('hide'); }
 async function askAI(provider){
-  const q=$('#aiInput').value.trim() || 'Dari daftar ini, saham mana yang paling layak dipantau dan kenapa?';
+  const q=$('#aiInput').value.trim() || 'Dari daftar ini, saham mana yang ciri teknikalnya paling lengkap dan apa artinya?';
   const prompt=buildPrompt(q), link=AI_LINKS[provider], st=$('#aiStatus');
   let copied=false; try{ await navigator.clipboard.writeText(prompt); copied=true; }catch{}
   const w=window.open(link.url(prompt),'_blank','noopener');
