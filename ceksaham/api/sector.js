@@ -76,7 +76,7 @@ async function fundOne(code, sfxList) {
   for (const sfx of sfxList) {
     const symbol = (code + sfx).toUpperCase(), hit = memoF.get(symbol);
     if (hit && Date.now() - hit.t < TTL_F) return hit.v;
-    const x = await profile(symbol, 'assetProfile,financialData,defaultKeyStatistics,earningsTrend,summaryDetail', true);
+    const x = await profile(symbol, 'assetProfile,financialData,defaultKeyStatistics,earningsTrend,summaryDetail,price', true);
     if (!x) continue;
     const S = await series(symbol).catch(() => ({}));
     const fd = x.financialData || {}, ks = x.defaultKeyStatistics || {}, sd = x.summaryDetail || {}, tr = x.earningsTrend?.trend || [];
@@ -97,6 +97,8 @@ async function fundOne(code, sfxList) {
       roe: num(fd.returnOnEquity), roic: ebit != null && ic > 0 ? (ebit * (1 - (Number.isFinite(tax) ? tax : 0))) / ic : null,
       opm: num(fd.operatingMargins), opmUp, npm: num(fd.profitMargins),
       cr: num(fd.currentRatio), qr: num(fd.quickRatio), de: de == null ? null : de / 100,
+      epsY: eps && eps.length >= 2 && eps[eps.length - 2].v > 0 ? eps[eps.length - 1].v / eps[eps.length - 2].v - 1 : null,
+      mcap: num(sd.marketCap) ?? num(x.price?.marketCap),
       pe: num(sd.trailingPE), fpe: num(ks.forwardPE), peg: peg ? peg : null,
       fy: eps && eps.length ? eps[eps.length - 1].d : null,
     };
