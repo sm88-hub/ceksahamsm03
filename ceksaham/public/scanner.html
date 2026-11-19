@@ -1992,7 +1992,8 @@ async function fsMxRun(){
     if(res.status===404) throw new Error('belum-ada');
     const j=await res.json(); if(tok!==X.tok) return;
     if(!res.ok||!j.rows) throw new Error('HTTP '+res.status);
-    X.rows=j.rows.map(a=>{ const o={}; j.cols.forEach((c,i)=>{ o[c]=a[i]; }); o.opmUp=o.opmUp==null?null:!!o.opmUp; return o; });
+    X.rows=j.rows.map(a=>{ const o={}; j.cols.forEach((c,i)=>{ o[c]=a[i]; }); o.opmUp=o.opmUp==null?null:!!o.opmUp; return o; })
+      .filter(o=>(o.mcap!=null||o.sector) && !(mk==='US'&&/-(P|W|U|R)[A-Z]*$/.test(o.code)));
     X.at=j.at||''; X.all[mk]=X.rows.length;
   }catch(e){ if(tok!==X.tok) return; X.err=String(e.message||e); }
   X.busy=false; fsRender();

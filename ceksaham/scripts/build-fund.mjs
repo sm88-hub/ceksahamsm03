@@ -12,6 +12,9 @@ const OUT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', 'publi
 const BUDGET = (+process.env.BUDGET_MIN || 300) * 60e3;
 const CONC = +process.env.CONC || 4;
 const STALE_DAYS = 7;
+const SKIP_DAYS = 30;  // saham tanpa data sama sekali (umumnya sudah delisting) dicek ulang tiap 30 hari
+const FV = 2;          // versi rumus data laporan keuangan; dinaikkan bila ada kolom baru agar semua saham diambil ulang
+const US_JUNK = /-(P|W|U|R)[A-Z]*$/; // saham preferen, waran, unit, hak di bursa Amerika
 const T0 = Date.now();
 const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36';
 const MK = {
@@ -75,6 +78,7 @@ async function listMarket(mk) {
       let code = null;
       for (const s of M.sfx) { if (!s) { if (!sym.includes('.')) code = sym; } else if (sym.endsWith(s)) code = sym.slice(0, -s.length); if (code) break; }
       if (!code || rows.has(code) || q.regularMarketPrice == null) continue;
+      if (mk === 'US' && US_JUNK.test(code)) continue;
       rows.set(code, { code, sym, name: q.longName || q.shortName || code, price: q.regularMarketPrice, chg: q.regularMarketChangePercent ?? null,
         mcap: q.marketCap ?? null, pe: q.trailingPE ?? null, fpe: q.forwardPE ?? null, ma50: q.fiftyDayAverage ?? null, ma200: q.twoHundredDayAverage ?? null });
     }
@@ -101,7 +105,7 @@ async function fund(sym) {
   const S = {};
   for (const r of t?.timeseries?.result || []) { const k = r.meta?.type?.[0]; if (!k) continue;
     S[k] = (r[k] || []).filter(Boolean).map((v) => ({ d: v.asOfDate, v: v.reportedValue?.raw })).filter((v) => Number.isFinite(v.v)).sort((p, q) => p.d.localeCompare(q.d)); }
-  const fd = x.financialData || {}, ks = x.defaultKeyStatistics || {}, tr = x.earningsTrend?.trend || [];
+  const fd = x.financialData || {}, ks = x.defaultKeyStatistics || {}, sd = x.summaryDetail || {}, tr = x.earningsTrend?.trend || [];
   const g = (p) => num(tr.find((z) => z.period === p)?.growth);
   const rev = S.annualTotalRevenue, eps = S.annualDilutedEPS, oi = S.annualOperatingIncome;
   const last = (a) => (a && a.length ? a[a.length - 1].v : null);
@@ -119,12 +123,13 @@ async function fund(sym) {
     roe: num(fd.returnOnEquity), roic: ebit != null && ic > 0 ? (ebit * (1 - (Number.isFinite(tax) ? tax : 0))) / ic : null,
     opm: num(fd.operatingMargins), opmUp, npm: num(fd.profitMargins),
     cr: num(fd.currentRatio), qr: num(fd.quickRatio), de: de == null ? null : de / 100, peg: peg || null,
+    pe: num(sd.trailingPE), fpe: num(ks.forwardPE) ?? num(sd.forwardPE), mcap: num(sd.marketCap),
   };
 }
 
 /* ---------- File data ---------- */
-const COLS = ['code', 'name', 'sector', 'price', 'chg', 'mcap', 'pe', 'fpe', 'ma50', 'ma200', 'eps0y', 'eps1y', 'epsY', 'eps3y', 'salesQ', 'salesY', 'rev3y', 'roe', 'roic', 'opm', 'opmUp', 'npm', 'cr', 'qr', 'de', 'peg', 'fu'];
-const DEEP = ['sector', 'eps0y', 'eps1y', 'epsY', 'eps3y', 'salesQ', 'salesY', 'rev3y', 'roe', 'roic', 'opm', 'opmUp', 'npm', 'cr', 'qr', 'de', 'peg'];
+const COLS = ['code', 'name', 'sector', 'price', 'chg', 'mcap', 'pe', 'fpe', 'ma50', 'ma200', 'eps0y', 'eps1y', 'epsY', 'eps3y', 'salesQ', 'salesY', 'rev3y', 'roe', 'roic', 'opm', 'opmUp', 'npm', 'cr', 'qr', 'de', 'peg', 'fu', 'fv'];
+const DEEP = ['sector', 'eps0y', 'eps1y', 'epsY', 'eps3y', 'salesQ', 'salesY', 'rev3y', 'roe', 'roic', 'opm', 'opmUp', 'npm', 'cr', 'qr', 'de', 'peg', 'pe', 'fpe', 'mcap'];
 const rnd = (v, k) => {
   if (v == null || v === '') return null;
   if (typeof v === 'boolean') return v ? 1 : 0;
@@ -136,21 +141,28 @@ const rnd = (v, k) => {
 };
 async function readOld(mk) {
   try { const j = JSON.parse(await readFile(path.join(OUT, `fs-${mk}.json`), 'utf8')); const m = new Map();
-    for (const r of j.rows || []) { const o = {}; j.cols.forEach((c, i) => { o[c] = r[i]; }); m.set(o.code, o); } return m; }
+    for (const r of j.rows || []) { const o = {}; j.cols.forEach((c, i) => { o[c] = r[i]; }); m.set(o.code, o); }
+    for (const [code, fu] of j.skip || []) if (!m.has(code)) m.set(code, { code, fu, fv: FV, skip: true });
+    return m; }
   catch { return new Map(); }
 }
+const empty = (z) => z.mcap == null && !z.sector;
+function merge(o, r) { const z = { ...o }; for (const [k, v] of Object.entries(r)) if (v != null || !(k in z)) z[k] = v; return z; }
 async function writeMk(mk, list, old) {
-  const rows = list.map((r) => { const o = old.get(r.code) || {}; const z = { ...o, ...r };
-    return COLS.map((c) => rnd(z[c], c)); });
+  const rows = [], skip = [];
+  for (const r of list) { const z = merge(old.get(r.code) || {}, r);
+    if (z.fu && empty(z)) { skip.push([z.code, z.fu]); continue; }
+    rows.push(COLS.map((c) => rnd(z[c], c))); }
   const withFund = rows.filter((r) => r[COLS.indexOf('fu')]).length;
   await mkdir(OUT, { recursive: true });
-  await writeFile(path.join(OUT, `fs-${mk}.json`), JSON.stringify({ v: 1, mk, at: new Date().toISOString(), n: rows.length, fund: withFund, cols: COLS, rows }));
+  await writeFile(path.join(OUT, `fs-${mk}.json`), JSON.stringify({ v: 1, mk, at: new Date().toISOString(), n: rows.length, fund: withFund, cols: COLS, rows, skip }));
   return withFund;
 }
 
 /* ---------- Jalankan ---------- */
 const today = new Date().toISOString().slice(0, 10);
 const staleAt = new Date(Date.now() - STALE_DAYS * 864e5).toISOString().slice(0, 10);
+const skipAt = new Date(Date.now() - SKIP_DAYS * 864e5).toISOString().slice(0, 10);
 const M = {};
 for (const mk of ONLY) {
   try { const old = await readOld(mk); const list = await listMarket(mk); M[mk] = { old, list }; await writeMk(mk, list, old); }
@@ -159,7 +171,7 @@ for (const mk of ONLY) {
 // antrean laporan keuangan: bergiliran antar-bursa, yang belum punya data dulu, lalu yang paling lama
 const Q = {};
 for (const [mk, { old, list }] of Object.entries(M)) {
-  Q[mk] = list.filter((r) => { const fu = old.get(r.code)?.fu; return !fu || fu < staleAt; })
+  Q[mk] = list.filter((r) => { const o = old.get(r.code); if (!o?.fu) return true; if (o.skip) return o.fu < skipAt; return o.fu < staleAt || o.fv !== FV; })
     .sort((a, b) => (old.get(a.code)?.fu || '').localeCompare(old.get(b.code)?.fu || '') || (b.mcap || 0) - (a.mcap || 0));
   log(mk, 'perlu diperbarui:', Q[mk].length);
 }
@@ -175,7 +187,7 @@ async function worker() {
     const f = await fund(r.sym).catch(() => undefined);
     const o = M[mk].old.get(r.code) || { code: r.code };
     if (f === undefined) fail++;
-    else { if (f) DEEP.forEach((k) => { o[k] = f[k]; }); o.fu = today; M[mk].old.set(r.code, o); done++; }
+    else { delete o.skip; if (f) DEEP.forEach((k) => { o[k] = f[k]; }); o.fu = today; o.fv = FV; M[mk].old.set(r.code, o); done++; }
     if ((done + fail) % 200 === 0) log(`laporan keuangan: ${done} selesai, ${fail} gagal, sisa ${queue.length - qi}`);
     if (Date.now() - lastSave > 10 * 60e3) { lastSave = Date.now(); await saveAll(); }
     await sleep(150);
@@ -183,5 +195,5 @@ async function worker() {
 }
 await Promise.all(Array.from({ length: CONC }, worker));
 await saveAll();
-for (const [mk, { list, old }] of Object.entries(M)) log(mk, `${list.length} saham, ${list.filter((r) => old.get(r.code)?.fu).length} punya data laporan keuangan`);
+for (const [mk, { list, old }] of Object.entries(M)) { const z = list.map((r) => merge(old.get(r.code) || {}, r)); log(mk, `${z.filter((x) => !(x.fu && empty(x))).length} saham dipakai, ${z.filter((x) => x.sector).length} punya data laporan keuangan, ${z.filter((x) => x.fu && empty(x)).length} tanpa data (dilewati)`); }
 log(`Selesai. ${done} diperbarui, ${fail} gagal${stop ? ', berhenti: ' + stop : ''}.`);
