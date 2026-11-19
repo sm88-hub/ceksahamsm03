@@ -8,6 +8,7 @@
 const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36';
 const TTL = 30 * 60 * 1000;
 const memo = new Map();
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 const POS = ['naik', 'melonjak', 'melesat', 'menguat', 'terbang', 'meroket', 'rekor', 'tertinggi', 'borong', 'akumulasi', 'buyback', 'dividen', 'laba naik', 'laba tumbuh', 'tumbuh', 'untung', 'cuan', 'inflow', 'net buy', 'top buy', 'upgrade', 'target harga naik', 'ekspansi', 'kontrak baru', 'akuisisi',
   'surge', 'soar', 'jump', 'rally', 'rallies', 'gain', 'gains', 'record', 'beat', 'beats', 'upgrade', 'upgraded', 'raise', 'raises', 'raised', 'bullish', 'outperform', 'buy rating', 'strong demand', 'growth', 'profit rises', 'tops estimates', 'skyrocket'];
@@ -33,18 +34,33 @@ async function fetchOne(mk, code, name) {
   else if (mk === 'US') q = `"${code}" stock`;
   else if (crypto) q = `${name && name !== code ? `"${name}"` : `"${code}"`} crypto`;
   else q = `${name && name !== code ? `"${name.replace(/\b(Inc|Corp|Co|Ltd|Holdings?|Group|Corporation|Company|Limited)\.?$/i, '').trim()}"` : `"${code}"`} stock`;
-  const url = `https://news.google.com/rss/search?q=${encodeURIComponent(q + ' when:7d')}&${id ? 'hl=id&gl=ID&ceid=ID:id' : 'hl=en-US&gl=US&ceid=US:en'}`;
-  const r = await fetch(url, { headers: { 'User-Agent': UA, 'Accept': 'application/rss+xml,text/xml' } });
-  if (!r.ok) throw new Error('RSS ' + r.status);
-  const xml = await r.text();
+  const gUrl = `https://news.google.com/rss/search?q=${encodeURIComponent(q + ' when:7d')}&${id ? 'hl=id&gl=ID&ceid=ID:id' : 'hl=en-US&gl=US&ceid=US:en'}`;
+  const bUrl = `https://www.bing.com/news/search?q=${encodeURIComponent(q)}&format=rss&qft=interval%3d%228%22${id ? '&setlang=id&cc=ID' : '&setlang=en-US&cc=US'}`;
+  // Google News kadang membalas 503 untuk server cloud; coba ulang, lalu pakai Bing News sebagai cadangan.
+  let xml = null, lastErr = '';
+  for (const [u, tries] of [[gUrl, 3], [bUrl, 2]]) {
+    for (let i = 0; i < tries && xml == null; i++) {
+      if (i) await sleep(500 * i + Math.random() * 400);
+      try {
+        const r = await fetch(u, { headers: { 'User-Agent': UA, 'Accept': 'application/rss+xml,application/xml,text/xml;q=0.9,*/*;q=0.8', 'Accept-Language': id ? 'id-ID,id;q=0.9' : 'en-US,en;q=0.9' } });
+        if (!r.ok) { lastErr = 'RSS ' + r.status; continue; }
+        const t = await r.text();
+        if (!t.includes('<item>')) { lastErr = 'RSS kosong'; if (t.includes('<channel>')) xml = t; continue; }
+        xml = t;
+      } catch (e) { lastErr = String(e.message || e); }
+    }
+    if (xml && xml.includes('<item>')) break;
+  }
+  if (xml == null) throw new Error(lastErr || 'RSS gagal');
+  const week = Date.now() - 7 * 864e5;
   const seen = new Set(), items = [];
   for (const chunk of xml.split('<item>').slice(1)) {
     const get = (tag) => unesc((chunk.match(new RegExp(`<${tag}[^>]*>([\\s\\S]*?)</${tag}>`)) || [])[1]);
-    const source = get('source');
-    let title = get('title');
+    const source = get('source') || get('News:Source');
+    let title = get('title').replace(/<[^>]+>/g, '');
     if (source && title.endsWith(' - ' + source)) title = title.slice(0, -(source.length + 3));
     const link = get('link'), at = Date.parse(get('pubDate'));
-    if (!title || !link || !Number.isFinite(at)) continue;
+    if (!title || !link || !Number.isFinite(at) || at < week) continue;
     const k = title.toLowerCase().replace(/[^a-z0-9]+/g, ' ').slice(0, 60);
     if (seen.has(k)) continue; seen.add(k);
     items.push({ title, source, link, at, tone: tone(title) });
@@ -52,7 +68,8 @@ async function fetchOne(mk, code, name) {
   items.sort((a, b) => b.at - a.at);
   const top = items.slice(0, 8);
   const v = { mk, code, name: name || code, items: top, pos: top.filter((x) => x.tone > 0).length, neg: top.filter((x) => x.tone < 0).length };
-  memo.set(key, { t: Date.now(), v });
+  // Hasil kosong tidak disimpan lama: bisa jadi Google sedang membatasi permintaan.
+  if (top.length) memo.set(key, { t: Date.now(), v });
   return v;
 }
 
@@ -62,13 +79,18 @@ export async function GET(req) {
     .map(([mk, code, name]) => ({ mk: String(mk).toUpperCase().replace(/[^A-Z]/g, '').slice(0, 2), code: String(code).toUpperCase().replace(/[^A-Z0-9.\-]/g, '').slice(0, 12), name: String(name || '').replace(/["<>]/g, '').slice(0, 60) }))
     .filter((x) => x.mk && x.code).slice(0, 12);
   if (!list.length) return json({ error: 'Daftar saham kosong' }, 400);
-  const out = await Promise.all(list.map((x) => fetchOne(x.mk, x.code, x.name).catch((e) => ({ mk: x.mk, code: x.code, name: x.name || x.code, items: [], error: e.message }))));
-  return json({ at: new Date().toISOString(), stocks: out }, 200, 1800);
+  // maksimal 3 permintaan bersamaan agar tidak dibatasi sumber berita
+  const out = new Array(list.length); let k = 0;
+  const worker = async () => { while (k < list.length) { const i = k++, x = list[i];
+    out[i] = await fetchOne(x.mk, x.code, x.name).catch((e) => ({ mk: x.mk, code: x.code, name: x.name || x.code, items: [], error: e.message })); } };
+  await Promise.all([worker(), worker(), worker()]);
+  const thin = out.some((x) => x.error) || out.every((x) => !x.items.length);
+  return json({ at: new Date().toISOString(), stocks: out, thin }, 200, thin ? 60 : 1800, thin ? 0 : 600);
 }
 
-function json(obj, status = 200, maxAge = 0) {
+function json(obj, status = 200, maxAge = 0, browserAge = 600) {
   return new Response(JSON.stringify(obj), {
     status,
-    headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': maxAge ? `public, max-age=600, s-maxage=${maxAge}, stale-while-revalidate=900` : 'no-store' },
+    headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': maxAge ? `public, max-age=${browserAge}, s-maxage=${maxAge}, stale-while-revalidate=${maxAge >= 1800 ? 900 : 30}` : 'no-store' },
   });
 }
