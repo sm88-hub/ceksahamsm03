@@ -74,8 +74,33 @@
   .pill.pre .dot{background:var(--warn)}
   @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(14,138,92,.5)}70%,100%{box-shadow:0 0 0 8px rgba(14,138,92,0)}}
   .icon-btn{width:34px;height:34px;display:grid;place-items:center;border-radius:10px;border:1px solid var(--rule);background:var(--surface);cursor:pointer;color:var(--ink2)}
-  .install-btn{width:auto;padding:0 11px;gap:6px;display:inline-flex;align-items:center;font-weight:700;font-size:12.5px;color:var(--ink)}
-  .install-btn[hidden]{display:none}
+  .install-btn{width:auto;padding:0 11px;gap:6px;display:inline-flex;align-items:center;font-weight:700;font-size:12.5px;color:var(--ink);border-color:rgba(132,170,0,.55)!important;box-shadow:inset 0 0 0 1px rgba(198,241,53,.25)}
+  .install-btn svg{color:#84AA00}[data-theme="dark"] .install-btn svg{color:#C6F135}
+  .install-btn[hidden],.inst-pill[hidden]{display:none!important}
+  .inst-pill{display:inline-flex;align-items:center;gap:8px;margin:0 0 0 8px;padding:7px 14px 7px 8px;border-radius:999px;border:1px solid var(--rule2);background:var(--surface);color:var(--ink);font:700 12.5px 'Plus Jakarta Sans',sans-serif;cursor:pointer;vertical-align:middle;transition:border-color .2s,transform .2s}
+  .inst-pill:hover{border-color:#C6F135;transform:translateY(-1px)}
+  .inst-pill i{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:#C6F135;color:#0B1220;font-style:normal}
+  .inst-pill i svg{width:13px;height:13px}
+  .inst{position:fixed;inset:0;z-index:95;display:grid;place-items:center;padding:18px;background:rgba(4,8,18,.6);backdrop-filter:blur(6px);opacity:0;transition:opacity .25s}
+  .inst.on{opacity:1}
+  .inst-c{position:relative;width:min(440px,100%);max-height:calc(100vh - 36px);overflow:auto;border-radius:24px;padding:22px;color:#fff;
+    background:radial-gradient(260px 140px at 100% 0%,rgba(198,241,53,.2),transparent 70%),linear-gradient(160deg,var(--hero2),var(--hero));box-shadow:0 30px 80px rgba(0,0,0,.5);transform:translateY(14px) scale(.98);transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+  .inst.on .inst-c{transform:none}
+  .inst-x{position:absolute;top:12px;right:12px;width:32px;height:32px;border-radius:10px;border:0;background:rgba(255,255,255,.1);color:#fff;cursor:pointer;font-size:14px}
+  .inst-hero{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+  .inst-hero img{width:56px;height:56px;border-radius:16px;box-shadow:0 10px 24px -10px rgba(198,241,53,.6)}
+  .inst-hero small{display:block;font:800 10.5px 'Plus Jakarta Sans',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#C6F135}
+  .inst-hero h3{margin:2px 0;font:800 22px 'Space Grotesk','Plus Jakarta Sans',sans-serif;letter-spacing:-.01em}
+  .inst-hero span{font-size:12.5px;color:rgba(255,255,255,.65)}
+  .inst-perks{list-style:none;margin:0 0 14px;padding:12px 14px;border-radius:14px;background:rgba(255,255,255,.06);display:grid;gap:6px;font-size:13px;color:rgba(255,255,255,.82)}
+  .inst-perks li{position:relative;padding-left:22px}.inst-perks li::before{content:'✓';position:absolute;left:0;color:#C6F135;font-weight:800}
+  .inst-steps{list-style:none;margin:0 0 16px;padding:0;display:grid;gap:8px}
+  .inst-steps li{display:grid;grid-template-columns:24px 34px 1fr;align-items:center;gap:10px;padding:10px 12px;border-radius:14px;border:1px solid rgba(255,255,255,.1);font-size:13.5px;line-height:1.45;color:rgba(255,255,255,.88)}
+  .inst-steps .n{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:#C6F135;color:#0B1220;font:800 12px 'Space Grotesk',sans-serif}
+  .inst-steps .ic{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:rgba(255,255,255,.08);color:#fff}
+  .inst-steps .ic svg{width:18px;height:18px}
+  .inst-steps b{color:#fff}
+  .inst-ok{width:100%;border:0;border-radius:14px;padding:12px;background:#C6F135;color:#0B1220;font:800 14px 'Plus Jakarta Sans',sans-serif;cursor:pointer}
   @media(max-width:1440px){.install-btn span{display:none}.install-btn{padding:0;width:34px;justify-content:center}}
   .icon-btn:hover{color:var(--ink)}
   @media(max-width:760px){#upd{display:none}.bar-in{padding:10px 16px}.seg{order:3;width:100%}}
@@ -1155,8 +1180,8 @@
     <a class="scan-cta" href="scanner.html" title="Pindai saham dengan setup breakout terkuat"><span class="radar" aria-hidden="true"></span>Scanner<span class="new">LIVE</span></a>
     <span id="upd"></span>
     <div id="mkt" class="pill"><span class="dot"></span><span>—</span></div>
-    <button class="icon-btn install-btn" id="installBtn" type="button" hidden title="Pasang SM-Crestboard sebagai aplikasi" aria-label="Pasang aplikasi">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0-4-4m4 4 4-4"/><path d="M5 21h14"/></svg><span>Pasang</span>
+    <button class="icon-btn install-btn" id="installBtn" data-install type="button" hidden title="Pasang SM-Crestboard sebagai aplikasi" aria-label="Pasang aplikasi">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0-4-4m4 4 4-4"/><path d="M5 21h14"/></svg><span>Pasang aplikasi</span>
     </button>
     <div class="acct" id="acct" hidden></div>
     <button class="icon-btn" id="themeBtn" type="button" aria-label="Ganti tema terang/gelap">
@@ -1550,7 +1575,7 @@
           <li><b>Label Minat beli</b>: muncul bila skor minat beli 20 hari minimal 60 dari 100 dan harga belum naik lebih dari 12% dalam 20 hari. Skor disusun dari volume hari naik dibanding hari turun (30 poin), OBV menanjak (20), posisi penutupan harian (20), OBV lebih dulu mencapai puncak (10), harga dekat dasar 20 hari (15), dan rentang menyempit (5). Rincian lengkap ada di Scanner.</li>
           <li><b>Label Tahap</b> (data harian, rata-rata 50, 150, dan 200 hari). <b>Tahap 2 · Tren naik</b>: harga di atas rata-rata 150 hari dan tidak lebih dari 3% di bawah rata-rata 50 hari, rata-rata 50 di atas 150, 150 di atas 200, dan rata-rata 200 hari menanjak dibanding sebulan lalu. <b>Tahap 4 · Penurunan</b>: harga di bawah rata-rata 200 hari yang sedang menurun. <b>Tahap 3 · Puncak</b>: harga sudah naik minimal 30% dalam setahun, lalu melemah dan tren mendatar. Selain itu dianggap <b>Tahap 1 · Konsolidasi</b>.</li>
           <li><b>Label Lapkeu</b>: jadwal laporan keuangan dalam 21 hari ke depan, dari kalender emiten.</li>
-          <li><b>Label berita</b>: nada judul berita 7 hari terakhir dari Google News, dinilai dari kata kunci (misalnya laba naik, dividen, rugi, gugatan). Penilaian ini otomatis dan bisa keliru; baca beritanya sebelum menyimpulkan.</li>
+          <li><b>Label berita</b>: nada judul berita 7 hari terakhir dari Google News atau Bing News, dinilai dari kata kunci (misalnya laba naik, dividen, rugi, gugatan). Penilaian ini otomatis dan bisa keliru; baca beritanya sebelum menyimpulkan.</li>
         </ul></div></details>
       </article>
 
@@ -1567,7 +1592,7 @@
         <details class="note">
           <summary>Sumber berita dan cara membaca nada</summary>
           <div class="note-b"><ul>
-            <li>Berita diambil dari Google News untuk 7 hari terakhir, maksimal 8 judul per saham dan 12 saham pertama di watchlist. Saham BEI dicari dalam bahasa Indonesia, bursa lain dalam bahasa Inggris.</li>
+            <li>Berita diambil dari Google News (dengan Bing News sebagai cadangan bila Google sedang tidak dapat diakses) untuk 7 hari terakhir, maksimal 8 judul per saham dan 12 saham pertama di watchlist. Saham BEI dicari dalam bahasa Indonesia, bursa lain dalam bahasa Inggris.</li>
             <li><b>Nada</b> (positif, negatif, netral) ditentukan otomatis dari kata kunci pada judul, misalnya "anjlok", "gugatan", atau "rekor laba". Penilaian ini kasar dan dapat keliru, terutama untuk judul bernada sindiran atau pertanyaan. Selalu baca beritanya sebelum menarik kesimpulan.</li>
             <li>Nada berita bukan prediksi arah harga. Pasar sering sudah mencerminkan berita sebelum judulnya terbit, dan berita negatif tidak selalu diikuti penurunan harga.</li>
             <li>Tautan membuka situs penerbit di tab baru. Isi berita sepenuhnya menjadi tanggung jawab penerbitnya.</li>
@@ -1690,6 +1715,7 @@
 
   <footer>Data bersumber dari Yahoo Finance dan dapat tertunda 15–20 menit. Bukan rekomendasi investasi; setiap keputusan jual beli sepenuhnya menjadi tanggung jawab Anda. Grafik menggunakan <a href="https://www.tradingview.com/" target="_blank" rel="noopener">TradingView Lightweight Charts™</a>, Copyright © TradingView, Inc.
   <button type="button" class="ack-pill" data-ack-open><i>!</i>Ketentuan Penggunaan · Bukan Rekomendasi Investasi</button>
+  <button type="button" class="inst-pill" data-install hidden><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m0 0-4-4m4 4 4-4"/><path d="M5 20h14"/></svg></i>Pasang sebagai aplikasi</button>
   <a class="kopi" href="https://trakteer.id/sm-crestboard" target="_blank" rel="noopener" aria-label="Traktir kopi admin lewat Trakteer (membuka tab baru)">
     <span class="kopi-in">
       <span class="kopi-cup" aria-hidden="true">
@@ -3255,7 +3281,12 @@ async function newsLoad(force){
   if(nw.busy && nw.key===key) return nw.busy;
   nw.key=key;
   const l=wl.items.slice(0,12).map(x=>{ const d=wl.data[wlId(x)]; return [x.mk,x.t,(d&&d.name)||''].map(v=>String(v).replace(/[,~]/g,' ')).join('~'); }).join(',');
-  nw.busy=(async()=>{ try{ const r=await fetch(`/api/news?l=${encodeURIComponent(l)}`); if(!r.ok) throw 0; const j=await r.json(); if(!Array.isArray(j.stocks)) throw 0; nw.data=j; nw.at=Date.now(); return j; }
+  nw.busy=(async()=>{ try{ const r=await fetch(`/api/news?l=${encodeURIComponent(l)}${force?'&r='+Date.now():''}`,{cache:force?'no-store':'default'}); if(!r.ok) throw 0; const j=await r.json(); if(!Array.isArray(j.stocks)) throw 0;
+      const empty=j.thin || !j.stocks.some(x=>x.items.length);
+      nw.data=j; nw.at= empty ? Date.now()-14*60e3 : Date.now();   // hasil kosong dianggap cepat basi
+      if(empty && !force && !nw.retried){ nw.retried=true; setTimeout(()=>{ newsLoad(true).then(()=>{ try{ newsRender(); }catch{} try{ dockBadges(); }catch{} }); },4000); }
+      if(!empty) nw.retried=false;
+      return j; }
     catch{ nw.data={stocks:[],error:true}; nw.at=0; return nw.data; } finally{ nw.busy=null; } })();
   return nw.busy;
 }
@@ -4145,10 +4176,46 @@ load(start ? start.t : M().quick[0][0]);
 /* ===================== Aplikasi (PWA) ===================== */
 if('serviceWorker' in navigator && (location.protocol==='https:' || location.hostname==='localhost'))
   window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(()=>{}));
-(()=>{ let deferred=null; const b=document.getElementById('installBtn'); if(!b) return;
-  window.addEventListener('beforeinstallprompt',e=>{ e.preventDefault(); deferred=e; b.hidden=false; });
-  b.addEventListener('click',async()=>{ if(!deferred) return; deferred.prompt(); try{ await deferred.userChoice; }catch{} deferred=null; b.hidden=true; });
-  window.addEventListener('appinstalled',()=>{ b.hidden=true; });
+/* Tombol "Pasang aplikasi": memakai dialog bawaan browser bila tersedia, selain itu menampilkan panduan sesuai perangkat. */
+(()=>{
+  let deferred=null;
+  const btns=()=>[...document.querySelectorAll('[data-install]')];
+  const standalone=()=>matchMedia('(display-mode: standalone)').matches || matchMedia('(display-mode: window-controls-overlay)').matches || navigator.standalone===true;
+  const sync=()=>{ const on=!standalone(); btns().forEach(b=>b.hidden=!on); };
+  window.addEventListener('beforeinstallprompt',e=>{ e.preventDefault(); deferred=e; sync(); });
+  window.addEventListener('appinstalled',()=>{ deferred=null; btns().forEach(b=>b.hidden=true); document.getElementById('instp')?.remove(); });
+  const ua=navigator.userAgent, ios=/iPad|iPhone|iPod/.test(ua) || (navigator.platform==='MacIntel' && navigator.maxTouchPoints>1);
+  const android=/Android/i.test(ua), safari=/Safari/i.test(ua) && !/Chrome|CriOS|FxiOS|EdgiOS|Android/i.test(ua), firefox=/Firefox|FxiOS/i.test(ua), edge=/Edg\//.test(ua), samsung=/SamsungBrowser/i.test(ua);
+  const I={ share:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3m0 0L8 7m4-4 4 4"/><path d="M8 11H6a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2h-2"/></svg>',
+    dots:'<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>',
+    plus:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M12 8v8M8 12h8"/></svg>',
+    mon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4M12 7v5m0 0-2-2m2 2 2-2"/></svg>' };
+  function steps(){
+    if(ios && !safari) return { t:'iPhone / iPad', s:[[I.share,'Buka halaman ini di <b>Safari</b>. Di iPhone, pemasangan aplikasi web hanya dapat dilakukan lewat Safari.'],[I.share,'Ketuk tombol <b>Bagikan</b> (kotak dengan panah ke atas).'],[I.plus,'Pilih <b>Tambah ke Layar Utama</b>, lalu ketuk <b>Tambah</b>.']] };
+    if(ios) return { t:'iPhone / iPad (Safari)', s:[[I.share,'Ketuk tombol <b>Bagikan</b> (kotak dengan panah ke atas) di bagian bawah atau atas layar.'],[I.plus,'Gulir ke bawah, lalu pilih <b>Tambah ke Layar Utama</b>.'],[I.plus,'Ketuk <b>Tambah</b>. Ikon Crestboard akan muncul di layar utama.']] };
+    if(android && samsung) return { t:'Android (Samsung Internet)', s:[[I.dots,'Ketuk menu <b>☰</b> di kanan bawah.'],[I.plus,'Pilih <b>Tambahkan halaman ke</b> → <b>Layar Utama</b>.']] };
+    if(android) return { t:'Android (Chrome)', s:[[I.dots,'Ketuk menu <b>⋮</b> di kanan atas browser.'],[I.plus,'Pilih <b>Instal aplikasi</b> atau <b>Tambahkan ke layar utama</b>.'],[I.plus,'Ketuk <b>Instal</b>. Ikon Crestboard akan muncul di layar utama.']] };
+    if(firefox) return { t:'Firefox', s:[[I.mon,'Firefox di komputer belum mendukung pemasangan aplikasi web. Buka halaman ini di <b>Chrome</b> atau <b>Edge</b>, lalu tekan tombol Pasang aplikasi lagi.']] };
+    if(safari) return { t:'Mac (Safari)', s:[[I.share,'Klik menu <b>File</b> di bilah atas, atau tombol <b>Bagikan</b>.'],[I.plus,'Pilih <b>Add to Dock / Tambahkan ke Dock</b>, lalu klik <b>Tambahkan</b>.']] };
+    return { t: edge?'Komputer (Edge)':'Komputer (Chrome)', s:[[I.mon,'Klik ikon <b>Pasang</b> (layar dengan panah ke bawah) di ujung kanan kolom alamat.'],[I.dots,`Atau buka menu <b>${edge?'⋯':'⋮'}</b> → <b>${edge?'Aplikasi → Instal situs ini sebagai aplikasi':'Simpan dan bagikan → Instal halaman sebagai aplikasi'}</b>.`],[I.plus,'Klik <b>Instal</b>. Crestboard akan terbuka di jendelanya sendiri dan muncul di menu Start atau Dock.']] };
+  }
+  function guide(){
+    document.getElementById('instp')?.remove();
+    const g=steps(), box=document.createElement('div'); box.id='instp'; box.className='inst';
+    box.innerHTML=`<div class="inst-c" role="dialog" aria-modal="true" aria-labelledby="instT"><button type="button" class="inst-x" data-x aria-label="Tutup">✕</button>
+      <div class="inst-hero"><img src="/icon-192.png" alt="" width="56" height="56"><div><small>Pasang sebagai aplikasi</small><h3 id="instT">SM-Crestboard</h3><span>${g.t}</span></div></div>
+      <ul class="inst-perks"><li>Terbuka langsung dari layar utama, tanpa mengetik alamat</li><li>Tampil penuh tanpa bilah browser</li><li>Tidak perlu unduh dari Play Store atau App Store</li></ul>
+      <ol class="inst-steps">${g.s.map(([ic,t],i)=>`<li><span class="n">${i+1}</span><span class="ic">${ic}</span><span class="tx">${t}</span></li>`).join('')}</ol>
+      <button type="button" class="inst-ok" data-x>Mengerti</button></div>`;
+    document.body.appendChild(box); requestAnimationFrame(()=>box.classList.add('on'));
+    box.addEventListener('click',e=>{ if(e.target===box||e.target.closest('[data-x]')) box.remove(); });
+    box.addEventListener('keydown',e=>{ if(e.key==='Escape') box.remove(); });
+    box.querySelector('.inst-ok').focus();
+  }
+  document.addEventListener('click',async e=>{ const b=e.target.closest('[data-install]'); if(!b) return;
+    if(deferred){ deferred.prompt(); try{ const c=await deferred.userChoice; if(c&&c.outcome==='accepted') btns().forEach(x=>x.hidden=true); }catch{} deferred=null; return; }
+    guide(); });
+  sync(); matchMedia('(display-mode: standalone)').addEventListener?.('change',sync);
 })();
 /* ===================== Peringatan penggunaan ===================== */
 (()=>{
