@@ -23,13 +23,14 @@ async function getAuth(force) {
   return auth;
 }
 
-async function profile(symbol) {
+async function profile(symbol, modules = 'assetProfile', whole = false) {
   const go = async (a) => {
-    const r = await fetch(`https://query1.finance.yahoo.com/v10/finance/quoteSummary/${encodeURIComponent(symbol)}?modules=assetProfile&crumb=${encodeURIComponent(a.crumb)}`,
+    const r = await fetch(`https://query1.finance.yahoo.com/v10/finance/quoteSummary/${encodeURIComponent(symbol)}?modules=${modules}&crumb=${encodeURIComponent(a.crumb)}`,
       { headers: { 'User-Agent': UA, cookie: a.cookie } });
     if (r.status === 401 || r.status === 403) return { retry: true };
     const j = await r.json().catch(() => null);
-    return { res: j?.quoteSummary?.result?.[0]?.assetProfile || null };
+    const x = j?.quoteSummary?.result?.[0] || null;
+    return { res: whole ? x : (x?.assetProfile || null) };
   };
   let out = await go(await getAuth(false));
   if (out.retry) out = await go(await getAuth(true));
@@ -50,6 +51,61 @@ async function one(code, sfxList) {
   return { code, sector: null, industry: null };
 }
 
+/* ---------- Mode fund: metrik untuk Penyaring fundamental ---------- */
+const TS = ['annualDilutedEPS', 'annualTotalRevenue', 'annualOperatingIncome', 'annualEBIT', 'annualTaxRateForCalcs', 'annualInvestedCapital'];
+const memoF = new Map(); const TTL_F = 12 * 3600 * 1000;
+async function series(symbol) {
+  const go = async (a) => {
+    const now = Math.floor(Date.now() / 1000), p1 = now - 7 * 365 * 86400;
+    const r = await fetch(`https://query1.finance.yahoo.com/ws/fundamentals-timeseries/v1/finance/timeseries/${encodeURIComponent(symbol)}?symbol=${encodeURIComponent(symbol)}&type=${TS.join(',')}&period1=${p1}&period2=${now}&merge=false&padTimeSeries=false&crumb=${encodeURIComponent(a.crumb)}`,
+      { headers: { 'User-Agent': UA, cookie: a.cookie } });
+    if (r.status === 401 || r.status === 403) return { retry: true };
+    const j = await r.json().catch(() => null);
+    const out = {};
+    for (const x of j?.timeseries?.result || []) { const t = x.meta?.type?.[0]; if (!t) continue;
+      out[t] = (x[t] || []).filter(Boolean).map((v) => ({ d: v.asOfDate, v: v.reportedValue?.raw })).filter((v) => Number.isFinite(v.v)).sort((p, q) => p.d.localeCompare(q.d)); }
+    return { res: out };
+  };
+  let o = await go(await getAuth(false));
+  if (o.retry) o = await go(await getAuth(true));
+  return o.res || {};
+}
+const num = (v) => (Number.isFinite(v?.raw) ? v.raw : Number.isFinite(v) ? v : null);
+const cagr = (arr, yrs) => { if (!arr || arr.length < yrs + 1) return null; const a = arr[arr.length - 1 - yrs].v, b = arr[arr.length - 1].v; return a > 0 && b > 0 ? Math.pow(b / a, 1 / yrs) - 1 : null; };
+async function fundOne(code, sfxList) {
+  for (const sfx of sfxList) {
+    const symbol = (code + sfx).toUpperCase(), hit = memoF.get(symbol);
+    if (hit && Date.now() - hit.t < TTL_F) return hit.v;
+    const x = await profile(symbol, 'assetProfile,financialData,defaultKeyStatistics,earningsTrend,summaryDetail', true);
+    if (!x) continue;
+    const S = await series(symbol).catch(() => ({}));
+    const fd = x.financialData || {}, ks = x.defaultKeyStatistics || {}, sd = x.summaryDetail || {}, tr = x.earningsTrend?.trend || [];
+    const g = (p) => num(tr.find((t) => t.period === p)?.growth);
+    const rev = S.annualTotalRevenue, eps = S.annualDilutedEPS, oi = S.annualOperatingIncome;
+    const last = (a) => (a && a.length ? a[a.length - 1].v : null);
+    let opmUp = null;
+    if (oi && rev && oi.length >= 2) {
+      const m = (i) => { const d = oi[oi.length - 1 - i]?.d, r = rev.find((z) => z.d === d)?.v; return r ? oi[oi.length - 1 - i].v / r : null; };
+      const m0 = m(0), m1 = m(1); if (m0 != null && m1 != null) opmUp = m0 > 0 && m0 > m1;
+    }
+    const ebit = last(S.annualEBIT), tax = last(S.annualTaxRateForCalcs), ic = last(S.annualInvestedCapital);
+    const de = num(fd.debtToEquity), peg = num(ks.pegRatio);
+    const v = {
+      code, sector: x.assetProfile?.sector || null,
+      eps0y: g('0y'), eps1y: g('+1y'), eps3y: cagr(eps, 3), rev3y: cagr(rev, 3),
+      salesQ: num(fd.revenueGrowth), salesY: rev && rev.length >= 2 && rev[rev.length - 2].v > 0 ? rev[rev.length - 1].v / rev[rev.length - 2].v - 1 : null,
+      roe: num(fd.returnOnEquity), roic: ebit != null && ic > 0 ? (ebit * (1 - (Number.isFinite(tax) ? tax : 0))) / ic : null,
+      opm: num(fd.operatingMargins), opmUp, npm: num(fd.profitMargins),
+      cr: num(fd.currentRatio), qr: num(fd.quickRatio), de: de == null ? null : de / 100,
+      pe: num(sd.trailingPE), fpe: num(ks.forwardPE), peg: peg ? peg : null,
+      fy: eps && eps.length ? eps[eps.length - 1].d : null,
+    };
+    memoF.set(symbol, { t: Date.now(), v });
+    return v;
+  }
+  return { code, missing: true };
+}
+
 export async function GET(req) {
   const u = new URL(req.url);
   const market = (u.searchParams.get('market') || 'ID').toUpperCase();
@@ -57,6 +113,13 @@ export async function GET(req) {
   if (!U || market === 'CS') return json({ error: 'Sektor hanya tersedia untuk saham' }, 400);
   const codes = [...new Set((u.searchParams.get('codes') || '').toUpperCase().split(',').map((c) => c.replace(/[^A-Z0-9.\-]/g, '')).filter(Boolean))].slice(0, 12);
   if (!codes.length) return json({ error: 'Parameter codes kosong' }, 400);
+  if (u.searchParams.get('mode') === 'fund') {
+    const out = new Array(codes.length); let k = 0;
+    const w = async () => { while (k < codes.length) { const i = k++; out[i] = await fundOne(codes[i], U.sfx).catch((e) => ({ code: codes[i], error: String(e.message || e) })); } };
+    try { await getAuth(false); } catch (e) { return json({ error: 'Gagal terhubung ke sumber data: ' + e.message }, 502); }
+    await Promise.all([w(), w(), w(), w()]);
+    return json({ market, items: out }, 200, 43200);
+  }
   try {
     const items = await Promise.all(codes.map((c) => one(c, U.sfx).catch(() => ({ code: c, sector: null, industry: null }))));
     return json({ market, items }, 200, 604800);
