@@ -19,6 +19,10 @@ async function networkFirst(req, key) {
   try {
     const res = await fetch(req);
     if (res.ok) cache.put(key || req, res.clone());
+    else if (res.status >= 500) { // sumber data gangguan: pakai salinan terakhir bila ada
+      const hit = await cache.match(key || req, { ignoreSearch: !key });
+      if (hit) return hit;
+    }
     return res;
   } catch (err) {
     const hit = await cache.match(key || req, { ignoreSearch: !key });

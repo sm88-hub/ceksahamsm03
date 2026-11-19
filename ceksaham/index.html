@@ -1811,7 +1811,7 @@
     </section>
   </main>
 
-  <footer>Data bersumber dari Yahoo Finance dan dapat tertunda 15–20 menit. Bukan rekomendasi investasi; setiap keputusan jual beli sepenuhnya menjadi tanggung jawab Anda. Grafik menggunakan <a href="https://www.tradingview.com/" target="_blank" rel="noopener">TradingView Lightweight Charts™</a>, Copyright © TradingView, Inc.
+  <footer>Data bersumber dari Yahoo Finance dan dapat tertunda 15–20 menit (cadangan bila terganggu: kurs referensi ECB via Frankfurter, kripto via Hyperliquid). Bukan rekomendasi investasi; setiap keputusan jual beli sepenuhnya menjadi tanggung jawab Anda. Grafik menggunakan <a href="https://www.tradingview.com/" target="_blank" rel="noopener">TradingView Lightweight Charts™</a>, Copyright © TradingView, Inc.
   <button type="button" class="ack-pill" data-ack-open><i>!</i>Ketentuan Penggunaan · Bukan Rekomendasi Investasi</button>
   <button type="button" class="inst-pill" data-install hidden><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m0 0-4-4m4 4 4-4"/><path d="M5 20h14"/></svg></i>Pasang sebagai aplikasi</button>
   <a class="kopi" href="https://trakteer.id/sm-crestboard" target="_blank" rel="noopener" aria-label="Traktir kopi admin lewat Trakteer (membuka tab baru)">
@@ -1888,7 +1888,8 @@
       <li><b>Keterbatasan Data</b> Data harga dan laporan keuangan bersumber dari pihak ketiga serta dapat mengalami keterlambatan 15–20 menit atau ketidakakuratan. Mohon verifikasi kembali melalui perusahaan efek atau sumber resmi sebelum bertransaksi.</li>
       <li><b>Data Akun</b> Apabila Anda masuk ke akun, alamat email, waktu akses, halaman yang dibuka, dan jenis perangkat dicatat untuk keperluan keamanan dan pemantauan layanan. Watchlist, jurnal, dan catatan Anda disimpan di Firebase (Google) dan hanya ditampilkan kepada Anda. Pengelola tidak membuka, membaca, menganalisis, maupun membagikan isinya; akses teknis hanya dilakukan atas permintaan Anda, misalnya untuk menangani kendala atau penghapusan data.</li>
       <li><b>Penghapusan Akun</b> Anda dapat menghapus akun beserta seluruh datanya kapan saja melalui menu akun, pilih <i>Hapus akun saya</i>. Konfirmasi penghapusan dikirim ke email akun Anda. Pertanyaan lain dapat disampaikan ke <a href="mailto:smcrestboard@gmail.com">smcrestboard@gmail.com</a>.</li>
-      <li><b>Tidak Berafiliasi</b> SM-Crestboard adalah proyek independen dan tidak berafiliasi dengan Bursa Efek Indonesia, bursa lain, Yahoo, maupun pemilik metode yang dirujuk. CAN SLIM® merupakan merek dagang milik pemiliknya dan disebut hanya sebagai rujukan metode.</li>
+      <li><b>Sumber Data dan Hak Pihak Ketiga</b> Data harga dan laporan keuangan diambil dari Yahoo Finance. Apabila sumber tersebut terganggu, kurs memakai kurs referensi bank sentral (ECB) melalui Frankfurter dan harga kripto memakai API publik Hyperliquid; sumber yang sedang dipakai selalu dicantumkan. Seluruh data tetap menjadi milik penyedianya dan ditampilkan apa adanya tanpa jaminan. SM-Crestboard tidak memperjualbelikan data dan tidak memungut biaya dari pengguna. Penyedia data yang berkeberatan dapat menghubungi <a href="mailto:smcrestboard@gmail.com">smcrestboard@gmail.com</a>, dan penggunaan datanya akan segera dihentikan atau disesuaikan.</li>
+      <li><b>Tidak Berafiliasi</b> SM-Crestboard adalah proyek independen dan tidak berafiliasi dengan Bursa Efek Indonesia, bursa lain, Yahoo, Bank Sentral Eropa, Hyperliquid, penyedia data lainnya, maupun pemilik metode yang dirujuk. CAN SLIM® merupakan merek dagang milik pemiliknya dan disebut hanya sebagai rujukan metode.</li>
     </ul>
     <label class="ack-check"><input type="checkbox" id="ackCk"><span>Saya telah membaca, memahami, dan menyetujui bahwa seluruh keputusan investasi sepenuhnya merupakan tanggung jawab saya pribadi.</span></label>
     <button type="button" class="ack-go" id="ackGo" disabled><span>Saya Memahami dan Setuju</span></button>
@@ -2053,7 +2054,7 @@ async function fetchChart(symbol, range, interval, tz=M().tz){
     text = await res.text();
   }catch(e){ throw new ApiDown(e.message); }
   let j; try{ j=JSON.parse(text); }catch{ throw new ApiDown('Respons bukan JSON'); }
-  if(!j.chart) throw new ApiDown(j.error || 'Format tidak dikenal');
+  if(!j.chart){ const e=new ApiDown(j.error || 'Format tidak dikenal'); e.down=!!j.down; throw e; }
   return parseYahoo(j, tz);
 }
 function dedupeDaily(bars){ const m=new Map(); bars.forEach(b=>m.set(b.key,b)); return [...m.values()]; }
@@ -2109,6 +2110,13 @@ function normalize(raw, mk){
   if(mk==='KR') return t.replace(/[^0-9A-Z]/g,'');
   if(mk==='HK'){ const d=t.replace(/\D/g,''); return d ? d.slice(-5).padStart(4,'0') : ''; }
   return t.replace(/[^A-Z0-9]/g,'');
+}
+/* Nama kontrak berjangka dari Yahoo, mis. "Gold Dec 26" = kontrak jatuh tempo Desember 2026 */
+function metalName(meta,t,short){
+  const nm=t==='PERAK'?'Perak':'Emas', BL={Jan:'Jan',Feb:'Feb',Mar:'Mar',Apr:'Apr',May:'Mei',Jun:'Jun',Jul:'Jul',Aug:'Agu',Sep:'Sep',Oct:'Okt',Nov:'Nov',Dec:'Des'};
+  const mt=/(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+(\d{2})\b/.exec(meta?.shortName||meta?.longName||'');
+  const k=mt?`kontrak COMEX ${BL[mt[1]]} 20${mt[2]}`:'kontrak berjangka COMEX';
+  return short?`${nm} · ${k}`:`${nm} · ${k} (tertunda ±15 menit)`;
 }
 const symsFor=(m,t)=>m.symMap ? (m.symMap[t]?[m.symMap[t]]:[]) : m.suffixes.map(s=>t+s);
 function hashFor(mk,t){ return mk==='ID' ? t : `${mk}-${t}`; }
@@ -2169,7 +2177,7 @@ async function fxLoad(force){
     const j=await fetch(`${CONFIG.apiPath}?symbol=${encodeURIComponent(sym)}&range=1d&interval=15m`).then(r=>r.json());
     const r=j.chart?.result?.[0]; const cl=fxMed((r?.indicators?.quote?.[0]?.close||[]).filter(v=>v>0)); const px=r?.meta?.regularMarketPrice||cl[cl.length-1];
     if(!(px>0)) return null;
-    return {k,nm,sg,col,px,s:cl.slice(-40),t:r?.meta?.regularMarketTime||null};
+    return {k,nm,sg,col,px,s:cl.slice(-40),t:r?.meta?.regularMarketTime||null,src:r?.meta?.dataSource||''};
   }catch{ return null; } }));
   fxS.busy=false;
   const data=out.filter(Boolean); if(!data.length){ if(!fxS.data) box.hidden=true; return; }
@@ -2187,7 +2195,7 @@ let krSel='USD';
 function krLead(from){
   const lead=$('#fxLead'); if(!fxS.data) return;
   const u=fxS.data.find(x=>x.k===krSel)||fxS.data[0]; krSel=u.k;
-  lead.innerHTML=`<div class="kr-lab"><i></i>Kurs rupiah</div><div class="kr-pair">${u.nm} · ${u.k}/IDR</div><div class="kr-big"><small>Rp</small><span data-fxc>${fxNum(u)}</span></div>${fxSpark(u.s,200,34,true)}<div class="kr-when">${u.t?'Diperbarui '+new Date(u.t*1000).toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'})+' · per 1 '+u.k:''}</div>`;
+  lead.innerHTML=`<div class="kr-lab"><i></i>Kurs rupiah</div><div class="kr-pair">${u.nm} · ${u.k}/IDR</div><div class="kr-big"><small>Rp</small><span data-fxc>${fxNum(u)}</span></div>${fxSpark(u.s,200,34,true)}<div class="kr-when">${u.t?'Diperbarui '+new Date(u.t*1000).toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'})+' · per 1 '+u.k:''}${u.src?' · sumber cadangan: kurs referensi ECB':''}</div>`;
   document.querySelectorAll('#fxRow .kr-c').forEach(c=>{ const on=c.dataset.krk===u.k; c.classList.toggle('on',on); c.setAttribute('aria-pressed',on); });
   const el=lead.querySelector('[data-fxc]');
   if(el && !matchMedia('(prefers-reduced-motion: reduce)').matches){ const to=u.px, a=from&&from!==to?from:to*0.985, t0=performance.now(), d=to>=1000?0:to>=10?2:3;
@@ -2263,13 +2271,15 @@ async function load(raw, silent, mk){
     if(!d) throw lastErr;
     i=await fetchChart(state.symbol,'5d','5m').catch(e=>{ if(e instanceof ApiDown) throw e; return {meta:{},bars:[]}; });
     if(state.ticker!==t) return;
-    state.daily=d; state.intra=i; state.demo=false; banner(null);
+    state.daily=d; state.intra=i; state.demo=false;
+    banner(d.meta?.dataSource ? `<b>Sumber utama sedang gangguan.</b> Data sementara diambil dari ${esc(d.meta.dataSource)}. ${esc(d.meta.dataNote||'')}` : null);
   }catch(e){
     if(e instanceof NotFound){
       banner(`Kode <b>${esc(t)}</b> tidak ditemukan di bursa ${m.name}. Periksa ejaannya (contoh: ${m.quick.slice(0,3).map(x=>x[0]).join(', ')}).`,'err');
       document.body.classList.remove('loading'); return;
     }
     if(silent && !state.demo) return;
+    if(e && e.down){ banner('<b>Sumber data sedang gangguan.</b> Yahoo Finance belum bisa dihubungi dan belum ada sumber cadangan berizin untuk aset ini. Coba lagi beberapa menit lagi; data yang pernah Anda buka di perangkat ini tetap ditampilkan bila tersedia.','err'); document.body.classList.remove('loading'); return; }
     const demo=makeDemo(t); state.daily=demo.daily; state.intra=demo.intra; state.demo=true;
     banner(navigator.onLine===false ? '<b>Anda sedang offline.</b> Saham ini belum pernah dibuka sebelumnya sehingga yang ditampilkan adalah data contoh. Sambungkan internet untuk memperoleh data asli.' : '<b>Mode contoh.</b> Angka di bawah merupakan data simulasi karena sumber data belum dapat dijangkau. Silakan muat ulang beberapa saat lagi.');
   }
@@ -2316,7 +2326,7 @@ function render(silent){
 
   $('#code').textContent=state.ticker;
   $('#exch').textContent= state.demo ? 'Contoh' : m.tag;
-  $('#name').textContent=meta.longName||meta.shortName||meta.symbol||'';
+  $('#name').textContent=M().metal?metalName(meta,state.ticker):(meta.longName||meta.shortName||meta.symbol||'');
   { const pi=meta.perp, el=$('#perpInfo');
     if(pi && !state.demo){ el.hidden=false; const fr=pi.funding*100, cls=fr>=0?'pos':'neg';
       el.innerHTML=`<span class="${cls}" title="Funding per jam di Hyperliquid. Positif: posisi long membayar short (pasar condong beli). Negatif: sebaliknya.">Funding <b>${fr>=0?'+':''}${fmt(fr,4)}%</b>/jam · ${fmt(pi.fundingAnn*100,1)}%/thn</span><span title="Nilai seluruh posisi futures yang masih terbuka">Open interest <b>$${short(pi.oiUsd)}</b></span><span>Mark <b>${fp(pi.markPx)}</b></span><span>Leverage maks <b>${pi.maxLev}×</b></span>`; }
@@ -2826,7 +2836,7 @@ async function wlFetchOne(x){
   const done=bars.slice(0,idx+1); let acc=null, st=null; try{ acc=wxAcc(done); st=wxStage(done); }catch{}
   const cl=done.map(b=>b.c), smaN=k=>cl.length>=k?cl.slice(-k).reduce((a,v)=>a+v,0)/k:null, l10=done.slice(-10);
   const tr={ ma20:smaN(20), ma50:smaN(50), lo10:Math.min(...l10.map(b=>b.l)), hi10:Math.max(...l10.map(b=>b.h)), key:ref.key };
-  return { name:d.meta.longName||d.meta.shortName||x.t, close:ref.c, price: live?live.c:ref.c, live:!!live, vr: avgV? ref.v/avgV : 0, buy, refKey:ref.key, acc, st, tr };
+  return { name:m.metal?metalName(d.meta,x.t,true):(d.meta.longName||d.meta.shortName||x.t), close:ref.c, price: live?live.c:ref.c, live:!!live, vr: avgV? ref.v/avgV : 0, buy, refKey:ref.key, acc, st, tr };
 }
 async function wlRefresh(){
   if(wl.busy || !wl.items.length){ wlRender(); return; }
