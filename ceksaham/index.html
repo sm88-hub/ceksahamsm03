@@ -144,6 +144,22 @@
   .perp-info .pos b{color:#5CEBA9}.perp-info .neg b{color:#FF8D76}
   .mkt-strip{display:flex;align-items:center;gap:4px 8px;flex-wrap:wrap;margin:-8px 0 14px;padding:9px 14px;border:1px solid var(--rule);border-radius:12px;background:var(--surface);color:var(--ink2);font-size:13px;text-decoration:none;line-height:1.45;transition:border-color .2s}
   .mkt-strip[hidden]{display:none}
+  .fx{margin:-6px 0 14px;padding:10px 12px 11px;border:1px solid var(--rule);border-radius:14px;background:var(--surface)}
+  .fx[hidden]{display:none}
+  .fx-h{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:12px;color:var(--ink3);margin:0 2px 8px}
+  .fx-h b{font:800 13px 'Space Grotesk','Plus Jakarta Sans',sans-serif;color:var(--ink);letter-spacing:-.01em}
+  .fx-i{margin-left:auto;width:20px;height:20px;border-radius:50%;border:1px solid var(--rule2);background:transparent;color:var(--ink3);font:800 11px Georgia,serif;font-style:italic;cursor:pointer;flex:none}
+  .fx-i[aria-expanded="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+  .fx-row{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;scroll-snap-type:x proximity;padding-bottom:1px}
+  .fx-row::-webkit-scrollbar{display:none}
+  .fx-c{flex:none;scroll-snap-align:start;display:flex;flex-direction:column;gap:1px;min-width:92px;padding:7px 10px;border-radius:11px;background:var(--sunk);animation:fxIn .4s ease both;animation-delay:calc(var(--i,0)*40ms)}
+  .fx-c em{font-style:normal;font-size:11px;font-weight:800;color:var(--ink3);letter-spacing:.02em}
+  .fx-c b{font:800 14px 'Space Grotesk',sans-serif;color:var(--ink);font-variant-numeric:tabular-nums}
+  .fx-c.sk{min-height:44px;background:linear-gradient(90deg,var(--sunk) 25%,var(--rule) 50%,var(--sunk) 75%);background-size:200% 100%;animation:sh 1.3s linear infinite}
+  .fx-note{margin:8px 2px 0;font-size:11.5px;line-height:1.5;color:var(--ink3)}
+  .fx-note[hidden]{display:none}
+  @media(max-width:640px){ .fx-h span{order:3;flex-basis:100%} }
+  @keyframes fxIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
   .mkt-strip:hover{border-color:var(--rule2)}
   .mkt-strip>i{width:8px;height:8px;border-radius:50%;background:var(--ink3);flex:none}
   .mkt-strip.ok>i{background:var(--up)}.mkt-strip.mid>i{background:var(--warn)}.mkt-strip.bad>i{background:var(--down)}
@@ -1202,6 +1218,11 @@
   <div class="cx-toggle" id="cxToggle" role="tablist" aria-label="Jenis pasar kripto" hidden><span>Pasar kripto</span><button type="button" data-mk="CS">Spot</button><button type="button" data-mk="CF">Futures <small>perpetual</small></button></div>
   <div class="chips" id="chips"></div>
   <a class="mkt-strip" id="mktStrip" href="scanner.html" hidden></a>
+  <section class="fx" id="fx" aria-label="Kurs rupiah" hidden>
+    <div class="fx-h"><b>Kurs rupiah</b><span id="fxSub">Rupiah per 1 unit mata uang asing</span><button type="button" class="fx-i" id="fxInfo" aria-expanded="false" aria-controls="fxNote" title="Tentang data kurs">i</button></div>
+    <div class="fx-row" id="fxRow"></div>
+    <p class="fx-note" id="fxNote" hidden>Kurs referensi pasar internasional dari Yahoo Finance, dapat tertunda atau berbeda dari kurs di tempat lain, dan bukan kurs jual-beli bank, money changer, atau kurs resmi Bank Indonesia (JISDOR). Ditampilkan hanya sebagai informasi, bukan ajakan untuk bertransaksi valuta asing.</p>
+  </section>
   <div id="banner" class="banner" role="status"></div>
 
   <main id="app" class="swap">
@@ -2050,9 +2071,36 @@ async function mktStrip(){
   const when= fresh ? `diperbarui ${new Date(st.at).toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'})}` : '';
   el.innerHTML=`<i></i>${parts.map(x=>`<span>${x}</span>`).join(sep)}${when?sep+`<span>${when}</span>`:''}<span class="go">${fresh?'Lihat di Scanner →':'Hitung kondisi lengkap di Scanner →'}</span>`;
 }
-document.addEventListener('visibilitychange',()=>{ if(!document.hidden) mktStrip(); });
+document.addEventListener('visibilitychange',()=>{ if(!document.hidden){ mktStrip(); fxLoad(); } });
+/* Kurs rupiah: murni informasi, tanpa tautan atau ajakan transaksi */
+const FX=[['USD','IDR=X'],['EUR','EURIDR=X'],['SGD','SGDIDR=X'],['JPY','JPYIDR=X'],['CNY','CNYIDR=X'],['AUD','AUDIDR=X'],['GBP','GBPIDR=X'],['MYR','MYRIDR=X'],['HKD','HKDIDR=X'],['KRW','KRWIDR=X']];
+const fxS={at:0,busy:false,data:null};
+async function fxLoad(){
+  const box=$('#fx'), row=$('#fxRow'); if(!box||!row||fxS.busy) return;
+  if(fxS.data && Date.now()-fxS.at<10*60e3) return fxPaint();
+  try{ const c=JSON.parse(sessionStorage.getItem('smcb_fx')||'null'); if(c && Date.now()-c.at<10*60e3){ fxS.data=c.data; fxS.at=c.at; return fxPaint(); } }catch{}
+  fxS.busy=true; if(!fxS.data){ box.hidden=false; row.innerHTML='<span class="fx-c sk"></span>'.repeat(6); }
+  const out=await Promise.all(FX.map(async([k,sym])=>{ try{
+    const j=await fetch(`${CONFIG.apiPath}?symbol=${encodeURIComponent(sym)}&range=1d&interval=15m`).then(r=>r.json());
+    const r=j.chart?.result?.[0]; const cl=(r?.indicators?.quote?.[0]?.close||[]).filter(v=>v>0); const px=r?.meta?.regularMarketPrice||cl[cl.length-1];
+    if(!(px>0)) return null;
+    return {k,px,t:r?.meta?.regularMarketTime||null};
+  }catch{ return null; } }));
+  fxS.busy=false;
+  const data=out.filter(Boolean); if(!data.length){ if(!fxS.data) box.hidden=true; return; }
+  fxS.data=data; fxS.at=Date.now(); try{ sessionStorage.setItem('smcb_fx',JSON.stringify({at:fxS.at,data})); }catch{}
+  fxPaint();
+}
+function fxPaint(){
+  const box=$('#fx'), row=$('#fxRow'); if(!fxS.data) return;
+  box.hidden=false;
+  row.innerHTML=fxS.data.map((x,i)=>{ const d=x.px>=1000?0:x.px>=10?2:3;
+    return `<span class="fx-c" style="--i:${i}"><em>${x.k}</em><b>Rp${fmt(x.px,d)}</b></span>`; }).join('');
+  const t=Math.max(...fxS.data.map(x=>x.t||0)); $('#fxSub').textContent='Rupiah per 1 unit mata uang asing'+(t?` · pembaruan terakhir ${new Date(t*1000).toLocaleString('id-ID',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}`:'');
+}
+document.addEventListener('click',e=>{ const b=e.target.closest('#fxInfo'); if(!b) return; const n=$('#fxNote'), open=n.hidden; n.hidden=!open; b.setAttribute('aria-expanded',open); });
 function paintMarketUI(){
-  setTimeout(mktStrip,0);
+  setTimeout(mktStrip,0); setTimeout(fxLoad,600);
   const m=M();
   document.querySelectorAll('.mk').forEach(b=>{ const on=b.dataset.mk===state.market || (b.dataset.mk==='CS' && state.market==='CF'); b.classList.toggle('active',on); b.setAttribute('aria-selected',on); });
   const cx=$('#cxToggle'); if(cx){ cx.hidden=!m.crypto; cx.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.mk===state.market)); }
