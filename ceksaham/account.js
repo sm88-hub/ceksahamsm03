@@ -178,7 +178,7 @@
         <ul class="au-pts">
           <li><i>✓</i><span>Watchlist, Price to Watch, dan jurnal trading tersimpan aman pada akun Anda.</span></li>
           <li><i>✓</i><span>Akses berkelanjutan dari perangkat mana pun tanpa pencadangan manual.</span></li>
-          <li><i>✓</i><span>Data bersifat pribadi dan hanya dapat diakses oleh pemilik akun.</span></li>
+          <li><i>✓</i><span>Data bersifat pribadi: hanya ditampilkan kepada Anda dan tidak dibuka maupun dibagikan oleh pengelola.</span></li>
         </ul>
       </aside>
       <section class="au-main">
