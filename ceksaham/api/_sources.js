@@ -31,7 +31,7 @@ export async function yfetch(url, opt = {}) {
   throw last || new Error('Yahoo tidak dapat dihubungi');
 }
 
-const DAYS = { '1d': 7, '5d': 10, '1mo': 31, '3mo': 93, '6mo': 186, '1y': 366, '2y': 731 };
+const DAYS = { '1d': 7, '5d': 10, '1mo': 31, '3mo': 93, '6mo': 186, '1y': 366, '2y': 731, '5y': 1827 };
 const iso = (d) => new Date(d).toISOString().slice(0, 10);
 
 function chartOf(symbol, rows, meta) {

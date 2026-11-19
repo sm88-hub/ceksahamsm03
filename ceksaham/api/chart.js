@@ -3,7 +3,7 @@
 import { yfetch, fxBackup, cryptoBackup } from './_sources.js';
 // Dipanggil oleh halaman lewat: /api/chart?symbol=BBCA.JK&range=1y&interval=1d
 
-const RANGES = new Set(['1d', '5d', '1mo', '3mo', '6mo', '1y', '2y']);
+const RANGES = new Set(['1d', '5d', '1mo', '3mo', '6mo', '1y', '2y', '5y']);
 const INTERVALS = new Set(['1m', '5m', '15m', '30m', '1h', '1d', '1wk']);
 
 export async function GET(req) {

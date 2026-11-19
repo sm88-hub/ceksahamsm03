@@ -91,6 +91,10 @@ async function one(code, sfxList) {
       mcap: val(sd.marketCap) ?? val(pr.marketCap),
       shares,
       exDiv: val(sd.exDividendDate),
+      // tambahan untuk Peta 5 sisi dan konsensus analis (pendapat pihak ketiga yang dihimpun Yahoo)
+      revG: val(fd.revenueGrowth), epsG: val(fd.earningsGrowth), cr: val(fd.currentRatio), opm: val(fd.operatingMargins), peg: val(ks.pegRatio), beta: val(ks.beta),
+      tgtMean: val(fd.targetMeanPrice), tgtHigh: val(fd.targetHighPrice), tgtLow: val(fd.targetLowPrice), recMean: val(fd.recommendationMean),
+      nAnalyst: val(fd.numberOfAnalystOpinions),
       fxNote: fc && cur && fc !== cur ? `Laporan keuangan dalam ${fc}; nilai buku dikonversi ke ${cur}` : null,
     };
     memo.set(symbol, { t: Date.now(), v });

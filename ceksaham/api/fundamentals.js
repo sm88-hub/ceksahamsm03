@@ -7,6 +7,7 @@ const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,
 const TYPES = [
   'quarterlyDilutedEPS', 'quarterlyBasicEPS', 'quarterlyTotalRevenue', 'quarterlyNetIncome', 'quarterlyStockholdersEquity',
   'annualDilutedEPS', 'annualBasicEPS', 'annualTotalRevenue', 'annualNetIncome', 'annualStockholdersEquity',
+  'trailingDilutedEPS', // EPS 12 bulan bergulir per kuartal: dasar grafik PER historis (PER band)
 ];
 
 let auth = null; // { cookie, crumb, t } disimpan selama fungsi masih "hangat"
@@ -29,14 +30,14 @@ async function fetchSeries(symbol, a) {
     + `?symbol=${encodeURIComponent(symbol)}&type=${TYPES.join(',')}&period1=${p1}&period2=${now}&merge=false&padTimeSeries=false`;
   const headers = { 'User-Agent': UA };
   if (a) { url += `&crumb=${encodeURIComponent(a.crumb)}`; headers.cookie = a.cookie; }
-  const r = await fetch(url, { headers });
+  const r = await yfetch(url, { headers });
   const text = await r.text();
   let j = null; try { j = JSON.parse(text); } catch {}
   return { status: r.status, j };
 }
 
 export function normalize(symbol, j) {
-  const out = { symbol, currency: null, q: {}, a: {} };
+  const out = { symbol, currency: null, q: {}, a: {}, t: {} };
   const results = j?.timeseries?.result || [];
   for (const res of results) {
     const type = res?.meta?.type?.[0];
@@ -48,8 +49,8 @@ export function normalize(symbol, j) {
       .sort((a, b) => (a.d < b.d ? -1 : 1));
     if (!pts.length) continue;
     out.currency = out.currency || pts[pts.length - 1].cur || null;
-    const key = type.replace(/^(quarterly|annual)/, '');
-    (type.startsWith('quarterly') ? out.q : out.a)[key] = pts.map(({ d, v }) => ({ d, v }));
+    const key = type.replace(/^(quarterly|annual|trailing)/, '');
+    (type.startsWith('quarterly') ? out.q : type.startsWith('trailing') ? out.t : out.a)[key] = pts.map(({ d, v }) => ({ d, v }));
   }
   out.empty = !Object.keys(out.q).length && !Object.keys(out.a).length;
   return out;
