@@ -1,6 +1,7 @@
 // Vercel Function: data fundamental (EPS, pendapatan, laba bersih, ekuitas) dari Yahoo Finance.
 // Dipanggil oleh halaman lewat: /api/fundamentals?symbol=AAPL
 // Endpoint Yahoo ini tidak resmi. Kalau Yahoo meminta "crumb", fungsi ini mengambilnya otomatis.
+import { yfetch } from './_sources.js';
 
 const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36';
 const TYPES = [
@@ -15,7 +16,7 @@ async function getAuth(force) {
   const r1 = await fetch('https://fc.yahoo.com', { headers: { 'User-Agent': UA }, redirect: 'manual' });
   const raw = typeof r1.headers.getSetCookie === 'function' ? r1.headers.getSetCookie() : [r1.headers.get('set-cookie') || ''];
   const cookie = raw.flatMap(c => c.split(/,(?=\s*[A-Za-z0-9_]+=)/)).map(c => c.split(';')[0].trim()).filter(Boolean).join('; ');
-  const r2 = await fetch('https://query1.finance.yahoo.com/v1/test/getcrumb', { headers: { 'User-Agent': UA, cookie } });
+  const r2 = await yfetch('https://query1.finance.yahoo.com/v1/test/getcrumb', { headers: { 'User-Agent': UA, cookie } });
   const crumb = (await r2.text()).trim();
   if (!crumb || crumb.length > 40 || /[<{\s]/.test(crumb)) throw new Error('Gagal mengambil crumb Yahoo');
   auth = { cookie, crumb, t: Date.now() };

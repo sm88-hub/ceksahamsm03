@@ -27,10 +27,11 @@ const unesc = (s) => String(s || '').replace(/<!\[CDATA\[|\]\]>/g, '').replace(/
 async function fetchOne(mk, code, name) {
   const key = `${mk}:${code}`, hit = memo.get(key);
   if (hit && Date.now() - hit.t < TTL) return hit.v;
-  const id = mk === 'ID';
+  const id = mk === 'ID' || mk === 'KM'; // KM = emas & perak: berita berbahasa Indonesia
   const crypto = mk === 'CS' || mk === 'CF';
   let q;
-  if (id) q = `"${code}" saham`;
+  if (mk === 'KM') q = code === 'PERAK' ? '"harga perak" OR "silver price"' : '"harga emas" OR "emas Antam"';
+  else if (id) q = `"${code}" saham`;
   else if (mk === 'US') q = `"${code}" stock`;
   else if (crypto) q = `${name && name !== code ? `"${name}"` : `"${code}"`} crypto`;
   else q = `${name && name !== code ? `"${name.replace(/\b(Inc|Corp|Co|Ltd|Holdings?|Group|Corporation|Company|Limited)\.?$/i, '').trim()}"` : `"${code}"`} stock`;

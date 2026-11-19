@@ -4,6 +4,7 @@
 // Sumber: Yahoo Finance quoteSummary (tidak resmi). Beberapa emiten melaporkan
 // keuangannya dalam mata uang lain (misalnya PTRO/ADRO dalam USD), sehingga
 // nilai buku per saham dikonversi ke mata uang harga sebelum PBV dihitung.
+import { yfetch } from './_sources.js';
 
 import { UNIVERSE } from './rs.js';
 
@@ -18,7 +19,7 @@ async function getAuth(force) {
   const r1 = await fetch('https://fc.yahoo.com', { headers: { 'User-Agent': UA }, redirect: 'manual' });
   const raw = typeof r1.headers.getSetCookie === 'function' ? r1.headers.getSetCookie() : [r1.headers.get('set-cookie') || ''];
   const cookie = raw.flatMap((c) => c.split(/,(?=\s*[A-Za-z0-9_]+=)/)).map((c) => c.split(';')[0].trim()).filter(Boolean).join('; ');
-  const r2 = await fetch('https://query1.finance.yahoo.com/v1/test/getcrumb', { headers: { 'User-Agent': UA, cookie } });
+  const r2 = await yfetch('https://query1.finance.yahoo.com/v1/test/getcrumb', { headers: { 'User-Agent': UA, cookie } });
   const crumb = (await r2.text()).trim();
   if (!crumb || crumb.length > 40 || /[<{\s]/.test(crumb)) throw new Error('Gagal mengambil crumb Yahoo');
   auth = { cookie, crumb, t: Date.now() };
@@ -32,7 +33,7 @@ const val = (x) => {
 
 async function summary(symbol) {
   const go = async (a) => {
-    const r = await fetch(`https://query1.finance.yahoo.com/v10/finance/quoteSummary/${encodeURIComponent(symbol)}?modules=summaryDetail,defaultKeyStatistics,financialData,price&crumb=${encodeURIComponent(a.crumb)}`,
+    const r = await yfetch(`https://query1.finance.yahoo.com/v10/finance/quoteSummary/${encodeURIComponent(symbol)}?modules=summaryDetail,defaultKeyStatistics,financialData,price&crumb=${encodeURIComponent(a.crumb)}`,
       { headers: { 'User-Agent': UA, cookie: a.cookie } });
     if (r.status === 401 || r.status === 403) return { retry: true };
     const j = await r.json().catch(() => null);
@@ -47,7 +48,7 @@ async function fxRate(from, to) {
   if (!from || !to || from === to) return 1;
   const k = from + to, hit = fxMemo.get(k);
   if (hit && Date.now() - hit.t < TTL) return hit.v;
-  const r = await fetch(`https://query1.finance.yahoo.com/v8/finance/chart/${k}=X?range=5d&interval=1d`, { headers: { 'User-Agent': UA } });
+  const r = await yfetch(`https://query1.finance.yahoo.com/v8/finance/chart/${k}=X?range=5d&interval=1d`, { headers: { 'User-Agent': UA } });
   const j = await r.json().catch(() => null);
   const v = val(j?.chart?.result?.[0]?.meta?.regularMarketPrice);
   if (!v) return null;

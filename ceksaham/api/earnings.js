@@ -6,6 +6,7 @@
 // EPS aktual, dan selisihnya. Bila endpoint itu tidak merespons, jadwal rilis
 // berikutnya diambil dari data kuotasi Yahoo (earningsTimestamp).
 // Keduanya tidak resmi; hasil disimpan 6 jam di CDN Vercel.
+import { yfetch } from './_sources.js';
 
 import { UNIVERSE } from './rs.js';
 
@@ -19,7 +20,7 @@ async function getAuth(force) {
   const r1 = await fetch('https://fc.yahoo.com', { headers: { 'User-Agent': UA }, redirect: 'manual' });
   const raw = typeof r1.headers.getSetCookie === 'function' ? r1.headers.getSetCookie() : [r1.headers.get('set-cookie') || ''];
   const cookie = raw.flatMap((c) => c.split(/,(?=\s*[A-Za-z0-9_]+=)/)).map((c) => c.split(';')[0].trim()).filter(Boolean).join('; ');
-  const r2 = await fetch('https://query1.finance.yahoo.com/v1/test/getcrumb', { headers: { 'User-Agent': UA, cookie } });
+  const r2 = await yfetch('https://query1.finance.yahoo.com/v1/test/getcrumb', { headers: { 'User-Agent': UA, cookie } });
   const crumb = (await r2.text()).trim();
   if (!crumb || crumb.length > 40 || /[<{\s]/.test(crumb)) throw new Error('Gagal mengambil crumb Yahoo');
   auth = { cookie, crumb, t: Date.now() };
@@ -65,7 +66,7 @@ async function fromCalendar(market, year, map) {
     },
   };
   const call = async (a, offset) => {
-    const r = await fetch(`https://query1.finance.yahoo.com/v1/finance/visualization?lang=en-US&region=US&crumb=${encodeURIComponent(a.crumb)}`, {
+    const r = await yfetch(`https://query1.finance.yahoo.com/v1/finance/visualization?lang=en-US&region=US&crumb=${encodeURIComponent(a.crumb)}`, {
       method: 'POST', headers: { 'User-Agent': UA, cookie: a.cookie, 'content-type': 'application/json' }, body: JSON.stringify({ ...body, offset }),
     });
     if (r.status === 401 || r.status === 403) return null;
@@ -101,7 +102,7 @@ async function fromCalendar(market, year, map) {
 async function fromQuote(market, year, map) {
   const syms = [...map.keys()].join(',');
   const call = async (a) => {
-    const r = await fetch(`https://query1.finance.yahoo.com/v7/finance/quote?symbols=${encodeURIComponent(syms)}&crumb=${encodeURIComponent(a.crumb)}`, { headers: { 'User-Agent': UA, cookie: a.cookie } });
+    const r = await yfetch(`https://query1.finance.yahoo.com/v7/finance/quote?symbols=${encodeURIComponent(syms)}&crumb=${encodeURIComponent(a.crumb)}`, { headers: { 'User-Agent': UA, cookie: a.cookie } });
     if (r.status === 401 || r.status === 403) return null;
     return (await r.json().catch(() => null))?.quoteResponse?.result || null;
   };

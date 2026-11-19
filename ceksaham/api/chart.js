@@ -1,4 +1,6 @@
 // Vercel Function: perantara ke Yahoo Finance supaya browser tidak diblokir (CORS).
+// Bila Yahoo gangguan: server Yahoo cadangan, lalu sumber cadangan per jenis aset (lihat _sources.js).
+import { yfetch, fxBackup, cryptoBackup } from './_sources.js';
 // Dipanggil oleh halaman lewat: /api/chart?symbol=BBCA.JK&range=1y&interval=1d
 
 const RANGES = new Set(['1d', '5d', '1mo', '3mo', '6mo', '1y', '2y']);
@@ -17,21 +19,35 @@ export async function GET(req) {
   const target = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}`
     + `?range=${range}&interval=${interval}&includePrePost=false`;
 
+  let res = null, body = '';
   try {
-    const res = await fetch(target, { headers: { 'User-Agent': 'Mozilla/5.0 (CekSaham)' } });
-    let body = await res.text();
-    if (res.ok && interval === '1d') body = fillLastClose(body);
-    return new Response(body, {
-      status: res.status,
-      headers: {
-        'content-type': 'application/json; charset=utf-8',
-        // simpan di cache 60 detik supaya hemat kuota & cepat
-        'cache-control': 'public, max-age=60, s-maxage=60, stale-while-revalidate=30',
-      },
+    res = await yfetch(target);
+    body = await res.text();
+    if (res.ok) {
+      if (interval === '1d') body = fillLastClose(body);
+      return new Response(body, {
+        status: 200,
+        headers: {
+          'content-type': 'application/json; charset=utf-8',
+          'x-data-source': 'yahoo',
+          // simpan di cache 60 detik supaya hemat kuota & cepat
+          'cache-control': 'public, max-age=60, s-maxage=60, stale-while-revalidate=30',
+        },
+      });
+    }
+    // 404 dari Yahoo = kode memang tidak ada; jangan cari ke sumber lain
+    if (res.status === 404) return new Response(body, { status: 404, headers: { 'content-type': 'application/json; charset=utf-8' } });
+  } catch { /* lanjut ke cadangan */ }
+
+  // Sumber cadangan (hanya yang izinnya jelas untuk ditampilkan)
+  try {
+    const alt = (await fxBackup(symbol, range)) || (await cryptoBackup(symbol, range, interval));
+    if (alt) return new Response(JSON.stringify(alt), {
+      status: 200,
+      headers: { 'content-type': 'application/json; charset=utf-8', 'x-data-source': 'backup', 'cache-control': 'public, max-age=60, s-maxage=120' },
     });
-  } catch (err) {
-    return json({ error: 'Gagal menghubungi sumber data: ' + err.message }, 502);
-  }
+  } catch { /* abaikan */ }
+  return json({ error: 'Sumber data utama sedang gangguan. Coba lagi beberapa menit lagi.', down: true }, 503);
 }
 
 // Setelah bursa tutup, Yahoo kerap mengirim candle harian terakhir dengan close = null

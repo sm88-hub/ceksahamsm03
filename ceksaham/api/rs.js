@@ -3,6 +3,7 @@
 // utama di bursa itu + indeksnya. Halaman memakai sebaran skor ini untuk
 // menghitung RS 1–99 saham mana pun. Hasil disimpan 6 jam di CDN Vercel
 // (dan di memori fungsi) supaya Yahoo tidak dipanggil berulang-ulang.
+import { yfetch } from './_sources.js';
 
 const TTL = 6 * 3600 * 1000;
 export const UNIVERSE = {
@@ -24,7 +25,7 @@ export function rsWeighted(closes) {
   return w >= 0.4 ? s / w : null;
 }
 
-async function closesOf(symbol, fetchImpl = fetch) {
+async function closesOf(symbol, fetchImpl = yfetch) {
   const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}?range=2y&interval=1d`;
   const r = await fetchImpl(url, { headers: { 'User-Agent': 'Mozilla/5.0 (SM-Crestboard)' } });
   if (!r.ok) return null;
@@ -33,7 +34,7 @@ async function closesOf(symbol, fetchImpl = fetch) {
   return q?.close ? q.close.filter((x) => x != null && x > 0) : null;
 }
 
-export async function compute(market, fetchImpl = fetch) {
+export async function compute(market, fetchImpl = yfetch) {
   const u = UNIVERSE[market], codes = u.list.split(' '), scores = {};
   let i = 0;
   async function worker() {

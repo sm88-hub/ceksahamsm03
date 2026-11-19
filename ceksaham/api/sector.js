@@ -3,6 +3,7 @@
 //
 // Sumber: Yahoo Finance quoteSummary modul assetProfile (tidak resmi).
 // Sektor jarang berubah, jadi hasilnya disimpan lama di cache (7 hari).
+import { yfetch } from './_sources.js';
 
 import { UNIVERSE } from './rs.js';
 
@@ -16,7 +17,7 @@ async function getAuth(force) {
   const r1 = await fetch('https://fc.yahoo.com', { headers: { 'User-Agent': UA }, redirect: 'manual' });
   const raw = typeof r1.headers.getSetCookie === 'function' ? r1.headers.getSetCookie() : [r1.headers.get('set-cookie') || ''];
   const cookie = raw.flatMap((c) => c.split(/,(?=\s*[A-Za-z0-9_]+=)/)).map((c) => c.split(';')[0].trim()).filter(Boolean).join('; ');
-  const r2 = await fetch('https://query1.finance.yahoo.com/v1/test/getcrumb', { headers: { 'User-Agent': UA, cookie } });
+  const r2 = await yfetch('https://query1.finance.yahoo.com/v1/test/getcrumb', { headers: { 'User-Agent': UA, cookie } });
   const crumb = (await r2.text()).trim();
   if (!crumb || crumb.length > 40 || /[<{\s]/.test(crumb)) throw new Error('Gagal mengambil crumb Yahoo');
   auth = { cookie, crumb, t: Date.now() };
@@ -25,7 +26,7 @@ async function getAuth(force) {
 
 async function profile(symbol, modules = 'assetProfile', whole = false) {
   const go = async (a) => {
-    const r = await fetch(`https://query1.finance.yahoo.com/v10/finance/quoteSummary/${encodeURIComponent(symbol)}?modules=${modules}&crumb=${encodeURIComponent(a.crumb)}`,
+    const r = await yfetch(`https://query1.finance.yahoo.com/v10/finance/quoteSummary/${encodeURIComponent(symbol)}?modules=${modules}&crumb=${encodeURIComponent(a.crumb)}`,
       { headers: { 'User-Agent': UA, cookie: a.cookie } });
     if (r.status === 401 || r.status === 403) return { retry: true };
     const j = await r.json().catch(() => null);
@@ -57,7 +58,7 @@ const memoF = new Map(); const TTL_F = 12 * 3600 * 1000;
 async function series(symbol) {
   const go = async (a) => {
     const now = Math.floor(Date.now() / 1000), p1 = now - 7 * 365 * 86400;
-    const r = await fetch(`https://query1.finance.yahoo.com/ws/fundamentals-timeseries/v1/finance/timeseries/${encodeURIComponent(symbol)}?symbol=${encodeURIComponent(symbol)}&type=${TS.join(',')}&period1=${p1}&period2=${now}&merge=false&padTimeSeries=false&crumb=${encodeURIComponent(a.crumb)}`,
+    const r = await yfetch(`https://query1.finance.yahoo.com/ws/fundamentals-timeseries/v1/finance/timeseries/${encodeURIComponent(symbol)}?symbol=${encodeURIComponent(symbol)}&type=${TS.join(',')}&period1=${p1}&period2=${now}&merge=false&padTimeSeries=false&crumb=${encodeURIComponent(a.crumb)}`,
       { headers: { 'User-Agent': UA, cookie: a.cookie } });
     if (r.status === 401 || r.status === 403) return { retry: true };
     const j = await r.json().catch(() => null);
