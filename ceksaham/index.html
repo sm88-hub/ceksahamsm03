@@ -298,6 +298,37 @@
   .tile h3{font-size:14px;font-weight:700;display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:16px}
   .tile h3 .sub{font-weight:500;color:var(--ink3);font-size:12.5px}
   .kv{display:grid;grid-template-columns:1fr 1fr;gap:14px 18px}
+  .t-econ{grid-column:span 12}.t-econ:hover{transform:none}
+  .ec-head{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:flex-end;margin-bottom:14px}
+  .ec-head h3{margin:6px 0 4px}
+  .ec-filt{display:flex;gap:6px;flex-wrap:wrap}
+  .ec-filt button{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--rule);background:var(--surface);color:var(--ink2);border-radius:999px;padding:6px 12px;font:700 12.5px 'Plus Jakarta Sans',sans-serif;cursor:pointer;transition:all .2s}
+  .ec-filt button i{width:8px;height:8px;border-radius:50%;background:var(--c)}
+  .ec-filt button.off{opacity:.45;text-decoration:line-through}
+  .ec-next{position:relative;overflow:hidden;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:16px;align-items:center;padding:16px 18px;border-radius:18px;color:#fff;margin-bottom:12px;
+    background:radial-gradient(420px 160px at 0% 0%,color-mix(in srgb,var(--c,#C6F135) 35%,transparent),transparent 70%),linear-gradient(155deg,var(--hero2),var(--hero))}
+  .ec-next .lb{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.6)}
+  .ec-next .tt{font:800 17px/1.3 'Space Grotesk',sans-serif;margin-top:3px}
+  .ec-next .ds{font-size:12.5px;color:rgba(255,255,255,.7);margin-top:3px}
+  .ec-cd{display:flex;gap:6px}
+  .ec-cd div{min-width:54px;padding:8px 6px;border-radius:12px;background:rgba(255,255,255,.08);text-align:center}
+  .ec-cd b{display:block;font:800 22px 'Space Grotesk',sans-serif;font-variant-numeric:tabular-nums}
+  .ec-cd span{font-size:10.5px;color:rgba(255,255,255,.6)}
+  .ec-ico{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:var(--c,#C6F135);color:#0D1526;font:800 13px 'Space Grotesk',sans-serif}
+  .ec-mo{font-size:11.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);margin:14px 2px 6px}
+  .ec-it{display:grid;grid-template-columns:56px minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 12px;border-radius:14px;border:1px solid var(--rule);background:var(--surface);margin-bottom:6px;animation:fxIn .35s ease both;animation-delay:calc(var(--i,0)*25ms)}
+  .ec-it.past{opacity:.5}
+  .ec-d{text-align:center;border-radius:12px;padding:5px 0;background:var(--sunk);border-top:3px solid var(--c)}
+  .ec-d b{display:block;font:800 19px 'Space Grotesk',sans-serif;line-height:1.1}
+  .ec-d span{font-size:10.5px;font-weight:700;color:var(--ink3);text-transform:uppercase}
+  .ec-t{min-width:0}
+  .ec-t b{display:block;font-size:13.5px;font-weight:800}
+  .ec-t small{display:block;font-size:12px;color:var(--ink3);margin-top:2px;line-height:1.45}
+  .ec-tag{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:800;padding:3px 9px;border-radius:999px;background:color-mix(in srgb,var(--c) 16%,transparent);color:var(--ink2);white-space:nowrap}
+  .ec-tag i{width:6px;height:6px;border-radius:50%;background:var(--c)}
+  .ec-tm{font-size:12px;font-weight:700;color:var(--ink2);text-align:right;white-space:nowrap}
+  .ec-more{display:block;margin:10px auto 0;border:1px solid var(--rule2);background:var(--surface);color:var(--ink);border-radius:999px;padding:9px 18px;font:700 13px 'Plus Jakarta Sans',sans-serif;cursor:pointer}
+  @media(max-width:640px){ .ec-next{grid-template-columns:auto minmax(0,1fr)} .ec-cd{grid-column:1/-1} .ec-cd div{flex:1} .ec-it{grid-template-columns:50px minmax(0,1fr)} .ec-it .ec-side{grid-column:2;display:flex;gap:8px;align-items:center} .ec-tm{text-align:left} }
   .t-risk{grid-column:span 12}.t-risk:hover{transform:none}
   .rk-wrap{display:grid;grid-template-columns:auto minmax(0,1fr);gap:22px;align-items:center}
   .rk-main{display:flex;align-items:center;gap:14px}
@@ -1772,6 +1803,27 @@
         <details class="note"><summary>Sumber dan keterangan</summary><div class="note-b"><p class="fine">Sumber: kalender earnings Yahoo Finance; jadwal dapat berubah dan sebagian tanggal masih berupa perkiraan. <b>EPS</b> = laba bersih per saham. <b>Di atas estimasi</b> berarti EPS yang dilaporkan lebih tinggi dari rata-rata perkiraan analis. Cakupan bursa di luar Amerika Serikat bergantung pada ketersediaan data di Yahoo Finance.</p></div></details>
       </article>
 
+      <article data-panel="earn" class="tile t-econ" id="econ" style="--i:11">
+        <div class="ec-head">
+          <div>
+            <span class="er-kick"><i></i>Agenda ekonomi</span>
+            <h3>Jadwal yang kerap menggerakkan pasar</h3>
+            <p class="jr-sub">Keputusan suku bunga, rilis data utama Amerika Serikat, dan hari libur Bursa Efek Indonesia. Waktu ditampilkan dalam WIB.</p>
+          </div>
+          <div class="ec-filt" id="ecFilt" role="group" aria-label="Saring kategori"></div>
+        </div>
+        <div class="ec-next" id="ecNext"></div>
+        <div class="ec-list" id="ecList"></div>
+        <button type="button" class="ec-more" id="ecMore" hidden>Tampilkan jadwal lebih jauh</button>
+        <details class="note"><summary>Sumber dan keterangan</summary><div class="note-b"><ul>
+          <li><b>The Fed (FOMC)</b>: jadwal resmi dan revisi 12 November 2026 dari <a href="https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm" target="_blank" rel="noopener">federalreserve.gov</a>. Keputusan diumumkan pukul 14.00 waktu New York pada hari kedua rapat.</li>
+          <li><b>Bank Indonesia (RDG)</b>: jadwal resmi dari <a href="https://www.bi.go.id/id/publikasi/kalender/default.aspx" target="_blank" rel="noopener">bi.go.id</a>. Jadwal 2027 akan ditambahkan setelah diumumkan Bank Indonesia.</li>
+          <li><b>Inflasi (CPI) dan tenaga kerja (Employment Situation) AS</b>: jadwal rilis dari <a href="https://www.bls.gov/schedule/" target="_blank" rel="noopener">bls.gov</a>, pukul 08.30 waktu New York.</li>
+          <li><b>Libur bursa</b>: kalender BEI 2026 dan SKB 3 Menteri tentang Hari Libur Nasional dan Cuti Bersama 2027; hanya hari kerja yang ditampilkan.</li>
+          <li>Jadwal dapat berubah sewaktu-waktu oleh lembaga terkait. Agenda ini bersifat informasi, bukan perkiraan arah pasar.</li>
+        </ul></div></details>
+      </article>
+
       <div class="panel-h ph-me" data-panel="me"><span class="ph-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span><div><h2>Ruang Pribadi</h2><p>Watchlist dan jurnal trading Anda. <span class="store-note" data-what="desk">Belum masuk akun: data hanya tersimpan di browser ini. Masuk ke akun agar data tersimpan aman dan dapat dibuka dari browser atau perangkat mana pun.</span></p></div>
         <div class="me-sw" id="meSw" role="tablist" aria-label="Isi Ruang Pribadi"><button type="button" data-sub="watch" class="on">Watchlist <i id="meNW">0</i></button><button type="button" data-sub="jr">Jurnal trading <i id="meNJ">0</i></button><button type="button" data-sub="news">Berita <i id="meNN" class="nn" hidden>0</i></button></div></div>
       <article data-panel="me" data-sub="watch" class="tile t-watch" style="--i:9">
@@ -3079,6 +3131,44 @@ function rsWeighted(closes){
   for(const [k,wt] of [[63,.4],[126,.2],[189,.2],[252,.2]]) if(n>k && closes[n-1-k]>0){ s+=(c/closes[n-1-k]-1)*wt; w+=wt; }
   return w>=.4 ? s/w : null;
 }
+/* ===================== Agenda ekonomi (jadwal resmi; diperbarui manual) ===================== */
+const EC_CAT={fed:['The Fed','#61A5FF','FED'],bi:['Bank Indonesia','#F2994A','BI'],us:['Data AS','#BB86FC','AS'],idx:['Libur BEI','#EB5757','IDX']};
+const EC=[
+  ...['2026-12-09','2027-01-27','2027-03-17','2027-04-28','2027-06-09','2027-07-28','2027-09-15','2027-11-17'].map(d=>['fed',d,'14:00ET','Keputusan suku bunga The Fed (FOMC)','Arah suku bunga acuan Amerika Serikat; kerap memengaruhi dolar, emas, dan pasar saham global.']),
+  ['fed','2027-10-27','14:00ET','Rapat FOMC: pembahasan strategi kebijakan','Menurut jadwal revisi The Fed, rapat ini khusus membahas strategi kebijakan moneter, tanpa pengumuman keputusan suku bunga.'],
+  ['bi','2026-12-16','','Keputusan suku bunga Bank Indonesia (RDG 15–16 Des)','Penetapan BI-Rate dan kebijakan nilai tukar rupiah; diumumkan pada hari kedua rapat.'],
+  ...[['2026-12-10','Nov 2026'],['2027-01-13','Des 2026'],['2027-02-11','Jan 2027'],['2027-03-10','Feb 2027'],['2027-04-13','Mar 2027'],['2027-05-12','Apr 2027'],['2027-06-10','Mei 2027'],['2027-07-14','Jun 2027'],['2027-08-11','Jul 2027'],['2027-09-14','Agu 2027'],['2027-10-14','Sep 2027'],['2027-11-10','Okt 2027'],['2027-12-10','Nov 2027']].map(([d,m])=>['us',d,'08:30ET',`Inflasi AS (CPI) periode ${m}`,'Angka inflasi konsumen Amerika Serikat; menjadi pertimbangan utama arah suku bunga The Fed.']),
+  ...[['2026-12-04','Nov 2026'],['2027-01-08','Des 2026'],['2027-02-05','Jan 2027'],['2027-03-05','Feb 2027'],['2027-04-02','Mar 2027'],['2027-05-07','Apr 2027'],['2027-06-04','Mei 2027'],['2027-07-02','Jun 2027'],['2027-08-06','Jul 2027'],['2027-09-03','Agu 2027'],['2027-10-08','Sep 2027'],['2027-11-05','Okt 2027'],['2027-12-03','Nov 2027']].map(([d,m])=>['us',d,'08:30ET',`Data tenaga kerja AS periode ${m}`,'Laporan Employment Situation (penambahan lapangan kerja dan tingkat pengangguran) dari Biro Statistik Tenaga Kerja AS.']),
+  ...[['2026-12-24','Cuti bersama Natal'],['2026-12-25','Kelahiran Yesus Kristus'],['2026-12-31','Libur bursa akhir tahun'],['2027-01-01','Tahun Baru 2027'],['2027-01-05','Isra Mikraj'],['2027-02-05','Cuti bersama Imlek'],['2027-03-08','Hari Suci Nyepi'],['2027-03-09','Cuti bersama Idulfitri'],['2027-03-10','Idulfitri 1448 H'],['2027-03-11','Idulfitri 1448 H'],['2027-03-12','Cuti bersama Idulfitri'],['2027-03-15','Cuti bersama Idulfitri'],['2027-03-25','Cuti bersama Wafat Yesus Kristus'],['2027-03-26','Wafat Yesus Kristus'],['2027-05-06','Kenaikan Yesus Kristus'],['2027-05-17','Iduladha 1448 H'],['2027-05-18','Cuti bersama Iduladha'],['2027-05-19','Cuti bersama Waisak'],['2027-05-20','Hari Raya Waisak'],['2027-06-01','Hari Lahir Pancasila'],['2027-08-17','Proklamasi Kemerdekaan'],['2027-12-24','Cuti bersama Natal / libur bursa'],['2027-12-31','Libur bursa akhir tahun']].map(([d,t])=>['idx',d,'',`BEI libur: ${t}`,'Tidak ada perdagangan di Bursa Efek Indonesia pada tanggal ini.']),
+];
+const ec={off:{},all:false};
+try{ ec.off=JSON.parse(localStorage.getItem('smcb_ec_off')||'{}')||{}; }catch{}
+function ecDST(y,m,d){ const nth=(mo,k)=>{ const f=new Date(Date.UTC(y,mo,1)).getUTCDay(); return 1+((7-f)%7)+7*(k-1); }; const v=m*100+d, s=2*100+nth(2,2), e=10*100+nth(10,1); return v>=s && v<e; }
+function ecWhen(e){ const [y,m,d]=e[1].split('-').map(Number);
+  if(!e[2]) return { t:Date.UTC(y,m-1,d,2), wib:null, allDay:true };
+  const [hh,mm]=e[2].replace('ET','').split(':').map(Number), off=ecDST(y,m-1,d)?4:5, t=Date.UTC(y,m-1,d,hh+off,mm);
+  return { t, wib:new Date(t).toLocaleString('id-ID',{timeZone:'Asia/Jakarta',weekday:'short',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})+' WIB' }; }
+function ecRender(){
+  const L=$('#ecList'); if(!L) return;
+  $('#ecFilt').innerHTML=Object.entries(EC_CAT).map(([k,[n,c]])=>`<button type="button" data-ecf="${k}" class="${ec.off[k]?'off':''}" style="--c:${c}" aria-pressed="${!ec.off[k]}"><i></i>${n}</button>`).join('');
+  const now=Date.now(), rows=EC.map(e=>({e,w:ecWhen(e)})).filter(x=>!ec.off[x.e[0]]).sort((a,b)=>a.w.t-b.w.t);
+  const up=rows.filter(x=>x.w.t>=now-36e5*20), past=rows.filter(x=>x.w.t<now-36e5*20).slice(-2), show=[...past,...(ec.all?up:up.slice(0,14))];
+  const nx=up.find(x=>x.w.t>now)||up[0];
+  if(nx){ const [n,c,ab]=EC_CAT[nx.e[0]], ms=Math.max(0,nx.w.t-now), dd=Math.floor(ms/864e5), hh=Math.floor(ms%864e5/36e5), mi=Math.floor(ms%36e5/6e4);
+    $('#ecNext').style.setProperty('--c',c);
+    $('#ecNext').innerHTML=`<div class="ec-ico">${ab}</div><div><div class="lb">Agenda berikutnya · ${n}</div><div class="tt">${esc(nx.e[3])}</div><div class="ds">${nx.w.wib||dateID(nx.e[1],true)}</div></div>${nx.w.allDay?'':`<div class="ec-cd"><div><b>${dd}</b><span>hari</span></div><div><b>${hh}</b><span>jam</span></div><div><b>${mi}</b><span>menit</span></div></div>`}`; }
+  else $('#ecNext').innerHTML='';
+  let mo='', i=0;
+  L.innerHTML=show.map(x=>{ const [n,c]=EC_CAT[x.e[0]], wk=x.w.allDay?x.e[1]:new Date(x.w.t).toLocaleDateString('en-CA',{timeZone:'Asia/Jakarta'}), dt=new Date(wk+'T00:00:00'), m=dt.toLocaleDateString('id-ID',{month:'long',year:'numeric'});
+    const head=m!==mo?`<div class="ec-mo">${m}</div>`:''; mo=m;
+    const wd=dt.toLocaleDateString('id-ID',{weekday:'short'});
+    return head+`<div class="ec-it${x.w.t<now-36e5*20?' past':''}" style="--c:${c};--i:${Math.min(i++,14)}"><div class="ec-d"><b>${dt.getDate()}</b><span>${wd}</span></div><div class="ec-t"><b>${esc(x.e[3])}</b><small>${esc(x.e[4])}</small></div><div class="ec-side"><span class="ec-tag"><i></i>${n}</span><div class="ec-tm">${x.w.allDay?(x.e[0]==='bi'?'Hari kedua rapat':'Bursa tutup'):x.w.wib.replace(/^[^,]+,\s*/,'').split(' ').slice(-2).join(' ')}</div></div></div>`; }).join('') || '<p class="ins-empty">Tidak ada agenda untuk kategori yang dipilih.</p>';
+  $('#ecMore').hidden=ec.all || up.length<=14;
+}
+document.addEventListener('click',e=>{ const f=e.target.closest('[data-ecf]'); if(f){ const k=f.dataset.ecf; ec.off[k]=!ec.off[k]; try{ localStorage.setItem('smcb_ec_off',JSON.stringify(ec.off)); }catch{} ecRender(); return; }
+  if(e.target.closest('#ecMore')){ ec.all=true; ecRender(); } });
+setTimeout(ecRender,0); setInterval(()=>{ if(!document.hidden) ecRender(); },60e3);
+
 /* ===================== Skor volatilitas harga (1–10) =====================
    Volatilitas tahunan dari perubahan harga harian 1 tahun terakhir, dipetakan ke skala 1–10.
    Hanya menggambarkan volatilitas harga masa lalu; bukan penilaian kualitas atau rekomendasi. */

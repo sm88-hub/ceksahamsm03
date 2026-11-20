@@ -364,7 +364,7 @@
   .cx-note{flex:1 1 320px;margin:0;font-size:12.5px;line-height:1.55;color:var(--ink2)}
   .cx-note b{color:var(--down)}
   .fund-bar[hidden],.fx-scan[hidden]{display:none}
-  .sec-sk[hidden],.sec-fs[hidden]{display:none}
+  .sec-sk[hidden],.sec-fs[hidden],.sec-hm[hidden]{display:none}
   .fs-pres{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:14px}
   .fs-pre{position:relative;text-align:left;border:1px solid var(--rule);border-radius:18px;padding:14px;background:var(--surface);color:var(--ink);cursor:pointer;display:flex;flex-direction:column;gap:6px;transition:transform .25s,border-color .25s,box-shadow .25s;font-family:inherit}
   .fs-pre:hover{transform:translateY(-2px);border-color:var(--rule2)}
@@ -495,6 +495,79 @@
   .sk-t tr.sk-sep td{padding:14px 8px 6px;font-size:12px;font-weight:800;color:var(--ink3);border-bottom:1px dashed var(--rule2)}
   .sk-t tr.sm td{opacity:.72}
   @media(max-width:760px){ .sk-t .hm{display:none} .sk-t .rs i{width:40px} }
+  .hm-head{align-items:flex-end}
+  .hm-ctrl{display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+  .hm-seg{display:inline-flex;padding:4px;border-radius:999px;background:var(--sunk);border:1px solid var(--rule)}
+  .hm-seg button{border:0;background:transparent;padding:7px 14px;border-radius:999px;font:700 12.5px 'Plus Jakarta Sans',sans-serif;color:var(--ink2);cursor:pointer;transition:all .25s}
+  .hm-seg button.on{background:var(--ink);color:var(--surface)}
+  .hm-leg{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:700;color:var(--ink3)}
+  .hm-leg{gap:3px}.hm-leg i{display:block;width:22px;height:10px;border-radius:3px}
+  .hm-box{position:relative;width:100%;height:600px;border-radius:22px;overflow:hidden;margin-top:12px;padding:0;
+    background:radial-gradient(700px 360px at 0% 0%,rgba(31,230,170,.10),transparent 60%),radial-gradient(600px 340px at 100% 100%,rgba(255,98,131,.10),transparent 60%),radial-gradient(500px 300px at 60% 0%,rgba(120,110,255,.08),transparent 60%),#080D1A;box-shadow:inset 0 0 0 1px rgba(255,255,255,.06),0 24px 50px -30px rgba(11,18,32,.9)}
+  .hm-sk{position:absolute;inset:0;background:linear-gradient(90deg,#0B1220 25%,#172036 50%,#0B1220 75%);background-size:200% 100%;animation:sh 1.3s linear infinite}
+  .hm-sec{position:absolute;box-sizing:border-box;border-radius:14px;background:rgba(255,255,255,.035);box-shadow:inset 0 0 0 1px rgba(255,255,255,.05)}
+  .hm-sec>span{position:absolute;left:9px;top:6px;right:8px;display:flex;align-items:center;gap:6px;font:800 10.5px 'Plus Jakarta Sans',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.7);white-space:nowrap;overflow:hidden}
+  .hm-sec>span em{font-style:normal;font-weight:800;letter-spacing:0;padding:1px 6px;border-radius:99px;background:rgba(255,255,255,.08)}
+  .hm-sec>span em.u{color:#5BE39A}.hm-sec>span em.d{color:#FF8A8F}
+  .hm-t{position:absolute;box-sizing:border-box;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;text-decoration:none;overflow:hidden;
+    background-image:linear-gradient(180deg,rgba(255,255,255,.14),rgba(255,255,255,0) 55%);box-shadow:inset 0 0 0 1px rgba(255,255,255,.07);transition:transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .25s,filter .25s;animation:hmIn .55s cubic-bezier(.2,.8,.2,1) both}
+  .hm-t:hover{transform:scale(1.04);z-index:3;box-shadow:inset 0 0 0 2px rgba(255,255,255,.85),0 12px 28px -10px rgba(0,0,0,.8);filter:saturate(1.15) brightness(1.1)}
+  .hm-t b{font:800 clamp(9px,var(--fs,12px),24px) 'Space Grotesk',sans-serif;line-height:1.05;letter-spacing:-.01em;text-shadow:0 1px 3px rgba(0,0,0,.35)}
+  .hm-t small{font:700 clamp(8px,calc(var(--fs,12px)*.68),15px) 'Plus Jakarta Sans',sans-serif;opacity:.92;margin-top:3px;text-shadow:0 1px 2px rgba(0,0,0,.3)}
+  .hm-t.c-3{background-color:#E5484D}.hm-t.c-2{background-color:#B23A45}.hm-t.c-1{background-color:#6B2E3A}.hm-t.c0{background-color:#2E3A52}.hm-t.c1{background-color:#1D5C46}.hm-t.c2{background-color:#1C8B58}.hm-t.c3{background-color:#22B573}
+  @keyframes hmIn{from{opacity:0;transform:scale(.86)}}
+  .mz-col{position:absolute;box-sizing:border-box;border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));box-shadow:inset 0 0 0 1px rgba(255,255,255,.07);transform-origin:bottom;animation:mzUp .7s cubic-bezier(.2,.8,.2,1) both;animation-delay:var(--d)}
+  .mz-col.row{transform-origin:left;animation-name:mzRt}
+  @keyframes mzUp{from{opacity:0;transform:scaleY(.3)}} @keyframes mzRt{from{opacity:0;transform:scaleX(.3)}}
+  .mz-h{position:absolute;left:8px;right:6px;top:6px;display:flex;flex-direction:column;gap:2px;min-width:0}
+  .mz-col.row .mz-h{top:7px;left:10px;right:10px;flex-direction:row;align-items:baseline;gap:8px}
+  .mz-t.v{flex-direction:column;justify-content:center;align-items:flex-start;gap:1px}
+  .mz-t.c{justify-content:flex-start}
+  .mz-h span{padding-right:26px;font:800 10.5px 'Plus Jakarta Sans',sans-serif;letter-spacing:.05em;text-transform:uppercase;color:rgba(255,255,255,.72);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .mz-h em{font-style:normal;font:800 12.5px 'Space Grotesk',sans-serif}.mz-h em.u{color:#4DF2C0}.mz-h em.d{color:#FF8FA6}
+  .mz-h i{position:absolute;right:0;top:1px;font-style:normal;font-size:10px;font-weight:700;color:rgba(255,255,255,.38)}
+  .mz-col.row .mz-h i{position:static;margin-left:auto}
+  .mz-col.row .mz-h span{flex:0 1 auto}
+  .mz-t{position:absolute;box-sizing:border-box;border-radius:9px;display:flex;align-items:center;justify-content:space-between;gap:6px;padding:0 9px;color:#fff;text-decoration:none;overflow:hidden;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.09);animation:hmIn .5s ease both;animation-delay:var(--d);transition:transform .2s,box-shadow .2s,filter .25s,opacity .3s}
+  .mz-t:hover{transform:scale(1.03);z-index:3;box-shadow:inset 0 0 0 2px rgba(255,255,255,.9),0 12px 28px -8px var(--g,rgba(0,0,0,.8)),0 10px 24px -12px rgba(0,0,0,.8)}
+  .mz-t b{font:800 clamp(10px,var(--fs),20px) 'Space Grotesk',sans-serif;letter-spacing:-.01em;white-space:nowrap;text-shadow:0 1px 2px rgba(0,0,0,.35)}
+  .mz-t small{font:700 clamp(9px,calc(var(--fs)*.78),15px) 'Plus Jakarta Sans',sans-serif;white-space:nowrap;opacity:.95}
+  .mz-t.more{background:repeating-linear-gradient(135deg,rgba(255,255,255,.045) 0 6px,transparent 6px 12px),linear-gradient(145deg,rgba(255,255,255,.07),rgba(255,255,255,.02))!important;box-shadow:inset 0 0 0 1px rgba(255,255,255,.1)!important;cursor:default}
+  .mz-t.more::after{display:none}
+  .mz-t.more b{font-size:11px;font-family:'Plus Jakarta Sans',sans-serif;opacity:.8}
+  .mz-t{--a:#2B3550;--b:#1F273B;--g:transparent;background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,0) 42%),linear-gradient(145deg,var(--a),var(--b))}
+  .mz-t.c3{--a:#1FE6AA;--b:#00A38F;--g:rgba(31,230,170,.42)}.mz-t.c2{--a:#16BC93;--b:#0A7F72;--g:rgba(22,188,147,.25)}.mz-t.c1{--a:#15675F;--b:#0E4846}
+  .mz-t.c0{--a:#323D5C;--b:#232B42}
+  .mz-t.c-1{--a:#6B2A4C;--b:#4A1F38}.mz-t.c-2{--a:#D8406E;--b:#9A2755;--g:rgba(216,64,110,.25)}.mz-t.c-3{--a:#FF6283;--b:#E02E5E;--g:rgba(255,98,131,.42)}
+  .mz-t.c3,.mz-t.c-3{box-shadow:inset 0 0 0 1px rgba(255,255,255,.22),0 0 22px -4px var(--g)}
+  .mz-t.c3::after,.mz-t.c-3::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.28) 50%,transparent 70%);transform:translateX(-120%);animation:mzShine 4.5s ease-in-out 1.2s infinite;pointer-events:none}
+  @keyframes mzShine{0%,60%{transform:translateX(-120%)}85%,100%{transform:translateX(120%)}}
+  .mz-t.dim{opacity:.15;filter:grayscale(.6)}
+  @media(prefers-reduced-motion:reduce){ .mz-col,.mz-t,.mz-t::after{animation:none} }
+  .hm-secs{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;align-items:center}
+  .hm-sl{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3);margin-right:4px}
+  .hm-secs button{border:1px solid var(--rule);background:var(--surface);color:var(--ink2);border-radius:999px;padding:6px 11px;font:700 12px 'Plus Jakarta Sans',sans-serif;cursor:pointer;transition:all .2s}
+  .hm-secs button:hover{border-color:var(--rule2);transform:translateY(-1px)}
+  .hm-secs button.on{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+  .hm-secs em{font-style:normal;font-weight:800;margin-left:3px}.hm-secs em.u{color:#0C9F7C}.hm-secs em.d{color:#E0365E}
+  .hm-secs button.on em.u{color:#5BE39A}.hm-secs button.on em.d{color:#FF8A8F}
+  .hm-stats{display:grid;grid-template-columns:minmax(0,1.6fr) repeat(3,minmax(0,1fr));gap:10px;margin-top:6px}
+  .hm-st{padding:12px 14px;border-radius:16px;background:var(--sunk);border:1px solid var(--rule);min-width:0}
+  .hm-st label{display:block;font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--ink3);margin-bottom:6px}
+  .hm-st b{font:800 18px 'Space Grotesk',sans-serif;font-variant-numeric:tabular-nums}
+  .hm-st small{display:block;font-size:11.5px;color:var(--ink3);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .hm-br{display:flex;height:10px;border-radius:99px;overflow:hidden;background:var(--rule);margin:4px 0 6px}
+  .hm-br i{display:block;height:100%;transition:width .8s cubic-bezier(.2,.8,.2,1)}
+  .hm-br i.u{background:linear-gradient(90deg,#00A38F,#1FE6AA)}.hm-br i.f{background:var(--rule2)}.hm-br i.d{background:linear-gradient(90deg,#FF6283,#E02E5E)}
+  .hm-brl{display:flex;justify-content:space-between;font-size:12px;font-weight:700}
+  .hm-tip{position:fixed;z-index:70;pointer-events:none;min-width:210px;padding:12px 14px;border-radius:16px;background:rgba(11,18,32,.92);backdrop-filter:blur(10px);color:#fff;font-size:12px;line-height:1.55;box-shadow:0 20px 40px -14px rgba(0,0,0,.7),inset 0 0 0 1px rgba(255,255,255,.08)}
+  .hm-tip b{display:block;font:800 16px 'Space Grotesk',sans-serif}
+  .hm-tip .r{display:flex;justify-content:space-between;gap:14px;color:rgba(255,255,255,.65)}.hm-tip .r em{font-style:normal;color:#fff;font-weight:700}
+  .hm-tip .big{font:800 22px 'Space Grotesk',sans-serif;margin:4px 0 8px}
+  .hm-note{margin:10px 2px 0;font-size:12px;color:var(--ink3);line-height:1.5}
+  @media(max-width:640px){ .hm-box{height:520px} .hm-ctrl{align-items:flex-start;width:100%} .hm-leg i{width:16px} .hm-stats{grid-template-columns:1fr 1fr} .hm-st:first-child{grid-column:1/-1} }
+  @media(prefers-reduced-motion:reduce){ .hm-t{animation:none} }
   .stg{margin-top:36px;scroll-margin-top:90px;background:var(--surface);border:1px solid var(--rule);border-radius:22px;padding:24px;box-shadow:var(--shadow)}
   .stg{--s1:#8a94a6;--s2:var(--up);--s3:#d99a1e;--s4:var(--down)}
   .stg-bar{display:flex;height:8px;border-radius:99px;overflow:hidden;gap:2px;margin:4px 0 16px;background:var(--sunk)}
@@ -803,6 +876,25 @@
   </div>
   <div id="regime" class="regime" role="status"></div>
   <section id="mkt" class="mkt" aria-live="polite"></section>
+
+  <section class="stg sec-hm" id="peta" hidden>
+    <div class="rp-head hm-head">
+      <div>
+        <span class="rp-kick">Peta Pasar</span>
+        <h2>Peta pasar <span id="hmMk"></span></h2>
+        <p id="hmSub">Potret satu sesi: saham berkapitalisasi terbesar dari seluruh bursa. Tiap kolom adalah satu sektor, lebarnya menurut porsi kapitalisasi; tinggi kotak menurut kapitalisasi saham, warna menurut pergerakan harga. Berbeda dengan Peringkat sektor yang menggambarkan tren beberapa bulan dari saham hasil pindaian.</p>
+      </div>
+      <div class="hm-ctrl">
+        <div class="hm-seg" id="hmMode" role="group" aria-label="Warna peta"><button type="button" data-hm="chg" class="on">Sesi terakhir</button><button type="button" data-hm="ma">Jarak dari MA200</button></div>
+        <div class="hm-leg" id="hmLeg"></div>
+      </div>
+    </div>
+    <div class="hm-stats" id="hmStats"></div>
+    <div class="hm-box" id="hmBox"><div class="hm-sk"></div></div>
+    <div class="hm-secs" id="hmSecs"></div>
+    <div class="hm-tip" id="hmTip" hidden></div>
+    <p class="hm-note" id="hmNote"></p>
+  </section>
   <div id="banner" class="banner" role="status"></div>
 
   <div class="tools">
@@ -954,7 +1046,7 @@
       <div>
         <span class="rp-kick">Rotasi Sektor</span>
         <h2>Peringkat sektor</h2>
-        <p>Sektor diurutkan dari rata-rata kekuatan relatif (RS) anggotanya pada pindaian terakhir. Sektor di urutan atas sedang lebih diminati pasar dibanding sektor lain. Klik kode untuk membuka analisis lengkapnya.</p>
+        <p>Sektor diurutkan dari rata-rata kekuatan relatif (RS) anggotanya pada pindaian terakhir, yang menggambarkan tren beberapa bulan. Sektor di urutan atas sedang lebih diminati pasar dibanding sektor lain. Untuk potret satu sesi seluruh bursa, lihat Peta pasar di atas. Klik kode untuk membuka analisis lengkapnya.</p>
       </div>
     </div>
     <div id="skBody"></div>
@@ -1569,7 +1661,7 @@ async function scan(){
   let wlCodes=[]; try{ wlCodes=JSON.parse(localStorage.getItem('smcb_watch')||'[]').filter(x=>x&&x.mk===state.market&&x.t).map(x=>String(x.t).toUpperCase()); }catch{}
   state.wlSet=new Set(wlCodes); wlCodes.forEach(c=>{ if(!codes.includes(c)) codes.push(c); });
   const uw=m.unitWord||'saham';
-  state.results=[]; state.scanning=true; render(); try{ skRender(); }catch{} try{ fsRender(); }catch{}
+  state.results=[]; state.scanning=true; render(); try{ skRender(); }catch{} try{ fsRender(); }catch{} try{ hmLoad(); }catch{}
   if(state.market==='ID') fxLoad();
   $('#scanBtn').disabled=true; banner(null); regime(null);
   let done=0, failed=0, apiDown=false;
@@ -1855,6 +1947,117 @@ function mktRender(){
     localStorage.setItem('smcb_mkt',JSON.stringify(all)); } }catch{}
 }
 /* ===================== Peringkat sektor ===================== */
+/* ===================== Peta pasar (treemap) dari data harian Crestboard ===================== */
+const hm={ mk:null, rows:null, at:'', busy:false, mode:'chg', err:'', focus:null };
+try{ if(localStorage.getItem('smcb_hm_mode')==='ma') hm.mode='ma'; }catch{}
+function hmSquarify(items, x, y, w, h){
+  const out=[], total=items.reduce((a,b)=>a+b.v,0); if(!total||w<=0||h<=0) return out;
+  const scale=w*h/total, arr=items.map(it=>({...it, a:it.v*scale}));
+  let i=0;
+  while(i<arr.length){
+    const side=Math.min(w,h); let row=[arr[i]], best=Infinity, j=i;
+    const worst=r=>{ const s=r.reduce((a,b)=>a+b.a,0), mx=Math.max(...r.map(z=>z.a)), mn=Math.min(...r.map(z=>z.a)); return Math.max(side*side*mx/(s*s), s*s/(side*side*mn)); };
+    best=worst(row);
+    while(j+1<arr.length){ const nr=[...row,arr[j+1]], wv=worst(nr); if(wv<=best){ row=nr; best=wv; j++; } else break; }
+    const s=row.reduce((a,b)=>a+b.a,0);
+    if(w>=h){ const cw=s/h; let cy=y; row.forEach(r=>{ const ch=r.a/cw; out.push({...r,x,y:cy,w:cw,h:ch}); cy+=ch; }); x+=cw; w-=cw; }
+    else { const rh=s/w; let cx=x; row.forEach(r=>{ const cw=r.a/rh; out.push({...r,x:cx,y,w:cw,h:rh}); cx+=cw; }); y+=rh; h-=rh; }
+    i=j+1;
+  }
+  return out;
+}
+function hmBucket(v,mode){ if(v==null||!isFinite(v)) return 0; const st=mode==='ma'?[2,8,16]:[0.25,1,2.5], a=Math.abs(v), k=a<st[0]?0:a<st[1]?1:a<st[2]?2:3; return v<0?-k:k; }
+async function hmLoad(){
+  const sec=$('#peta'); if(!sec) return; const m=M(), mk=state.market;
+  if(m.crypto||!['ID','US','JP','KR','HK'].includes(mk)){ sec.hidden=true; return; }
+  sec.hidden=false; $('#hmMk').textContent=m.name;
+  if(hm.mk===mk && (hm.rows||hm.busy)) return hmRender();
+  hm.mk=mk; hm.rows=null; hm.err=''; hm.busy=true; $('#hmBox').innerHTML='<div class="hm-sk"></div>';
+  try{ const r=await fetch(`/public/data/fs-${mk}.json`); if(!r.ok) throw new Error(r.status===404?'belum-ada':'HTTP '+r.status); const j=await r.json(); if(hm.mk!==mk) return;
+    hm.rows=j.rows.map(a=>{ const o={}; j.cols.forEach((c,i)=>{ o[c]=a[i]; }); return o; }).filter(o=>o.mcap>0&&o.price>0&&!(mk==='US'&&/-(P|W|U|R)[A-Z]*$/.test(o.code))); hm.at=j.at||'';
+  }catch(e){ if(hm.mk!==mk) return; hm.err=String(e.message||e); }
+  hm.busy=false; hmRender();
+}
+/* Tata letak mosaik kolom: tiap sektor satu kolom selebar porsi kapitalisasinya; saham ditumpuk di dalamnya.
+   Di layar sempit kolom diputar menjadi baris. Saham yang terlalu kecil untuk dibaca digabung menjadi "+n lainnya". */
+function hmMosaic(rows,W,H,secOf,asRows){
+  const G=6, HD=asRows?0:40, total=rows.reduce((a,o)=>a+o.mcap,0);
+  const groups={}; rows.forEach(o=>{ const k=secOf(o); (groups[k]=groups[k]||[]).push(o); });
+  let secs=Object.entries(groups).map(([k,list])=>({k,list:list.sort((a,b)=>b.mcap-a.mcap),m:list.reduce((a,o)=>a+o.mcap,0)})).sort((a,b)=>b.m-a.m);
+  const minShare=asRows?0.035:0.045, small=secs.filter(c=>c.m/total<minShare);
+  if(small.length>1){ secs=secs.filter(c=>c.m/total>=minShare); const list=small.flatMap(c=>c.list).sort((a,b)=>b.mcap-a.mcap); secs.push({k:'Sektor lain',list,m:list.reduce((a,o)=>a+o.mcap,0),merged:small.map(c=>c.k)}); }
+  const span=(asRows?H:W)-G*(secs.length+1); let pos=G;
+  for(const c of secs){ c.share=c.m/total; const len=asRows?Math.max(104,span*c.share):Math.max(62,span*c.share);
+    if(asRows){ c.x=G; c.y=pos; c.w=W-2*G; c.h=len; } else { c.x=pos; c.y=G; c.w=len; c.h=H-2*G; } pos+=len+G; }
+  // skala ulang bila minimum lebar membuat melebar
+  const over=asRows?0:pos-W; if(over>0){ const f=(span-over)/span; pos=G; for(const c of secs){ const len=(asRows?c.h:c.w)*f; if(asRows){ c.y=pos; c.h=len; } else { c.x=pos; c.w=len; } pos+=len+G; } }
+  for(const c of secs){
+    if(asRows){ // blok sektor bertumpuk; saham disusun squarify di dalamnya
+      const HH=30, ix=c.x+3, iy=c.y+HH, iw=c.w-6, ih=c.h-HH-3, area=iw*ih, MINA=50*34;
+      let keep=[], rest=[]; for(const o of c.list){ if(area*o.mcap/c.m>=MINA||!keep.length) keep.push(o); else rest.push(o); }
+      if(rest.length===1){ keep.push(rest.pop()); }
+      const items=keep.map(o=>({o,v:o.mcap})); if(rest.length) items.push({more:true,cnt:rest.length,v:rest.reduce((a,o)=>a+o.mcap,0),list:rest});
+      c.tiles=hmSquarify(items,ix,iy,iw,ih).map(t=>({...t,w:Math.max(2,t.w-3),h:Math.max(2,t.h-3)}));
+      continue;
+    }
+    const ix=c.x+3, iy=c.y+HD, iw=c.w-6, ih=c.h-HD-3, along=ih, MIN=24;
+    let keep=[], rest=[]; for(const o of c.list){ const l=along*o.mcap/c.m; if(l>=MIN||keep.length<1) keep.push(o); else rest.push(o); }
+    if(rest.length===1){ keep.push(rest.pop()); }
+    const tm=c.m;
+    const items=keep.map(o=>({o,v:o.mcap})); if(rest.length) items.push({more:true,cnt:rest.length,v:rest.reduce((a,o)=>a+o.mcap,0),list:rest});
+    let p0=0; c.tiles=items.map(it=>{ const l=along*it.v/tm, t={x:ix,y:iy+p0,w:iw,h:Math.max(2,l-3)}; p0+=l; return {...it,...t}; });
+  }
+  return {secs,rows:asRows,H:pos};
+}
+function hmRender(){
+  const box=$('#hmBox'); if(!box) return; const m=M();
+  document.querySelectorAll('#hmMode [data-hm]').forEach(b=>b.classList.toggle('on',b.dataset.hm===hm.mode));
+  const LC=['linear-gradient(145deg,#FF6283,#E02E5E)','linear-gradient(145deg,#D8406E,#9A2755)','linear-gradient(145deg,#6B2A4C,#4A1F38)','linear-gradient(145deg,#323D5C,#232B42)','linear-gradient(145deg,#15675F,#0E4846)','linear-gradient(145deg,#16BC93,#0A7F72)','linear-gradient(145deg,#1FE6AA,#00A38F)'];
+  $('#hmLeg').innerHTML=`<span>${hm.mode==='ma'?'−16%':'−2,5%'}</span>${LC.map(c=>`<i style="background:${c}"></i>`).join('')}<span>${hm.mode==='ma'?'+16%':'+2,5%'}</span>`;
+  box.classList.remove('go');
+  if(hm.busy){ return; }
+  if(hm.err||!hm.rows){ box.innerHTML=`<p class="hm-note" style="color:#fff;padding:18px">${hm.err==='belum-ada'?'Data peta pasar untuk bursa ini belum tersedia. Data disiapkan otomatis setiap pagi.':'Data peta pasar belum dapat dimuat.'}</p>`; return; }
+  const W=box.clientWidth, H=box.clientHeight, N=W>900?150:W>600?100:60;
+  const top=[...hm.rows].sort((a,b)=>b.mcap-a.mcap).slice(0,N), S=typeof SK_ID!=='undefined'?SK_ID:{};
+  const val=o=>hm.mode==='ma'?(o.ma200>0?(o.price/o.ma200-1)*100:null):o.chg;
+  const mob=W<640, L=hmMosaic(top,W,mob?Math.max(980,W*2.6):H,o=>S[o.sector]||o.sector||'Lainnya', mob);
+  box.style.height=mob?Math.ceil(L.H)+'px':'';
+  const pct=v=>v==null?'–':(v>=0?'+':'−')+fmt(Math.abs(v),hm.mode==='ma'?0:2)+'%';
+  let html='', n=0;
+  for(const c of L.secs){
+    const sv=c.list.reduce((a,o)=>{ const v=val(o); return v==null?a:{s:a.s+v*o.mcap,w:a.w+o.mcap}; },{s:0,w:0}); c.avg=sv.w?sv.s/sv.w:null;
+    html+=`<div class="mz-col${L.rows?' row':''}" data-hsec="${esc(c.k)}" style="left:${c.x}px;top:${c.y}px;width:${c.w}px;height:${c.h}px;--d:${(n++)*45}ms"><div class="mz-h" title="${esc(c.k)}${c.merged?': '+esc(c.merged.join(', ')):''}"><span>${esc(c.k)}</span><em class="${(c.avg??0)>=0?'u':'d'}">${pct(c.avg)}</em>${c.w>=100||L.rows?`<i>${fmt(c.share*100,0)}%</i>`:''}</div></div>`;
+    for(const t of c.tiles){ if(t.more&&t.avg===undefined){ const w=t.list.reduce((a,o)=>{ const x=val(o); return x==null?a:{s:a.s+x*o.mcap,w:a.w+o.mcap}; },{s:0,w:0}); t.avg=w.w?w.s/w.w:null; } const v=t.more?t.avg:val(t.o), big=t.w>=58&&t.h>=22;
+      const code=t.more?`+${t.cnt} lainnya`:t.o.code, fsz=Math.max(10,Math.min(20,t.h*0.42,t.w/4.4)), cw=code.length*fsz*(t.more?.5:.64), pw=6.2*fsz*.62;
+      const lay=t.w>=cw+pw+22&&t.h>=20?'':(t.w>=Math.max(cw,pw)+14&&t.h>=fsz*2.3+8)?' v':(t.w>=cw+12&&t.h>=18)?' c':' x';
+      html+=`<${t.more?'div':'a'} class="mz-t c${hmBucket(v,hm.mode)}${t.more?' more':''}${lay}${hm.focus&&hm.focus!==c.k?' dim':''}" data-hsec="${esc(c.k)}"${t.more?'':` href="index.html#${encodeURIComponent(hashFor(t.o.code))}" data-hmc="${esc(t.o.code)}"`} style="left:${t.x}px;top:${t.y}px;width:${t.w}px;height:${t.h}px;--d:${Math.min(n++,120)*7}ms;--fs:${fsz.toFixed(1)}px">${lay===' x'?'':`<b>${esc(code)}</b>${lay===' c'?'':`<small>${pct(v)}</small>`}`}</${t.more?'div':'a'}>`; }
+  }
+  box.innerHTML=html;
+  const pills=[...L.secs].sort((a,b)=>b.list.length-a.list.length);
+  $('#hmSecs').innerHTML=`<span class="hm-sl">Sorot sektor</span>`+pills.map(c=>`<button type="button" data-hms="${esc(c.k)}" class="${hm.focus===c.k?'on':''}">${esc(c.k)}${c.avg!=null?` <em class="${c.avg>=0?'u':'d'}">${c.avg>=0?'+':'−'}${fmt(Math.abs(c.avg),hm.mode==='ma'?0:2)}%</em>`:''}</button>`).join('');
+  requestAnimationFrame(()=>requestAnimationFrame(()=>box.classList.add('go')));
+  const up=top.filter(o=>o.chg>0).length, dn=top.filter(o=>o.chg<0).length, fl=top.length-up-dn;
+  const wv=top.reduce((a,o)=>o.chg==null?a:{s:a.s+o.chg*o.mcap,w:a.w+o.mcap},{s:0,w:0}), wAvg=wv.w?wv.s/wv.w:0;
+  const byc=top.filter(o=>o.chg!=null).sort((a,b)=>b.chg-a.chg), g=byc[0], l=byc[byc.length-1], pc=v=>`${v>=0?'+':'−'}${fmt(Math.abs(v),2)}%`;
+  const ab=top.filter(o=>o.ma200>0&&o.price>o.ma200).length;
+  $('#hmStats').innerHTML=`<div class="hm-st"><label>Naik vs turun · sesi terakhir</label><div class="hm-br"><i class="u" style="width:${up/top.length*100}%"></i><i class="f" style="width:${fl/top.length*100}%"></i><i class="d" style="width:${dn/top.length*100}%"></i></div><div class="hm-brl"><span style="color:#0C9F7C">${up} naik</span><span style="color:var(--ink3)">${fl} tetap</span><span style="color:#E0365E">${dn} turun</span></div></div>
+    <div class="hm-st"><label>Rata-rata tertimbang</label><b style="color:${wAvg>=0?'#0C9F7C':'#E0365E'}">${pc(wAvg)}</b><small>menurut kapitalisasi</small></div>
+    <div class="hm-st"><label>Kenaikan terbesar</label><b style="color:#0C9F7C">${g?pc(g.chg):'–'}</b><small>${g?esc(g.code):''}</small></div>
+    <div class="hm-st"><label>Di atas MA200</label><b>${fmt(ab/top.length*100,0)}%</b><small>${ab} dari ${top.length} saham</small></div>`;
+  $('#hmNote').innerHTML=`${top.length} saham dengan kapitalisasi terbesar di bursa ${m.name}: <b style="color:var(--up)">${up} naik</b>, <b style="color:var(--down)">${dn} turun</b> pada sesi terakhir. Data per ${hm.at?new Date(hm.at).toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'}):'–'} (harga penutupan sesi terakhir, bukan waktu nyata). Sumber: data harian SM-Crestboard dari Yahoo Finance.`;
+}
+(function hmBind(){
+  const tip=()=>$('#hmTip');
+  document.addEventListener('mousemove',e=>{ const t=e.target.closest?.('.mz-t[data-hmc],.hm-t'); const tp=tip(); if(!tp) return; if(!t){ tp.hidden=true; return; }
+    const o=hm.rows?.find(r=>r.code===t.dataset.hmc); if(!o){ tp.hidden=true; return; } const m=M();
+    const S=typeof SK_ID!=='undefined'?SK_ID:{}, ma=o.ma200>0?(o.price/o.ma200-1)*100:null;
+    tp.innerHTML=`<b>${esc(o.code)}</b><div style="color:rgba(255,255,255,.6)">${esc(o.name||'')}</div><div class="big" style="color:${(o.chg||0)>=0?'#5BE39A':'#FF8A8F'}">${o.chg==null?'–':(o.chg>=0?'+':'−')+fmt(Math.abs(o.chg),2)+'%'}</div><div class="r">Harga<em>${fp(o.price,m)}</em></div><div class="r">Jarak dari MA200<em>${ma==null?'–':(ma>=0?'+':'−')+fmt(Math.abs(ma),1)+'%'}</em></div><div class="r">Sektor<em>${esc(S[o.sector]||o.sector||'–')}</em></div>`;
+    tp.hidden=false; const x=Math.min(innerWidth-tp.offsetWidth-12,e.clientX+14), y=Math.min(innerHeight-tp.offsetHeight-12,e.clientY+14); tp.style.left=x+'px'; tp.style.top=y+'px'; });
+  document.addEventListener('click',e=>{ const sp=e.target.closest('[data-hms]'); if(sp){ const k=sp.dataset.hms; hm.focus=hm.focus===k?null:k; document.querySelectorAll('#hmBox .hm-b,#hmBox .mz-t').forEach(x=>x.classList.toggle('dim',!!hm.focus&&x.dataset.hsec!==hm.focus)); document.querySelectorAll('#hmSecs [data-hms]').forEach(x=>x.classList.toggle('on',x.dataset.hms===hm.focus)); return; }
+    const b=e.target.closest('[data-hm]'); if(!b) return; hm.mode=b.dataset.hm; try{ localStorage.setItem('smcb_hm_mode',hm.mode); }catch{} hmRender(); });
+  let rt=0; addEventListener('resize',()=>{ clearTimeout(rt); rt=setTimeout(()=>{ if(hm.rows) hmRender(); },200); });
+})();
+
 const SK_ID={'Financial Services':'Keuangan','Basic Materials':'Bahan baku','Energy':'Energi','Consumer Defensive':'Barang konsumen primer','Consumer Cyclical':'Barang konsumen non-primer','Industrials':'Perindustrian','Healthcare':'Kesehatan','Technology':'Teknologi','Communication Services':'Komunikasi','Real Estate':'Properti','Utilities':'Utilitas'};
 const sk={ map:{}, busy:false, mk:null };
 function skLoadCache(mk){ try{ const c=JSON.parse(localStorage.getItem('smcb_sector_'+mk)||'{}'); if(c.at && Date.now()-c.at<30*864e5) return c.map||{}; }catch{} return {}; }
