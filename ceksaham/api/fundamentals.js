@@ -8,6 +8,9 @@ const TYPES = [
   'quarterlyDilutedEPS', 'quarterlyBasicEPS', 'quarterlyTotalRevenue', 'quarterlyNetIncome', 'quarterlyStockholdersEquity',
   'annualDilutedEPS', 'annualBasicEPS', 'annualTotalRevenue', 'annualNetIncome', 'annualStockholdersEquity',
   'trailingDilutedEPS', // EPS 12 bulan bergulir per kuartal: dasar grafik PER historis (PER band)
+  // Untuk Fundachart: margin, arus kas, dan struktur modal
+  'quarterlyGrossProfit', 'quarterlyOperatingIncome', 'quarterlyTotalDebt', 'quarterlyFreeCashFlow',
+  'annualGrossProfit', 'annualOperatingIncome', 'annualTotalDebt', 'annualFreeCashFlow',
 ];
 
 let auth = null; // { cookie, crumb, t } disimpan selama fungsi masih "hangat"
