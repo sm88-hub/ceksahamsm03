@@ -568,6 +568,52 @@
   .hm-note{margin:10px 2px 0;font-size:12px;color:var(--ink3);line-height:1.5}
   @media(max-width:640px){ .hm-box{height:520px} .hm-ctrl{align-items:flex-start;width:100%} .hm-leg i{width:16px} .hm-stats{grid-template-columns:1fr 1fr} .hm-st:first-child{grid-column:1/-1} }
   @media(prefers-reduced-motion:reduce){ .hm-t{animation:none} }
+  /* Alur analisis: navigasi bab + pemisah bab */
+  .flow{position:sticky;top:calc(var(--barH,64px) + 8px);z-index:15;display:flex;gap:4px;padding:5px;margin:2px 0 0;border-radius:16px;background:var(--glass);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--rule);box-shadow:0 10px 26px -20px rgba(0,0,0,.45);overflow-x:auto;scrollbar-width:none}
+  .flow::-webkit-scrollbar{display:none}
+  .flow a{flex:1 0 auto;display:flex;align-items:center;justify-content:center;gap:8px;padding:7px 12px;border-radius:11px;text-decoration:none;color:var(--ink2);font:700 13px 'Plus Jakarta Sans',sans-serif;white-space:nowrap;transition:background .2s,color .2s}
+  .flow a i{font-style:normal;flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font:800 11.5px 'Space Grotesk',sans-serif;background:var(--sunk);color:var(--ink3);transition:background .25s,color .25s}
+  .flow a:hover{background:var(--sunk);color:var(--ink)}
+  .flow a.on{background:var(--ink);color:var(--surface)}.flow a.on i{background:#C6F135;color:#0D1526}
+  .flow a[hidden]{display:none}
+  .wrap[data-tab="ch-pasar"] [data-ch]:not([data-ch="ch-pasar"]),.wrap[data-tab="ch-pasar"] .chap:not(#ch-pasar){display:none!important}
+  .wrap[data-tab="ch-sektor"] [data-ch]:not([data-ch="ch-sektor"]),.wrap[data-tab="ch-sektor"] .chap:not(#ch-sektor){display:none!important}
+  .wrap[data-tab="ch-hasil"] [data-ch]:not([data-ch="ch-hasil"]),.wrap[data-tab="ch-hasil"] .chap:not(#ch-hasil){display:none!important}
+  .wrap[data-tab="ch-saring"] [data-ch]:not([data-ch="ch-saring"]),.wrap[data-tab="ch-saring"] .chap:not(#ch-saring){display:none!important}
+  .wrap[data-tab="ch-metode"] [data-ch]:not([data-ch="ch-metode"]),.wrap[data-tab="ch-metode"] .chap:not(#ch-metode){display:none!important}
+  .chap{display:flex;align-items:center;gap:14px;margin:26px 0 0;scroll-margin-top:calc(var(--barH,64px) + 74px)}
+  .chap[hidden]{display:none}
+  .chap>span{flex:none;width:40px;height:40px;border-radius:13px;display:grid;place-items:center;font:800 17px 'Space Grotesk',sans-serif;background:linear-gradient(135deg,#C6F135,#5FE0B4);color:#0D1526;box-shadow:0 8px 20px -10px rgba(95,224,180,.7)}
+  .chap>div{min-width:0}
+  .chap b{display:block;font:800 21px 'Space Grotesk',sans-serif;letter-spacing:-.015em;color:var(--ink)}
+  .chap small{display:block;color:var(--ink3);font-size:13px;margin-top:2px;line-height:1.45;max-width:72ch}
+  .chap::after{content:"";flex:1;min-width:30px;height:1px;background:linear-gradient(90deg,var(--rule2),transparent)}
+  .wrap .chap + *,.wrap .chap + [hidden] + *,.wrap .chap + [hidden] + [hidden] + *{margin-top:18px}
+  #ch-hasil + .banner{margin-top:24px}
+  .stg,.rapor,.method{scroll-margin-top:calc(var(--barH,64px) + 74px)}
+  .fs-mmore{display:none}
+  @media(max-width:760px){ .fs-cards:not(.all) .fs-card:nth-child(n+13){display:none} .fs-mmore{display:flex;width:100%;justify-content:center;margin-top:10px} }
+  /* Header bab dalam mode tab: ringkas, tanpa nomor (nomor sudah ada di tab) */
+  .chap>span,.chap::after{display:none}
+  .chap b{font-size:18px}.chap small{font-size:12.5px}
+  @media(max-width:720px){
+    .sum{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-left:20px;gap:8px;margin:16px -20px 0;padding:0 20px 2px;scrollbar-width:none}
+    .sum::-webkit-scrollbar{display:none}
+    .sum button{flex:0 0 auto;min-width:112px;padding:10px 12px;scroll-snap-align:start}
+    .sum b{font-size:22px}.sum span{font-size:12px;white-space:nowrap}
+    .hero h1{font-size:24px}
+  }
+  .res-ctl{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;align-items:stretch}
+  .res-ctl>*{margin:0!important}
+  .res-help{margin-top:22px;display:grid;gap:8px}.res-help>*{margin:0!important}
+  .tags:not(.open) .tag:nth-child(n+4):not(.tmore){display:none}
+  .tag.tmore{border:0;cursor:pointer;font:inherit;font-size:12px;font-weight:700;background:transparent;color:var(--ink3);box-shadow:inset 0 0 0 1px var(--rule2)}
+  .tag.tmore:hover{color:var(--ink)}
+  @media(max-width:860px){ .res-ctl{grid-template-columns:1fr} }
+  .list-more{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:10px;padding:13px;border-radius:14px;border:1px dashed var(--rule2);color:var(--ink);font:700 13.5px 'Plus Jakarta Sans',sans-serif;background:var(--surface);transition:background .2s,border-color .2s}
+  .list-more:hover{background:var(--sunk);border-color:var(--ink3)}
+  .list-more svg{transition:transform .2s}.list-more:hover svg{transform:translateY(2px)}
+  @media(max-width:760px){ .flow{top:calc(var(--barH,64px) + 6px);border-radius:14px} .flow a{padding:6px 10px;font-size:12.5px;flex:0 0 auto} .chap{margin-top:40px;gap:12px} .chap>span{width:34px;height:34px;font-size:15px;border-radius:11px} .chap b{font-size:18px} .chap small{font-size:12.5px} .chap::after{display:none} }
   .stg{margin-top:36px;scroll-margin-top:90px;background:var(--surface);border:1px solid var(--rule);border-radius:22px;padding:24px;box-shadow:var(--shadow)}
   .stg{--s1:#8a94a6;--s2:var(--up);--s3:#d99a1e;--s4:var(--down)}
   .stg-bar{display:flex;height:8px;border-radius:99px;overflow:hidden;gap:2px;margin:4px 0 16px;background:var(--sunk)}
@@ -817,44 +863,12 @@
   </div>
 </div></header>
 
-<div class="wrap">
+<div class="wrap" data-tab="ch-hasil">
   <section class="hero">
     <div class="hero-top">
       <div>
         <h1 id="heroTitle">Saham Indonesia dengan setup breakout terkuat</h1>
-        <p>Setiap saham di daftar pantauan diberi skor 0–100 dari enam faktor yang paling konsisten muncul sebelum breakout berhasil: tren, momentum relatif, jarak ke titik tertinggi 52 minggu, volatilitas, breakout dan volume, serta candle. Skor tinggi berarti tanda-tandanya lengkap, bukan jaminan harga naik.</p>
-        <nav class="hx" aria-label="Pintasan halaman">
-          <a class="hx-a" href="#dasar">
-            <span class="hx-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5V5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2.5Z"/><path d="M8 7h7M8 11h5"/></svg></span>
-            <span class="hx-t"><b>Dasar analisis</b><small>Enam faktor penilaian</small></span>
-            <svg class="hx-ar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </a>
-          <a class="hx-a" href="#tahap">
-            <span class="hx-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17c3 0 3-6 6-6s3 3 6 3 3-8 6-8"/><circle cx="9" cy="11" r="1.4" fill="currentColor"/><circle cx="15" cy="14" r="1.4" fill="currentColor"/><circle cx="21" cy="6" r="1.4" fill="currentColor"/></svg></span>
-            <span class="hx-t"><b>Rekap tahap siklus</b><small>Peta tahap 1 hingga 4</small></span>
-            <svg class="hx-ar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </a>
-          <a class="hx-a" href="#asing" id="hxFx" hidden>
-            <span class="hx-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 4 6 4 9s-1 6-4 9c-3-3-4-6-4-9s1-6 4-9z"/></svg></span>
-            <span class="hx-t"><b>Radar asing</b><small>Aliran dana asing 5 hari</small></span>
-            <svg class="hx-ar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </a>
-          <a class="hx-a" href="#saring" id="hxFs" hidden>
-            <span class="hx-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h18l-7 8v6l-4 2v-8z"/></svg></span>
-            <span class="hx-t"><b>Penyaring fundamental</b><small>Saring dengan syarat Anda</small></span>
-            <svg class="hx-ar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </a>
-          <a class="hx-a" href="#sektor" id="hxSk" hidden>
-            <span class="hx-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9v9z"/><path d="M15 3.5A9 9 0 0 1 20.5 9H15z"/></svg></span>
-            <span class="hx-t"><b>Peringkat sektor</b><small>Sektor yang paling diminati</small></span>
-            <svg class="hx-ar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </a>
-          <a class="hx-a" href="#rapor">
-            <span class="hx-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span>
-            <span class="hx-t"><b>Rapor scanner</b><small>Uji ulang 12 bulan</small></span>
-            <svg class="hx-ar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </a>
-        </nav>
+        <p>Skor 0–100 dari enam faktor yang sering muncul sebelum breakout. Skor tinggi berarti tandanya lengkap, bukan jaminan harga naik.</p>
       </div>
       <button class="scan-btn" id="scanBtn" type="button">Pindai ulang</button>
     </div>
@@ -869,20 +883,23 @@
     </div>
   </section>
 
+  <nav class="flow" id="flow" aria-label="Bagian halaman" role="tablist"><a href="#ch-pasar" role="tab" data-tab="ch-pasar"><i>1</i>Pasar</a><a href="#ch-sektor" role="tab" data-tab="ch-sektor"><i>2</i>Sektor</a><a href="#ch-hasil" role="tab" data-tab="ch-hasil"><i>3</i>Hasil pindaian</a><a href="#ch-saring" role="tab" data-tab="ch-saring"><i>4</i>Penyaring</a><a href="#ch-metode" role="tab" data-tab="ch-metode"><i>5</i>Metode</a></nav>
+
+  <div class="chap" id="ch-pasar"><span>1</span><div><b>Gambaran pasar</b><small>Mulai dari gambaran besar: arah indeks, sebaran saham naik dan turun, serta aliran dana asing.</small></div></div>
   <div class="cx-bar" id="cxBar" hidden>
     <span class="cx-lbl">Pasar kripto</span>
     <div class="rp-hz" role="tablist" aria-label="Jenis pasar kripto"><button type="button" data-mk="CS">Spot</button><button type="button" data-mk="CF">Futures <small>perpetual</small></button></div>
     <p class="cx-note">Pasar kripto beroperasi 24 jam; satu candle harian ditutup pada pukul 00.00 UTC (07.00 WIB). Data spot bersumber dari Yahoo Finance, data futures dari Hyperliquid. <span id="cxLev" hidden><b>Futures memakai leverage:</b> kerugian dapat menghabiskan seluruh margin melalui likuidasi, sehingga ukuran posisi perlu diperhitungkan dengan cermat.</span></p>
   </div>
   <div id="regime" class="regime" role="status"></div>
-  <section id="mkt" class="mkt" aria-live="polite"></section>
+  <section id="mkt" class="mkt" aria-live="polite" data-ch="ch-pasar"></section>
 
-  <section class="stg sec-hm" id="peta" hidden>
+  <section class="stg sec-hm" id="peta" hidden data-ch="ch-pasar">
     <div class="rp-head hm-head">
       <div>
         <span class="rp-kick">Peta Pasar</span>
         <h2>Peta pasar <span id="hmMk"></span></h2>
-        <p id="hmSub">Potret satu sesi: saham berkapitalisasi terbesar dari seluruh bursa. Tiap kolom adalah satu sektor, lebarnya menurut porsi kapitalisasi; tinggi kotak menurut kapitalisasi saham, warna menurut pergerakan harga. Berbeda dengan Peringkat sektor yang menggambarkan tren beberapa bulan dari saham hasil pindaian.</p>
+        <p id="hmSub">Sesi terakhir, saham terbesar di bursa. Satu kolom satu sektor; makin besar kotak, makin besar kapitalisasinya.</p>
       </div>
       <div class="hm-ctrl">
         <div class="hm-seg" id="hmMode" role="group" aria-label="Warna peta"><button type="button" data-hm="chg" class="on">Sesi terakhir</button><button type="button" data-hm="ma">Jarak dari MA200</button></div>
@@ -895,8 +912,82 @@
     <div class="hm-tip" id="hmTip" hidden></div>
     <p class="hm-note" id="hmNote"></p>
   </section>
-  <div id="banner" class="banner" role="status"></div>
+  <section class="stg fxs" id="asing" hidden data-ch="ch-pasar">
+    <div class="rp-head">
+      <div>
+        <span class="rp-kick">Radar Asing</span>
+        <h2>Aliran dana asing di BEI</h2>
+        <p>Pembelian bersih asing terbesar di seluruh BEI. <span id="fxDates"></span></p>
+      </div>
+      <div class="rp-ctrl">
+        <div class="rp-hz" id="fxFlat" role="tablist" aria-label="Filter harga"><button type="button" data-v="1" class="on">Harga belum lari (≤5%)</button><button type="button" data-v="0">Semua</button></div>
+        <select id="fxLiq" aria-label="Minimal nilai transaksi harian"><option value="1000000000">Transaksi ≥ Rp1 M/hari</option><option value="5000000000" selected>Transaksi ≥ Rp5 M/hari</option><option value="20000000000">Transaksi ≥ Rp20 M/hari</option></select>
+      </div>
+    </div>
+    <div id="fxBody"></div>
+    <details class="rp-how">
+      <summary>Cara membaca dan batasannya</summary>
+      <ul>
+        <li><b>Sumber:</b> Ringkasan Saham harian di situs resmi BEI (kolom pembelian dan penjualan asing). Nilai bersih = (lembar dibeli asing − lembar dijual asing) × harga penutupan hari itu, sehingga merupakan perkiraan.</li>
+        <li><b>Hari net beli</b> menunjukkan berapa hari asing membeli lebih banyak daripada menjual. Pembelian yang konsisten setiap hari lebih bermakna daripada satu hari pembelian besar.</li>
+        <li><b>Porsi asing</b> = rata-rata transaksi asing (beli dan jual) terhadap total nilai transaksi saham tersebut.</li>
+        <li>Data ini <b>tidak menunjukkan broker</b> atau pihak tertentu, dan transaksi asing juga dapat berasal dari investor domestik yang memakai rekening luar negeri. Pembelian asing tidak menjamin harga naik.</li>
+        <li>Situs BEI dapat sewaktu-waktu membatasi akses otomatis. Bila itu terjadi, bagian ini menampilkan pemberitahuan dan akan mencoba kembali pada pemindaian berikutnya.</li>
+      </ul>
+    </details>
+  </section>
 
+
+  <div class="chap" id="ch-sektor"><span>2</span><div><b>Sektor dan siklus</b><small>Sektor mana yang sedang kuat, dan di tahap siklus mana saham-saham berada.</small></div></div>
+  <section class="stg sec-sk" id="sektor" hidden data-ch="ch-sektor">
+    <div class="rp-head">
+      <div>
+        <span class="rp-kick">Rotasi Sektor</span>
+        <h2>Peringkat sektor</h2>
+        <p>Sektor dengan tren beberapa bulan terkuat ada di urutan atas.</p>
+      </div>
+    </div>
+    <div id="skBody"></div>
+    <details class="rp-how">
+      <summary>Cara menghitung peringkat sektor</summary>
+      <ul>
+        <li><b>Sektor</b> diambil dari profil emiten di Yahoo Finance dan diterjemahkan ke bahasa Indonesia.</li>
+        <li><b>RS rata-rata</b> = rata-rata peringkat kekuatan relatif (1–99) seluruh saham sektor tersebut yang ikut dipindai.</li>
+        <li><b>Tahap 2</b> = persentase anggota sektor yang berada dalam tren naik (data harian). <b>Di atas MA50</b> = persentase anggota dengan harga penutupan di atas rata-rata 50 hari. <b>Kinerja 3 bulan</b> = rata-rata perubahan harga 63 sesi bursa.</li>
+        <li>Hanya sektor dengan minimal 3 anggota yang diberi peringkat. Sektor dengan 1–2 anggota ditampilkan terpisah di bawah tanpa peringkat, karena hasilnya ditentukan oleh satu-dua saham saja. Peringkat ini hanya mencakup saham yang dipindai Crestboard, bukan seluruh bursa.</li>
+      </ul>
+    </details>
+  </section>
+  <section class="stg" id="tahap" data-ch="ch-sektor">
+    <div class="rp-head">
+      <div>
+        <span class="rp-kick">Peta Siklus</span>
+        <h2>Rekap tahap siklus</h2>
+        <p>Saham hasil pindaian dikelompokkan: konsolidasi, tren naik, puncak, atau turun.</p>
+      </div>
+      <div class="rp-ctrl">
+        <div class="rp-hz" id="stgTf" role="tablist" aria-label="Kerangka waktu"><button type="button" data-tf="d" class="on">Harian</button><button type="button" data-tf="w">Mingguan</button></div>
+      </div>
+    </div>
+    <div id="stgBody"></div>
+    <details class="rp-how">
+      <summary>Cara menentukan tahap</summary>
+      <ul>
+        <li><b>Tahap 2, tren naik:</b> harga di atas rata-rata menengah, rata-rata menengah di atas rata-rata panjang, rata-rata pendek di atas rata-rata menengah, dan rata-rata panjang sedang menanjak.</li>
+        <li><b>Tahap 4, penurunan:</b> harga di bawah rata-rata panjang yang sedang menurun.</li>
+        <li><b>Tahap 3, puncak:</b> sebelumnya terjadi kenaikan minimal 30% dari titik terendah, titik tertinggi tercapai belum lama, harga masih dalam jarak 30% dari puncak, tetapi struktur tren naik sudah tidak utuh (rata-rata pendek melandai, harga turun di bawahnya, atau rata-rata panjang mendatar).</li>
+        <li><b>Tahap 1, konsolidasi:</b> kondisi selain ketiga tahap di atas, umumnya harga bergerak di sekitar rata-rata panjang yang mendatar.</li>
+        <li><b>Harian</b> memakai rata-rata 50, 150, dan 200 hari, dengan kemiringan rata-rata panjang dibandingkan 21 hari bursa sebelumnya. <b>Mingguan</b> memakai rata-rata 10, 30, dan 40 minggu, dibandingkan 4 minggu sebelumnya. Kerangka mingguan lebih lambat berubah tetapi lebih tahan terhadap fluktuasi sesaat.</li>
+        <li><b>Keterbatasan.</b> Data yang dipakai adalah 12 bulan terakhir, sehingga tahap pada aset yang baru melantai atau baru diperdagangkan dapat kurang akurat. Tahap adalah gambaran kondisi, bukan sinyal beli atau jual.</li>
+      </ul>
+    </details>
+  </section>
+
+
+  <div class="chap" id="ch-hasil"><span>3</span><div><b>Hasil pindaian</b><small>Saham dengan setup breakout, diurutkan dari skor tertinggi.</small></div></div>
+  <div id="banner" class="banner" role="status" data-ch="ch-hasil"></div>
+
+  <div class="res-ctl" data-ch="ch-hasil">
   <div class="tools">
     <label class="field">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="color:var(--ink3)"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
@@ -914,6 +1005,9 @@
     </select>
     <span class="fprog" id="fundProg"></span>
   </div>
+  </div>
+  <div class="list" id="list" data-ch="ch-hasil"></div>
+  <div class="res-help" data-ch="ch-hasil">
   <details class="fx fx-scan">
     <summary>Apa arti tiap kriteria fundamental?</summary>
     <div class="fx-body">
@@ -989,83 +1083,16 @@
       </div>
     </div>
   </details>
-  <div class="list" id="list"></div>
+  </div>
 
-  <section class="stg fxs" id="asing" hidden>
-    <div class="rp-head">
-      <div>
-        <span class="rp-kick">Radar Asing</span>
-        <h2>Aliran dana asing di BEI</h2>
-        <p>Saham dengan pembelian bersih investor asing terbesar dari seluruh saham BEI, bukan hanya daftar pantauan. Gunakan filter "Harga belum lari" untuk mencari saham yang sedang dikumpulkan asing namun harganya belum naik banyak. <span id="fxDates"></span></p>
-      </div>
-      <div class="rp-ctrl">
-        <div class="rp-hz" id="fxFlat" role="tablist" aria-label="Filter harga"><button type="button" data-v="1" class="on">Harga belum lari (≤5%)</button><button type="button" data-v="0">Semua</button></div>
-        <select id="fxLiq" aria-label="Minimal nilai transaksi harian"><option value="1000000000">Transaksi ≥ Rp1 M/hari</option><option value="5000000000" selected>Transaksi ≥ Rp5 M/hari</option><option value="20000000000">Transaksi ≥ Rp20 M/hari</option></select>
-      </div>
-    </div>
-    <div id="fxBody"></div>
-    <details class="rp-how">
-      <summary>Cara membaca dan batasannya</summary>
-      <ul>
-        <li><b>Sumber:</b> Ringkasan Saham harian di situs resmi BEI (kolom pembelian dan penjualan asing). Nilai bersih = (lembar dibeli asing − lembar dijual asing) × harga penutupan hari itu, sehingga merupakan perkiraan.</li>
-        <li><b>Hari net beli</b> menunjukkan berapa hari asing membeli lebih banyak daripada menjual. Pembelian yang konsisten setiap hari lebih bermakna daripada satu hari pembelian besar.</li>
-        <li><b>Porsi asing</b> = rata-rata transaksi asing (beli dan jual) terhadap total nilai transaksi saham tersebut.</li>
-        <li>Data ini <b>tidak menunjukkan broker</b> atau pihak tertentu, dan transaksi asing juga dapat berasal dari investor domestik yang memakai rekening luar negeri. Pembelian asing tidak menjamin harga naik.</li>
-        <li>Situs BEI dapat sewaktu-waktu membatasi akses otomatis. Bila itu terjadi, bagian ini menampilkan pemberitahuan dan akan mencoba kembali pada pemindaian berikutnya.</li>
-      </ul>
-    </details>
-  </section>
 
-  <section class="stg" id="tahap">
-    <div class="rp-head">
-      <div>
-        <span class="rp-kick">Peta Siklus</span>
-        <h2>Rekap tahap siklus</h2>
-        <p>Pengelompokan seluruh hasil pindaian ke dalam tahap siklus harga, agar terlihat sekilas mana yang sedang berkonsolidasi, sedang dalam tren naik, atau mulai memuncak. Klik kode untuk membuka analisis lengkapnya.</p>
-      </div>
-      <div class="rp-ctrl">
-        <div class="rp-hz" id="stgTf" role="tablist" aria-label="Kerangka waktu"><button type="button" data-tf="d" class="on">Harian</button><button type="button" data-tf="w">Mingguan</button></div>
-      </div>
-    </div>
-    <div id="stgBody"></div>
-    <details class="rp-how">
-      <summary>Cara menentukan tahap</summary>
-      <ul>
-        <li><b>Tahap 2, tren naik:</b> harga di atas rata-rata menengah, rata-rata menengah di atas rata-rata panjang, rata-rata pendek di atas rata-rata menengah, dan rata-rata panjang sedang menanjak.</li>
-        <li><b>Tahap 4, penurunan:</b> harga di bawah rata-rata panjang yang sedang menurun.</li>
-        <li><b>Tahap 3, puncak:</b> sebelumnya terjadi kenaikan minimal 30% dari titik terendah, titik tertinggi tercapai belum lama, harga masih dalam jarak 30% dari puncak, tetapi struktur tren naik sudah tidak utuh (rata-rata pendek melandai, harga turun di bawahnya, atau rata-rata panjang mendatar).</li>
-        <li><b>Tahap 1, konsolidasi:</b> kondisi selain ketiga tahap di atas, umumnya harga bergerak di sekitar rata-rata panjang yang mendatar.</li>
-        <li><b>Harian</b> memakai rata-rata 50, 150, dan 200 hari, dengan kemiringan rata-rata panjang dibandingkan 21 hari bursa sebelumnya. <b>Mingguan</b> memakai rata-rata 10, 30, dan 40 minggu, dibandingkan 4 minggu sebelumnya. Kerangka mingguan lebih lambat berubah tetapi lebih tahan terhadap fluktuasi sesaat.</li>
-        <li><b>Keterbatasan.</b> Data yang dipakai adalah 12 bulan terakhir, sehingga tahap pada aset yang baru melantai atau baru diperdagangkan dapat kurang akurat. Tahap adalah gambaran kondisi, bukan sinyal beli atau jual.</li>
-      </ul>
-    </details>
-  </section>
-
-  <section class="stg sec-sk" id="sektor" hidden>
-    <div class="rp-head">
-      <div>
-        <span class="rp-kick">Rotasi Sektor</span>
-        <h2>Peringkat sektor</h2>
-        <p>Sektor diurutkan dari rata-rata kekuatan relatif (RS) anggotanya pada pindaian terakhir, yang menggambarkan tren beberapa bulan. Sektor di urutan atas sedang lebih diminati pasar dibanding sektor lain. Untuk potret satu sesi seluruh bursa, lihat Peta pasar di atas. Klik kode untuk membuka analisis lengkapnya.</p>
-      </div>
-    </div>
-    <div id="skBody"></div>
-    <details class="rp-how">
-      <summary>Cara menghitung peringkat sektor</summary>
-      <ul>
-        <li><b>Sektor</b> diambil dari profil emiten di Yahoo Finance dan diterjemahkan ke bahasa Indonesia.</li>
-        <li><b>RS rata-rata</b> = rata-rata peringkat kekuatan relatif (1–99) seluruh saham sektor tersebut yang ikut dipindai.</li>
-        <li><b>Tahap 2</b> = persentase anggota sektor yang berada dalam tren naik (data harian). <b>Di atas MA50</b> = persentase anggota dengan harga penutupan di atas rata-rata 50 hari. <b>Kinerja 3 bulan</b> = rata-rata perubahan harga 63 sesi bursa.</li>
-        <li>Hanya sektor dengan minimal 3 anggota yang diberi peringkat. Sektor dengan 1–2 anggota ditampilkan terpisah di bawah tanpa peringkat, karena hasilnya ditentukan oleh satu-dua saham saja. Peringkat ini hanya mencakup saham yang dipindai Crestboard, bukan seluruh bursa.</li>
-      </ul>
-    </details>
-  </section>
-  <section class="stg sec-fs" id="saring" hidden>
+  <div class="chap" id="ch-saring"><span>4</span><div><b>Penyaring fundamental</b><small>Saring lebih lanjut dengan laporan keuangan, estimasi analis, dan valuasi.</small></div></div>
+  <section class="stg sec-fs" id="saring" hidden data-ch="ch-saring">
     <div class="rp-head">
       <div>
         <span class="rp-kick">Penyaring</span>
         <h2>Penyaring fundamental</h2>
-        <p>Saring saham berdasarkan laporan keuangan terbaru, estimasi analis, dan kondisi teknikalnya. Pilih cakupannya: hasil pindaian Crestboard, atau seluruh saham di bursa.</p>
+        <p>Pilih preset atau atur syarat sendiri; berlaku untuk hasil pindaian atau seluruh bursa.</p>
       </div>
     </div>
     <div class="fs-mode" id="fsMode" role="tablist" aria-label="Cakupan penyaringan" data-m="scan">
@@ -1095,12 +1122,14 @@
     </details>
   </section>
 
-  <section class="rapor" id="rapor">
+
+  <div class="chap" id="ch-metode"><span>5</span><div><b>Keandalan dan metode</b><small>Rekam jejak sinyal scanner dan cara skornya dihitung.</small></div></div>
+  <section class="rapor" id="rapor" data-ch="ch-metode">
     <div class="rp-head">
       <div>
         <span class="rp-kick">Transparansi</span>
         <h2>Rapor scanner</h2>
-        <p>Scanner ini diuji ulang hari demi hari selama 12 bulan terakhir, hanya dengan data yang tersedia pada hari tersebut, untuk melihat pergerakan saham setelah sinyal muncul. Hasilnya ditampilkan apa adanya, baik maupun buruk.</p>
+        <p>Uji ulang 12 bulan: apa yang terjadi setelah sinyal muncul, baik maupun buruk.</p>
       </div>
       <div class="rp-ctrl">
         <div class="rp-hz" id="rpHz" role="tablist" aria-label="Rentang waktu"><button type="button" data-h="5">5 hari</button><button type="button" data-h="10">10 hari</button><button type="button" data-h="20" class="on">20 hari</button></div>
@@ -1121,7 +1150,7 @@
     </details>
   </section>
 
-  <section class="method" id="dasar">
+  <section class="method" id="dasar" data-ch="ch-metode">
     <details class="method-d" id="dasarD">
     <summary class="method-s"><span><h2>Dasar analisis</h2><small>Enam faktor penilaian skor, pengurang skor, catatan penting, dan aturan status</small></span><i aria-hidden="true"></i></summary>
     <p class="lead">Tidak ada analisis yang dapat memastikan harga esok hari. Yang dapat dilakukan adalah memilih saham yang punya ciri-ciri paling sering mendahului breakout yang berhasil. Skor di halaman ini menggabungkan enam faktor itu. Sebagian berasal dari riset pasar modal yang sudah diuji puluhan tahun, sebagian dari praktik trader momentum profesional, dan sumbernya disebut di tiap faktor.</p>
@@ -2017,11 +2046,11 @@ function hmRender(){
   box.classList.remove('go');
   if(hm.busy){ return; }
   if(hm.err||!hm.rows){ box.innerHTML=`<p class="hm-note" style="color:#fff;padding:18px">${hm.err==='belum-ada'?'Data peta pasar untuk bursa ini belum tersedia. Data disiapkan otomatis setiap pagi.':'Data peta pasar belum dapat dimuat.'}</p>`; return; }
-  const W=box.clientWidth, H=box.clientHeight, N=W>900?150:W>600?100:60;
+  const W=box.clientWidth, H=box.clientHeight, N=W>900?150:W>600?100:45;
   if(W<120){ box.innerHTML='<div class="hm-sk"></div>'; return; } // belum punya ukuran (tab latar belakang); digambar ulang oleh ResizeObserver
   const top=[...hm.rows].sort((a,b)=>b.mcap-a.mcap).slice(0,N), S=typeof SK_ID!=='undefined'?SK_ID:{};
   const val=o=>hm.mode==='ma'?(o.ma200>0?(o.price/o.ma200-1)*100:null):o.chg;
-  const mob=W<640, L=hmMosaic(top,W,mob?Math.max(980,W*2.6):H,o=>S[o.sector]||o.sector||'Lainnya', mob);
+  const mob=W<640, L=hmMosaic(top,W,mob?Math.max(820,W*2.15):H,o=>S[o.sector]||o.sector||'Lainnya', mob);
   box.style.height=mob?Math.ceil(L.H)+'px':'';
   const pct=v=>v==null?'–':(v>=0?'+':'−')+fmt(Math.abs(v),hm.mode==='ma'?0:2)+'%';
   let html='', n=0;
@@ -2066,7 +2095,7 @@ const sk={ map:{}, busy:false, mk:null };
 function skLoadCache(mk){ try{ const c=JSON.parse(localStorage.getItem('smcb_sector_'+mk)||'{}'); if(c.at && Date.now()-c.at<30*864e5) return c.map||{}; }catch{} return {}; }
 async function skFetch(){
   const m=M(), mk=state.market;
-  if(m.crypto || state.demo){ $('#sektor').hidden=true; $('#hxSk').hidden=true; return; }
+  if(m.crypto || state.demo){ $('#sektor').hidden=true; ($('#hxSk')||{}).hidden=true; return; }
   if(sk.mk!==mk){ sk.map=skLoadCache(mk); sk.mk=mk; }
   const need=state.results.map(r=>r.code).filter(c=>!(c in sk.map));
   if(need.length && !sk.busy){
@@ -2084,8 +2113,8 @@ async function skFetch(){
 function skRender(){
   const box=$('#skBody'); if(!box) return;
   const m=M(), uw=m.unitWord||'saham';
-  if(m.crypto){ $('#sektor').hidden=true; $('#hxSk').hidden=true; return; }
-  $('#sektor').hidden=false; $('#hxSk').hidden=false;
+  if(m.crypto){ $('#sektor').hidden=true; ($('#hxSk')||{}).hidden=true; return; }
+  $('#sektor').hidden=false; ($('#hxSk')||{}).hidden=false;
   const by={}; state.results.forEach(r=>{ const sc=sk.map[r.code]; if(!sc) return; (by[sc]=by[sc]||[]).push(r); });
   const rows=Object.entries(by).map(([sc,L])=>{ const a=f=>L.reduce((s,r)=>s+f(r),0)/L.length;
     return { sc, L, n:L.length, rs:a(r=>r.rs||0), t2:L.filter(r=>r.stg?.d?.st===2).length/L.length*100, a50:L.filter(r=>r.br?.a50).length/L.length*100, r3:a(r=>r.ret63||0) }; }).sort((a,b)=>b.rs-a.rs);
@@ -2257,7 +2286,8 @@ function fsList(list,col,get,m,lim){
   const ck=[...new Set([...fsAct().map(f=>f[0]).filter(k=>FS_COL[k]),'roe','eps3y','pe','de'])].slice(0,4);
   const table=`<div class="fs-tw"><table class="fs-t"><thead><tr>${col.map(([k,l])=>`<th data-fss="${k}" class="${fs.sort===k?'s'+(fs.asc?' asc':''):''}">${l}</th>`).join('')}</tr></thead><tbody>${list.map(r=>`<tr${nw(r)}>${col.map(([k])=>`<td${hit(k)?' class="hit"':''}>${fsCell(k,get(r,k),r,m)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
   ni=0; const cards=`<div class="fs-cards">${list.map(r=>`<a${nw(r).replace('class="fs-new"','class="fs-card fs-new"')||' class="fs-card"'} href="index.html#${encodeURIComponent(hashFor(r.code))}"><div class="h"><b>${esc(r.code)}</b>${fsCell('chg',get(r,'chg'),r,m)}<span class="p">${fp(get(r,'price'),m)}</span></div><small>${esc(r.name||'')}</small><div class="kv">${ck.map(k=>`<span${hit(k)?' class="hit"':''}><em>${FS_COL[k]}</em>${fsCell(k,get(r,k),r,m)}</span>`).join('')}</div></a>`).join('')}</div>`;
-  return `<div class="fs-list">${table}${cards}</div>`;
+  const mm=list.length>12?`<button type="button" class="fs-more fs-mmore" data-fsall>Tampilkan ${list.length-12} kartu lainnya</button>`:'';
+  return `<div class="fs-list">${table}${cards}${mm}</div>`;
 }
 function fsModeUI(){
   const el=$('#fsMode'); if(!el) return; el.dataset.m=fs.mode;
@@ -2268,8 +2298,8 @@ function fsModeUI(){
 }
 function fsRender(){
   const out=$('#fsOut'); if(!out) return;
-  const m=M(); if(m.crypto){ $('#saring').hidden=true; $('#hxFs').hidden=true; return; }
-  $('#saring').hidden=false; $('#hxFs').hidden=false;
+  const m=M(); if(m.crypto){ $('#saring').hidden=true; ($('#hxFs')||{}).hidden=true; return; }
+  $('#saring').hidden=false; ($('#hxFs')||{}).hidden=false;
   fsEnsureMk();
   if(fs.sel.mcap && !fsOpt('mcap').some(o=>o[0]===fs.sel.mcap)) delete fs.sel.mcap;
   fsModeUI(); fsGrid();
@@ -2324,6 +2354,7 @@ document.addEventListener('click',e=>{
   const x=e.target.closest('[data-fsx]'); if(x){ delete fs.sel[x.dataset.fsx]; fsSave(); fsRender(); return; }
   const h=e.target.closest('[data-fss]'); if(h){ const k=h.dataset.fss; if(fs.sort===k) fs.asc=!fs.asc; else { fs.sort=k; fs.asc=k==='code'||k==='sector'||k==='st'||k==='de'||k==='pe'||k==='fpe'||k==='peg'; } fsRender(); return; }
   if(e.target.closest('[data-fsmore]')){ fs.mx.lim+=50; fsRender(); return; }
+  { const b=e.target.closest('[data-fsall]'); if(b){ b.parentElement.querySelector('.fs-cards')?.classList.add('all'); b.remove(); return; } }
   if(e.target.closest('[data-fsretry]')){ fs.mx.mk=''; fs.mx.err=''; fsRender(); return; }
   if(e.target.id==='fsReset'){ fs.sel={}; fsSave(); fsRender(); }
 });
@@ -2350,7 +2381,8 @@ function render(){
       : `<div class="empty">${state.filter==='all' ? 'Belum ada hasil. Silakan tekan "Pindai ulang".' : `Tidak ada ${uw} dengan status ini pada pindaian terakhir.`}</div>`;
     return;
   }
-  list.innerHTML=rows.map((r,i)=>`
+  const LIM=15, show=(state.listAll||q||rows.length<=LIM+3)?rows:rows.slice(0,LIM);
+  list.innerHTML=show.map((r,i)=>`
     <article class="row" style="animation-delay:${Math.min(i,12)*35}ms">
       <div class="rank">${i+1}</div>
       <div class="tk"><b>${esc(r.code)}</b><span>${esc(r.name)}</span></div>
@@ -2361,7 +2393,8 @@ function render(){
       <div class="tags">${r.isNew?`<span class="tag new" title="Belum berstatus ini pada sesi sebelumnya">BARU · ${LABEL[r.status]}</span>`:''}${r.accNew?'<span class="tag new" title="Belum lolos Minat beli pada sesi sebelumnya">BARU · Minat beli</span>':''}${state.wlSet&&state.wlSet.has(r.code)?'<span class="tag wl">★ Watchlist</span>':''}${r.acc&&r.acc.pass&&state.filter!=='acc'?`<span class="tag acc">Minat beli ${r.acc.score}</span>`:''}${r.tags.map(([c,t])=>`<span class="tag ${c}">${esc(t)}</span>`).join('')}${fxTag(r)}</div>
       ${state.filter==='acc'&&r.acc ? accStrip(r) : ''}
       ${fOn ? fundStrip(r) : ''}
-    </article>`).join('');
+    </article>`).join('')+(show.length<rows.length?`<button type="button" class="list-more" id="listMore">Tampilkan ${rows.length-show.length} ${uw} lainnya <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>`:'');
+  list.querySelectorAll('.tags').forEach(t=>{ const n=t.querySelectorAll('.tag').length; if(n>3) t.insertAdjacentHTML('beforeend',`<button type="button" class="tag tmore" title="Tampilkan semua label">+${n-3}</button>`); });
 }
 
 /* ===================== Rekap tahap siklus =====================
@@ -2466,7 +2499,29 @@ $('#aiClose').addEventListener('click',closeChat);
 document.addEventListener('keydown',e=>{ if(e.key==='Escape' && $('#aiPanel').classList.contains('open')) closeChat(); });
 $('#aiSugg').addEventListener('click',e=>{ const b=e.target.closest('button'); if(b){ $('#aiInput').value=b.textContent; $('#aiInput').focus(); } });
 document.querySelector('.ai-go').addEventListener('click',e=>{ const b=e.target.closest('.ai-btn'); if(b) askAI(b.dataset.p); });
-document.querySelector('.sum').addEventListener('click',e=>{ const f=e.target.closest('button')?.dataset.f; if(!f) return; state.filter = state.filter===f ? 'all' : f; render(); });
+document.querySelector('.sum').addEventListener('click',e=>{ const f=e.target.closest('button')?.dataset.f; if(!f) return; state.filter = state.filter===f ? 'all' : f; state.listAll=false; render();
+  if(state.filter!=='all' && window.scanTab) scanTab('ch-hasil',true); });
+$('#list').addEventListener('click',e=>{ if(e.target.closest('#listMore')){ state.listAll=true; render(); return; } const m=e.target.closest('.tmore'); if(m){ m.closest('.tags').classList.add('open'); m.remove(); } });
+/* Bagian halaman sebagai tab: hanya satu bagian tampil, agar halaman tidak terlalu panjang */
+(function(){
+  const nav=$('#flow'), bar=document.querySelector('.bar'); if(!nav) return;
+  const setH=()=>document.documentElement.style.setProperty('--barH',(bar?bar.offsetHeight:64)+'px'); setH(); addEventListener('resize',setH);
+  const chs=[...document.querySelectorAll('.chap')].map(c=>c.id);
+  let cur='ch-hasil'; try{ const v=localStorage.getItem('smcb_scan_tab'); if(chs.includes(v)) cur=v; }catch{}
+  const has=id=>[...document.querySelectorAll(`[data-ch="${id}"]`)].some(x=>!x.hidden);
+  function apply(){
+    chs.forEach(id=>{ const vis=has(id), a=nav.querySelector(`[data-tab="${id}"]`); if(a && a.hidden===vis) a.hidden=!vis; });
+    const show=has(cur)?cur:'ch-hasil';
+    const w=document.querySelector('.wrap'); if(w.dataset.tab!==show) w.dataset.tab=show;
+    nav.querySelectorAll('[data-tab]').forEach(a=>{ const on=a.dataset.tab===show; a.classList.toggle('on',on); a.setAttribute('aria-selected',on?'true':'false'); });
+  }
+  window.scanTab=(id,scroll)=>{ cur=id; try{ localStorage.setItem('smcb_scan_tab',id); }catch{} apply();
+    const a=nav.querySelector('.on'); if(a && nav.scrollWidth>nav.clientWidth) nav.scrollTo({left:a.offsetLeft-nav.clientWidth/2+a.offsetWidth/2,behavior:'smooth'});
+    if(scroll){ const y=nav.getBoundingClientRect().top+scrollY-(bar?bar.offsetHeight:64)-8; if(scrollY>y+4) scrollTo({top:y,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'}); } };
+  nav.addEventListener('click',e=>{ const a=e.target.closest('[data-tab]'); if(!a) return; e.preventDefault(); scanTab(a.dataset.tab,true); });
+  new MutationObserver(apply).observe(document.querySelector('.wrap'),{subtree:true,attributes:true,attributeFilter:['hidden']});
+  apply();
+})();
 $('#filterQ').addEventListener('input',e=>{ state.q=e.target.value; render(); });
 window.addEventListener('resize',moveInd);
 if(document.fonts&&document.fonts.ready) document.fonts.ready.then(moveInd);

@@ -958,6 +958,46 @@
   .sea-hint{display:none;margin:6px 0 0;font-size:11.5px;color:var(--ink3)}
   @media(max-width:680px){ .sea-hint{display:block} .sea-facts{grid-template-columns:1fr 1fr;gap:8px} .sea-facts .sea-f:last-child{grid-column:1/-1} .sea-f b{font-size:16px} .sea th.y,.sea td.y{width:56px;font-size:11px} .sg-tfs{gap:6px} .sg-tf{min-height:0;padding:11px 10px;gap:7px;border-radius:14px} .sg-n{font-size:9.5px;letter-spacing:.05em} .sg-lb{font-size:13.5px;line-height:1.2} .sg-c{display:none} .sg-beam{height:6px} .sg-beam i{width:12px;height:12px;margin:-6px 0 0 -6px;box-shadow:0 0 0 2px var(--ink)} .pf-strip{gap:4px} .pf-sc .bar i{width:10px;margin-left:-5px} .pf-ch{height:220px} .ch-sub{height:100px} .ch-ctl{justify-content:flex-start;width:100%} }
   @media(prefers-reduced-motion:reduce){ .sg-r,.sg-beam i,.pf-sc .bar i,.pf-s,.pf-k,.sea-f,.sea td.sc{animation:none} .pf-s{stroke-dashoffset:0} }
+  /* Fundachart */
+  .t-fc{grid-column:span 12}
+  .fc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+  .fc-m{position:relative;text-align:left;border:1px solid var(--rule);background:var(--surface);border-radius:15px;padding:11px 12px 9px;cursor:pointer;display:grid;grid-template-columns:1fr auto;grid-template-areas:"l l" "v s" "c s";gap:2px 8px;align-items:end;font:inherit;color:var(--ink);transition:border-color .2s,transform .2s,box-shadow .2s;animation:t2In .4s ease both;animation-delay:var(--d)}
+  .fc-m:hover{transform:translateY(-2px);border-color:var(--rule2)}
+  .fc-m.on{border-color:var(--ink);box-shadow:0 12px 26px -20px rgba(0,0,0,.7);background:linear-gradient(160deg,rgba(31,230,170,.10),transparent 60%),var(--surface)}
+  .fc-ml{grid-area:l;font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--ink3)}
+  .fc-m b{grid-area:v;font:800 17px 'Space Grotesk',sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .fc-m b small{font-size:10.5px;font-weight:700;color:var(--ink3)}
+  .fc-m svg{grid-area:s;width:72px;height:30px;overflow:visible}
+  .fc-sl{fill:none;stroke:#0FB894;stroke-width:1.8;stroke-linejoin:round;vector-effect:non-scaling-stroke}.fc-sa{fill:rgba(31,230,170,.14)}.fc-sd{fill:#0FB894}
+  .fc-mc{grid-area:c;font-size:11.5px;font-weight:800;display:flex;gap:6px;align-items:baseline}.fc-mc.u{color:var(--up)}.fc-mc.d{color:var(--down)}
+  .fc-mc em{font-style:normal;font-weight:600;color:var(--ink3)}
+  .fc-main{margin-top:14px;border-radius:18px;background:var(--sunk);padding:16px 16px 12px}
+  .fc-head{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;align-items:flex-start}
+  .fc-ttl b{display:block;font:800 17px 'Space Grotesk',sans-serif}.fc-ttl small{display:block;color:var(--ink3);font-size:12.5px;margin-top:2px;max-width:56ch;line-height:1.45}
+  .fc-cmpw{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+  .fc-cmp{display:flex;gap:6px}
+  .fc-cmp input{width:200px;border:1px solid var(--rule2);background:var(--surface);color:var(--ink);border-radius:11px;padding:8px 11px;font:600 13px 'Plus Jakarta Sans',sans-serif;text-transform:uppercase}
+  .fc-cmp input::placeholder{text-transform:none;color:var(--ink3)}
+  .fc-cmp button{border:0;border-radius:11px;padding:8px 13px;background:var(--ink);color:var(--surface);font:800 12.5px 'Plus Jakarta Sans',sans-serif;cursor:pointer}
+  .fc-cmpt{font-size:12.5px;color:var(--ink3);min-height:0}
+  .fc-tag{display:inline-flex;align-items:center;gap:6px;padding:4px 6px 4px 10px;border-radius:99px;background:var(--surface);border:1px solid var(--rule);font-weight:800;color:var(--ink)}
+  .fc-tag button{border:0;background:var(--sunk);color:var(--ink2);width:20px;height:20px;border-radius:50%;cursor:pointer;font-size:14px;line-height:1}
+  .fc-ka,.fc-kb{display:inline-block;width:10px;height:10px;border-radius:3px;background:linear-gradient(#1FE6AA,#0A9C88)}.fc-kb{background:linear-gradient(#A78BFA,#6D28D9);margin-left:6px}
+  .fc-err{color:var(--down);font-weight:700}
+  .fc-ch{position:relative;height:280px;margin-top:8px}
+  .fc-ch svg{display:block;width:100%;height:100%;overflow:visible}
+  .fc-b{animation:t2Grow .7s cubic-bezier(.2,.8,.2,1) both;animation-delay:var(--d);transform-box:fill-box;transform-origin:bottom;opacity:.62;transition:opacity .2s}
+  .fc-b.neg{transform-origin:top}
+  .fc-b.a{fill:url(#fcGa)}.fc-b.b{fill:url(#fcGb)}.fc-b.a.neg{fill:url(#fcGn)}.fc-b.last,.fc-b:hover{opacity:1}
+  .fc-b.b{opacity:.9}
+  .fc-v{fill:var(--ink2);font:700 10.5px 'Space Grotesk',sans-serif}.fc-v.last{fill:var(--ink);font-size:12px}
+  .fc-x.last{fill:var(--ink);font-weight:800}
+  .fc-g{font:800 10.5px 'Plus Jakarta Sans',sans-serif}.fc-g.u{fill:var(--up)}.fc-g.d{fill:var(--down)}
+  .fc-foot{display:flex;flex-direction:column;gap:4px;margin-top:6px;font-size:12.5px;color:var(--ink2)}
+  .fc-foot em{font-style:normal;font-weight:800}.fc-foot em.u{color:var(--up)}.fc-foot em.d{color:var(--down)}
+  .fc-hint{color:var(--ink3)}
+  @media(max-width:1000px){ .fc-grid{grid-template-columns:repeat(2,1fr)} }
+  @media(max-width:680px){ .fc-m{padding:10px 10px 8px;grid-template-columns:1fr;grid-template-areas:"l" "v" "c"} .fc-m svg{display:none} .fc-mc em{display:none} .fc-m b{font-size:15px} .fc-cmpw{align-items:stretch;width:100%} .fc-cmp input{flex:1;width:auto} .fc-ch{height:250px} .fc-main{padding:12px 10px 10px} }
   .legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:12px;color:var(--ink2);font-size:13px}
   .legend span{display:inline-flex;align-items:center;gap:7px}.legend i{width:16px;display:inline-block}
   .tbl-wrap{overflow-x:auto}
@@ -1854,6 +1894,25 @@
         </ul></div></details>
       </article>
 
+      <article data-panel="fund" class="tile t-fc" id="fcTile" style="--i:8">
+        <h3><span>Fundachart <span class="sub" id="fcTk"></span></span>
+          <div class="ch-ctl"><div class="tfseg" id="fcPer" role="tablist" aria-label="Periode laporan"><button type="button" data-p="a" class="on">Tahunan</button><button type="button" data-p="q">Kuartalan</button></div></div>
+        </h3>
+        <div class="fc-grid" id="fcGrid"></div>
+        <div class="fc-main">
+          <div class="fc-head">
+            <div class="fc-ttl"><b id="fcTitle"></b><small id="fcDesc"></small></div>
+            <div class="fc-cmpw">
+              <form class="fc-cmp" id="fcCmp" autocomplete="off"><input id="fcCmpQ" placeholder="Kode pembanding, mis. BBRI" aria-label="Kode saham pembanding" maxlength="12"><button type="submit">Bandingkan</button></form>
+              <div class="fc-cmpt" id="fcCmpTag"></div>
+            </div>
+          </div>
+          <div class="fc-ch" id="fcCh"></div>
+          <div class="fc-foot" id="fcFoot"></div>
+        </div>
+        <p class="sg-note">Angka dari laporan keuangan yang dihimpun Yahoo Finance; margin, ROE, dan rasio utang dihitung dari angka tersebut. Riwayat yang tersedia umumnya 4 tahun buku dan 5 kuartal terakhir. Angka di bawah tiap batang adalah perubahan dibanding periode yang sama tahun sebelumnya. Ini gambaran kinerja historis, bukan proyeksi.</p>
+      </article>
+
       <article data-panel="fund" class="tile t-fund" style="--i:8">
         <h3><span>Checklist fundamental <span id="fTk"></span></span> <span class="sub">kriteria C &amp; A dari CAN SLIM (William O'Neil)</span></h3>
         <div class="fund">
@@ -2231,7 +2290,7 @@
       <li><b>Data Akun</b> Apabila Anda masuk ke akun, alamat email, waktu akses, halaman yang dibuka, dan jenis perangkat dicatat untuk keperluan keamanan dan pemantauan layanan. Watchlist, jurnal, dan catatan Anda disimpan di Firebase (Google) dan hanya ditampilkan kepada Anda. Pengelola tidak membuka, membaca, menganalisis, maupun membagikan isinya; akses teknis hanya dilakukan atas permintaan Anda, misalnya untuk menangani kendala atau penghapusan data.</li>
       <li><b>Penghapusan Akun</b> Anda dapat menghapus akun beserta seluruh datanya kapan saja melalui menu akun, pilih <i>Hapus akun saya</i>. Konfirmasi penghapusan dikirim ke email akun Anda. Pertanyaan lain dapat disampaikan ke <a href="mailto:smcrestboard@gmail.com">smcrestboard@gmail.com</a>.</li>
       <li><b>Sumber Data dan Hak Pihak Ketiga</b> Data harga dan laporan keuangan diambil dari Yahoo Finance. Apabila sumber tersebut terganggu, kurs memakai kurs referensi bank sentral (ECB) melalui Frankfurter dan harga kripto memakai API publik Hyperliquid; sumber yang sedang dipakai selalu dicantumkan. Seluruh data tetap menjadi milik penyedianya dan ditampilkan apa adanya tanpa jaminan. SM-Crestboard tidak memperjualbelikan data dan tidak memungut biaya dari pengguna. Penyedia data yang berkeberatan dapat menghubungi <a href="mailto:smcrestboard@gmail.com">smcrestboard@gmail.com</a>, dan penggunaan datanya akan segera dihentikan atau disesuaikan.</li>
-      <li><b>Skor dan Ringkasan Otomatis</b> Skor pindaian, skor volatilitas harga, 5 pilar fundamental, PER Band, ringkasan indikator teknikal, perbandingan kinerja terhadap indeks, pola musiman, dan ringkasan lain dihitung secara mekanis dari data publik dengan rumus yang dijelaskan di halaman. SM-Crestboard bukan Penasihat Investasi dan tidak memberikan nasihat yang disesuaikan dengan kondisi pribadi siapa pun. Konsensus analis yang ditampilkan merupakan pendapat pihak ketiga, bukan pendapat SM-Crestboard.</li>
+      <li><b>Skor dan Ringkasan Otomatis</b> Skor pindaian, skor volatilitas harga, 5 pilar fundamental, PER Band, Fundachart, ringkasan indikator teknikal, perbandingan kinerja terhadap indeks, pola musiman, dan ringkasan lain dihitung secara mekanis dari data publik dengan rumus yang dijelaskan di halaman. SM-Crestboard bukan Penasihat Investasi dan tidak memberikan nasihat yang disesuaikan dengan kondisi pribadi siapa pun. Konsensus analis yang ditampilkan merupakan pendapat pihak ketiga, bukan pendapat SM-Crestboard.</li>
       <li><b>Tidak Berafiliasi</b> SM-Crestboard adalah proyek independen dan tidak berafiliasi dengan Bursa Efek Indonesia, bursa lain, Yahoo, Bank Sentral Eropa, Hyperliquid, penyedia data lainnya, maupun pemilik metode yang dirujuk. CAN SLIM® merupakan merek dagang milik pemiliknya dan disebut hanya sebagai rujukan metode.</li>
     </ul>
     <label class="ack-check"><input type="checkbox" id="ackCk"><span>Saya telah membaca, memahami, dan menyetujui bahwa seluruh keputusan investasi sepenuhnya merupakan tanggung jawab saya pribadi.</span></label>
@@ -3032,7 +3091,7 @@ const fundCache={};
 async function fetchFund(symbol){
   if(fundCache[symbol]) return fundCache[symbol];
   let r, j;
-  try{ r=await fetch(`${CONFIG.fundPath}?symbol=${encodeURIComponent(symbol)}&v=2`); j=await r.json(); }
+  try{ r=await fetch(`${CONFIG.fundPath}?symbol=${encodeURIComponent(symbol)}&v=3`); j=await r.json(); }
   catch{ throw new ApiDown('fundamental'); }
   if(!r.ok) throw new Error(j?.error||'Gagal');
   return (fundCache[symbol]=j);
@@ -3130,17 +3189,18 @@ async function loadFund(){
   window.loadVal?.();
   const sym=state.symbol, tk=state.ticker, ft=$('.t-fund');
   if(ft) ft.hidden=!!M().crypto;
-  if(M().crypto) return;
+  if(M().crypto){ fcRender(); return; }
   $('#fHead').textContent='Memuat data fundamental…'; $('#fDesc').textContent=' '; $('#fCrit').innerHTML='<div class="skel-row"></div>'.repeat(5);
-  if(state.demo){ renderFund(demoFund(tk)); return; }
+  if(state.demo){ const d=demoFund(tk); renderFund(d); fcSet(d); return; }
+  fcSet(null);
   try{
     const f=await fetchFund(sym);
     if(state.ticker!==tk) return;
     renderFund(f.empty?null:f, f.empty?'Yahoo tidak punya data laporan keuangan untuk saham ini':'');
-    ins.f=f.empty?null:f; insRender(); insBand();
+    ins.f=f.empty?null:f; insRender(); insBand(); fcSet(f.empty?null:f, f.empty?'Laporan keuangan saham ini tidak tersedia di sumber data.':'');
   }catch(e){
     if(state.ticker!==tk) return;
-    renderFund(null,'Sumber data fundamental sedang tidak merespons');
+    renderFund(null,'Sumber data fundamental sedang tidak merespons'); fcSet(null,'Sumber data laporan keuangan sedang tidak merespons. Coba lagi beberapa menit lagi.');
   }
 }
 
@@ -4108,6 +4168,116 @@ $('#indRow')?.addEventListener('click',e=>{ const b=e.target.closest('[data-ind]
 $('#sgTfs')?.addEventListener('click',e=>{ const b=e.target.closest('[data-sg]'); if(!b) return; T2.sel=b.dataset.sg; t2SigRender(); });
 $('#pfStrip')?.addEventListener('click',e=>{ const b=e.target.closest('[data-pf]'); if(!b) return; T2.pf=b.dataset.pf; t2PfRender(); });
 if(window.ResizeObserver && $('#pfCh')){ let lw=0; new ResizeObserver(()=>{ const w=$('#pfCh').clientWidth; if(w && w!==lw){ lw=w; const r=PF.find(p=>p.k===T2.pf); const s=r&&T2.pfIdx&&t2PfSeries(r); if(s) t2PfDraw(s); } }).observe($('#pfCh')); }
+
+/* ===================== Fundachart =====================
+   Grafik riwayat laporan keuangan (tahunan/kuartalan) dan perbandingan dengan saham lain di bursa yang sama.
+   Angka dari laporan keuangan yang dihimpun Yahoo Finance; rasio dihitung di browser. */
+const FC_DEF=[
+  {k:'rev',l:'Pendapatan',t:'m',d:'Total pendapatan usaha pada periode tersebut.'},
+  {k:'ni',l:'Laba bersih',t:'m',d:'Laba yang dapat diatribusikan kepada pemegang saham setelah pajak.'},
+  {k:'eps',l:'EPS',t:'s',d:'Laba bersih per lembar saham (dilusian).'},
+  {k:'npm',l:'Margin laba bersih',t:'p',d:'Laba bersih dibagi pendapatan.'},
+  {k:'opm',l:'Margin usaha',t:'p',d:'Laba usaha (sebelum bunga dan pajak) dibagi pendapatan.'},
+  {k:'roe',l:'ROE',t:'p',d:'Laba bersih dibagi ekuitas pemegang saham. Untuk kuartalan, laba kuartal disetahunkan (dikali 4).'},
+  {k:'fcf',l:'Arus kas bebas',t:'m',d:'Arus kas operasi dikurangi belanja modal.'},
+  {k:'de',l:'Utang / ekuitas',t:'x',d:'Total utang berbunga dibagi ekuitas pemegang saham. Makin rendah, makin kecil ketergantungan pada utang.'}];
+const fc={ p:'a', k:'rev', f:null, err:'', cmp:null, cmpF:null, cmpBusy:false, cmpErr:'' };
+function fcRows(f,p){
+  const S=f?.[p]||{}, map=new Map();
+  ['TotalRevenue','NetIncome','DilutedEPS','BasicEPS','StockholdersEquity','OperatingIncome','TotalDebt','FreeCashFlow'].forEach(k=>(S[k]||[]).forEach(x=>{ if(!map.has(x.d)) map.set(x.d,{d:x.d}); map.get(x.d)[k]=x.v; }));
+  return [...map.values()].sort((a,b)=>a.d<b.d?-1:1);
+}
+function fcVal(r,k,p){
+  const rv=r.TotalRevenue, ni=r.NetIncome, eq=r.StockholdersEquity;
+  switch(k){
+    case 'rev': return rv??null; case 'ni': return ni??null; case 'eps': return r.DilutedEPS??r.BasicEPS??null; case 'fcf': return r.FreeCashFlow??null;
+    case 'npm': return rv>0&&ni!=null?ni/rv*100:null; case 'opm': return rv>0&&r.OperatingIncome!=null?r.OperatingIncome/rv*100:null;
+    case 'roe': return eq>0&&ni!=null?ni*(p==='q'?4:1)/eq*100:null; case 'de': return eq>0&&r.TotalDebt!=null?r.TotalDebt/eq:null;
+  } return null;
+}
+const fcLbl=(d,p)=>p==='q'?qLabel(d):String(new Date(d).getUTCFullYear()-(new Date(d).getUTCMonth()<3?1:0));
+function fcSeries(f,k,p){ return fcRows(f,p).map(r=>({d:r.d,l:fcLbl(r.d,p),v:fcVal(r,k,p)})).filter(x=>x.v!=null&&isFinite(x.v)).slice(p==='q'?-8:-6); }
+function fcFmt(v,t,cur){ if(v==null||!isFinite(v)) return '–';
+  return t==='p'?fmt(v,1)+'%':t==='x'?fmt(v,2)+'×':t==='s'?fmt(v,Math.abs(v)<10?2:0):fNum(v); }
+function fcChg(s,i,t,p){ // perubahan dibanding periode yang sama sebelumnya (tahunan: tahun lalu; kuartalan: kuartal yang sama tahun lalu)
+  const cur=s[i]; let prev=null;
+  if(p==='a') prev=s[i-1]; else { const tg=new Date(cur.d); tg.setUTCFullYear(tg.getUTCFullYear()-1); prev=s.find(x=>Math.abs(new Date(x.d)-tg)/864e5<=45); }
+  if(!prev) return null;
+  if(t==='p') return {v:cur.v-prev.v,u:' poin'}; if(t==='x') return {v:cur.v-prev.v,u:'×'};
+  return prev.v>0?{v:(cur.v-prev.v)/prev.v*100,u:'%'}:null;
+}
+const fcSg=(c,d=1)=>c==null?'':(c.v>=0?'+':'−')+fmt(Math.abs(c.v),c.u==='×'?2:d)+(c.u==='%'?'%':c.u);
+function fcSpark(s){ if(s.length<2) return ''; const W=96,H=30, vs=s.map(x=>x.v), lo=Math.min(...vs), hi=Math.max(...vs), r=hi-lo||1;
+  const pts=s.map((x,i)=>`${(i/(s.length-1)*W).toFixed(1)},${(H-3-(x.v-lo)/r*(H-6)).toFixed(1)}`);
+  return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true"><path class="fc-sa" d="M0,${H}L${pts.join('L')}L${W},${H}Z"/><path class="fc-sl" d="M${pts.join('L')}"/><circle cx="${pts[pts.length-1].split(',')[0]}" cy="${pts[pts.length-1].split(',')[1]}" r="2.6" class="fc-sd"/></svg>`; }
+function fcSet(f,err){ fc.f=f; fc.err=err||''; fcRender(); }
+function fcRender(){
+  const tile=$('#fcTile'); if(!tile) return; tile.hidden=!!M().crypto; if(tile.hidden) return;
+  document.querySelectorAll('#fcPer [data-p]').forEach(b=>b.classList.toggle('on',b.dataset.p===fc.p));
+  $('#fcTk').textContent=state.ticker||'';
+  const grid=$('#fcGrid'), cur=fc.f?.currency||M().cur;
+  if(!fc.f){ grid.innerHTML=''; $('#fcCh').innerHTML=`<div class="pf-load">${fc.err?esc(fc.err):'<i class="sg-sp"></i>Memuat laporan keuangan…'}</div>`; $('#fcFoot').innerHTML=''; $('#fcTitle').textContent=''; $('#fcDesc').textContent=''; return; }
+  const avail=FC_DEF.map(m=>({...m,s:fcSeries(fc.f,m.k,fc.p)})).filter(m=>m.s.length>=2);
+  if(!avail.length){ grid.innerHTML=''; $('#fcCh').innerHTML=`<div class="pf-load">Riwayat ${fc.p==='q'?'kuartalan':'tahunan'} untuk saham ini belum tersedia di sumber data.</div>`; $('#fcFoot').innerHTML=''; return; }
+  if(!avail.some(m=>m.k===fc.k)) fc.k=avail[0].k;
+  grid.innerHTML=avail.map((m,i)=>{ const s=m.s, L=s.length-1, c=fcChg(s,L,m.t,fc.p), good=c==null?'':(m.k==='de'?c.v<=0:c.v>=0)?'u':'d';
+    return `<button type="button" class="fc-m${m.k===fc.k?' on':''}" data-fck="${m.k}" style="--d:${i*35}ms"><span class="fc-ml">${m.l}</span><b>${m.t==='m'?`<small>${esc(cur)}</small> `:''}${fcFmt(s[L].v,m.t,cur)}</b>${fcSpark(s)}<span class="fc-mc ${good}">${c?fcSg(c):'&nbsp;'}<em>${s[L].l}</em></span></button>`; }).join('');
+  const M0=avail.find(m=>m.k===fc.k);
+  $('#fcTitle').textContent=M0.l+(M0.t==='m'?` (${cur})`:M0.t==='s'?` (${cur} per lembar)`:'');
+  $('#fcDesc').textContent=M0.d;
+  let B=null; if(fc.cmpF){ const s2=fcSeries(fc.cmpF,M0.k,fc.p); if(s2.length) B=s2; }
+  fcDraw(M0,M0.s,B);
+  const foot=[]; const sum=(s,tk)=>{ const n=s.length; if(n<2) return '';
+    if(M0.t==='m'||M0.t==='s'){ const a=s[0].v, z=s[n-1].v; if(fc.p==='a'&&a>0&&z>0){ const yrs=(new Date(s[n-1].d)-new Date(s[0].d))/(365.25*864e5); const cg=(Math.pow(z/a,1/yrs)-1)*100; return `<span><b>${esc(tk)}</b> rata-rata tumbuh <em class="${cg>=0?'u':'d'}">${cg>=0?'+':'−'}${fmt(Math.abs(cg),1)}%</em> per tahun (${s[0].l}–${s[n-1].l})</span>`; }
+      const c=fcChg(s,n-1,M0.t,fc.p); return c?`<span><b>${esc(tk)}</b> ${s[n-1].l} berubah <em class="${c.v>=0?'u':'d'}">${fcSg(c)}</em> dibanding periode yang sama tahun sebelumnya</span>`:''; }
+    const av=s.reduce((x,y)=>x+y.v,0)/n; return `<span><b>${esc(tk)}</b> rata-rata ${fcFmt(av,M0.t)}, terbaru ${fcFmt(s[n-1].v,M0.t)} (${s[n-1].l})</span>`; };
+  foot.push(sum(M0.s,state.ticker)); if(B) foot.push(sum(B,fc.cmp));
+  if(B&&M0.t==='m') foot.push('<span class="fc-hint">Untuk perusahaan dengan ukuran berbeda, rasio seperti margin dan ROE lebih sebanding daripada nilai rupiah.</span>');
+  $('#fcFoot').innerHTML=foot.filter(Boolean).join('');
+  $('#fcCmpTag').innerHTML=fc.cmpBusy?'<i class="sg-sp"></i>Memuat pembanding…':fc.cmpErr?`<span class="fc-err">${esc(fc.cmpErr)}</span>`:fc.cmp?`<span class="fc-tag"><i class="fc-ka"></i>${esc(state.ticker)}<i class="fc-kb"></i>${esc(fc.cmp)}<button type="button" data-fcx aria-label="Hapus pembanding">×</button></span>`:'';
+}
+function fcDraw(M0,A,B){
+  const el=$('#fcCh'), W=el.clientWidth; if(!W) return;
+  const H=el.clientHeight||270, P={l:6,r:6,t:30,b:46};
+  const labels=[...new Set([...A.map(x=>x.l),...(B||[]).map(x=>x.l)])].sort((a,b)=>{ const k=s=>s.startsWith('K')?+s.slice(-4)*10+ +s[1]:+s*10; return k(a)-k(b); }).slice(fc.p==='q'?-8:-6);
+  const va=new Map(A.map(x=>[x.l,x])), vb=new Map((B||[]).map(x=>[x.l,x]));
+  const vals=[...labels.map(l=>va.get(l)?.v),...labels.map(l=>vb.get(l)?.v)].filter(v=>v!=null);
+  let lo=Math.min(0,...vals), hi=Math.max(0,...vals); if(hi===lo) hi=lo+1; const pad=(hi-lo)*.06; if(hi>0) hi+=pad; if(lo<0) lo-=pad;
+  const Y=v=>P.t+(H-P.t-P.b)*(hi-v)/(hi-lo), y0=Y(0), n=labels.length, slot=(W-P.l-P.r)/n, bw=Math.min(B?26:46,slot*(B?.34:.56));
+  let g=`<line class="pf-0" x1="${P.l}" x2="${W-P.r}" y1="${y0.toFixed(1)}" y2="${y0.toFixed(1)}"/>`;
+  labels.forEach((l,i)=>{ const cx=P.l+slot*(i+.5), last=i===n-1;
+    const bar=(x,v,cls,lb)=>{ if(v==null) return ''; const y=Y(v), h=Math.max(1.5,Math.abs(y-y0)), top=v>=0?y:y0;
+      return `<rect class="fc-b ${cls}${v<0?' neg':''}${last?' last':''}" x="${(x-bw/2).toFixed(1)}" y="${top.toFixed(1)}" width="${bw.toFixed(1)}" height="${h.toFixed(1)}" rx="${Math.min(7,bw/3).toFixed(1)}" style="--d:${i*60}ms"><title>${lb}: ${fcFmt(v,M0.t)}</title></rect>`
+        +((B?n<=5:n<=8)||last?`<text class="fc-v${last?' last':''}" x="${x.toFixed(1)}" y="${(v>=0?y-7:y+h+13).toFixed(1)}" text-anchor="middle">${fcFmt(v,M0.t)}</text>`:''); };
+    const a=va.get(l), b=vb.get(l);
+    if(B){ g+=bar(cx-bw/2-2,a?.v,'a',state.ticker+' '+l)+bar(cx+bw/2+2,b?.v,'b',fc.cmp+' '+l); }
+    else g+=bar(cx,a?.v,'a',l);
+    const ia=A.findIndex(x=>x.l===l), c=!B&&ia>=0?fcChg(A,ia,M0.t,fc.p):null, good=c&&(M0.k==='de'?c.v<=0:c.v>=0);
+    g+=`<text class="pf-t fc-x${last?' last':''}" x="${cx.toFixed(1)}" y="${H-26}" text-anchor="middle">${l}</text>`;
+    if(c) g+=`<text class="fc-g ${good?'u':'d'}" x="${cx.toFixed(1)}" y="${H-9}" text-anchor="middle">${fcSg(c,0)}</text>`;
+  });
+  el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" aria-label="Grafik ${esc(M0.l)}"><defs>
+    <linearGradient id="fcGa" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1FE6AA"/><stop offset="1" stop-color="#0A9C88"/></linearGradient>
+    <linearGradient id="fcGb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#A78BFA"/><stop offset="1" stop-color="#6D28D9"/></linearGradient>
+    <linearGradient id="fcGn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E02E5E"/><stop offset="1" stop-color="#FF6283"/></linearGradient></defs>${g}</svg>`;
+}
+async function fcCompare(raw){
+  const m=M(), t=normalize(raw,state.market); if(!t) return;
+  if(t===state.ticker){ fc.cmpErr='Pilih kode yang berbeda dari saham yang sedang dibuka.'; fcRender(); return; }
+  fc.cmpBusy=true; fc.cmpErr=''; fcRender();
+  let got=null;
+  if(state.demo) got=demoFund(t);
+  else for(const sym of symsFor(m,t)){ try{ const f=await fetchFund(sym); if(f && !f.empty){ got=f; break; } }catch{} }
+  fc.cmpBusy=false;
+  if(!got){ fc.cmpErr=`Data laporan keuangan ${t} tidak ditemukan di bursa ${m.name}.`; fc.cmp=null; fc.cmpF=null; }
+  else { fc.cmp=t; fc.cmpF=got; fc.cmpMk=state.market; $('#fcCmpQ').value=''; }
+  fcRender();
+}
+$('#fcPer')?.addEventListener('click',e=>{ const b=e.target.closest('[data-p]'); if(!b) return; fc.p=b.dataset.p; fcRender(); });
+$('#fcGrid')?.addEventListener('click',e=>{ const b=e.target.closest('[data-fck]'); if(!b) return; fc.k=b.dataset.fck; fcRender(); });
+$('#fcCmp')?.addEventListener('submit',e=>{ e.preventDefault(); fcCompare($('#fcCmpQ').value); });
+$('#fcCmpTag')?.addEventListener('click',e=>{ if(e.target.closest('[data-fcx]')){ fc.cmp=null; fc.cmpF=null; fc.cmpErr=''; fcRender(); } });
+if(window.ResizeObserver && $('#fcCh')){ let lw=0; new ResizeObserver(()=>{ const w=$('#fcCh').clientWidth; if(w&&w!==lw){ lw=w; if(fc.f) fcRender(); } }).observe($('#fcCh')); }
 
 /* ===================== Event ===================== */
 $('#markets').insertAdjacentHTML('beforeend', Object.entries(MARKETS).filter(([,m])=>!m.navHidden).map(([k,m])=>`<button type="button" class="mk" role="tab" data-mk="${k}">${m.navName||m.name}<span class="code">${m.metal?'XAU':m.crypto?'24J':m.tag.split('/')[0]}</span></button>`).join(''));
