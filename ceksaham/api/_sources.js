@@ -31,7 +31,7 @@ export async function yfetch(url, opt = {}) {
   throw last || new Error('Yahoo tidak dapat dihubungi');
 }
 
-const DAYS = { '1d': 7, '5d': 10, '1mo': 31, '3mo': 93, '6mo': 186, '1y': 366, '2y': 731, '5y': 1827 };
+const DAYS = { '1d': 7, '5d': 10, '1mo': 31, '3mo': 93, '6mo': 186, '1y': 366, '2y': 731, '5y': 1827, '10y': 3653 };
 const iso = (d) => new Date(d).toISOString().slice(0, 10);
 
 function chartOf(symbol, rows, meta) {
@@ -69,7 +69,7 @@ export async function fxBackup(symbol, range) {
 export async function cryptoBackup(symbol, range, interval) {
   const m = /^([A-Z0-9]{2,12})-USDT?$/.exec(symbol);
   if (!m) return null;
-  const iv = ['5m', '15m', '1h', '1d'].includes(interval) ? interval : '1d';
+  const iv = ({ '1wk': '1w', '1mo': '1M' })[interval] || (['5m', '15m', '1h', '1d'].includes(interval) ? interval : '1d');
   const end = Date.now(), start = end - (DAYS[range] || 366) * 864e5;
   const post = (body) => fetch('https://api.hyperliquid.xyz/info', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body), signal: AbortSignal.timeout(8000) });
   const r = await post({ type: 'candleSnapshot', req: { coin: m[1], interval: iv, startTime: start, endTime: end } });
