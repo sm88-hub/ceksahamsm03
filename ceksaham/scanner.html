@@ -2018,6 +2018,7 @@ function hmRender(){
   if(hm.busy){ return; }
   if(hm.err||!hm.rows){ box.innerHTML=`<p class="hm-note" style="color:#fff;padding:18px">${hm.err==='belum-ada'?'Data peta pasar untuk bursa ini belum tersedia. Data disiapkan otomatis setiap pagi.':'Data peta pasar belum dapat dimuat.'}</p>`; return; }
   const W=box.clientWidth, H=box.clientHeight, N=W>900?150:W>600?100:60;
+  if(W<120){ box.innerHTML='<div class="hm-sk"></div>'; return; } // belum punya ukuran (tab latar belakang); digambar ulang oleh ResizeObserver
   const top=[...hm.rows].sort((a,b)=>b.mcap-a.mcap).slice(0,N), S=typeof SK_ID!=='undefined'?SK_ID:{};
   const val=o=>hm.mode==='ma'?(o.ma200>0?(o.price/o.ma200-1)*100:null):o.chg;
   const mob=W<640, L=hmMosaic(top,W,mob?Math.max(980,W*2.6):H,o=>S[o.sector]||o.sector||'Lainnya', mob);
@@ -2055,7 +2056,9 @@ function hmRender(){
     tp.hidden=false; const x=Math.min(innerWidth-tp.offsetWidth-12,e.clientX+14), y=Math.min(innerHeight-tp.offsetHeight-12,e.clientY+14); tp.style.left=x+'px'; tp.style.top=y+'px'; });
   document.addEventListener('click',e=>{ const sp=e.target.closest('[data-hms]'); if(sp){ const k=sp.dataset.hms; hm.focus=hm.focus===k?null:k; document.querySelectorAll('#hmBox .hm-b,#hmBox .mz-t').forEach(x=>x.classList.toggle('dim',!!hm.focus&&x.dataset.hsec!==hm.focus)); document.querySelectorAll('#hmSecs [data-hms]').forEach(x=>x.classList.toggle('on',x.dataset.hms===hm.focus)); return; }
     const b=e.target.closest('[data-hm]'); if(!b) return; hm.mode=b.dataset.hm; try{ localStorage.setItem('smcb_hm_mode',hm.mode); }catch{} hmRender(); });
-  let rt=0; addEventListener('resize',()=>{ clearTimeout(rt); rt=setTimeout(()=>{ if(hm.rows) hmRender(); },200); });
+  let rt=0, lastW=-1; const rer=()=>{ clearTimeout(rt); rt=setTimeout(()=>{ const w=$('#hmBox')?.clientWidth||0; if(hm.rows&&w!==lastW){ lastW=w; hmRender(); } },150); };
+  addEventListener('resize',rer); if(window.ResizeObserver&&$('#hmBox')) new ResizeObserver(rer).observe($('#hmBox'));
+  document.addEventListener('visibilitychange',()=>{ if(!document.hidden) rer(); });
 })();
 
 const SK_ID={'Financial Services':'Keuangan','Basic Materials':'Bahan baku','Energy':'Energi','Consumer Defensive':'Barang konsumen primer','Consumer Cyclical':'Barang konsumen non-primer','Industrials':'Perindustrian','Healthcare':'Kesehatan','Technology':'Teknologi','Communication Services':'Komunikasi','Real Estate':'Properti','Utilities':'Utilitas'};
